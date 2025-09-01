@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/Users/gowoobro/develop/gym/back/**)",
+      "Read(/Users/gowoobro/develop/gym/back/router/**)",
+      "Read(/Users/gowoobro/develop/gym/back/router/routers/**)",
+      "Read(/Users/gowoobro/develop/gym/back/models/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
