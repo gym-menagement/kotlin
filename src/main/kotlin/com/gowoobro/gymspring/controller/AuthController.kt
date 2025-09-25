@@ -23,7 +23,7 @@ class AuthController(
     fun authenticateUser(
         @RequestParam loginid: String,
         @RequestParam passwd: String
-    ): ResponseEntity<ApiSingleResponse<JwtResponse?>> {
+    ): ResponseEntity<JwtResponse?> {
         return try {
             println("JWT Login attempt: loginid=$loginid")
             val user = userService.findByLoginid(loginid)
@@ -38,21 +38,21 @@ class AuthController(
                 if (passwordMatches) {
                     val jwt = jwtUtil.generateToken(user.loginid)
                     println("JWT generated successfully")
-                    ResponseEntity.ok(ApiSingleResponse(item = JwtResponse(jwt)))
+                    ResponseEntity.ok(JwtResponse(jwt))
                 } else {
-                    ResponseEntity.ok(ApiSingleResponse(code = "error", item = null))
+                    ResponseEntity.status(401).body(null)
                 }
             } else {
-                ResponseEntity.ok(ApiSingleResponse(code = "not_found", item = null))
+                ResponseEntity.status(404).body(null)
             }
         } catch (e: Exception) {
             println("Authentication error: ${e.message}")
             e.printStackTrace()
-            ResponseEntity.ok(ApiSingleResponse(code = "error", item = null))
+            ResponseEntity.status(500).body(null)
         }
     }
     @PostMapping("/auth/login")
-    fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<ApiSingleResponse<JwtResponse?>> {
+    fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<JwtResponse?> {
         return try {
             authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
@@ -61,9 +61,9 @@ class AuthController(
                 )
             )
             val jwt = jwtUtil.generateToken(loginRequest.loginid)
-            ResponseEntity.ok(ApiSingleResponse(item = JwtResponse(jwt)))
+            ResponseEntity.ok(JwtResponse(jwt))
         } catch (e: Exception) {
-            ResponseEntity.ok(ApiSingleResponse(code = "error", item = null))
+            ResponseEntity.status(401).body(null)
         }
     }
 }
