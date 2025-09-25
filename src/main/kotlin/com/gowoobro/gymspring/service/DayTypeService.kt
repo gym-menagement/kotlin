@@ -1,0 +1,97 @@
+package com.gowoobro.gymspring.service
+
+import com.gowoobro.gymspring.entity.Daytype
+import com.gowoobro.gymspring.entity.DaytypeCreateRequest
+import com.gowoobro.gymspring.entity.DaytypeUpdateRequest
+import com.gowoobro.gymspring.repository.DaytypeRepository
+import com.gowoobro.gymspring.entity.Type
+import com.gowoobro.gymspring.entity.Status
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
+@Service
+@Transactional
+class DaytypeService(private val daytypeRepository: DaytypeRepository) {
+    
+    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Daytype> {
+        val pageable: Pageable = PageRequest.of(page, pageSize)
+        return daytypeRepository.findAll(pageable)
+    }
+    
+    fun findById(id: Long): Daytype? {
+        return daytypeRepository.findById(id).orElse(null)
+    }
+    
+    fun findByGym(gym: Long): List<Daytype> {
+        return daytypeRepository.findByGym(gym)
+    }
+    
+    fun findByNameContaining(name: String): List<Daytype> {
+        return daytypeRepository.findByNameContaining(name)
+    }
+    
+    fun count(): Long {
+        return daytypeRepository.count()
+    }
+    
+    fun create(request: DaytypeCreateRequest): Daytype {
+        val entity = Daytype(
+            gym = request.gym,
+            name = request.name,
+            date = request.date,
+        )
+        return daytypeRepository.save(entity)
+    }
+    
+    fun createBatch(requests: List<DaytypeCreateRequest>): List<Daytype> {
+        val entities = requests.map { request ->
+            Daytype(
+                gym = request.gym,
+                name = request.name,
+                date = request.date,
+            )
+        }
+        return daytypeRepository.saveAll(entities)
+    }
+    
+    fun update(request: DaytypeUpdateRequest): Daytype? {
+        val existing = daytypeRepository.findById(request.id).orElse(null) ?: return null
+        
+        val updated = existing.copy(
+            gym = request.gym,
+            name = request.name,
+            date = request.date,
+        )
+        return daytypeRepository.save(updated)
+    }
+    
+    fun delete(entity: Daytype): Boolean {
+        return try {
+            daytypeRepository.delete(entity)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+    
+    fun deleteById(id: Long): Boolean {
+        return try {
+            daytypeRepository.deleteById(id)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+    
+    fun deleteBatch(entities: List<Daytype>): Boolean {
+        return try {
+            daytypeRepository.deleteAll(entities)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+}

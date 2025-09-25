@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: gymspring
+
+  datasource:
+    url: jdbc:mysql://140.82.12.99:3306/gym?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8
+    username: gym
+    password: gymdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+
+  security:
+    user:
+      name: admin
+      password: admin
+
+jwt:
+  secret: WkaQHd100%MySecureJwtSecretKey2024ForGymspringApplicationWith256BitsLength
+  expiration: 86400000 # 24 hours in milliseconds
+
+server:
+  port: 9410
+
+logging:
+  level:
+    com.gowoobro.gymspring: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder: ERROR
