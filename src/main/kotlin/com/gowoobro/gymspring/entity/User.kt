@@ -36,7 +36,7 @@ data class User(
     @Column(name = "u_level")
     val level: Level,
     @Column(name = "u_role")
-    val role: UserRole,
+    val role: Role,
     @Column(name = "u_use")
     val use: Use,
     @Column(name = "u_logindate")
@@ -60,7 +60,7 @@ data class UserCreateRequest(
     val type: Type,
     val connectid: String = "",
     val level: Level,
-    val role: UserRole,
+    val role: Role,
     val use: Use,
     val logindate: LocalDateTime? = null,
     val lastchangepasswddate: LocalDateTime? = null,
@@ -81,7 +81,7 @@ data class UserUpdateRequest(
     val type: Type,
     val connectid: String = "",
     val level: Level,
-    val role: UserRole,
+    val role: Role,
     val use: Use,
     val logindate: LocalDateTime? = null,
     val lastchangepasswddate: LocalDateTime? = null,
