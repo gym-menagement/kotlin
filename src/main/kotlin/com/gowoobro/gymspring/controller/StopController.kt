@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/stop")
 class StopController(private val stopService: StopService) {
-    
+
     @GetMapping
     fun getStops(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class StopController(private val stopService: StopService) {
         val result = stopService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getStop(@PathVariable id: Long): ResponseEntity<Stop> {
         val result = stopService.findById(id)
@@ -30,13 +30,51 @@ class StopController(private val stopService: StopService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
+
+    @GetMapping("/search/id")
+    fun getStopById(@RequestParam id: String): ResponseEntity<List<Stop>> {
+        val result = stopService.findById(id)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/usehelth")
+    fun getStopByUsehelth(@RequestParam usehelth: String): ResponseEntity<List<Stop>> {
+        val result = stopService.findByUsehelth(usehelth)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/startday")
+    fun getStopByStartday(@RequestParam startday: String): ResponseEntity<List<Stop>> {
+        val result = stopService.findByStartday(startday)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/endday")
+    fun getStopByEndday(@RequestParam endday: String): ResponseEntity<List<Stop>> {
+        val result = stopService.findByEndday(endday)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/count")
+    fun getStopByCount(@RequestParam count: String): ResponseEntity<List<Stop>> {
+        val result = stopService.findByCount(count)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getStopByDate(@RequestParam date: String): ResponseEntity<List<Stop>> {
+        val result = stopService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = stopService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createStop(@RequestBody request: StopCreateRequest): ResponseEntity<Stop> {
         return try {
@@ -46,7 +84,7 @@ class StopController(private val stopService: StopService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createStops(@RequestBody requests: List<StopCreateRequest>): ResponseEntity<List<Stop>> {
         return try {
@@ -56,7 +94,7 @@ class StopController(private val stopService: StopService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateStop(
         @PathVariable id: Long,
@@ -70,13 +108,13 @@ class StopController(private val stopService: StopService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteStop(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = stopService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteStops(@RequestBody entities: List<Stop>): ResponseEntity<Map<String, Boolean>> {
         val success = stopService.deleteBatch(entities)

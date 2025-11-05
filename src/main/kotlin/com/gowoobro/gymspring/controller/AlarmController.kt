@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/alarm")
 class AlarmController(private val alarmService: AlarmService) {
-    
+
     @GetMapping
     fun getAlarms(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class AlarmController(private val alarmService: AlarmService) {
         val result = alarmService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getAlarm(@PathVariable id: Long): ResponseEntity<Alarm> {
         val result = alarmService.findById(id)
@@ -30,25 +30,57 @@ class AlarmController(private val alarmService: AlarmService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
+
+    @GetMapping("/search/id")
+    fun getAlarmById(@RequestParam id: String): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findById(id)
+        return ResponseEntity.ok(result)
+    }
+
     @GetMapping("/search/title")
-    fun getAlarmsByMobileSearchTitle(@RequestParam title: String): ResponseEntity<List<Alarm>> {
-        val result = alarmService.findByTitleContaining(title)
+    fun getAlarmByTitle(@RequestParam title: String): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByTitle(title)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/search/content")
-    fun getAlarmsByMobileSearchContent(@RequestParam content: String): ResponseEntity<List<Alarm>> {
-        val result = alarmService.findByContentContaining(content)
+    fun getAlarmByContent(@RequestParam content: String): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByContent(content)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/type")
+    fun getAlarmByType(@RequestParam type: String): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByType(type)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/status")
+    fun getAlarmByStatus(@RequestParam status: String): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByStatus(status)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/user")
+    fun getAlarmByUser(@RequestParam user: String): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByUser(user)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getAlarmByDate(@RequestParam date: String): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = alarmService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createAlarm(@RequestBody request: AlarmCreateRequest): ResponseEntity<Alarm> {
         return try {
@@ -58,7 +90,7 @@ class AlarmController(private val alarmService: AlarmService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createAlarms(@RequestBody requests: List<AlarmCreateRequest>): ResponseEntity<List<Alarm>> {
         return try {
@@ -68,7 +100,7 @@ class AlarmController(private val alarmService: AlarmService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateAlarm(
         @PathVariable id: Long,
@@ -82,13 +114,13 @@ class AlarmController(private val alarmService: AlarmService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteAlarm(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = alarmService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteAlarms(@RequestBody entities: List<Alarm>): ResponseEntity<Map<String, Boolean>> {
         val success = alarmService.deleteBatch(entities)

@@ -4,8 +4,6 @@ import com.gowoobro.gymspring.entity.Systemlog
 import com.gowoobro.gymspring.entity.SystemlogCreateRequest
 import com.gowoobro.gymspring.entity.SystemlogUpdateRequest
 import com.gowoobro.gymspring.repository.SystemlogRepository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -15,66 +13,59 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class SystemlogService(private val systemlogRepository: SystemlogRepository) {
-    
+
     fun findAll(page: Int = 0, pageSize: Int = 10): Page<Systemlog> {
         val pageable: Pageable = PageRequest.of(page, pageSize)
         return systemlogRepository.findAll(pageable)
     }
-    
+
     fun findById(id: Long): Systemlog? {
         return systemlogRepository.findById(id).orElse(null)
     }
-    
-    fun findByType(type: Type): List<Systemlog> {
-        return systemlogRepository.findByType(type)
-    }
-    
-    fun findByContentContaining(content: String): List<Systemlog> {
-        return systemlogRepository.findByContentContaining(content)
-    }
-    
-    fun findByResult(result: Int): List<Systemlog> {
-        return systemlogRepository.findByResult(result)
-    }
-    
+
     fun count(): Long {
         return systemlogRepository.count()
     }
-    
+
+
+    fun findById(id: String): List<Systemlog> {
+        return systemlogRepository.findById(id)
+    }
+
+    fun findByType(type: String): List<Systemlog> {
+        return systemlogRepository.findByType(type)
+    }
+
+    fun findByContent(content: String): List<Systemlog> {
+        return systemlogRepository.findByContent(content)
+    }
+
+    fun findByResult(result: String): List<Systemlog> {
+        return systemlogRepository.findByResult(result)
+    }
+
+    fun findByDate(date: String): List<Systemlog> {
+        return systemlogRepository.findByDate(date)
+    }
+
+
     fun create(request: SystemlogCreateRequest): Systemlog {
-        val entity = Systemlog(
-            type = request.type,
-            content = request.content,
-            result = request.result,
-            date = request.date,
-        )
+        val entity = Systemlog()
         return systemlogRepository.save(entity)
     }
-    
+
     fun createBatch(requests: List<SystemlogCreateRequest>): List<Systemlog> {
         val entities = requests.map { request ->
-            Systemlog(
-                type = request.type,
-                content = request.content,
-                result = request.result,
-                date = request.date,
-            )
+            Systemlog()
         }
         return systemlogRepository.saveAll(entities)
     }
-    
+
     fun update(request: SystemlogUpdateRequest): Systemlog? {
         val existing = systemlogRepository.findById(request.id).orElse(null) ?: return null
-        
-        val updated = existing.copy(
-            type = request.type,
-            content = request.content,
-            result = request.result,
-            date = request.date,
-        )
-        return systemlogRepository.save(updated)
+        return systemlogRepository.save(existing)
     }
-    
+
     fun delete(entity: Systemlog): Boolean {
         return try {
             systemlogRepository.delete(entity)
@@ -83,7 +74,7 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
             false
         }
     }
-    
+
     fun deleteById(id: Long): Boolean {
         return try {
             systemlogRepository.deleteById(id)
@@ -92,7 +83,7 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
             false
         }
     }
-    
+
     fun deleteBatch(entities: List<Systemlog>): Boolean {
         return try {
             systemlogRepository.deleteAll(entities)

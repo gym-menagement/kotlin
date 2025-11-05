@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/token")
 class TokenController(private val tokenService: TokenService) {
-    
+
     @GetMapping
     fun getTokens(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class TokenController(private val tokenService: TokenService) {
         val result = tokenService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getToken(@PathVariable id: Long): ResponseEntity<Token> {
         val result = tokenService.findById(id)
@@ -30,19 +30,45 @@ class TokenController(private val tokenService: TokenService) {
             ResponseEntity.notFound().build()
         }
     }
-    
-    @GetMapping("/search/token")
-    fun getTokensByMobileSearchToken(@RequestParam token: String): ResponseEntity<List<Token>> {
-        val result = tokenService.findByTokenContaining(token)
+
+
+    @GetMapping("/search/id")
+    fun getTokenById(@RequestParam id: String): ResponseEntity<List<Token>> {
+        val result = tokenService.findById(id)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/user")
+    fun getTokenByUser(@RequestParam user: String): ResponseEntity<List<Token>> {
+        val result = tokenService.findByUser(user)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/token")
+    fun getTokenByToken(@RequestParam token: String): ResponseEntity<List<Token>> {
+        val result = tokenService.findByToken(token)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/status")
+    fun getTokenByStatus(@RequestParam status: String): ResponseEntity<List<Token>> {
+        val result = tokenService.findByStatus(status)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getTokenByDate(@RequestParam date: String): ResponseEntity<List<Token>> {
+        val result = tokenService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = tokenService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createToken(@RequestBody request: TokenCreateRequest): ResponseEntity<Token> {
         return try {
@@ -52,7 +78,7 @@ class TokenController(private val tokenService: TokenService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createTokens(@RequestBody requests: List<TokenCreateRequest>): ResponseEntity<List<Token>> {
         return try {
@@ -62,7 +88,7 @@ class TokenController(private val tokenService: TokenService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateToken(
         @PathVariable id: Long,
@@ -76,13 +102,13 @@ class TokenController(private val tokenService: TokenService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteToken(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = tokenService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteTokens(@RequestBody entities: List<Token>): ResponseEntity<Map<String, Boolean>> {
         val success = tokenService.deleteBatch(entities)

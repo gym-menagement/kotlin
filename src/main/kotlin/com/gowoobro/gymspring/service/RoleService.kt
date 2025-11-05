@@ -4,8 +4,6 @@ import com.gowoobro.gymspring.entity.Role
 import com.gowoobro.gymspring.entity.RoleCreateRequest
 import com.gowoobro.gymspring.entity.RoleUpdateRequest
 import com.gowoobro.gymspring.repository.RoleRepository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -15,66 +13,59 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class RoleService(private val roleRepository: RoleRepository) {
-    
+
     fun findAll(page: Int = 0, pageSize: Int = 10): Page<Role> {
         val pageable: Pageable = PageRequest.of(page, pageSize)
         return roleRepository.findAll(pageable)
     }
-    
+
     fun findById(id: Long): Role? {
         return roleRepository.findById(id).orElse(null)
     }
-    
-    fun findByGym(gym: Long): List<Role> {
-        return roleRepository.findByGym(gym)
-    }
-    
-    fun findByRole(role: Int): List<Role> {
-        return roleRepository.findByRole(role)
-    }
-    
-    fun findByNameContaining(name: String): List<Role> {
-        return roleRepository.findByNameContaining(name)
-    }
-    
+
     fun count(): Long {
         return roleRepository.count()
     }
-    
+
+
+    fun findById(id: String): List<Role> {
+        return roleRepository.findById(id)
+    }
+
+    fun findByGym(gym: String): List<Role> {
+        return roleRepository.findByGym(gym)
+    }
+
+    fun findByRole(role: String): List<Role> {
+        return roleRepository.findByRole(role)
+    }
+
+    fun findByName(name: String): List<Role> {
+        return roleRepository.findByName(name)
+    }
+
+    fun findByDate(date: String): List<Role> {
+        return roleRepository.findByDate(date)
+    }
+
+
     fun create(request: RoleCreateRequest): Role {
-        val entity = Role(
-            gym = request.gym,
-            role = request.role,
-            name = request.name,
-            date = request.date,
-        )
+        val entity = Role()
         return roleRepository.save(entity)
     }
-    
+
     fun createBatch(requests: List<RoleCreateRequest>): List<Role> {
         val entities = requests.map { request ->
-            Role(
-                gym = request.gym,
-                role = request.role,
-                name = request.name,
-                date = request.date,
-            )
+            Role()
         }
         return roleRepository.saveAll(entities)
     }
-    
+
     fun update(request: RoleUpdateRequest): Role? {
         val existing = roleRepository.findById(request.id).orElse(null) ?: return null
-        
-        val updated = existing.copy(
-            gym = request.gym,
-            role = request.role,
-            name = request.name,
-            date = request.date,
-        )
-        return roleRepository.save(updated)
+        return roleRepository.save(existing)
     }
-    
+
     fun delete(entity: Role): Boolean {
         return try {
             roleRepository.delete(entity)
@@ -83,7 +74,7 @@ class RoleService(private val roleRepository: RoleRepository) {
             false
         }
     }
-    
+
     fun deleteById(id: Long): Boolean {
         return try {
             roleRepository.deleteById(id)
@@ -92,7 +83,7 @@ class RoleService(private val roleRepository: RoleRepository) {
             false
         }
     }
-    
+
     fun deleteBatch(entities: List<Role>): Boolean {
         return try {
             roleRepository.deleteAll(entities)

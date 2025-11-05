@@ -4,8 +4,6 @@ import com.gowoobro.gymspring.entity.Token
 import com.gowoobro.gymspring.entity.TokenCreateRequest
 import com.gowoobro.gymspring.entity.TokenUpdateRequest
 import com.gowoobro.gymspring.repository.TokenRepository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -15,66 +13,59 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class TokenService(private val tokenRepository: TokenRepository) {
-    
+
     fun findAll(page: Int = 0, pageSize: Int = 10): Page<Token> {
         val pageable: Pageable = PageRequest.of(page, pageSize)
         return tokenRepository.findAll(pageable)
     }
-    
+
     fun findById(id: Long): Token? {
         return tokenRepository.findById(id).orElse(null)
     }
-    
-    fun findByUser(user: Long): List<Token> {
-        return tokenRepository.findByUser(user)
-    }
-    
-    fun findByTokenContaining(token: String): List<Token> {
-        return tokenRepository.findByTokenContaining(token)
-    }
-    
-    fun findByStatus(status: Int): List<Token> {
-        return tokenRepository.findByStatus(status)
-    }
-    
+
     fun count(): Long {
         return tokenRepository.count()
     }
-    
+
+
+    fun findById(id: String): List<Token> {
+        return tokenRepository.findById(id)
+    }
+
+    fun findByUser(user: String): List<Token> {
+        return tokenRepository.findByUser(user)
+    }
+
+    fun findByToken(token: String): List<Token> {
+        return tokenRepository.findByToken(token)
+    }
+
+    fun findByStatus(status: String): List<Token> {
+        return tokenRepository.findByStatus(status)
+    }
+
+    fun findByDate(date: String): List<Token> {
+        return tokenRepository.findByDate(date)
+    }
+
+
     fun create(request: TokenCreateRequest): Token {
-        val entity = Token(
-            user = request.user,
-            token = request.token,
-            status = request.status,
-            date = request.date,
-        )
+        val entity = Token()
         return tokenRepository.save(entity)
     }
-    
+
     fun createBatch(requests: List<TokenCreateRequest>): List<Token> {
         val entities = requests.map { request ->
-            Token(
-                user = request.user,
-                token = request.token,
-                status = request.status,
-                date = request.date,
-            )
+            Token()
         }
         return tokenRepository.saveAll(entities)
     }
-    
+
     fun update(request: TokenUpdateRequest): Token? {
         val existing = tokenRepository.findById(request.id).orElse(null) ?: return null
-        
-        val updated = existing.copy(
-            user = request.user,
-            token = request.token,
-            status = request.status,
-            date = request.date,
-        )
-        return tokenRepository.save(updated)
+        return tokenRepository.save(existing)
     }
-    
+
     fun delete(entity: Token): Boolean {
         return try {
             tokenRepository.delete(entity)
@@ -83,7 +74,7 @@ class TokenService(private val tokenRepository: TokenRepository) {
             false
         }
     }
-    
+
     fun deleteById(id: Long): Boolean {
         return try {
             tokenRepository.deleteById(id)
@@ -92,7 +83,7 @@ class TokenService(private val tokenRepository: TokenRepository) {
             false
         }
     }
-    
+
     fun deleteBatch(entities: List<Token>): Boolean {
         return try {
             tokenRepository.deleteAll(entities)

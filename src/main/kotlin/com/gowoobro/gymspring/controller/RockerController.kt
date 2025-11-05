@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/rocker")
 class RockerController(private val rockerService: RockerService) {
-    
+
     @GetMapping
     fun getRockers(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class RockerController(private val rockerService: RockerService) {
         val result = rockerService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getRocker(@PathVariable id: Long): ResponseEntity<Rocker> {
         val result = rockerService.findById(id)
@@ -30,19 +30,45 @@ class RockerController(private val rockerService: RockerService) {
             ResponseEntity.notFound().build()
         }
     }
-    
-    @GetMapping("/search/name")
-    fun getRockersByMobileSearchName(@RequestParam name: String): ResponseEntity<List<Rocker>> {
-        val result = rockerService.findByNameContaining(name)
+
+
+    @GetMapping("/search/id")
+    fun getRockerById(@RequestParam id: String): ResponseEntity<List<Rocker>> {
+        val result = rockerService.findById(id)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/group")
+    fun getRockerByGroup(@RequestParam group: String): ResponseEntity<List<Rocker>> {
+        val result = rockerService.findByGroup(group)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/name")
+    fun getRockerByName(@RequestParam name: String): ResponseEntity<List<Rocker>> {
+        val result = rockerService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/available")
+    fun getRockerByAvailable(@RequestParam available: String): ResponseEntity<List<Rocker>> {
+        val result = rockerService.findByAvailable(available)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getRockerByDate(@RequestParam date: String): ResponseEntity<List<Rocker>> {
+        val result = rockerService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = rockerService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createRocker(@RequestBody request: RockerCreateRequest): ResponseEntity<Rocker> {
         return try {
@@ -52,7 +78,7 @@ class RockerController(private val rockerService: RockerService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createRockers(@RequestBody requests: List<RockerCreateRequest>): ResponseEntity<List<Rocker>> {
         return try {
@@ -62,7 +88,7 @@ class RockerController(private val rockerService: RockerService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateRocker(
         @PathVariable id: Long,
@@ -76,13 +102,13 @@ class RockerController(private val rockerService: RockerService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteRocker(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = rockerService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteRockers(@RequestBody entities: List<Rocker>): ResponseEntity<Map<String, Boolean>> {
         val success = rockerService.deleteBatch(entities)

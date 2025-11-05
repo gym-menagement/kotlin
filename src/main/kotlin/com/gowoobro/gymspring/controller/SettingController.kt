@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/setting")
 class SettingController(private val settingService: SettingService) {
-    
+
     @GetMapping
     fun getSettings(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class SettingController(private val settingService: SettingService) {
         val result = settingService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getSetting(@PathVariable id: Long): ResponseEntity<Setting> {
         val result = settingService.findById(id)
@@ -30,49 +30,75 @@ class SettingController(private val settingService: SettingService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
+
+    @GetMapping("/search/id")
+    fun getSettingById(@RequestParam id: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findById(id)
+        return ResponseEntity.ok(result)
+    }
+
     @GetMapping("/search/category")
-    fun getSettingsByMobileSearchCategory(@RequestParam category: String): ResponseEntity<List<Setting>> {
-        val result = settingService.findByCategoryContaining(category)
+    fun getSettingByCategory(@RequestParam category: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByCategory(category)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/search/name")
-    fun getSettingsByMobileSearchName(@RequestParam name: String): ResponseEntity<List<Setting>> {
-        val result = settingService.findByNameContaining(name)
+    fun getSettingByName(@RequestParam name: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByName(name)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/search/key")
-    fun getSettingsByMobileSearchKey(@RequestParam key: String): ResponseEntity<List<Setting>> {
-        val result = settingService.findByKeyContaining(key)
+    fun getSettingByKey(@RequestParam key: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByKey(key)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/search/value")
-    fun getSettingsByMobileSearchValue(@RequestParam value: String): ResponseEntity<List<Setting>> {
-        val result = settingService.findByValueContaining(value)
+    fun getSettingByValue(@RequestParam value: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByValue(value)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/search/remark")
-    fun getSettingsByMobileSearchRemark(@RequestParam remark: String): ResponseEntity<List<Setting>> {
-        val result = settingService.findByRemarkContaining(remark)
+    fun getSettingByRemark(@RequestParam remark: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByRemark(remark)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/type")
+    fun getSettingByType(@RequestParam type: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByType(type)
+        return ResponseEntity.ok(result)
+    }
+
     @GetMapping("/search/data")
-    fun getSettingsByMobileSearchData(@RequestParam data: String): ResponseEntity<List<Setting>> {
-        val result = settingService.findByDataContaining(data)
+    fun getSettingByData(@RequestParam data: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByData(data)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/order")
+    fun getSettingByOrder(@RequestParam order: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByOrder(order)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getSettingByDate(@RequestParam date: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = settingService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createSetting(@RequestBody request: SettingCreateRequest): ResponseEntity<Setting> {
         return try {
@@ -82,7 +108,7 @@ class SettingController(private val settingService: SettingService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createSettings(@RequestBody requests: List<SettingCreateRequest>): ResponseEntity<List<Setting>> {
         return try {
@@ -92,7 +118,7 @@ class SettingController(private val settingService: SettingService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateSetting(
         @PathVariable id: Long,
@@ -106,13 +132,13 @@ class SettingController(private val settingService: SettingService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteSetting(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = settingService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteSettings(@RequestBody entities: List<Setting>): ResponseEntity<Map<String, Boolean>> {
         val success = settingService.deleteBatch(entities)

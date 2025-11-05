@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/gym")
 class GymController(private val gymService: GymService) {
-    
+
     @GetMapping
     fun getGyms(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class GymController(private val gymService: GymService) {
         val result = gymService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getGym(@PathVariable id: Long): ResponseEntity<Gym> {
         val result = gymService.findById(id)
@@ -30,19 +30,33 @@ class GymController(private val gymService: GymService) {
             ResponseEntity.notFound().build()
         }
     }
-    
-    @GetMapping("/search/name")
-    fun getGymsByMobileSearchName(@RequestParam name: String): ResponseEntity<List<Gym>> {
-        val result = gymService.findByNameContaining(name)
+
+
+    @GetMapping("/search/id")
+    fun getGymById(@RequestParam id: String): ResponseEntity<List<Gym>> {
+        val result = gymService.findById(id)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/name")
+    fun getGymByName(@RequestParam name: String): ResponseEntity<List<Gym>> {
+        val result = gymService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getGymByDate(@RequestParam date: String): ResponseEntity<List<Gym>> {
+        val result = gymService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = gymService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createGym(@RequestBody request: GymCreateRequest): ResponseEntity<Gym> {
         return try {
@@ -52,7 +66,7 @@ class GymController(private val gymService: GymService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createGyms(@RequestBody requests: List<GymCreateRequest>): ResponseEntity<List<Gym>> {
         return try {
@@ -62,7 +76,7 @@ class GymController(private val gymService: GymService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateGym(
         @PathVariable id: Long,
@@ -76,13 +90,13 @@ class GymController(private val gymService: GymService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteGym(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = gymService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteGyms(@RequestBody entities: List<Gym>): ResponseEntity<Map<String, Boolean>> {
         val success = gymService.deleteBatch(entities)

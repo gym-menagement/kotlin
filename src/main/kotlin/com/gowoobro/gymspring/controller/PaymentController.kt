@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/payment")
 class PaymentController(private val paymentService: PaymentService) {
-    
+
     @GetMapping
     fun getPayments(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class PaymentController(private val paymentService: PaymentService) {
         val result = paymentService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getPayment(@PathVariable id: Long): ResponseEntity<Payment> {
         val result = paymentService.findById(id)
@@ -30,13 +30,51 @@ class PaymentController(private val paymentService: PaymentService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
+
+    @GetMapping("/search/id")
+    fun getPaymentById(@RequestParam id: String): ResponseEntity<List<Payment>> {
+        val result = paymentService.findById(id)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/gym")
+    fun getPaymentByGym(@RequestParam gym: String): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/order")
+    fun getPaymentByOrder(@RequestParam order: String): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByOrder(order)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/membership")
+    fun getPaymentByMembership(@RequestParam membership: String): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByMembership(membership)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/cost")
+    fun getPaymentByCost(@RequestParam cost: String): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByCost(cost)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getPaymentByDate(@RequestParam date: String): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = paymentService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createPayment(@RequestBody request: PaymentCreateRequest): ResponseEntity<Payment> {
         return try {
@@ -46,7 +84,7 @@ class PaymentController(private val paymentService: PaymentService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createPayments(@RequestBody requests: List<PaymentCreateRequest>): ResponseEntity<List<Payment>> {
         return try {
@@ -56,7 +94,7 @@ class PaymentController(private val paymentService: PaymentService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updatePayment(
         @PathVariable id: Long,
@@ -70,13 +108,13 @@ class PaymentController(private val paymentService: PaymentService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deletePayment(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = paymentService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deletePayments(@RequestBody entities: List<Payment>): ResponseEntity<Map<String, Boolean>> {
         val success = paymentService.deleteBatch(entities)

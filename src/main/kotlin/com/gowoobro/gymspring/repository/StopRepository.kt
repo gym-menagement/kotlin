@@ -1,19 +1,27 @@
 package com.gowoobro.gymspring.repository
 
 import com.gowoobro.gymspring.entity.Stop
+import com.gowoobro.gymspring.entity.StopCreateRequest
+import com.gowoobro.gymspring.entity.StopUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
 
 @Repository
 interface StopRepository : JpaRepository<Stop, Long> {
-    
-    fun findByUsehelth(usehelth: Long): List<Stop>
-    
-    fun findByCount(count: Int): List<Stop>
-    
     override fun findAll(pageable: Pageable): Page<Stop>
+
+    override fun findById(id: String): List<Stop>
+
+    override fun findByUsehelth(usehelth: String): List<Stop>
+
+    override fun findByStartday(startday: String): List<Stop>
+
+    override fun findByEndday(endday: String): List<Stop>
+
+    override fun findByCount(count: String): List<Stop>
+
+    override fun findByDate(date: String): List<Stop>
 }

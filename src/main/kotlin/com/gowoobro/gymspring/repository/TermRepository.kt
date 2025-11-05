@@ -1,23 +1,27 @@
 package com.gowoobro.gymspring.repository
 
 import com.gowoobro.gymspring.entity.Term
+import com.gowoobro.gymspring.entity.TermCreateRequest
+import com.gowoobro.gymspring.entity.TermUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
 
 @Repository
 interface TermRepository : JpaRepository<Term, Long> {
-    
-    fun findByGym(gym: Long): List<Term>
-    
-    fun findByDaytype(daytype: Long): List<Term>
-    
-    fun findByNameContaining(name: String): List<Term>
-    
-    fun findByTerm(term: Int): List<Term>
-    
     override fun findAll(pageable: Pageable): Page<Term>
+
+    override fun findById(id: String): List<Term>
+
+    override fun findByGym(gym: String): List<Term>
+
+    override fun findByDaytype(daytype: String): List<Term>
+
+    override fun findByName(name: String): List<Term>
+
+    override fun findByTerm(term: String): List<Term>
+
+    override fun findByDate(date: String): List<Term>
 }

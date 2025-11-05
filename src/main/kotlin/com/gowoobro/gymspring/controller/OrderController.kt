@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/order")
 class OrderController(private val orderService: OrderService) {
-    
+
     @GetMapping
     fun getOrders(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class OrderController(private val orderService: OrderService) {
         val result = orderService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getOrder(@PathVariable id: Long): ResponseEntity<Order> {
         val result = orderService.findById(id)
@@ -30,13 +30,33 @@ class OrderController(private val orderService: OrderService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
+
+    @GetMapping("/search/id")
+    fun getOrderById(@RequestParam id: String): ResponseEntity<List<Order>> {
+        val result = orderService.findById(id)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/membership")
+    fun getOrderByMembership(@RequestParam membership: String): ResponseEntity<List<Order>> {
+        val result = orderService.findByMembership(membership)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getOrderByDate(@RequestParam date: String): ResponseEntity<List<Order>> {
+        val result = orderService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = orderService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createOrder(@RequestBody request: OrderCreateRequest): ResponseEntity<Order> {
         return try {
@@ -46,7 +66,7 @@ class OrderController(private val orderService: OrderService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createOrders(@RequestBody requests: List<OrderCreateRequest>): ResponseEntity<List<Order>> {
         return try {
@@ -56,7 +76,7 @@ class OrderController(private val orderService: OrderService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateOrder(
         @PathVariable id: Long,
@@ -70,13 +90,13 @@ class OrderController(private val orderService: OrderService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteOrder(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = orderService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteOrders(@RequestBody entities: List<Order>): ResponseEntity<Map<String, Boolean>> {
         val success = orderService.deleteBatch(entities)

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/paymentform")
 class PaymentformController(private val paymentformService: PaymentformService) {
-    
+
     @GetMapping
     fun getPaymentforms(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class PaymentformController(private val paymentformService: PaymentformService) 
         val result = paymentformService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getPaymentform(@PathVariable id: Long): ResponseEntity<Paymentform> {
         val result = paymentformService.findById(id)
@@ -30,13 +30,51 @@ class PaymentformController(private val paymentformService: PaymentformService) 
             ResponseEntity.notFound().build()
         }
     }
-    
+
+
+    @GetMapping("/search/id")
+    fun getPaymentformById(@RequestParam id: String): ResponseEntity<List<Paymentform>> {
+        val result = paymentformService.findById(id)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/gym")
+    fun getPaymentformByGym(@RequestParam gym: String): ResponseEntity<List<Paymentform>> {
+        val result = paymentformService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/payment")
+    fun getPaymentformByPayment(@RequestParam payment: String): ResponseEntity<List<Paymentform>> {
+        val result = paymentformService.findByPayment(payment)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/type")
+    fun getPaymentformByType(@RequestParam type: String): ResponseEntity<List<Paymentform>> {
+        val result = paymentformService.findByType(type)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/cost")
+    fun getPaymentformByCost(@RequestParam cost: String): ResponseEntity<List<Paymentform>> {
+        val result = paymentformService.findByCost(cost)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getPaymentformByDate(@RequestParam date: String): ResponseEntity<List<Paymentform>> {
+        val result = paymentformService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = paymentformService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createPaymentform(@RequestBody request: PaymentformCreateRequest): ResponseEntity<Paymentform> {
         return try {
@@ -46,7 +84,7 @@ class PaymentformController(private val paymentformService: PaymentformService) 
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createPaymentforms(@RequestBody requests: List<PaymentformCreateRequest>): ResponseEntity<List<Paymentform>> {
         return try {
@@ -56,7 +94,7 @@ class PaymentformController(private val paymentformService: PaymentformService) 
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updatePaymentform(
         @PathVariable id: Long,
@@ -70,13 +108,13 @@ class PaymentformController(private val paymentformService: PaymentformService) 
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deletePaymentform(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = paymentformService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deletePaymentforms(@RequestBody entities: List<Paymentform>): ResponseEntity<Map<String, Boolean>> {
         val success = paymentformService.deleteBatch(entities)

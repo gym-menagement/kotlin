@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/role")
 class RoleController(private val roleService: RoleService) {
-    
+
     @GetMapping
     fun getRoles(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class RoleController(private val roleService: RoleService) {
         val result = roleService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getRole(@PathVariable id: Long): ResponseEntity<Role> {
         val result = roleService.findById(id)
@@ -30,19 +30,45 @@ class RoleController(private val roleService: RoleService) {
             ResponseEntity.notFound().build()
         }
     }
-    
-    @GetMapping("/search/name")
-    fun getRolesByMobileSearchName(@RequestParam name: String): ResponseEntity<List<Role>> {
-        val result = roleService.findByNameContaining(name)
+
+
+    @GetMapping("/search/id")
+    fun getRoleById(@RequestParam id: String): ResponseEntity<List<Role>> {
+        val result = roleService.findById(id)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/gym")
+    fun getRoleByGym(@RequestParam gym: String): ResponseEntity<List<Role>> {
+        val result = roleService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/role")
+    fun getRoleByRole(@RequestParam role: String): ResponseEntity<List<Role>> {
+        val result = roleService.findByRole(role)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/name")
+    fun getRoleByName(@RequestParam name: String): ResponseEntity<List<Role>> {
+        val result = roleService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getRoleByDate(@RequestParam date: String): ResponseEntity<List<Role>> {
+        val result = roleService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = roleService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createRole(@RequestBody request: RoleCreateRequest): ResponseEntity<Role> {
         return try {
@@ -52,7 +78,7 @@ class RoleController(private val roleService: RoleService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createRoles(@RequestBody requests: List<RoleCreateRequest>): ResponseEntity<List<Role>> {
         return try {
@@ -62,7 +88,7 @@ class RoleController(private val roleService: RoleService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateRole(
         @PathVariable id: Long,
@@ -76,13 +102,13 @@ class RoleController(private val roleService: RoleService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteRole(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = roleService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteRoles(@RequestBody entities: List<Role>): ResponseEntity<Map<String, Boolean>> {
         val success = roleService.deleteBatch(entities)

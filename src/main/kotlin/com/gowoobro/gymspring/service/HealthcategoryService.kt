@@ -4,8 +4,6 @@ import com.gowoobro.gymspring.entity.Healthcategory
 import com.gowoobro.gymspring.entity.HealthcategoryCreateRequest
 import com.gowoobro.gymspring.entity.HealthcategoryUpdateRequest
 import com.gowoobro.gymspring.repository.HealthcategoryRepository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -15,59 +13,55 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class HealthcategoryService(private val healthcategoryRepository: HealthcategoryRepository) {
-    
+
     fun findAll(page: Int = 0, pageSize: Int = 10): Page<Healthcategory> {
         val pageable: Pageable = PageRequest.of(page, pageSize)
         return healthcategoryRepository.findAll(pageable)
     }
-    
+
     fun findById(id: Long): Healthcategory? {
         return healthcategoryRepository.findById(id).orElse(null)
     }
-    
-    fun findByGym(gym: Long): List<Healthcategory> {
-        return healthcategoryRepository.findByGym(gym)
-    }
-    
-    fun findByNameContaining(name: String): List<Healthcategory> {
-        return healthcategoryRepository.findByNameContaining(name)
-    }
-    
+
     fun count(): Long {
         return healthcategoryRepository.count()
     }
-    
+
+
+    fun findById(id: String): List<Healthcategory> {
+        return healthcategoryRepository.findById(id)
+    }
+
+    fun findByGym(gym: String): List<Healthcategory> {
+        return healthcategoryRepository.findByGym(gym)
+    }
+
+    fun findByName(name: String): List<Healthcategory> {
+        return healthcategoryRepository.findByName(name)
+    }
+
+    fun findByDate(date: String): List<Healthcategory> {
+        return healthcategoryRepository.findByDate(date)
+    }
+
+
     fun create(request: HealthcategoryCreateRequest): Healthcategory {
-        val entity = Healthcategory(
-            gym = request.gym,
-            name = request.name,
-            date = request.date,
-        )
+        val entity = Healthcategory()
         return healthcategoryRepository.save(entity)
     }
-    
+
     fun createBatch(requests: List<HealthcategoryCreateRequest>): List<Healthcategory> {
         val entities = requests.map { request ->
-            Healthcategory(
-                gym = request.gym,
-                name = request.name,
-                date = request.date,
-            )
+            Healthcategory()
         }
         return healthcategoryRepository.saveAll(entities)
     }
-    
+
     fun update(request: HealthcategoryUpdateRequest): Healthcategory? {
         val existing = healthcategoryRepository.findById(request.id).orElse(null) ?: return null
-        
-        val updated = existing.copy(
-            gym = request.gym,
-            name = request.name,
-            date = request.date,
-        )
-        return healthcategoryRepository.save(updated)
+        return healthcategoryRepository.save(existing)
     }
-    
+
     fun delete(entity: Healthcategory): Boolean {
         return try {
             healthcategoryRepository.delete(entity)
@@ -76,7 +70,7 @@ class HealthcategoryService(private val healthcategoryRepository: Healthcategory
             false
         }
     }
-    
+
     fun deleteById(id: Long): Boolean {
         return try {
             healthcategoryRepository.deleteById(id)
@@ -85,7 +79,7 @@ class HealthcategoryService(private val healthcategoryRepository: Healthcategory
             false
         }
     }
-    
+
     fun deleteBatch(entities: List<Healthcategory>): Boolean {
         return try {
             healthcategoryRepository.deleteAll(entities)

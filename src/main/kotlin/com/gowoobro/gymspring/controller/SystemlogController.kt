@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/systemlog")
 class SystemlogController(private val systemlogService: SystemlogService) {
-    
+
     @GetMapping
     fun getSystemlogs(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class SystemlogController(private val systemlogService: SystemlogService) {
         val result = systemlogService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getSystemlog(@PathVariable id: Long): ResponseEntity<Systemlog> {
         val result = systemlogService.findById(id)
@@ -30,19 +30,45 @@ class SystemlogController(private val systemlogService: SystemlogService) {
             ResponseEntity.notFound().build()
         }
     }
-    
-    @GetMapping("/search/content")
-    fun getSystemlogsByMobileSearchContent(@RequestParam content: String): ResponseEntity<List<Systemlog>> {
-        val result = systemlogService.findByContentContaining(content)
+
+
+    @GetMapping("/search/id")
+    fun getSystemlogById(@RequestParam id: String): ResponseEntity<List<Systemlog>> {
+        val result = systemlogService.findById(id)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/type")
+    fun getSystemlogByType(@RequestParam type: String): ResponseEntity<List<Systemlog>> {
+        val result = systemlogService.findByType(type)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/content")
+    fun getSystemlogByContent(@RequestParam content: String): ResponseEntity<List<Systemlog>> {
+        val result = systemlogService.findByContent(content)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/result")
+    fun getSystemlogByResult(@RequestParam result: String): ResponseEntity<List<Systemlog>> {
+        val result = systemlogService.findByResult(result)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getSystemlogByDate(@RequestParam date: String): ResponseEntity<List<Systemlog>> {
+        val result = systemlogService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = systemlogService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createSystemlog(@RequestBody request: SystemlogCreateRequest): ResponseEntity<Systemlog> {
         return try {
@@ -52,7 +78,7 @@ class SystemlogController(private val systemlogService: SystemlogService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createSystemlogs(@RequestBody requests: List<SystemlogCreateRequest>): ResponseEntity<List<Systemlog>> {
         return try {
@@ -62,7 +88,7 @@ class SystemlogController(private val systemlogService: SystemlogService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateSystemlog(
         @PathVariable id: Long,
@@ -76,13 +102,13 @@ class SystemlogController(private val systemlogService: SystemlogService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteSystemlog(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = systemlogService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteSystemlogs(@RequestBody entities: List<Systemlog>): ResponseEntity<Map<String, Boolean>> {
         val success = systemlogService.deleteBatch(entities)

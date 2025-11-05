@@ -1,25 +1,29 @@
 package com.gowoobro.gymspring.repository
 
 import com.gowoobro.gymspring.entity.Alarm
+import com.gowoobro.gymspring.entity.AlarmCreateRequest
+import com.gowoobro.gymspring.entity.AlarmUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
 
 @Repository
 interface AlarmRepository : JpaRepository<Alarm, Long> {
-    
-    fun findByTitleContaining(title: String): List<Alarm>
-    
-    fun findByContentContaining(content: String): List<Alarm>
-    
-    fun findByType(type: Type): List<Alarm>
-    
-    fun findByStatus(status: Status): List<Alarm>
-    
-    fun findByUser(user: Long): List<Alarm>
-    
     override fun findAll(pageable: Pageable): Page<Alarm>
+
+    override fun findById(id: String): List<Alarm>
+
+    override fun findByTitle(title: String): List<Alarm>
+
+    override fun findByContent(content: String): List<Alarm>
+
+    override fun findByType(type: String): List<Alarm>
+
+    override fun findByStatus(status: String): List<Alarm>
+
+    override fun findByUser(user: String): List<Alarm>
+
+    override fun findByDate(date: String): List<Alarm>
 }

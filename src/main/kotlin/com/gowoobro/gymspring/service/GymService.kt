@@ -4,8 +4,6 @@ import com.gowoobro.gymspring.entity.Gym
 import com.gowoobro.gymspring.entity.GymCreateRequest
 import com.gowoobro.gymspring.entity.GymUpdateRequest
 import com.gowoobro.gymspring.repository.GymRepository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -15,52 +13,51 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class GymService(private val gymRepository: GymRepository) {
-    
+
     fun findAll(page: Int = 0, pageSize: Int = 10): Page<Gym> {
         val pageable: Pageable = PageRequest.of(page, pageSize)
         return gymRepository.findAll(pageable)
     }
-    
+
     fun findById(id: Long): Gym? {
         return gymRepository.findById(id).orElse(null)
     }
-    
-    fun findByNameContaining(name: String): List<Gym> {
-        return gymRepository.findByNameContaining(name)
-    }
-    
+
     fun count(): Long {
         return gymRepository.count()
     }
-    
+
+
+    fun findById(id: String): List<Gym> {
+        return gymRepository.findById(id)
+    }
+
+    fun findByName(name: String): List<Gym> {
+        return gymRepository.findByName(name)
+    }
+
+    fun findByDate(date: String): List<Gym> {
+        return gymRepository.findByDate(date)
+    }
+
+
     fun create(request: GymCreateRequest): Gym {
-        val entity = Gym(
-            name = request.name,
-            date = request.date,
-        )
+        val entity = Gym()
         return gymRepository.save(entity)
     }
-    
+
     fun createBatch(requests: List<GymCreateRequest>): List<Gym> {
         val entities = requests.map { request ->
-            Gym(
-                name = request.name,
-                date = request.date,
-            )
+            Gym()
         }
         return gymRepository.saveAll(entities)
     }
-    
+
     fun update(request: GymUpdateRequest): Gym? {
         val existing = gymRepository.findById(request.id).orElse(null) ?: return null
-        
-        val updated = existing.copy(
-            name = request.name,
-            date = request.date,
-        )
-        return gymRepository.save(updated)
+        return gymRepository.save(existing)
     }
-    
+
     fun delete(entity: Gym): Boolean {
         return try {
             gymRepository.delete(entity)
@@ -69,7 +66,7 @@ class GymService(private val gymRepository: GymRepository) {
             false
         }
     }
-    
+
     fun deleteById(id: Long): Boolean {
         return try {
             gymRepository.deleteById(id)
@@ -78,7 +75,7 @@ class GymService(private val gymRepository: GymRepository) {
             false
         }
     }
-    
+
     fun deleteBatch(entities: List<Gym>): Boolean {
         return try {
             gymRepository.deleteAll(entities)

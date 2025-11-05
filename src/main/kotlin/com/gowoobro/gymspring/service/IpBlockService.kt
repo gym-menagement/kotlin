@@ -4,10 +4,6 @@ import com.gowoobro.gymspring.entity.Ipblock
 import com.gowoobro.gymspring.entity.IpblockCreateRequest
 import com.gowoobro.gymspring.entity.IpblockUpdateRequest
 import com.gowoobro.gymspring.repository.IpblockRepository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
-import com.gowoobro.gymspring.entity.Policy
-import com.gowoobro.gymspring.entity.Use
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -17,80 +13,67 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class IpblockService(private val ipblockRepository: IpblockRepository) {
-    
+
     fun findAll(page: Int = 0, pageSize: Int = 10): Page<Ipblock> {
         val pageable: Pageable = PageRequest.of(page, pageSize)
         return ipblockRepository.findAll(pageable)
     }
-    
+
     fun findById(id: Long): Ipblock? {
         return ipblockRepository.findById(id).orElse(null)
     }
-    
-    fun findByAddressContaining(address: String): List<Ipblock> {
-        return ipblockRepository.findByAddressContaining(address)
-    }
-    
-    fun findByType(type: Type): List<Ipblock> {
-        return ipblockRepository.findByType(type)
-    }
-    
-    fun findByPolicy(policy: Policy): List<Ipblock> {
-        return ipblockRepository.findByPolicy(policy)
-    }
-    
-    fun findByUse(use: Use): List<Ipblock> {
-        return ipblockRepository.findByUse(use)
-    }
-    
-    fun findByOrder(order: Int): List<Ipblock> {
-        return ipblockRepository.findByOrder(order)
-    }
-    
+
     fun count(): Long {
         return ipblockRepository.count()
     }
-    
+
+
+    fun findById(id: String): List<Ipblock> {
+        return ipblockRepository.findById(id)
+    }
+
+    fun findByAddress(address: String): List<Ipblock> {
+        return ipblockRepository.findByAddress(address)
+    }
+
+    fun findByType(type: String): List<Ipblock> {
+        return ipblockRepository.findByType(type)
+    }
+
+    fun findByPolicy(policy: String): List<Ipblock> {
+        return ipblockRepository.findByPolicy(policy)
+    }
+
+    fun findByUse(use: String): List<Ipblock> {
+        return ipblockRepository.findByUse(use)
+    }
+
+    fun findByOrder(order: String): List<Ipblock> {
+        return ipblockRepository.findByOrder(order)
+    }
+
+    fun findByDate(date: String): List<Ipblock> {
+        return ipblockRepository.findByDate(date)
+    }
+
+
     fun create(request: IpblockCreateRequest): Ipblock {
-        val entity = Ipblock(
-            address = request.address,
-            type = request.type,
-            policy = request.policy,
-            use = request.use,
-            order = request.order,
-            date = request.date,
-        )
+        val entity = Ipblock()
         return ipblockRepository.save(entity)
     }
-    
+
     fun createBatch(requests: List<IpblockCreateRequest>): List<Ipblock> {
         val entities = requests.map { request ->
-            Ipblock(
-                address = request.address,
-                type = request.type,
-                policy = request.policy,
-                use = request.use,
-                order = request.order,
-                date = request.date,
-            )
+            Ipblock()
         }
         return ipblockRepository.saveAll(entities)
     }
-    
+
     fun update(request: IpblockUpdateRequest): Ipblock? {
         val existing = ipblockRepository.findById(request.id).orElse(null) ?: return null
-        
-        val updated = existing.copy(
-            address = request.address,
-            type = request.type,
-            policy = request.policy,
-            use = request.use,
-            order = request.order,
-            date = request.date,
-        )
-        return ipblockRepository.save(updated)
+        return ipblockRepository.save(existing)
     }
-    
+
     fun delete(entity: Ipblock): Boolean {
         return try {
             ipblockRepository.delete(entity)
@@ -99,7 +82,7 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
             false
         }
     }
-    
+
     fun deleteById(id: Long): Boolean {
         return try {
             ipblockRepository.deleteById(id)
@@ -108,7 +91,7 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
             false
         }
     }
-    
+
     fun deleteBatch(entities: List<Ipblock>): Boolean {
         return try {
             ipblockRepository.deleteAll(entities)

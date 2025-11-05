@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/discount")
 class DiscountController(private val discountService: DiscountService) {
-    
+
     @GetMapping
     fun getDiscounts(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class DiscountController(private val discountService: DiscountService) {
         val result = discountService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getDiscount(@PathVariable id: Long): ResponseEntity<Discount> {
         val result = discountService.findById(id)
@@ -30,19 +30,39 @@ class DiscountController(private val discountService: DiscountService) {
             ResponseEntity.notFound().build()
         }
     }
-    
-    @GetMapping("/search/name")
-    fun getDiscountsByMobileSearchName(@RequestParam name: String): ResponseEntity<List<Discount>> {
-        val result = discountService.findByNameContaining(name)
+
+
+    @GetMapping("/search/id")
+    fun getDiscountById(@RequestParam id: String): ResponseEntity<List<Discount>> {
+        val result = discountService.findById(id)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/name")
+    fun getDiscountByName(@RequestParam name: String): ResponseEntity<List<Discount>> {
+        val result = discountService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/discount")
+    fun getDiscountByDiscount(@RequestParam discount: String): ResponseEntity<List<Discount>> {
+        val result = discountService.findByDiscount(discount)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getDiscountByDate(@RequestParam date: String): ResponseEntity<List<Discount>> {
+        val result = discountService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = discountService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createDiscount(@RequestBody request: DiscountCreateRequest): ResponseEntity<Discount> {
         return try {
@@ -52,7 +72,7 @@ class DiscountController(private val discountService: DiscountService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createDiscounts(@RequestBody requests: List<DiscountCreateRequest>): ResponseEntity<List<Discount>> {
         return try {
@@ -62,7 +82,7 @@ class DiscountController(private val discountService: DiscountService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateDiscount(
         @PathVariable id: Long,
@@ -76,13 +96,13 @@ class DiscountController(private val discountService: DiscountService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteDiscount(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = discountService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteDiscounts(@RequestBody entities: List<Discount>): ResponseEntity<Map<String, Boolean>> {
         val success = discountService.deleteBatch(entities)

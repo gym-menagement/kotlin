@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/ipblock")
 class IpblockController(private val ipblockService: IpblockService) {
-    
+
     @GetMapping
     fun getIpblocks(
         @RequestParam(defaultValue = "0") page: Int,
@@ -20,7 +20,7 @@ class IpblockController(private val ipblockService: IpblockService) {
         val result = ipblockService.findAll(page, pageSize)
         return ResponseEntity.ok(result)
     }
-    
+
     @GetMapping("/{id}")
     fun getIpblock(@PathVariable id: Long): ResponseEntity<Ipblock> {
         val result = ipblockService.findById(id)
@@ -30,19 +30,57 @@ class IpblockController(private val ipblockService: IpblockService) {
             ResponseEntity.notFound().build()
         }
     }
-    
-    @GetMapping("/search/address")
-    fun getIpblocksByMobileSearchAddress(@RequestParam address: String): ResponseEntity<List<Ipblock>> {
-        val result = ipblockService.findByAddressContaining(address)
+
+
+    @GetMapping("/search/id")
+    fun getIpblockById(@RequestParam id: String): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findById(id)
         return ResponseEntity.ok(result)
     }
-    
+
+    @GetMapping("/search/address")
+    fun getIpblockByAddress(@RequestParam address: String): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByAddress(address)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/type")
+    fun getIpblockByType(@RequestParam type: String): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByType(type)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/policy")
+    fun getIpblockByPolicy(@RequestParam policy: String): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByPolicy(policy)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/use")
+    fun getIpblockByUse(@RequestParam use: String): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByUse(use)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/order")
+    fun getIpblockByOrder(@RequestParam order: String): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByOrder(order)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getIpblockByDate(@RequestParam date: String): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
+
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = ipblockService.count()
         return ResponseEntity.ok(mapOf("count" to count))
     }
-    
+
     @PostMapping
     fun createIpblock(@RequestBody request: IpblockCreateRequest): ResponseEntity<Ipblock> {
         return try {
@@ -52,7 +90,7 @@ class IpblockController(private val ipblockService: IpblockService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PostMapping("/batch")
     fun createIpblocks(@RequestBody requests: List<IpblockCreateRequest>): ResponseEntity<List<Ipblock>> {
         return try {
@@ -62,7 +100,7 @@ class IpblockController(private val ipblockService: IpblockService) {
             ResponseEntity.badRequest().build()
         }
     }
-    
+
     @PutMapping("/{id}")
     fun updateIpblock(
         @PathVariable id: Long,
@@ -76,13 +114,13 @@ class IpblockController(private val ipblockService: IpblockService) {
             ResponseEntity.notFound().build()
         }
     }
-    
+
     @DeleteMapping("/{id}")
     fun deleteIpblock(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
         val success = ipblockService.deleteById(id)
         return ResponseEntity.ok(mapOf("success" to success))
     }
-    
+
     @DeleteMapping("/batch")
     fun deleteIpblocks(@RequestBody entities: List<Ipblock>): ResponseEntity<Map<String, Boolean>> {
         val success = ipblockService.deleteBatch(entities)

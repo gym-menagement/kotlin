@@ -4,8 +4,6 @@ import com.gowoobro.gymspring.entity.Order
 import com.gowoobro.gymspring.entity.OrderCreateRequest
 import com.gowoobro.gymspring.entity.OrderUpdateRequest
 import com.gowoobro.gymspring.repository.OrderRepository
-import com.gowoobro.gymspring.entity.Type
-import com.gowoobro.gymspring.entity.Status
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -15,52 +13,51 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class OrderService(private val orderRepository: OrderRepository) {
-    
+
     fun findAll(page: Int = 0, pageSize: Int = 10): Page<Order> {
         val pageable: Pageable = PageRequest.of(page, pageSize)
         return orderRepository.findAll(pageable)
     }
-    
+
     fun findById(id: Long): Order? {
         return orderRepository.findById(id).orElse(null)
     }
-    
-    fun findByMembership(membership: Long): List<Order> {
-        return orderRepository.findByMembership(membership)
-    }
-    
+
     fun count(): Long {
         return orderRepository.count()
     }
-    
+
+
+    fun findById(id: String): List<Order> {
+        return orderRepository.findById(id)
+    }
+
+    fun findByMembership(membership: String): List<Order> {
+        return orderRepository.findByMembership(membership)
+    }
+
+    fun findByDate(date: String): List<Order> {
+        return orderRepository.findByDate(date)
+    }
+
+
     fun create(request: OrderCreateRequest): Order {
-        val entity = Order(
-            membership = request.membership,
-            date = request.date,
-        )
+        val entity = Order()
         return orderRepository.save(entity)
     }
-    
+
     fun createBatch(requests: List<OrderCreateRequest>): List<Order> {
         val entities = requests.map { request ->
-            Order(
-                membership = request.membership,
-                date = request.date,
-            )
+            Order()
         }
         return orderRepository.saveAll(entities)
     }
-    
+
     fun update(request: OrderUpdateRequest): Order? {
         val existing = orderRepository.findById(request.id).orElse(null) ?: return null
-        
-        val updated = existing.copy(
-            membership = request.membership,
-            date = request.date,
-        )
-        return orderRepository.save(updated)
+        return orderRepository.save(existing)
     }
-    
+
     fun delete(entity: Order): Boolean {
         return try {
             orderRepository.delete(entity)
@@ -69,7 +66,7 @@ class OrderService(private val orderRepository: OrderRepository) {
             false
         }
     }
-    
+
     fun deleteById(id: Long): Boolean {
         return try {
             orderRepository.deleteById(id)
@@ -78,7 +75,7 @@ class OrderService(private val orderRepository: OrderRepository) {
             false
         }
     }
-    
+
     fun deleteBatch(entities: List<Order>): Boolean {
         return try {
             orderRepository.deleteAll(entities)
