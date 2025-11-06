@@ -13,11 +13,6 @@ import org.springframework.stereotype.Repository
 interface DiscountRepository : JpaRepository<Discount, Long> {
     override fun findAll(pageable: Pageable): Page<Discount>
 
-    override fun findById(id: String): List<Discount>
 
-    override fun findByName(name: String): List<Discount>
 
-    override fun findByDiscount(discount: String): List<Discount>
-
-    override fun findByDate(date: String): List<Discount>
 }

@@ -32,35 +32,10 @@ class TokenController(private val tokenService: TokenService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getTokenById(@RequestParam id: String): ResponseEntity<List<Token>> {
-        val result = tokenService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/user")
-    fun getTokenByUser(@RequestParam user: String): ResponseEntity<List<Token>> {
-        val result = tokenService.findByUser(user)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/token")
-    fun getTokenByToken(@RequestParam token: String): ResponseEntity<List<Token>> {
-        val result = tokenService.findByToken(token)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/status")
-    fun getTokenByStatus(@RequestParam status: String): ResponseEntity<List<Token>> {
-        val result = tokenService.findByStatus(status)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getTokenByDate(@RequestParam date: String): ResponseEntity<List<Token>> {
-        val result = tokenService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

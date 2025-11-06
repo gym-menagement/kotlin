@@ -28,21 +28,9 @@ class RockergroupService(private val rockergroupRepository: RockergroupRepositor
     }
 
 
-    fun findById(id: String): List<Rockergroup> {
-        return rockergroupRepository.findById(id)
-    }
 
-    fun findByGym(gym: String): List<Rockergroup> {
-        return rockergroupRepository.findByGym(gym)
-    }
 
-    fun findByName(name: String): List<Rockergroup> {
-        return rockergroupRepository.findByName(name)
-    }
 
-    fun findByDate(date: String): List<Rockergroup> {
-        return rockergroupRepository.findByDate(date)
-    }
 
 
     fun create(request: RockergroupCreateRequest): Rockergroup {

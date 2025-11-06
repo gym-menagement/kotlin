@@ -13,13 +13,7 @@ import org.springframework.stereotype.Repository
 interface LoginlogRepository : JpaRepository<Loginlog, Long> {
     override fun findAll(pageable: Pageable): Page<Loginlog>
 
-    override fun findById(id: String): List<Loginlog>
 
-    override fun findByIp(ip: String): List<Loginlog>
 
-    override fun findByIpvalue(ipvalue: String): List<Loginlog>
 
-    override fun findByUser(user: String): List<Loginlog>
-
-    override fun findByDate(date: String): List<Loginlog>
 }

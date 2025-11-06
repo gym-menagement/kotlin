@@ -28,29 +28,11 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
     }
 
 
-    fun findById(id: String): List<Payment> {
-        return paymentRepository.findById(id)
-    }
 
-    fun findByGym(gym: String): List<Payment> {
-        return paymentRepository.findByGym(gym)
-    }
 
-    fun findByOrder(order: String): List<Payment> {
-        return paymentRepository.findByOrder(order)
-    }
 
-    fun findByMembership(membership: String): List<Payment> {
-        return paymentRepository.findByMembership(membership)
-    }
 
-    fun findByCost(cost: String): List<Payment> {
-        return paymentRepository.findByCost(cost)
-    }
 
-    fun findByDate(date: String): List<Payment> {
-        return paymentRepository.findByDate(date)
-    }
 
 
     fun create(request: PaymentCreateRequest): Payment {

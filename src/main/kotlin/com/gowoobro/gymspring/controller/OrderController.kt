@@ -32,23 +32,8 @@ class OrderController(private val orderService: OrderService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getOrderById(@RequestParam id: String): ResponseEntity<List<Order>> {
-        val result = orderService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/membership")
-    fun getOrderByMembership(@RequestParam membership: String): ResponseEntity<List<Order>> {
-        val result = orderService.findByMembership(membership)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getOrderByDate(@RequestParam date: String): ResponseEntity<List<Order>> {
-        val result = orderService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

@@ -28,25 +28,10 @@ class RoleService(private val roleRepository: RoleRepository) {
     }
 
 
-    fun findById(id: String): List<Role> {
-        return roleRepository.findById(id)
-    }
 
-    fun findByGym(gym: String): List<Role> {
-        return roleRepository.findByGym(gym)
-    }
 
-    fun findByRole(role: String): List<Role> {
-        return roleRepository.findByRole(role)
-    }
 
-    fun findByName(name: String): List<Role> {
-        return roleRepository.findByName(name)
-    }
 
-    fun findByDate(date: String): List<Role> {
-        return roleRepository.findByDate(date)
-    }
 
 
     fun create(request: RoleCreateRequest): Role {

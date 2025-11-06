@@ -32,29 +32,9 @@ class DaytypeController(private val daytypeService: DaytypeService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getDaytypeById(@RequestParam id: String): ResponseEntity<List<Daytype>> {
-        val result = daytypeService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/gym")
-    fun getDaytypeByGym(@RequestParam gym: String): ResponseEntity<List<Daytype>> {
-        val result = daytypeService.findByGym(gym)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/name")
-    fun getDaytypeByName(@RequestParam name: String): ResponseEntity<List<Daytype>> {
-        val result = daytypeService.findByName(name)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getDaytypeByDate(@RequestParam date: String): ResponseEntity<List<Daytype>> {
-        val result = daytypeService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

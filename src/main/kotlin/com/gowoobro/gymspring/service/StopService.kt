@@ -28,29 +28,11 @@ class StopService(private val stopRepository: StopRepository) {
     }
 
 
-    fun findById(id: String): List<Stop> {
-        return stopRepository.findById(id)
-    }
 
-    fun findByUsehelth(usehelth: String): List<Stop> {
-        return stopRepository.findByUsehelth(usehelth)
-    }
 
-    fun findByStartday(startday: String): List<Stop> {
-        return stopRepository.findByStartday(startday)
-    }
 
-    fun findByEndday(endday: String): List<Stop> {
-        return stopRepository.findByEndday(endday)
-    }
 
-    fun findByCount(count: String): List<Stop> {
-        return stopRepository.findByCount(count)
-    }
 
-    fun findByDate(date: String): List<Stop> {
-        return stopRepository.findByDate(date)
-    }
 
 
     fun create(request: StopCreateRequest): Stop {

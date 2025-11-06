@@ -13,13 +13,7 @@ import org.springframework.stereotype.Repository
 interface TokenRepository : JpaRepository<Token, Long> {
     override fun findAll(pageable: Pageable): Page<Token>
 
-    override fun findById(id: String): List<Token>
 
-    override fun findByUser(user: String): List<Token>
 
-    override fun findByToken(token: String): List<Token>
 
-    override fun findByStatus(status: String): List<Token>
-
-    override fun findByDate(date: String): List<Token>
 }

@@ -28,17 +28,8 @@ class OrderService(private val orderRepository: OrderRepository) {
     }
 
 
-    fun findById(id: String): List<Order> {
-        return orderRepository.findById(id)
-    }
 
-    fun findByMembership(membership: String): List<Order> {
-        return orderRepository.findByMembership(membership)
-    }
 
-    fun findByDate(date: String): List<Order> {
-        return orderRepository.findByDate(date)
-    }
 
 
     fun create(request: OrderCreateRequest): Order {

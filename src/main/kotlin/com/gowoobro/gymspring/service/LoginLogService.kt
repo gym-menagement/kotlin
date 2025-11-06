@@ -28,25 +28,10 @@ class LoginlogService(private val loginlogRepository: LoginlogRepository) {
     }
 
 
-    fun findById(id: String): List<Loginlog> {
-        return loginlogRepository.findById(id)
-    }
 
-    fun findByIp(ip: String): List<Loginlog> {
-        return loginlogRepository.findByIp(ip)
-    }
 
-    fun findByIpvalue(ipvalue: String): List<Loginlog> {
-        return loginlogRepository.findByIpvalue(ipvalue)
-    }
 
-    fun findByUser(user: String): List<Loginlog> {
-        return loginlogRepository.findByUser(user)
-    }
 
-    fun findByDate(date: String): List<Loginlog> {
-        return loginlogRepository.findByDate(date)
-    }
 
 
     fun create(request: LoginlogCreateRequest): Loginlog {

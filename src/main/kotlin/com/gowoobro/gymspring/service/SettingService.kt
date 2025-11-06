@@ -28,62 +28,63 @@ class SettingService(private val settingRepository: SettingRepository) {
     }
 
 
-    fun findById(id: String): List<Setting> {
-        return settingRepository.findById(id)
-    }
 
-    fun findByCategory(category: String): List<Setting> {
-        return settingRepository.findByCategory(category)
-    }
 
-    fun findByName(name: String): List<Setting> {
-        return settingRepository.findByName(name)
-    }
 
-    fun findByKey(key: String): List<Setting> {
-        return settingRepository.findByKey(key)
-    }
 
-    fun findByValue(value: String): List<Setting> {
-        return settingRepository.findByValue(value)
-    }
 
-    fun findByRemark(remark: String): List<Setting> {
-        return settingRepository.findByRemark(remark)
-    }
 
-    fun findByType(type: String): List<Setting> {
-        return settingRepository.findByType(type)
-    }
 
-    fun findByData(data: String): List<Setting> {
-        return settingRepository.findByData(data)
-    }
 
-    fun findByOrder(order: String): List<Setting> {
-        return settingRepository.findByOrder(order)
-    }
 
-    fun findByDate(date: String): List<Setting> {
-        return settingRepository.findByDate(date)
-    }
 
 
     fun create(request: SettingCreateRequest): Setting {
-        val entity = Setting()
+        val entity = Setting(
+            category = request.category,
+            name = request.name,
+            key = request.key,
+            value = request.value,
+            remark = request.remark,
+            type = request.type,
+            data = request.data,
+            order = request.order,
+            date = request.date
+        )
         return settingRepository.save(entity)
     }
 
     fun createBatch(requests: List<SettingCreateRequest>): List<Setting> {
         val entities = requests.map { request ->
-            Setting()
+            Setting(
+                category = request.category,
+                name = request.name,
+                key = request.key,
+                value = request.value,
+                remark = request.remark,
+                type = request.type,
+                data = request.data,
+                order = request.order,
+                date = request.date
+            )
         }
         return settingRepository.saveAll(entities)
     }
 
     fun update(request: SettingUpdateRequest): Setting? {
         val existing = settingRepository.findById(request.id).orElse(null) ?: return null
-        return settingRepository.save(existing)
+        val updated = existing.copy(
+            category = request.category,
+            name = request.name,
+            key = request.key,
+            value = request.value,
+            remark = request.remark,
+            type = request.type,
+            data = request.data,
+            order = request.order,
+            date = request.date
+        )
+        return settingRepository.save(updated)
     }
 
     fun delete(entity: Setting): Boolean {

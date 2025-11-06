@@ -28,29 +28,11 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
     }
 
 
-    fun findById(id: String): List<Paymentform> {
-        return paymentformRepository.findById(id)
-    }
 
-    fun findByGym(gym: String): List<Paymentform> {
-        return paymentformRepository.findByGym(gym)
-    }
 
-    fun findByPayment(payment: String): List<Paymentform> {
-        return paymentformRepository.findByPayment(payment)
-    }
 
-    fun findByType(type: String): List<Paymentform> {
-        return paymentformRepository.findByType(type)
-    }
 
-    fun findByCost(cost: String): List<Paymentform> {
-        return paymentformRepository.findByCost(cost)
-    }
 
-    fun findByDate(date: String): List<Paymentform> {
-        return paymentformRepository.findByDate(date)
-    }
 
 
     fun create(request: PaymentformCreateRequest): Paymentform {

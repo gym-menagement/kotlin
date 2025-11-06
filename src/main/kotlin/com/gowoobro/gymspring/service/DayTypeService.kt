@@ -28,21 +28,9 @@ class DaytypeService(private val daytypeRepository: DaytypeRepository) {
     }
 
 
-    fun findById(id: String): List<Daytype> {
-        return daytypeRepository.findById(id)
-    }
 
-    fun findByGym(gym: String): List<Daytype> {
-        return daytypeRepository.findByGym(gym)
-    }
 
-    fun findByName(name: String): List<Daytype> {
-        return daytypeRepository.findByName(name)
-    }
 
-    fun findByDate(date: String): List<Daytype> {
-        return daytypeRepository.findByDate(date)
-    }
 
 
     fun create(request: DaytypeCreateRequest): Daytype {

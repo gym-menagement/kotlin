@@ -13,17 +13,9 @@ import org.springframework.stereotype.Repository
 interface AlarmRepository : JpaRepository<Alarm, Long> {
     override fun findAll(pageable: Pageable): Page<Alarm>
 
-    override fun findById(id: String): List<Alarm>
 
-    override fun findByTitle(title: String): List<Alarm>
 
-    override fun findByContent(content: String): List<Alarm>
 
-    override fun findByType(type: String): List<Alarm>
 
-    override fun findByStatus(status: String): List<Alarm>
 
-    override fun findByUser(user: String): List<Alarm>
-
-    override fun findByDate(date: String): List<Alarm>
 }

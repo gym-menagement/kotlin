@@ -16,8 +16,10 @@ data class Alarm(
     @Column(name = "al_content")
     val content: String = "",
     @Column(name = "al_type")
+    @Enumerated(EnumType.ORDINAL)
     val type: Type,
     @Column(name = "al_status")
+    @Enumerated(EnumType.ORDINAL)
     val status: Status,
     @Column(name = "al_user")
     val user: Long = 0L,

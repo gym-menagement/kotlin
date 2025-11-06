@@ -32,35 +32,10 @@ class RockerController(private val rockerService: RockerService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getRockerById(@RequestParam id: String): ResponseEntity<List<Rocker>> {
-        val result = rockerService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/group")
-    fun getRockerByGroup(@RequestParam group: String): ResponseEntity<List<Rocker>> {
-        val result = rockerService.findByGroup(group)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/name")
-    fun getRockerByName(@RequestParam name: String): ResponseEntity<List<Rocker>> {
-        val result = rockerService.findByName(name)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/available")
-    fun getRockerByAvailable(@RequestParam available: String): ResponseEntity<List<Rocker>> {
-        val result = rockerService.findByAvailable(available)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getRockerByDate(@RequestParam date: String): ResponseEntity<List<Rocker>> {
-        val result = rockerService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

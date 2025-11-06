@@ -32,29 +32,9 @@ class HealthcategoryController(private val healthcategoryService: Healthcategory
     }
 
 
-    @GetMapping("/search/id")
-    fun getHealthcategoryById(@RequestParam id: String): ResponseEntity<List<Healthcategory>> {
-        val result = healthcategoryService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/gym")
-    fun getHealthcategoryByGym(@RequestParam gym: String): ResponseEntity<List<Healthcategory>> {
-        val result = healthcategoryService.findByGym(gym)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/name")
-    fun getHealthcategoryByName(@RequestParam name: String): ResponseEntity<List<Healthcategory>> {
-        val result = healthcategoryService.findByName(name)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getHealthcategoryByDate(@RequestParam date: String): ResponseEntity<List<Healthcategory>> {
-        val result = healthcategoryService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

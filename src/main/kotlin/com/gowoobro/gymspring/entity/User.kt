@@ -30,14 +30,18 @@ data class User(
     @Column(name = "u_birth")
     val birth: LocalDateTime? = null,
     @Column(name = "u_type")
+    @Enumerated(EnumType.ORDINAL)
     val type: Type,
     @Column(name = "u_connectid")
     val connectid: String = "",
     @Column(name = "u_level")
+    @Enumerated(EnumType.ORDINAL)
     val level: Level,
     @Column(name = "u_role")
-    val role: Role,
+    @Enumerated(EnumType.ORDINAL)
+    val role: UserRole,
     @Column(name = "u_use")
+    @Enumerated(EnumType.ORDINAL)
     val use: Use,
     @Column(name = "u_logindate")
     val logindate: LocalDateTime? = null,
@@ -60,7 +64,7 @@ data class UserCreateRequest(
     val type: Type,
     val connectid: String = "",
     val level: Level,
-    val role: Role,
+    val role: UserRole,
     val use: Use,
     val logindate: LocalDateTime? = null,
     val lastchangepasswddate: LocalDateTime? = null,
@@ -81,7 +85,7 @@ data class UserUpdateRequest(
     val type: Type,
     val connectid: String = "",
     val level: Level,
-    val role: Role,
+    val role: UserRole,
     val use: Use,
     val logindate: LocalDateTime? = null,
     val lastchangepasswddate: LocalDateTime? = null,

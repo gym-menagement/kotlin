@@ -12,6 +12,7 @@ data class Systemlog(
     @Column(name = "sl_id")
     val id: Long = 0,
     @Column(name = "sl_type")
+    @Enumerated(EnumType.ORDINAL)
     val type: Type,
     @Column(name = "sl_content")
     val content: String = "",

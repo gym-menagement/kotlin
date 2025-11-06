@@ -32,29 +32,9 @@ class DiscountController(private val discountService: DiscountService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getDiscountById(@RequestParam id: String): ResponseEntity<List<Discount>> {
-        val result = discountService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/name")
-    fun getDiscountByName(@RequestParam name: String): ResponseEntity<List<Discount>> {
-        val result = discountService.findByName(name)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/discount")
-    fun getDiscountByDiscount(@RequestParam discount: String): ResponseEntity<List<Discount>> {
-        val result = discountService.findByDiscount(discount)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getDiscountByDate(@RequestParam date: String): ResponseEntity<List<Discount>> {
-        val result = discountService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

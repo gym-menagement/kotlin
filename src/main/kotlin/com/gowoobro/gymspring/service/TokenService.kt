@@ -28,25 +28,10 @@ class TokenService(private val tokenRepository: TokenRepository) {
     }
 
 
-    fun findById(id: String): List<Token> {
-        return tokenRepository.findById(id)
-    }
 
-    fun findByUser(user: String): List<Token> {
-        return tokenRepository.findByUser(user)
-    }
 
-    fun findByToken(token: String): List<Token> {
-        return tokenRepository.findByToken(token)
-    }
 
-    fun findByStatus(status: String): List<Token> {
-        return tokenRepository.findByStatus(status)
-    }
 
-    fun findByDate(date: String): List<Token> {
-        return tokenRepository.findByDate(date)
-    }
 
 
     fun create(request: TokenCreateRequest): Token {

@@ -28,21 +28,9 @@ class PaymenttypeService(private val paymenttypeRepository: PaymenttypeRepositor
     }
 
 
-    fun findById(id: String): List<Paymenttype> {
-        return paymenttypeRepository.findById(id)
-    }
 
-    fun findByGym(gym: String): List<Paymenttype> {
-        return paymenttypeRepository.findByGym(gym)
-    }
 
-    fun findByName(name: String): List<Paymenttype> {
-        return paymenttypeRepository.findByName(name)
-    }
 
-    fun findByDate(date: String): List<Paymenttype> {
-        return paymenttypeRepository.findByDate(date)
-    }
 
 
     fun create(request: PaymenttypeCreateRequest): Paymenttype {

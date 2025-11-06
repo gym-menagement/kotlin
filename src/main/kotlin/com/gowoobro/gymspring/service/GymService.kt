@@ -28,17 +28,8 @@ class GymService(private val gymRepository: GymRepository) {
     }
 
 
-    fun findById(id: String): List<Gym> {
-        return gymRepository.findById(id)
-    }
 
-    fun findByName(name: String): List<Gym> {
-        return gymRepository.findByName(name)
-    }
 
-    fun findByDate(date: String): List<Gym> {
-        return gymRepository.findByDate(date)
-    }
 
 
     fun create(request: GymCreateRequest): Gym {

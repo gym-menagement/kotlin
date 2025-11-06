@@ -13,23 +13,12 @@ import org.springframework.stereotype.Repository
 interface MembershipRepository : JpaRepository<Membership, Long> {
     override fun findAll(pageable: Pageable): Page<Membership>
 
-    override fun findById(id: String): List<Membership>
 
-    override fun findByGym(gym: String): List<Membership>
 
-    override fun findByUser(user: String): List<Membership>
 
-    override fun findByName(name: String): List<Membership>
 
-    override fun findBySex(sex: String): List<Membership>
 
-    override fun findByBirth(birth: String): List<Membership>
 
-    override fun findByPhonenum(phonenum: String): List<Membership>
 
-    override fun findByAddress(address: String): List<Membership>
 
-    override fun findByImage(image: String): List<Membership>
-
-    override fun findByDate(date: String): List<Membership>
 }

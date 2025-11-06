@@ -13,9 +13,5 @@ import org.springframework.stereotype.Repository
 interface OrderRepository : JpaRepository<Order, Long> {
     override fun findAll(pageable: Pageable): Page<Order>
 
-    override fun findById(id: String): List<Order>
 
-    override fun findByMembership(membership: String): List<Order>
-
-    override fun findByDate(date: String): List<Order>
 }

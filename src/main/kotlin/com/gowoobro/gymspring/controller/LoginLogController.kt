@@ -32,35 +32,10 @@ class LoginlogController(private val loginlogService: LoginlogService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getLoginlogById(@RequestParam id: String): ResponseEntity<List<Loginlog>> {
-        val result = loginlogService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/ip")
-    fun getLoginlogByIp(@RequestParam ip: String): ResponseEntity<List<Loginlog>> {
-        val result = loginlogService.findByIp(ip)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/ipvalue")
-    fun getLoginlogByIpvalue(@RequestParam ipvalue: String): ResponseEntity<List<Loginlog>> {
-        val result = loginlogService.findByIpvalue(ipvalue)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/user")
-    fun getLoginlogByUser(@RequestParam user: String): ResponseEntity<List<Loginlog>> {
-        val result = loginlogService.findByUser(user)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getLoginlogByDate(@RequestParam date: String): ResponseEntity<List<Loginlog>> {
-        val result = loginlogService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

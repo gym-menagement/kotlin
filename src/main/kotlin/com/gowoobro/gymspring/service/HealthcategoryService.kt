@@ -28,21 +28,9 @@ class HealthcategoryService(private val healthcategoryRepository: Healthcategory
     }
 
 
-    fun findById(id: String): List<Healthcategory> {
-        return healthcategoryRepository.findById(id)
-    }
 
-    fun findByGym(gym: String): List<Healthcategory> {
-        return healthcategoryRepository.findByGym(gym)
-    }
 
-    fun findByName(name: String): List<Healthcategory> {
-        return healthcategoryRepository.findByName(name)
-    }
 
-    fun findByDate(date: String): List<Healthcategory> {
-        return healthcategoryRepository.findByDate(date)
-    }
 
 
     fun create(request: HealthcategoryCreateRequest): Healthcategory {

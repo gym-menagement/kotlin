@@ -32,41 +32,11 @@ class PaymentController(private val paymentService: PaymentService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getPaymentById(@RequestParam id: String): ResponseEntity<List<Payment>> {
-        val result = paymentService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/gym")
-    fun getPaymentByGym(@RequestParam gym: String): ResponseEntity<List<Payment>> {
-        val result = paymentService.findByGym(gym)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/order")
-    fun getPaymentByOrder(@RequestParam order: String): ResponseEntity<List<Payment>> {
-        val result = paymentService.findByOrder(order)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/membership")
-    fun getPaymentByMembership(@RequestParam membership: String): ResponseEntity<List<Payment>> {
-        val result = paymentService.findByMembership(membership)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/cost")
-    fun getPaymentByCost(@RequestParam cost: String): ResponseEntity<List<Payment>> {
-        val result = paymentService.findByCost(cost)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getPaymentByDate(@RequestParam date: String): ResponseEntity<List<Payment>> {
-        val result = paymentService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

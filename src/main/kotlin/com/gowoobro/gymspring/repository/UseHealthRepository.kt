@@ -13,23 +13,12 @@ import org.springframework.stereotype.Repository
 interface UsehealthRepository : JpaRepository<Usehealth, Long> {
     override fun findAll(pageable: Pageable): Page<Usehealth>
 
-    override fun findById(id: String): List<Usehealth>
 
-    override fun findByOrder(order: String): List<Usehealth>
 
-    override fun findByHealth(health: String): List<Usehealth>
 
-    override fun findByUser(user: String): List<Usehealth>
 
-    override fun findByRocker(rocker: String): List<Usehealth>
 
-    override fun findByTerm(term: String): List<Usehealth>
 
-    override fun findByDiscount(discount: String): List<Usehealth>
 
-    override fun findByStartday(startday: String): List<Usehealth>
 
-    override fun findByEndday(endday: String): List<Usehealth>
-
-    override fun findByDate(date: String): List<Usehealth>
 }

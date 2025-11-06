@@ -28,50 +28,51 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
     }
 
 
-    fun findById(id: String): List<Ipblock> {
-        return ipblockRepository.findById(id)
-    }
 
-    fun findByAddress(address: String): List<Ipblock> {
-        return ipblockRepository.findByAddress(address)
-    }
 
-    fun findByType(type: String): List<Ipblock> {
-        return ipblockRepository.findByType(type)
-    }
 
-    fun findByPolicy(policy: String): List<Ipblock> {
-        return ipblockRepository.findByPolicy(policy)
-    }
 
-    fun findByUse(use: String): List<Ipblock> {
-        return ipblockRepository.findByUse(use)
-    }
 
-    fun findByOrder(order: String): List<Ipblock> {
-        return ipblockRepository.findByOrder(order)
-    }
 
-    fun findByDate(date: String): List<Ipblock> {
-        return ipblockRepository.findByDate(date)
-    }
 
 
     fun create(request: IpblockCreateRequest): Ipblock {
-        val entity = Ipblock()
+        val entity = Ipblock(
+            address = request.address,
+            type = request.type,
+            policy = request.policy,
+            use = request.use,
+            order = request.order,
+            date = request.date
+        )
         return ipblockRepository.save(entity)
     }
 
     fun createBatch(requests: List<IpblockCreateRequest>): List<Ipblock> {
         val entities = requests.map { request ->
-            Ipblock()
+            Ipblock(
+                address = request.address,
+                type = request.type,
+                policy = request.policy,
+                use = request.use,
+                order = request.order,
+                date = request.date
+            )
         }
         return ipblockRepository.saveAll(entities)
     }
 
     fun update(request: IpblockUpdateRequest): Ipblock? {
         val existing = ipblockRepository.findById(request.id).orElse(null) ?: return null
-        return ipblockRepository.save(existing)
+        val updated = existing.copy(
+            address = request.address,
+            type = request.type,
+            policy = request.policy,
+            use = request.use,
+            order = request.order,
+            date = request.date
+        )
+        return ipblockRepository.save(updated)
     }
 
     fun delete(entity: Ipblock): Boolean {

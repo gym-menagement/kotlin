@@ -14,10 +14,13 @@ data class Ipblock(
     @Column(name = "ib_address")
     val address: String = "",
     @Column(name = "ib_type")
+    @Enumerated(EnumType.ORDINAL)
     val type: Type,
     @Column(name = "ib_policy")
+    @Enumerated(EnumType.ORDINAL)
     val policy: Policy,
     @Column(name = "ib_use")
+    @Enumerated(EnumType.ORDINAL)
     val use: Use,
     @Column(name = "ib_order")
     val order: Int = 0,

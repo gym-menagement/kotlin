@@ -32,112 +32,14 @@ class UserController(private val userService: UserService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getUserById(@RequestParam id: String): ResponseEntity<List<User>> {
-        val result = userService.findById(id)
-        return ResponseEntity.ok(result)
-    }
-
     @GetMapping("/search/loginid")
-    fun getUserByLoginid(@RequestParam loginid: String): ResponseEntity<List<User>> {
+    fun getUserByLoginid(@RequestParam loginid: String): ResponseEntity<User?> {
         val result = userService.findByLoginid(loginid)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/passwd")
-    fun getUserByPasswd(@RequestParam passwd: String): ResponseEntity<List<User>> {
-        val result = userService.findByPasswd(passwd)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/email")
-    fun getUserByEmail(@RequestParam email: String): ResponseEntity<List<User>> {
-        val result = userService.findByEmail(email)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/name")
-    fun getUserByName(@RequestParam name: String): ResponseEntity<List<User>> {
-        val result = userService.findByName(name)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/tel")
-    fun getUserByTel(@RequestParam tel: String): ResponseEntity<List<User>> {
-        val result = userService.findByTel(tel)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/address")
-    fun getUserByAddress(@RequestParam address: String): ResponseEntity<List<User>> {
-        val result = userService.findByAddress(address)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/image")
-    fun getUserByImage(@RequestParam image: String): ResponseEntity<List<User>> {
-        val result = userService.findByImage(image)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/sex")
-    fun getUserBySex(@RequestParam sex: String): ResponseEntity<List<User>> {
-        val result = userService.findBySex(sex)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/birth")
-    fun getUserByBirth(@RequestParam birth: String): ResponseEntity<List<User>> {
-        val result = userService.findByBirth(birth)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/type")
-    fun getUserByType(@RequestParam type: String): ResponseEntity<List<User>> {
-        val result = userService.findByType(type)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/connectid")
-    fun getUserByConnectid(@RequestParam connectid: String): ResponseEntity<List<User>> {
-        val result = userService.findByConnectid(connectid)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/level")
-    fun getUserByLevel(@RequestParam level: String): ResponseEntity<List<User>> {
-        val result = userService.findByLevel(level)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/role")
-    fun getUserByRole(@RequestParam role: String): ResponseEntity<List<User>> {
-        val result = userService.findByRole(role)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/use")
-    fun getUserByUse(@RequestParam use: String): ResponseEntity<List<User>> {
-        val result = userService.findByUse(use)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/logindate")
-    fun getUserByLogindate(@RequestParam logindate: String): ResponseEntity<List<User>> {
-        val result = userService.findByLogindate(logindate)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/lastchangepasswddate")
-    fun getUserByLastchangepasswddate(@RequestParam lastchangepasswddate: String): ResponseEntity<List<User>> {
-        val result = userService.findByLastchangepasswddate(lastchangepasswddate)
-        return ResponseEntity.ok(result)
-    }
-
-    @GetMapping("/search/date")
-    fun getUserByDate(@RequestParam date: String): ResponseEntity<List<User>> {
-        val result = userService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return if (result != null) {
+            ResponseEntity.ok(result)
+        } else {
+            ResponseEntity.notFound().build()
+        }
     }
 
 

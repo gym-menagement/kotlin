@@ -13,15 +13,8 @@ import org.springframework.stereotype.Repository
 interface TermRepository : JpaRepository<Term, Long> {
     override fun findAll(pageable: Pageable): Page<Term>
 
-    override fun findById(id: String): List<Term>
 
-    override fun findByGym(gym: String): List<Term>
 
-    override fun findByDaytype(daytype: String): List<Term>
 
-    override fun findByName(name: String): List<Term>
 
-    override fun findByTerm(term: String): List<Term>
-
-    override fun findByDate(date: String): List<Term>
 }

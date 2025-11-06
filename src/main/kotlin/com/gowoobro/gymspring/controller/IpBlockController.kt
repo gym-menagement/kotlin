@@ -32,47 +32,12 @@ class IpblockController(private val ipblockService: IpblockService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getIpblockById(@RequestParam id: String): ResponseEntity<List<Ipblock>> {
-        val result = ipblockService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/address")
-    fun getIpblockByAddress(@RequestParam address: String): ResponseEntity<List<Ipblock>> {
-        val result = ipblockService.findByAddress(address)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/type")
-    fun getIpblockByType(@RequestParam type: String): ResponseEntity<List<Ipblock>> {
-        val result = ipblockService.findByType(type)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/policy")
-    fun getIpblockByPolicy(@RequestParam policy: String): ResponseEntity<List<Ipblock>> {
-        val result = ipblockService.findByPolicy(policy)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/use")
-    fun getIpblockByUse(@RequestParam use: String): ResponseEntity<List<Ipblock>> {
-        val result = ipblockService.findByUse(use)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/order")
-    fun getIpblockByOrder(@RequestParam order: String): ResponseEntity<List<Ipblock>> {
-        val result = ipblockService.findByOrder(order)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getIpblockByDate(@RequestParam date: String): ResponseEntity<List<Ipblock>> {
-        val result = ipblockService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

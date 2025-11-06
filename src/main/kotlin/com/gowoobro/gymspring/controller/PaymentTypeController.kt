@@ -32,29 +32,9 @@ class PaymenttypeController(private val paymenttypeService: PaymenttypeService) 
     }
 
 
-    @GetMapping("/search/id")
-    fun getPaymenttypeById(@RequestParam id: String): ResponseEntity<List<Paymenttype>> {
-        val result = paymenttypeService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/gym")
-    fun getPaymenttypeByGym(@RequestParam gym: String): ResponseEntity<List<Paymenttype>> {
-        val result = paymenttypeService.findByGym(gym)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/name")
-    fun getPaymenttypeByName(@RequestParam name: String): ResponseEntity<List<Paymenttype>> {
-        val result = paymenttypeService.findByName(name)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getPaymenttypeByDate(@RequestParam date: String): ResponseEntity<List<Paymenttype>> {
-        val result = paymenttypeService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

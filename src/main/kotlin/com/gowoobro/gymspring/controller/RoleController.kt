@@ -32,35 +32,10 @@ class RoleController(private val roleService: RoleService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getRoleById(@RequestParam id: String): ResponseEntity<List<Role>> {
-        val result = roleService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/gym")
-    fun getRoleByGym(@RequestParam gym: String): ResponseEntity<List<Role>> {
-        val result = roleService.findByGym(gym)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/role")
-    fun getRoleByRole(@RequestParam role: String): ResponseEntity<List<Role>> {
-        val result = roleService.findByRole(role)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/name")
-    fun getRoleByName(@RequestParam name: String): ResponseEntity<List<Role>> {
-        val result = roleService.findByName(name)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getRoleByDate(@RequestParam date: String): ResponseEntity<List<Role>> {
-        val result = roleService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

@@ -28,45 +28,15 @@ class HealthService(private val healthRepository: HealthRepository) {
     }
 
 
-    fun findById(id: String): List<Health> {
-        return healthRepository.findById(id)
-    }
 
-    fun findByCategory(category: String): List<Health> {
-        return healthRepository.findByCategory(category)
-    }
 
-    fun findByTerm(term: String): List<Health> {
-        return healthRepository.findByTerm(term)
-    }
 
-    fun findByName(name: String): List<Health> {
-        return healthRepository.findByName(name)
-    }
 
-    fun findByCount(count: String): List<Health> {
-        return healthRepository.findByCount(count)
-    }
 
-    fun findByCost(cost: String): List<Health> {
-        return healthRepository.findByCost(cost)
-    }
 
-    fun findByDiscount(discount: String): List<Health> {
-        return healthRepository.findByDiscount(discount)
-    }
 
-    fun findByCostdiscount(costdiscount: String): List<Health> {
-        return healthRepository.findByCostdiscount(costdiscount)
-    }
 
-    fun findByContent(content: String): List<Health> {
-        return healthRepository.findByContent(content)
-    }
 
-    fun findByDate(date: String): List<Health> {
-        return healthRepository.findByDate(date)
-    }
 
 
     fun create(request: HealthCreateRequest): Health {

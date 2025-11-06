@@ -25,7 +25,8 @@
       "Bash(for:*)",
       "Bash(do mv \"$file\" \"$file%.bak\")",
       "Bash(done)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(python3:*)"
     ],
     "deny": [],
     "ask": []

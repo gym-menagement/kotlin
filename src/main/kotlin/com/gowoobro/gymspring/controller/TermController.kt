@@ -32,41 +32,11 @@ class TermController(private val termService: TermService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getTermById(@RequestParam id: String): ResponseEntity<List<Term>> {
-        val result = termService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/gym")
-    fun getTermByGym(@RequestParam gym: String): ResponseEntity<List<Term>> {
-        val result = termService.findByGym(gym)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/daytype")
-    fun getTermByDaytype(@RequestParam daytype: String): ResponseEntity<List<Term>> {
-        val result = termService.findByDaytype(daytype)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/name")
-    fun getTermByName(@RequestParam name: String): ResponseEntity<List<Term>> {
-        val result = termService.findByName(name)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/term")
-    fun getTermByTerm(@RequestParam term: String): ResponseEntity<List<Term>> {
-        val result = termService.findByTerm(term)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getTermByDate(@RequestParam date: String): ResponseEntity<List<Term>> {
-        val result = termService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

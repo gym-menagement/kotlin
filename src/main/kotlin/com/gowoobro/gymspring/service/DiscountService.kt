@@ -28,21 +28,9 @@ class DiscountService(private val discountRepository: DiscountRepository) {
     }
 
 
-    fun findById(id: String): List<Discount> {
-        return discountRepository.findById(id)
-    }
 
-    fun findByName(name: String): List<Discount> {
-        return discountRepository.findByName(name)
-    }
 
-    fun findByDiscount(discount: String): List<Discount> {
-        return discountRepository.findByDiscount(discount)
-    }
 
-    fun findByDate(date: String): List<Discount> {
-        return discountRepository.findByDate(date)
-    }
 
 
     fun create(request: DiscountCreateRequest): Discount {

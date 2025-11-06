@@ -28,29 +28,11 @@ class TermService(private val termRepository: TermRepository) {
     }
 
 
-    fun findById(id: String): List<Term> {
-        return termRepository.findById(id)
-    }
 
-    fun findByGym(gym: String): List<Term> {
-        return termRepository.findByGym(gym)
-    }
 
-    fun findByDaytype(daytype: String): List<Term> {
-        return termRepository.findByDaytype(daytype)
-    }
 
-    fun findByName(name: String): List<Term> {
-        return termRepository.findByName(name)
-    }
 
-    fun findByTerm(term: String): List<Term> {
-        return termRepository.findByTerm(term)
-    }
 
-    fun findByDate(date: String): List<Term> {
-        return termRepository.findByDate(date)
-    }
 
 
     fun create(request: TermCreateRequest): Term {

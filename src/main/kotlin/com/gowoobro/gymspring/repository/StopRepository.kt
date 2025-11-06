@@ -13,15 +13,8 @@ import org.springframework.stereotype.Repository
 interface StopRepository : JpaRepository<Stop, Long> {
     override fun findAll(pageable: Pageable): Page<Stop>
 
-    override fun findById(id: String): List<Stop>
 
-    override fun findByUsehelth(usehelth: String): List<Stop>
 
-    override fun findByStartday(startday: String): List<Stop>
 
-    override fun findByEndday(endday: String): List<Stop>
 
-    override fun findByCount(count: String): List<Stop>
-
-    override fun findByDate(date: String): List<Stop>
 }

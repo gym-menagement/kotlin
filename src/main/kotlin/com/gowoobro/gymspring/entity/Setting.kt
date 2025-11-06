@@ -22,6 +22,7 @@ data class Setting(
     @Column(name = "se_remark")
     val remark: String = "",
     @Column(name = "se_type")
+    @Enumerated(EnumType.ORDINAL)
     val type: Type,
     @Column(name = "se_data")
     val data: String = "",

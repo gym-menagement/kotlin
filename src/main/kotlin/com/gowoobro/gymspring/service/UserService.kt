@@ -27,95 +27,80 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.count()
     }
 
-
-    fun findById(id: String): List<User> {
-        return userRepository.findById(id)
-    }
-
-    fun findByLoginid(loginid: String): List<User> {
+    fun findByLoginid(loginid: String): User? {
         return userRepository.findByLoginid(loginid)
     }
 
-    fun findByPasswd(passwd: String): List<User> {
-        return userRepository.findByPasswd(passwd)
-    }
-
-    fun findByEmail(email: String): List<User> {
-        return userRepository.findByEmail(email)
-    }
-
-    fun findByName(name: String): List<User> {
-        return userRepository.findByName(name)
-    }
-
-    fun findByTel(tel: String): List<User> {
-        return userRepository.findByTel(tel)
-    }
-
-    fun findByAddress(address: String): List<User> {
-        return userRepository.findByAddress(address)
-    }
-
-    fun findByImage(image: String): List<User> {
-        return userRepository.findByImage(image)
-    }
-
-    fun findBySex(sex: String): List<User> {
-        return userRepository.findBySex(sex)
-    }
-
-    fun findByBirth(birth: String): List<User> {
-        return userRepository.findByBirth(birth)
-    }
-
-    fun findByType(type: String): List<User> {
-        return userRepository.findByType(type)
-    }
-
-    fun findByConnectid(connectid: String): List<User> {
-        return userRepository.findByConnectid(connectid)
-    }
-
-    fun findByLevel(level: String): List<User> {
-        return userRepository.findByLevel(level)
-    }
-
-    fun findByRole(role: String): List<User> {
-        return userRepository.findByRole(role)
-    }
-
-    fun findByUse(use: String): List<User> {
-        return userRepository.findByUse(use)
-    }
-
-    fun findByLogindate(logindate: String): List<User> {
-        return userRepository.findByLogindate(logindate)
-    }
-
-    fun findByLastchangepasswddate(lastchangepasswddate: String): List<User> {
-        return userRepository.findByLastchangepasswddate(lastchangepasswddate)
-    }
-
-    fun findByDate(date: String): List<User> {
-        return userRepository.findByDate(date)
-    }
-
-
     fun create(request: UserCreateRequest): User {
-        val entity = User()
+        val entity = User(
+            loginid = request.loginid,
+            passwd = request.passwd,
+            email = request.email,
+            name = request.name,
+            tel = request.tel,
+            address = request.address,
+            image = request.image,
+            sex = request.sex,
+            birth = request.birth,
+            type = request.type,
+            connectid = request.connectid,
+            level = request.level,
+            role = request.role,
+            use = request.use,
+            logindate = request.logindate,
+            lastchangepasswddate = request.lastchangepasswddate,
+            date = request.date
+        )
         return userRepository.save(entity)
     }
 
     fun createBatch(requests: List<UserCreateRequest>): List<User> {
         val entities = requests.map { request ->
-            User()
+            User(
+                loginid = request.loginid,
+                passwd = request.passwd,
+                email = request.email,
+                name = request.name,
+                tel = request.tel,
+                address = request.address,
+                image = request.image,
+                sex = request.sex,
+                birth = request.birth,
+                type = request.type,
+                connectid = request.connectid,
+                level = request.level,
+                role = request.role,
+                use = request.use,
+                logindate = request.logindate,
+                lastchangepasswddate = request.lastchangepasswddate,
+                date = request.date
+            )
         }
         return userRepository.saveAll(entities)
     }
 
     fun update(request: UserUpdateRequest): User? {
         val existing = userRepository.findById(request.id).orElse(null) ?: return null
-        return userRepository.save(existing)
+        val updated = existing.copy(
+            loginid = request.loginid,
+            passwd = request.passwd,
+            email = request.email,
+            name = request.name,
+            tel = request.tel,
+            address = request.address,
+            image = request.image,
+            sex = request.sex,
+            birth = request.birth,
+            type = request.type,
+            connectid = request.connectid,
+            level = request.level,
+            role = request.role,
+            use = request.use,
+            logindate = request.logindate,
+            lastchangepasswddate = request.lastchangepasswddate,
+            date = request.date
+        )
+        return userRepository.save(updated)
     }
 
     fun delete(entity: User): Boolean {

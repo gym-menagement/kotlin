@@ -32,35 +32,10 @@ class SystemlogController(private val systemlogService: SystemlogService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getSystemlogById(@RequestParam id: String): ResponseEntity<List<Systemlog>> {
-        val result = systemlogService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/type")
-    fun getSystemlogByType(@RequestParam type: String): ResponseEntity<List<Systemlog>> {
-        val result = systemlogService.findByType(type)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/content")
-    fun getSystemlogByContent(@RequestParam content: String): ResponseEntity<List<Systemlog>> {
-        val result = systemlogService.findByContent(content)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/result")
-    fun getSystemlogByResult(@RequestParam result: String): ResponseEntity<List<Systemlog>> {
-        val result = systemlogService.findByResult(result)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getSystemlogByDate(@RequestParam date: String): ResponseEntity<List<Systemlog>> {
-        val result = systemlogService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

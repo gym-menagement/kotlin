@@ -28,25 +28,10 @@ class RockerService(private val rockerRepository: RockerRepository) {
     }
 
 
-    fun findById(id: String): List<Rocker> {
-        return rockerRepository.findById(id)
-    }
 
-    fun findByGroup(group: String): List<Rocker> {
-        return rockerRepository.findByGroup(group)
-    }
 
-    fun findByName(name: String): List<Rocker> {
-        return rockerRepository.findByName(name)
-    }
 
-    fun findByAvailable(available: String): List<Rocker> {
-        return rockerRepository.findByAvailable(available)
-    }
 
-    fun findByDate(date: String): List<Rocker> {
-        return rockerRepository.findByDate(date)
-    }
 
 
     fun create(request: RockerCreateRequest): Rocker {

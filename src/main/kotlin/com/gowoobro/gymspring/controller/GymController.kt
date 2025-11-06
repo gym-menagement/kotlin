@@ -32,23 +32,8 @@ class GymController(private val gymService: GymService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getGymById(@RequestParam id: String): ResponseEntity<List<Gym>> {
-        val result = gymService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/name")
-    fun getGymByName(@RequestParam name: String): ResponseEntity<List<Gym>> {
-        val result = gymService.findByName(name)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getGymByDate(@RequestParam date: String): ResponseEntity<List<Gym>> {
-        val result = gymService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

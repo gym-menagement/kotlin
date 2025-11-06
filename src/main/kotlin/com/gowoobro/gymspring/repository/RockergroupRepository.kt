@@ -13,11 +13,6 @@ import org.springframework.stereotype.Repository
 interface RockergroupRepository : JpaRepository<Rockergroup, Long> {
     override fun findAll(pageable: Pageable): Page<Rockergroup>
 
-    override fun findById(id: String): List<Rockergroup>
 
-    override fun findByGym(gym: String): List<Rockergroup>
 
-    override fun findByName(name: String): List<Rockergroup>
-
-    override fun findByDate(date: String): List<Rockergroup>
 }

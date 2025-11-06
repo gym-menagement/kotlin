@@ -32,47 +32,12 @@ class AlarmController(private val alarmService: AlarmService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getAlarmById(@RequestParam id: String): ResponseEntity<List<Alarm>> {
-        val result = alarmService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/title")
-    fun getAlarmByTitle(@RequestParam title: String): ResponseEntity<List<Alarm>> {
-        val result = alarmService.findByTitle(title)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/content")
-    fun getAlarmByContent(@RequestParam content: String): ResponseEntity<List<Alarm>> {
-        val result = alarmService.findByContent(content)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/type")
-    fun getAlarmByType(@RequestParam type: String): ResponseEntity<List<Alarm>> {
-        val result = alarmService.findByType(type)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/status")
-    fun getAlarmByStatus(@RequestParam status: String): ResponseEntity<List<Alarm>> {
-        val result = alarmService.findByStatus(status)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/user")
-    fun getAlarmByUser(@RequestParam user: String): ResponseEntity<List<Alarm>> {
-        val result = alarmService.findByUser(user)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getAlarmByDate(@RequestParam date: String): ResponseEntity<List<Alarm>> {
-        val result = alarmService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

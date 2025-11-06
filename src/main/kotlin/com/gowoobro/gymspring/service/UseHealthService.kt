@@ -28,45 +28,15 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
     }
 
 
-    fun findById(id: String): List<Usehealth> {
-        return usehealthRepository.findById(id)
-    }
 
-    fun findByOrder(order: String): List<Usehealth> {
-        return usehealthRepository.findByOrder(order)
-    }
 
-    fun findByHealth(health: String): List<Usehealth> {
-        return usehealthRepository.findByHealth(health)
-    }
 
-    fun findByUser(user: String): List<Usehealth> {
-        return usehealthRepository.findByUser(user)
-    }
 
-    fun findByRocker(rocker: String): List<Usehealth> {
-        return usehealthRepository.findByRocker(rocker)
-    }
 
-    fun findByTerm(term: String): List<Usehealth> {
-        return usehealthRepository.findByTerm(term)
-    }
 
-    fun findByDiscount(discount: String): List<Usehealth> {
-        return usehealthRepository.findByDiscount(discount)
-    }
 
-    fun findByStartday(startday: String): List<Usehealth> {
-        return usehealthRepository.findByStartday(startday)
-    }
 
-    fun findByEndday(endday: String): List<Usehealth> {
-        return usehealthRepository.findByEndday(endday)
-    }
 
-    fun findByDate(date: String): List<Usehealth> {
-        return usehealthRepository.findByDate(date)
-    }
 
 
     fun create(request: UsehealthCreateRequest): Usehealth {

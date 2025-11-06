@@ -32,65 +32,15 @@ class UsehealthController(private val usehealthService: UsehealthService) {
     }
 
 
-    @GetMapping("/search/id")
-    fun getUsehealthById(@RequestParam id: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findById(id)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/order")
-    fun getUsehealthByOrder(@RequestParam order: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findByOrder(order)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/health")
-    fun getUsehealthByHealth(@RequestParam health: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findByHealth(health)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/user")
-    fun getUsehealthByUser(@RequestParam user: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findByUser(user)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/rocker")
-    fun getUsehealthByRocker(@RequestParam rocker: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findByRocker(rocker)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/term")
-    fun getUsehealthByTerm(@RequestParam term: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findByTerm(term)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/discount")
-    fun getUsehealthByDiscount(@RequestParam discount: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findByDiscount(discount)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/startday")
-    fun getUsehealthByStartday(@RequestParam startday: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findByStartday(startday)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/endday")
-    fun getUsehealthByEndday(@RequestParam endday: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findByEndday(endday)
-        return ResponseEntity.ok(result)
-    }
 
-    @GetMapping("/search/date")
-    fun getUsehealthByDate(@RequestParam date: String): ResponseEntity<List<Usehealth>> {
-        val result = usehealthService.findByDate(date)
-        return ResponseEntity.ok(result)
-    }
 
 
     @GetMapping("/count")

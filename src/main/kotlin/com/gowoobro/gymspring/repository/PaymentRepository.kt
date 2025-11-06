@@ -13,15 +13,8 @@ import org.springframework.stereotype.Repository
 interface PaymentRepository : JpaRepository<Payment, Long> {
     override fun findAll(pageable: Pageable): Page<Payment>
 
-    override fun findById(id: String): List<Payment>
 
-    override fun findByGym(gym: String): List<Payment>
 
-    override fun findByOrder(order: String): List<Payment>
 
-    override fun findByMembership(membership: String): List<Payment>
 
-    override fun findByCost(cost: String): List<Payment>
-
-    override fun findByDate(date: String): List<Payment>
 }
