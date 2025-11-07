@@ -7,13 +7,17 @@ import com.gowoobro.gymspring.repository.UserRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
 @Transactional
-class UserService(private val userRepository: UserRepository) {
+class UserService(
+    private val userRepository: UserRepository,
+    private val passwordEncoder: PasswordEncoder
+) {
 
     fun findAll(page: Int = 0, pageSize: Int = 10): Page<User> {
         val pageable: Pageable = PageRequest.of(page, pageSize)
@@ -35,7 +39,7 @@ class UserService(private val userRepository: UserRepository) {
     fun create(request: UserCreateRequest): User {
         val entity = User(
             loginid = request.loginid,
-            passwd = request.passwd,
+            passwd = passwordEncoder.encode(request.passwd),
             email = request.email,
             name = request.name,
             tel = request.tel,
@@ -59,7 +63,7 @@ class UserService(private val userRepository: UserRepository) {
         val entities = requests.map { request ->
             User(
                 loginid = request.loginid,
-                passwd = request.passwd,
+                passwd = passwordEncoder.encode(request.passwd),
                 email = request.email,
                 name = request.name,
                 tel = request.tel,
@@ -82,9 +86,17 @@ class UserService(private val userRepository: UserRepository) {
 
     fun update(request: UserUpdateRequest): User? {
         val existing = userRepository.findById(request.id).orElse(null) ?: return null
+
+        // 비밀번호가 변경되었는지 확인 (기존 암호화된 비밀번호와 다른 경우에만 암호화)
+        val encodedPassword = if (request.passwd != existing.passwd && !request.passwd.startsWith("$2a$")) {
+            passwordEncoder.encode(request.passwd)
+        } else {
+            request.passwd
+        }
+
         val updated = existing.copy(
             loginid = request.loginid,
-            passwd = request.passwd,
+            passwd = encodedPassword,
             email = request.email,
             name = request.name,
             tel = request.tel,
