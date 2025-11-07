@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -39,7 +40,7 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
             type = request.type,
             content = request.content,
             result = request.result,
-            date = request.date
+            date = request.date ?: LocalDateTime.now()
         )
         return systemlogRepository.save(entity)
     }
@@ -50,7 +51,7 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
                 type = request.type,
                 content = request.content,
                 result = request.result,
-                date = request.date
+                date = request.date ?: LocalDateTime.now()
             )
         }
         return systemlogRepository.saveAll(entities)
@@ -62,7 +63,7 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
             type = request.type,
             content = request.content,
             result = request.result,
-            date = request.date
+            date = request.date ?: LocalDateTime.now()
         )
         return systemlogRepository.save(updated)
     }

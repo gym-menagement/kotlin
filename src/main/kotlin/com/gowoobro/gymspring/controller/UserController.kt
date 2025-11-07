@@ -31,7 +31,6 @@ class UserController(private val userService: UserService) {
         }
     }
 
-
     @GetMapping("/search/loginid")
     fun getUserByLoginid(@RequestParam loginid: String): ResponseEntity<User?> {
         val result = userService.findByLoginid(loginid)
@@ -41,7 +40,6 @@ class UserController(private val userService: UserService) {
             ResponseEntity.notFound().build()
         }
     }
-
 
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {

@@ -31,15 +31,6 @@ class AlarmController(private val alarmService: AlarmService) {
         }
     }
 
-
-
-
-
-
-
-
-
-
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {
         val count = alarmService.count()

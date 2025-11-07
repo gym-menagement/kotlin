@@ -1,0 +1,4732 @@
+{
+	"info": {
+		"_postman_id": "gym-api-collection",
+		"name": "Gym Management API - Complete",
+		"description": "Complete Spring Boot Gym Management System API Collection - All Endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwt_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:9410",
+			"type": "string"
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Get JWT Token (Login)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set('jwt_token', jsonData.token);",
+									"    console.log('JWT Token saved: ' + jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/jwt?loginid=admin1&passwd=admin1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"jwt"
+							],
+							"query": [
+								{
+									"key": "loginid",
+									"value": "admin1"
+								},
+								{
+									"key": "passwd",
+									"value": "admin1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Get All Users (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search User by LoginID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/search/loginid?loginid=admin1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"search",
+								"loginid"
+							],
+							"query": [
+								{
+									"key": "loginid",
+									"value": "admin1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"loginid\": \"newuser\", \"passwd\": \"password123\", \"email\": \"user@example.com\", \"name\": \"홍길동\", \"tel\": \"01012345678\", \"address\": \"서울시 강남구\", \"image\": \"profile.jpg\", \"sex\": 1, \"birth\": \"1990-01-01T00:00:00\", \"type\": \"USER\", \"connectid\": \"\", \"level\": \"BEGINNER\", \"role\": \"MEMBER\", \"use\": \"YES\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Users (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/user/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Users (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/user/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alarm Management",
+			"item": [
+				{
+					"name": "Get All Alarms (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/alarm?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"alarm"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Alarm by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/alarm/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"alarm",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Alarm Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/alarm/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"alarm",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Alarm",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"title\": \"중요 알림\", \"content\": \"회원님의 회원권이 곧 만료됩니다.\", \"type\": \"WARNING\", \"status\": \"ACTIVE\", \"user\": 1}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/alarm",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"alarm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Alarms (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/alarm/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"alarm",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Alarm",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/alarm/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"alarm",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Alarm by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/alarm/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"alarm",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Alarms (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/alarm/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"alarm",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DayType Management",
+			"item": [
+				{
+					"name": "Get All DayTypes (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/daytype?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"daytype"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get DayType by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/daytype/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"daytype",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get DayType Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/daytype/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"daytype",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create DayType",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/daytype",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"daytype"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create DayTypes (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/daytype/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"daytype",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update DayType",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/daytype/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"daytype",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete DayType by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/daytype/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"daytype",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete DayTypes (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/daytype/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"daytype",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Discount Management",
+			"item": [
+				{
+					"name": "Get All Discounts (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/discount?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"discount"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Discount by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/discount/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"discount",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Discount Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/discount/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"discount",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Discount",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/discount",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"discount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Discounts (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/discount/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"discount",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Discount",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/discount/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"discount",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Discount by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/discount/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"discount",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Discounts (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/discount/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"discount",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Gym Management",
+			"item": [
+				{
+					"name": "Get All Gyms (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/gym?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"gym"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Gym by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/gym/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"gym",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Gym Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/gym/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"gym",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Gym",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/gym",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"gym"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Gyms (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/gym/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"gym",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Gym",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/gym/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"gym",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Gym by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/gym/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"gym",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Gyms (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/gym/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"gym",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Management",
+			"item": [
+				{
+					"name": "Get All Healths (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/health?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Health by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/health/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Health Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/health/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Health",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Healths (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/health/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Health",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/health/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Health by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/health/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Healths (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/health/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Category Management",
+			"item": [
+				{
+					"name": "Get All Health Categorys (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/healthcategory?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"healthcategory"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Health Category by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/healthcategory/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"healthcategory",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Health Category Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/healthcategory/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"healthcategory",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Health Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/healthcategory",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"healthcategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Health Categorys (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/healthcategory/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"healthcategory",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Health Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/healthcategory/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"healthcategory",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Health Category by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/healthcategory/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"healthcategory",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Health Categorys (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/healthcategory/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"healthcategory",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IP Block Management",
+			"item": [
+				{
+					"name": "Get All IP Blocks (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ipblock?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ipblock"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get IP Block by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ipblock/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ipblock",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get IP Block Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ipblock/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ipblock",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create IP Block",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ipblock",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ipblock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create IP Blocks (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ipblock/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ipblock",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update IP Block",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ipblock/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ipblock",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete IP Block by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ipblock/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ipblock",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete IP Blocks (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ipblock/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ipblock",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login Log Management",
+			"item": [
+				{
+					"name": "Get All Login Logs (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/loginlog?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"loginlog"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Login Log by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/loginlog/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"loginlog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Login Log Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/loginlog/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"loginlog",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Login Log",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/loginlog",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"loginlog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Login Logs (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/loginlog/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"loginlog",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Login Log",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/loginlog/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"loginlog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Login Log by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/loginlog/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"loginlog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Login Logs (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/loginlog/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"loginlog",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Membership Management",
+			"item": [
+				{
+					"name": "Get All Memberships (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/membership?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"membership"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Membership by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/membership/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"membership",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Membership Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/membership/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"membership",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Membership",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/membership",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"membership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Memberships (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/membership/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"membership",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Membership",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/membership/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"membership",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Membership by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/membership/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"membership",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Memberships (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/membership/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"membership",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order Management",
+			"item": [
+				{
+					"name": "Get All Orders (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/order?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"order"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/order/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/order/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Orders (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/order/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/order/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/order/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Orders (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/order/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment Management",
+			"item": [
+				{
+					"name": "Get All Payments (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/payment?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/payment/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/payment/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/payment",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payments (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/payment/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Payment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/payment/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payment by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/payment/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payments (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/payment/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment Type Management",
+			"item": [
+				{
+					"name": "Get All Payment Types (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/paymenttype?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymenttype"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Type by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/paymenttype/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymenttype",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Type Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/paymenttype/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymenttype",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payment Type",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/paymenttype",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymenttype"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payment Types (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/paymenttype/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymenttype",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Payment Type",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/paymenttype/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymenttype",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payment Type by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/paymenttype/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymenttype",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payment Types (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/paymenttype/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymenttype",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment Form Management",
+			"item": [
+				{
+					"name": "Get All Payment Forms (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/paymentform?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymentform"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Form by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/paymentform/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymentform",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Form Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/paymentform/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymentform",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payment Form",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/paymentform",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymentform"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payment Forms (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/paymentform/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymentform",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Payment Form",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/paymentform/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymentform",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payment Form by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/paymentform/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymentform",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payment Forms (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/paymentform/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"paymentform",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rocker Management",
+			"item": [
+				{
+					"name": "Get All Rockers (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rocker?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rocker"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rocker by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rocker/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rocker",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rocker Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rocker/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rocker",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Rocker",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rocker",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rocker"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Rockers (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rocker/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rocker",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Rocker",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rocker/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rocker",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Rocker by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rocker/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rocker",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Rockers (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rocker/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rocker",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rocker Group Management",
+			"item": [
+				{
+					"name": "Get All Rocker Groups (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rockergroup?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rockergroup"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rocker Group by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rockergroup/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rockergroup",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rocker Group Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rockergroup/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rockergroup",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Rocker Group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rockergroup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rockergroup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Rocker Groups (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rockergroup/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rockergroup",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Rocker Group",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rockergroup/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rockergroup",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Rocker Group by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rockergroup/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rockergroup",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Rocker Groups (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rockergroup/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rockergroup",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role Management",
+			"item": [
+				{
+					"name": "Get All Roles (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/role?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"role"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/role/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/role/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/role",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Roles (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/role/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/role/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/role/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Roles (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/role/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Setting Management",
+			"item": [
+				{
+					"name": "Get All Settings (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/setting?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"setting"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Setting by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/setting/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"setting",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Setting Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/setting/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"setting",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Setting",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/setting",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"setting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Settings (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/setting/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"setting",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Setting",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/setting/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"setting",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Setting by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/setting/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"setting",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Settings (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/setting/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"setting",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stop Management",
+			"item": [
+				{
+					"name": "Get All Stops (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/stop?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stop"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Stop by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/stop/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stop",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Stop Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/stop/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stop",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Stop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/stop",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Stops (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/stop/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stop",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Stop",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/stop/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stop",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Stop by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/stop/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stop",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Stops (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/stop/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"stop",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "System Log Management",
+			"item": [
+				{
+					"name": "Get All System Logs (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/systemlog?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"systemlog"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get System Log by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/systemlog/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"systemlog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get System Log Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/systemlog/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"systemlog",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create System Log",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/systemlog",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"systemlog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create System Logs (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/systemlog/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"systemlog",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update System Log",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/systemlog/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"systemlog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete System Log by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/systemlog/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"systemlog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete System Logs (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/systemlog/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"systemlog",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Term Management",
+			"item": [
+				{
+					"name": "Get All Terms (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/term?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"term"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Term by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/term/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"term",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Term Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/term/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"term",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Term",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/term",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"term"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Terms (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/term/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"term",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Term",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/term/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"term",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Term by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/term/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"term",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Terms (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/term/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"term",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Token Management",
+			"item": [
+				{
+					"name": "Get All Tokens (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/token?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/token/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/token/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tokens (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Token",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Token by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/token/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Tokens (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Use Health Management",
+			"item": [
+				{
+					"name": "Get All Use Healths (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/usehealth?page=0&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usehealth"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Use Health by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/usehealth/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usehealth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Use Health Count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/usehealth/count",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usehealth",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Use Health",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/usehealth",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usehealth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Use Healths (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/usehealth/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usehealth",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Use Health",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/usehealth/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usehealth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Use Health by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/usehealth/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usehealth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Use Healths (Batch)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/usehealth/batch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"usehealth",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

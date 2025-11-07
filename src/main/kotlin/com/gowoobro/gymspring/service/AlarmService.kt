@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -43,7 +44,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
             type = request.type,
             status = request.status,
             user = request.user,
-            date = request.date
+            date = request.date ?: LocalDateTime.now()
         )
         return alarmRepository.save(entity)
     }
@@ -56,7 +57,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
                 type = request.type,
                 status = request.status,
                 user = request.user,
-                date = request.date
+                date = request.date ?: LocalDateTime.now()
             )
         }
         return alarmRepository.saveAll(entities)
@@ -70,7 +71,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
             type = request.type,
             status = request.status,
             user = request.user,
-            date = request.date
+            date = request.date ?: LocalDateTime.now()
         )
         return alarmRepository.save(updated)
     }

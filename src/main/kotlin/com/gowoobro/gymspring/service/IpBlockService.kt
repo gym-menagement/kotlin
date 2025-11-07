@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -43,7 +44,7 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
             policy = request.policy,
             use = request.use,
             order = request.order,
-            date = request.date
+            date = request.date ?: LocalDateTime.now()
         )
         return ipblockRepository.save(entity)
     }
@@ -56,7 +57,7 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
                 policy = request.policy,
                 use = request.use,
                 order = request.order,
-                date = request.date
+                date = request.date ?: LocalDateTime.now()
             )
         }
         return ipblockRepository.saveAll(entities)
@@ -70,7 +71,7 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
             policy = request.policy,
             use = request.use,
             order = request.order,
-            date = request.date
+            date = request.date ?: LocalDateTime.now()
         )
         return ipblockRepository.save(updated)
     }

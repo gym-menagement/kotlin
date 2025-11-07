@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -49,7 +50,7 @@ class SettingService(private val settingRepository: SettingRepository) {
             type = request.type,
             data = request.data,
             order = request.order,
-            date = request.date
+            date = request.date ?: LocalDateTime.now()
         )
         return settingRepository.save(entity)
     }
@@ -65,7 +66,7 @@ class SettingService(private val settingRepository: SettingRepository) {
                 type = request.type,
                 data = request.data,
                 order = request.order,
-                date = request.date
+                date = request.date ?: LocalDateTime.now()
             )
         }
         return settingRepository.saveAll(entities)
@@ -82,7 +83,7 @@ class SettingService(private val settingRepository: SettingRepository) {
             type = request.type,
             data = request.data,
             order = request.order,
-            date = request.date
+            date = request.date ?: LocalDateTime.now()
         )
         return settingRepository.save(updated)
     }
