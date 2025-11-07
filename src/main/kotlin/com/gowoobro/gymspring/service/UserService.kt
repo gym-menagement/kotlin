@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -49,7 +50,7 @@ class UserService(private val userRepository: UserRepository) {
             use = request.use,
             logindate = request.logindate,
             lastchangepasswddate = request.lastchangepasswddate,
-            date = request.date
+            date = request.date ?: LocalDateTime.now()
         )
         return userRepository.save(entity)
     }
@@ -73,7 +74,7 @@ class UserService(private val userRepository: UserRepository) {
                 use = request.use,
                 logindate = request.logindate,
                 lastchangepasswddate = request.lastchangepasswddate,
-                date = request.date
+                date = request.date ?: LocalDateTime.now()
             )
         }
         return userRepository.saveAll(entities)
