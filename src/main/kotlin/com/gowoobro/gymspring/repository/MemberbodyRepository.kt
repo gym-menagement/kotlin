@@ -16,7 +16,6 @@ import java.math.BigDecimal
 interface MemberbodyRepository : JpaRepository<Memberbody, Long> {
     override fun findAll(pageable: Pageable): Page<Memberbody>
 
-
     fun findByUser(user: Long): List<Memberbody>
 
     fun findByHeight(height: BigDecimal): List<Memberbody>

@@ -16,7 +16,6 @@ import java.math.BigDecimal
 interface WorkoutlogRepository : JpaRepository<Workoutlog, Long> {
     override fun findAll(pageable: Pageable): Page<Workoutlog>
 
-
     fun findByUser(user: Long): List<Workoutlog>
 
     fun findByAttendance(attendance: Long): List<Workoutlog>

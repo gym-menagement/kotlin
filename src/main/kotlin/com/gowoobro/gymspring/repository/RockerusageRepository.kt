@@ -16,7 +16,6 @@ import java.math.BigDecimal
 interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     override fun findAll(pageable: Pageable): Page<Rockerusage>
 
-
     fun findByRocker(rocker: Long): List<Rockerusage>
 
     fun findByUser(user: Long): List<Rockerusage>

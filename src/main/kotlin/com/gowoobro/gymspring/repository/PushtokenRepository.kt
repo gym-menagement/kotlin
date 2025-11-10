@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface PushtokenRepository : JpaRepository<Pushtoken, Long> {
     override fun findAll(pageable: Pageable): Page<Pushtoken>
 
-
     fun findByUser(user: Long): List<Pushtoken>
 
     fun findByToken(token: String): List<Pushtoken>

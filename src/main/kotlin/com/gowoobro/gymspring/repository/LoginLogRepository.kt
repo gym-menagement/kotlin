@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface LoginlogRepository : JpaRepository<Loginlog, Long> {
     override fun findAll(pageable: Pageable): Page<Loginlog>
 
-
     fun findByIp(ip: String): List<Loginlog>
 
     fun findByIpvalue(ipvalue: Long): List<Loginlog>

@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface StopRepository : JpaRepository<Stop, Long> {
     override fun findAll(pageable: Pageable): Page<Stop>
 
-
     fun findByUsehelth(usehelth: Long): List<Stop>
 
     fun findByStartday(startday: LocalDateTime): List<Stop>

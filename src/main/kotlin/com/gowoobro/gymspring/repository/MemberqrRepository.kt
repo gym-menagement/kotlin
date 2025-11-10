@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface MemberqrRepository : JpaRepository<Memberqr, Long> {
     override fun findAll(pageable: Pageable): Page<Memberqr>
 
-
     fun findByUser(user: Long): List<Memberqr>
 
     fun findByCode(code: String): List<Memberqr>

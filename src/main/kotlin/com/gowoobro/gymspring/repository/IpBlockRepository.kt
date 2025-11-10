@@ -19,7 +19,6 @@ import com.gowoobro.gymspring.enums.ipblock.Use
 interface IpblockRepository : JpaRepository<Ipblock, Long> {
     override fun findAll(pageable: Pageable): Page<Ipblock>
 
-
     fun findByAddress(address: String): List<Ipblock>
 
     fun findByType(type: Type): List<Ipblock>

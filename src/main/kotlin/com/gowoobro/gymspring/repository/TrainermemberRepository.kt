@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface TrainermemberRepository : JpaRepository<Trainermember, Long> {
     override fun findAll(pageable: Pageable): Page<Trainermember>
 
-
     fun findByTrainer(trainer: Long): List<Trainermember>
 
     fun findByMember(member: Long): List<Trainermember>

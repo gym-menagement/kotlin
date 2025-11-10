@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface OrderRepository : JpaRepository<Order, Long> {
     override fun findAll(pageable: Pageable): Page<Order>
 
-
     fun findByMembership(membership: Long): List<Order>
 
     fun findByDate(date: LocalDateTime): List<Order>

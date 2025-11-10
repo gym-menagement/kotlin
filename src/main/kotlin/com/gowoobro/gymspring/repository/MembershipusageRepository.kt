@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     override fun findAll(pageable: Pageable): Page<Membershipusage>
 
-
     fun findByMembership(membership: Long): List<Membershipusage>
 
     fun findByUser(user: Long): List<Membershipusage>

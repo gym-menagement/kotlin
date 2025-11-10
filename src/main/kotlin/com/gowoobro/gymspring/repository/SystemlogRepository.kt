@@ -17,7 +17,6 @@ import com.gowoobro.gymspring.enums.systemlog.Type
 interface SystemlogRepository : JpaRepository<Systemlog, Long> {
     override fun findAll(pageable: Pageable): Page<Systemlog>
 
-
     fun findByType(type: Type): List<Systemlog>
 
     fun findByContent(content: String): List<Systemlog>

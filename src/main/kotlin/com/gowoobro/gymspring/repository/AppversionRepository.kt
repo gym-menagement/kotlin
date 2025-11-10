@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface AppversionRepository : JpaRepository<Appversion, Long> {
     override fun findAll(pageable: Pageable): Page<Appversion>
 
-
     fun findByPlatform(platform: String): List<Appversion>
 
     fun findByVersion(version: String): List<Appversion>

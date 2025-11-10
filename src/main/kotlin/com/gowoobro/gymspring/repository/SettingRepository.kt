@@ -17,7 +17,6 @@ import com.gowoobro.gymspring.enums.setting.Type
 interface SettingRepository : JpaRepository<Setting, Long> {
     override fun findAll(pageable: Pageable): Page<Setting>
 
-
     fun findByCategory(category: String): List<Setting>
 
     fun findByName(name: String): List<Setting>

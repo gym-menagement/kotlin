@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface GymRepository : JpaRepository<Gym, Long> {
     override fun findAll(pageable: Pageable): Page<Gym>
 
-
     fun findByName(name: String): List<Gym>
 
     fun findByDate(date: LocalDateTime): List<Gym>

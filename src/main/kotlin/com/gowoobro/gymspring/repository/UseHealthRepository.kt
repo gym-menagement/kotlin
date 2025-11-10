@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface UsehealthRepository : JpaRepository<Usehealth, Long> {
     override fun findAll(pageable: Pageable): Page<Usehealth>
 
-
     fun findByOrder(order: Long): List<Usehealth>
 
     fun findByHealth(health: Long): List<Usehealth>

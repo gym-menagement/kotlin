@@ -20,7 +20,6 @@ import com.gowoobro.gymspring.enums.user.Role
 interface UserRepository : JpaRepository<User, Long> {
     override fun findAll(pageable: Pageable): Page<User>
 
-
     fun findByLoginid(loginid: String): List<User>
 
     fun findByPasswd(passwd: String): List<User>

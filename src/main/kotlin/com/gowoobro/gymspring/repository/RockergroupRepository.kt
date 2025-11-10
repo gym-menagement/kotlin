@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface RockergroupRepository : JpaRepository<Rockergroup, Long> {
     override fun findAll(pageable: Pageable): Page<Rockergroup>
 
-
     fun findByGym(gym: Long): List<Rockergroup>
 
     fun findByName(name: String): List<Rockergroup>

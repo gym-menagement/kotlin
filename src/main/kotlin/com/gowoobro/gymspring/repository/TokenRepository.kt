@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 interface TokenRepository : JpaRepository<Token, Long> {
     override fun findAll(pageable: Pageable): Page<Token>
 
-
     fun findByUser(user: Long): List<Token>
 
     fun findByToken(token: String): List<Token>

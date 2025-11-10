@@ -18,7 +18,6 @@ import com.gowoobro.gymspring.enums.alarm.Status
 interface AlarmRepository : JpaRepository<Alarm, Long> {
     override fun findAll(pageable: Pageable): Page<Alarm>
 
-
     fun findByTitle(title: String): List<Alarm>
 
     fun findByContent(content: String): List<Alarm>
