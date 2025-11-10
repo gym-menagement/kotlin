@@ -23,15 +23,15 @@ DROP TABLE IF EXISTS `alarm_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `alarm_tb` (
-  `al_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `al_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `al_content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `al_type` int(11) NOT NULL,
-  `al_status` int(11) NOT NULL,
-  `al_user` bigint(20) NOT NULL,
-  `al_date` datetime NOT NULL,
+  `al_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '알람 ID',
+  `al_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '알람 제목',
+  `al_content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '알람 내용',
+  `al_type` int(11) NOT NULL COMMENT '알람 타입 (NOTICE:공지, WARNING:경고, ERROR:에러, INFO:정보)',
+  `al_status` int(11) NOT NULL COMMENT '알람 상태 (SUCCESS:성공, FAIL:실패, PENDING:대기)',
+  `al_user` bigint(20) NOT NULL COMMENT '대상 회원 ID (user_tb 참조)',
+  `al_date` datetime NOT NULL COMMENT '등록일',
   PRIMARY KEY (`al_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='알람 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,12 +42,12 @@ DROP TABLE IF EXISTS `daytype_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `daytype_tb` (
-  `dt_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `dt_gym` bigint(20) DEFAULT NULL,
-  `dt_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dt_date` datetime DEFAULT NULL,
+  `dt_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '요일 타입 ID',
+  `dt_gym` bigint(20) DEFAULT NULL COMMENT '헬스장 ID (gym_tb 참조)',
+  `dt_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '요일 타입명 (평일/주말/공휴일 등)',
+  `dt_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`dt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='요일 타입 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,12 +58,12 @@ DROP TABLE IF EXISTS `discount_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `discount_tb` (
-  `d_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `d_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `d_discount` int(11) DEFAULT NULL,
-  `d_date` datetime DEFAULT NULL,
+  `d_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '할인 ID',
+  `d_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '할인명',
+  `d_discount` int(11) DEFAULT NULL COMMENT '할인율(%)',
+  `d_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`d_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='할인 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,11 +74,11 @@ DROP TABLE IF EXISTS `gym_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gym_tb` (
-  `g_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `g_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `g_date` datetime DEFAULT NULL,
+  `g_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '헬스장 ID',
+  `g_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '헬스장명',
+  `g_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`g_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='헬스장 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,18 +89,18 @@ DROP TABLE IF EXISTS `health_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `health_tb` (
-  `h_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `h_category` bigint(20) DEFAULT NULL,
-  `h_term` bigint(20) DEFAULT NULL,
-  `h_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `h_count` int(11) DEFAULT NULL,
-  `h_cost` int(11) DEFAULT NULL,
-  `h_discount` bigint(20) DEFAULT NULL,
-  `h_costdiscount` int(11) DEFAULT NULL,
-  `h_content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `h_date` datetime DEFAULT NULL,
+  `h_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '운동권 ID',
+  `h_category` bigint(20) DEFAULT NULL COMMENT '운동권 카테고리 ID (healthcategory_tb 참조)',
+  `h_term` bigint(20) DEFAULT NULL COMMENT '기간 ID (term_tb 참조)',
+  `h_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '운동권명',
+  `h_count` int(11) DEFAULT NULL COMMENT '이용 가능 횟수',
+  `h_cost` int(11) DEFAULT NULL COMMENT '원가',
+  `h_discount` bigint(20) DEFAULT NULL COMMENT '할인 ID (discount_tb 참조)',
+  `h_costdiscount` int(11) DEFAULT NULL COMMENT '할인가',
+  `h_content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '운동권 설명',
+  `h_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`h_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='운동권 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,12 +111,12 @@ DROP TABLE IF EXISTS `healthcategory_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `healthcategory_tb` (
-  `hc_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `hc_gym` bigint(20) DEFAULT NULL,
-  `hc_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hc_date` datetime DEFAULT NULL,
+  `hc_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '운동권 카테고리 ID',
+  `hc_gym` bigint(20) DEFAULT NULL COMMENT '헬스장 ID (gym_tb 참조)',
+  `hc_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '카테고리명 (헬스/PT/요가 등)',
+  `hc_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`hc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='운동권 카테고리 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,15 +127,15 @@ DROP TABLE IF EXISTS `ipblock_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ipblock_tb` (
-  `ib_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ib_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ib_type` int(11) NOT NULL,
-  `ib_policy` int(11) NOT NULL,
-  `ib_use` int(11) NOT NULL,
-  `ib_order` int(11) NOT NULL,
-  `ib_date` datetime NOT NULL,
+  `ib_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'IP 차단 ID',
+  `ib_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'IP 주소',
+  `ib_type` int(11) NOT NULL COMMENT 'IP 타입 (IPV4:0, IPV6:1, RANGE:2)',
+  `ib_policy` int(11) NOT NULL COMMENT '정책 (ALLOW:허용, DENY:거부, BLOCK:차단)',
+  `ib_use` int(11) NOT NULL COMMENT '사용 여부 (USE:사용, NOTUSE:미사용)',
+  `ib_order` int(11) NOT NULL COMMENT '우선순위',
+  `ib_date` datetime NOT NULL COMMENT '등록일',
   PRIMARY KEY (`ib_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='IP 차단 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,13 +146,13 @@ DROP TABLE IF EXISTS `loginlog_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `loginlog_tb` (
-  `ll_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ll_ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ll_ipvalue` bigint(20) NOT NULL,
-  `ll_user` bigint(20) NOT NULL,
-  `ll_date` datetime NOT NULL,
+  `ll_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '로그인 로그 ID',
+  `ll_ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '접속 IP 주소',
+  `ll_ipvalue` bigint(20) NOT NULL COMMENT 'IP 주소 숫자값',
+  `ll_user` bigint(20) NOT NULL COMMENT '회원 ID (user_tb 참조)',
+  `ll_date` datetime NOT NULL COMMENT '로그인 일시',
   PRIMARY KEY (`ll_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='로그인 로그 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,18 +163,18 @@ DROP TABLE IF EXISTS `membership_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `membership_tb` (
-  `m_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `m_gym` bigint(20) DEFAULT NULL,
-  `m_user` bigint(20) DEFAULT NULL,
-  `m_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `m_sex` int(11) DEFAULT NULL,
-  `m_birth` datetime DEFAULT NULL,
-  `m_phonenum` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `m_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `m_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `m_date` datetime DEFAULT NULL,
+  `m_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '회원 ID',
+  `m_gym` bigint(20) DEFAULT NULL COMMENT '헬스장 ID (gym_tb 참조)',
+  `m_user` bigint(20) DEFAULT NULL COMMENT '사용자 ID (user_tb 참조)',
+  `m_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '회원명',
+  `m_sex` int(11) DEFAULT NULL COMMENT '성별 (0:남성, 1:여성)',
+  `m_birth` datetime DEFAULT NULL COMMENT '생년월일',
+  `m_phonenum` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '전화번호',
+  `m_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '주소',
+  `m_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '프로필 이미지',
+  `m_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`m_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='회원 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,11 +185,11 @@ DROP TABLE IF EXISTS `order_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_tb` (
-  `o_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `o_membership` bigint(20) DEFAULT NULL,
-  `o_date` datetime DEFAULT NULL,
+  `o_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '주문 ID',
+  `o_membership` bigint(20) DEFAULT NULL COMMENT '회원 ID (membership_tb 참조)',
+  `o_date` datetime DEFAULT NULL COMMENT '주문일',
   PRIMARY KEY (`o_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='주문 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,14 +200,14 @@ DROP TABLE IF EXISTS `payment_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `payment_tb` (
-  `p_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `p_gym` bigint(20) DEFAULT NULL,
-  `p_order` bigint(20) DEFAULT NULL,
-  `p_membership` bigint(20) DEFAULT NULL,
-  `p_cost` int(11) DEFAULT NULL,
-  `p_date` datetime DEFAULT NULL,
+  `p_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '결제 ID',
+  `p_gym` bigint(20) DEFAULT NULL COMMENT '헬스장 ID (gym_tb 참조)',
+  `p_order` bigint(20) DEFAULT NULL COMMENT '주문 ID (order_tb 참조)',
+  `p_membership` bigint(20) DEFAULT NULL COMMENT '회원 ID (membership_tb 참조)',
+  `p_cost` int(11) DEFAULT NULL COMMENT '결제 금액',
+  `p_date` datetime DEFAULT NULL COMMENT '결제일',
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='결제 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,14 +218,14 @@ DROP TABLE IF EXISTS `paymentform_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `paymentform_tb` (
-  `pf_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `pf_gym` bigint(20) DEFAULT NULL,
-  `pf_payment` bigint(20) DEFAULT NULL,
-  `pf_type` bigint(20) DEFAULT NULL,
-  `pf_cost` int(11) DEFAULT NULL,
-  `pf_date` datetime DEFAULT NULL,
+  `pf_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '결제 상세 ID',
+  `pf_gym` bigint(20) DEFAULT NULL COMMENT '헬스장 ID (gym_tb 참조)',
+  `pf_payment` bigint(20) DEFAULT NULL COMMENT '결제 ID (payment_tb 참조)',
+  `pf_type` bigint(20) DEFAULT NULL COMMENT '결제 타입 ID (paymenttype_tb 참조)',
+  `pf_cost` int(11) DEFAULT NULL COMMENT '결제 금액',
+  `pf_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`pf_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='결제 상세 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,12 +236,12 @@ DROP TABLE IF EXISTS `paymenttype_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `paymenttype_tb` (
-  `pt_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `pt_gym` bigint(20) DEFAULT NULL,
-  `pt_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pt_date` datetime DEFAULT NULL,
+  `pt_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '결제 타입 ID',
+  `pt_gym` bigint(20) DEFAULT NULL COMMENT '헬스장 ID (gym_tb 참조)',
+  `pt_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '결제 타입명 (현금/카드/계좌이체 등)',
+  `pt_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`pt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='결제 타입 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,13 +252,13 @@ DROP TABLE IF EXISTS `rocker_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rocker_tb` (
-  `r_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `r_group` bigint(20) DEFAULT NULL,
-  `r_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `r_available` int(11) DEFAULT NULL,
-  `r_date` datetime DEFAULT NULL,
+  `r_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '락커 ID',
+  `r_group` bigint(20) DEFAULT NULL COMMENT '락커 그룹 ID (rockergroup_tb 참조)',
+  `r_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '락커 번호/이름',
+  `r_available` int(11) DEFAULT NULL COMMENT '사용 가능 여부 (0:사용중, 1:사용가능)',
+  `r_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='락커 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,12 +269,12 @@ DROP TABLE IF EXISTS `rockergroup_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rockergroup_tb` (
-  `rg_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `rg_gym` bigint(20) DEFAULT NULL,
-  `rg_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rg_date` datetime DEFAULT NULL,
+  `rg_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '락커 그룹 ID',
+  `rg_gym` bigint(20) DEFAULT NULL COMMENT '헬스장 ID (gym_tb 참조)',
+  `rg_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '락커 그룹명 (남자락커실/여자락커실 등)',
+  `rg_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`rg_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='락커 그룹 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,13 +285,13 @@ DROP TABLE IF EXISTS `role_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `role_tb` (
-  `r_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `r_gym` bigint(20) DEFAULT NULL,
-  `r_role` int(11) DEFAULT NULL,
-  `r_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `r_date` datetime DEFAULT NULL,
+  `r_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '역할 ID',
+  `r_gym` bigint(20) DEFAULT NULL COMMENT '헬스장 ID (gym_tb 참조)',
+  `r_role` int(11) DEFAULT NULL COMMENT '역할 타입 (MEMBER:회원, TRAINER:트레이너, STAFF:직원, GYM_ADMIN:헬스장관리자, PLATFORM_ADMIN:플랫폼관리자)',
+  `r_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '역할명',
+  `r_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='역할 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,18 +302,18 @@ DROP TABLE IF EXISTS `setting_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `setting_tb` (
-  `se_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `se_category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `se_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `se_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `se_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `se_remark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `se_type` int(11) NOT NULL,
-  `se_data` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `se_order` int(11) NOT NULL,
-  `se_date` datetime NOT NULL,
+  `se_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '설정 ID',
+  `se_category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '설정 카테고리',
+  `se_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '설정명',
+  `se_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '설정 키',
+  `se_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '설정 값',
+  `se_remark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '설명',
+  `se_type` int(11) NOT NULL COMMENT '설정 타입 (STRING:문자열, NUMBER:숫자, BOOLEAN:참거짓)',
+  `se_data` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '추가 데이터 (JSON 등)',
+  `se_order` int(11) NOT NULL COMMENT '정렬 순서',
+  `se_date` datetime NOT NULL COMMENT '등록일',
   PRIMARY KEY (`se_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='설정 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -324,14 +324,14 @@ DROP TABLE IF EXISTS `stop_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stop_tb` (
-  `s_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `s_usehelth` bigint(20) DEFAULT NULL,
-  `s_startday` datetime DEFAULT NULL,
-  `s_endday` datetime DEFAULT NULL,
-  `s_count` int(11) DEFAULT NULL,
-  `s_date` datetime DEFAULT NULL,
+  `s_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '일시정지 ID',
+  `s_usehelth` bigint(20) DEFAULT NULL COMMENT '운동권 사용 ID (usehealth_tb 참조)',
+  `s_startday` datetime DEFAULT NULL COMMENT '일시정지 시작일',
+  `s_endday` datetime DEFAULT NULL COMMENT '일시정지 종료일',
+  `s_count` int(11) DEFAULT NULL COMMENT '일시정지 일수',
+  `s_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`s_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='회원권 일시정지 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,13 +342,13 @@ DROP TABLE IF EXISTS `systemlog_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `systemlog_tb` (
-  `sl_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `sl_type` int(11) NOT NULL,
-  `sl_content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sl_result` int(11) NOT NULL,
-  `sl_date` datetime NOT NULL,
+  `sl_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '시스템 로그 ID',
+  `sl_type` int(11) NOT NULL COMMENT '로그 타입 (SYSTEM:시스템, USER:사용자, ADMIN:관리자, ERROR:에러)',
+  `sl_content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '로그 내용',
+  `sl_result` int(11) NOT NULL COMMENT '결과 (SUCCESS:성공, FAIL:실패)',
+  `sl_date` datetime NOT NULL COMMENT '발생일시',
   PRIMARY KEY (`sl_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='시스템 로그 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -359,14 +359,14 @@ DROP TABLE IF EXISTS `term_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `term_tb` (
-  `t_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `t_gym` bigint(20) DEFAULT NULL,
-  `t_daytype` bigint(20) DEFAULT NULL,
-  `t_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `t_term` int(11) DEFAULT NULL,
-  `t_date` datetime DEFAULT NULL,
+  `t_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '기간 ID',
+  `t_gym` bigint(20) DEFAULT NULL COMMENT '헬스장 ID (gym_tb 참조)',
+  `t_daytype` bigint(20) DEFAULT NULL COMMENT '요일 타입 ID (daytype_tb 참조)',
+  `t_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '기간명 (1개월/3개월/6개월 등)',
+  `t_term` int(11) DEFAULT NULL COMMENT '기간 일수',
+  `t_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='기간 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -377,13 +377,13 @@ DROP TABLE IF EXISTS `token_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `token_tb` (
-  `to_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `to_user` bigint(20) NOT NULL,
-  `to_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `to_status` int(11) NOT NULL,
-  `to_date` datetime NOT NULL,
+  `to_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '토큰 ID',
+  `to_user` bigint(20) NOT NULL COMMENT '회원 ID (user_tb 참조)',
+  `to_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'JWT 토큰',
+  `to_status` int(11) NOT NULL COMMENT '토큰 상태 (ACTIVE:활성, EXPIRED:만료, REVOKED:폐기)',
+  `to_date` datetime NOT NULL COMMENT '발급일시',
   PRIMARY KEY (`to_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='인증 토큰 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -394,18 +394,18 @@ DROP TABLE IF EXISTS `usehealth_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usehealth_tb` (
-  `uh_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `uh_order` bigint(20) DEFAULT NULL,
-  `uh_health` bigint(20) DEFAULT NULL,
-  `uh_user` bigint(20) DEFAULT NULL,
-  `uh_rocker` bigint(20) DEFAULT NULL,
-  `uh_term` bigint(20) DEFAULT NULL,
-  `uh_discount` bigint(20) DEFAULT NULL,
-  `uh_startday` datetime DEFAULT NULL,
-  `uh_endday` datetime DEFAULT NULL,
-  `uh_date` datetime DEFAULT NULL,
+  `uh_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '운동권 사용 ID',
+  `uh_order` bigint(20) DEFAULT NULL COMMENT '주문 ID (order_tb 참조)',
+  `uh_health` bigint(20) DEFAULT NULL COMMENT '운동권 ID (health_tb 참조)',
+  `uh_user` bigint(20) DEFAULT NULL COMMENT '회원 ID (user_tb 참조)',
+  `uh_rocker` bigint(20) DEFAULT NULL COMMENT '락커 ID (rocker_tb 참조)',
+  `uh_term` bigint(20) DEFAULT NULL COMMENT '기간 ID (term_tb 참조)',
+  `uh_discount` bigint(20) DEFAULT NULL COMMENT '할인 ID (discount_tb 참조)',
+  `uh_startday` datetime DEFAULT NULL COMMENT '시작일',
+  `uh_endday` datetime DEFAULT NULL COMMENT '종료일',
+  `uh_date` datetime DEFAULT NULL COMMENT '등록일',
   PRIMARY KEY (`uh_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='운동권 사용 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -416,26 +416,26 @@ DROP TABLE IF EXISTS `user_tb`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_tb` (
-  `u_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `u_loginid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `u_passwd` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `u_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `u_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `u_tel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `u_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `u_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `u_sex` int(11) DEFAULT NULL,
-  `u_birth` datetime DEFAULT NULL,
-  `u_type` int(11) NOT NULL,
-  `u_connectid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `u_level` int(11) NOT NULL,
-  `u_role` int(11) DEFAULT NULL,
-  `u_use` int(11) DEFAULT NULL,
-  `u_logindate` datetime DEFAULT NULL,
-  `u_lastchangepasswddate` datetime DEFAULT NULL,
-  `u_date` datetime DEFAULT NULL,
+  `u_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '사용자 ID',
+  `u_loginid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '로그인 ID',
+  `u_passwd` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '비밀번호 (암호화)',
+  `u_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '이메일',
+  `u_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '이름',
+  `u_tel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '전화번호',
+  `u_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '주소',
+  `u_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '프로필 이미지',
+  `u_sex` int(11) DEFAULT NULL COMMENT '성별 (0:남성, 1:여성)',
+  `u_birth` datetime DEFAULT NULL COMMENT '생년월일',
+  `u_type` int(11) NOT NULL COMMENT '가입 타입 (NORMAL:일반, KAKAO:카카오, NAVER:네이버, GOOGLE:구글, APPLE:애플)',
+  `u_connectid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'SNS 연동 ID',
+  `u_level` int(11) NOT NULL COMMENT '권한 레벨 (1:일반회원, 2:트레이너, 3:헬스장관리자, 4:플랫폼관리자, 9:최고관리자)',
+  `u_role` int(11) DEFAULT NULL COMMENT '역할 (MEMBER:회원, TRAINER:트레이너, STAFF:직원, GYM_ADMIN:헬스장관리자, PLATFORM_ADMIN:플랫폼관리자)',
+  `u_use` int(11) DEFAULT NULL COMMENT '사용 여부 (USE:사용, NOTUSE:미사용)',
+  `u_logindate` datetime DEFAULT NULL COMMENT '최근 로그인 일시',
+  `u_lastchangepasswddate` datetime DEFAULT NULL COMMENT '마지막 비밀번호 변경일',
+  `u_date` datetime DEFAULT NULL COMMENT '가입일',
   PRIMARY KEY (`u_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='사용자 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
