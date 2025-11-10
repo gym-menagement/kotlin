@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.rocker.Available
 
 
 @RestController
@@ -48,7 +49,7 @@ class RockerController(private val rockerService: RockerService) {
     }
 
     @GetMapping("/search/available")
-    fun getRockerByAvailable(@RequestParam available: Int): ResponseEntity<List<Rocker>> {
+    fun getRockerByAvailable(@RequestParam available: Available): ResponseEntity<List<Rocker>> {
         val result = rockerService.findByAvailable(available)
         return ResponseEntity.ok(result)
     }

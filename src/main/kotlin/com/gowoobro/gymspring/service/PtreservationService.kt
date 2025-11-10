@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.ptreservation.Status
 
 
 @Service
@@ -60,7 +61,7 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
         return ptreservationRepository.findByDuration(duration)
     }
 
-    fun findByStatus(status: Int): List<Ptreservation> {
+    fun findByStatus(status: Status): List<Ptreservation> {
         return ptreservationRepository.findByStatus(status)
     }
 

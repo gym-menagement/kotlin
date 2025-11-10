@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.membership.Sex
 
 @Entity
 @Table(name = "membership_tb")
@@ -18,7 +19,7 @@ data class Membership(
     @Column(name = "m_name")
     val name: String = "",
     @Column(name = "m_sex")
-    val sex: Int = 0,
+    val sex: Sex = Sex.0,
     @Column(name = "m_birth")
     val birth: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "m_phonenum")
@@ -35,7 +36,7 @@ data class MembershipCreateRequest(
     val gym: Long = 0L,
     val user: Long = 0L,
     val name: String = "",
-    val sex: Int = 0,
+    val sex: Sex = Sex.0,
     val birth: LocalDateTime? = LocalDateTime.now(),
     val phonenum: String = "",
     val address: String = "",
@@ -48,7 +49,7 @@ data class MembershipUpdateRequest(
     val gym: Long = 0L,
     val user: Long = 0L,
     val name: String = "",
-    val sex: Int = 0,
+    val sex: Sex = Sex.0,
     val birth: LocalDateTime? = LocalDateTime.now(),
     val phonenum: String = "",
     val address: String = "",

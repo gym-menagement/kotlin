@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.inquiry.Type
+import com.gowoobro.gymspring.enums.inquiry.Status
 
 
 @RestController
@@ -48,7 +50,7 @@ class InquiryController(private val inquiryService: InquiryService) {
     }
 
     @GetMapping("/search/type")
-    fun getInquiryByType(@RequestParam type: Int): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByType(@RequestParam type: Type): ResponseEntity<List<Inquiry>> {
         val result = inquiryService.findByType(type)
         return ResponseEntity.ok(result)
     }
@@ -66,7 +68,7 @@ class InquiryController(private val inquiryService: InquiryService) {
     }
 
     @GetMapping("/search/status")
-    fun getInquiryByStatus(@RequestParam status: Int): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByStatus(@RequestParam status: Status): ResponseEntity<List<Inquiry>> {
         val result = inquiryService.findByStatus(status)
         return ResponseEntity.ok(result)
     }

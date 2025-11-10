@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.token.Status
 
 
 @Service
@@ -40,7 +41,7 @@ class TokenService(private val tokenRepository: TokenRepository) {
         return tokenRepository.findByToken(token)
     }
 
-    fun findByStatus(status: Int): List<Token> {
+    fun findByStatus(status: Status): List<Token> {
         return tokenRepository.findByStatus(status)
     }
 

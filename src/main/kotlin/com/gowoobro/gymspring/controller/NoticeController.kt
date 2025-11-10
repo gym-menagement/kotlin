@@ -9,6 +9,11 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.notice.Type
+import com.gowoobro.gymspring.enums.notice.Ispopup
+import com.gowoobro.gymspring.enums.notice.Ispush
+import com.gowoobro.gymspring.enums.notice.Target
+import com.gowoobro.gymspring.enums.notice.Status
 
 
 @RestController
@@ -54,25 +59,25 @@ class NoticeController(private val noticeService: NoticeService) {
     }
 
     @GetMapping("/search/type")
-    fun getNoticeByType(@RequestParam type: Int): ResponseEntity<List<Notice>> {
+    fun getNoticeByType(@RequestParam type: Type): ResponseEntity<List<Notice>> {
         val result = noticeService.findByType(type)
         return ResponseEntity.ok(result)
     }
 
     @GetMapping("/search/ispopup")
-    fun getNoticeByIspopup(@RequestParam ispopup: Int): ResponseEntity<List<Notice>> {
+    fun getNoticeByIspopup(@RequestParam ispopup: Ispopup): ResponseEntity<List<Notice>> {
         val result = noticeService.findByIspopup(ispopup)
         return ResponseEntity.ok(result)
     }
 
     @GetMapping("/search/ispush")
-    fun getNoticeByIspush(@RequestParam ispush: Int): ResponseEntity<List<Notice>> {
+    fun getNoticeByIspush(@RequestParam ispush: Ispush): ResponseEntity<List<Notice>> {
         val result = noticeService.findByIspush(ispush)
         return ResponseEntity.ok(result)
     }
 
     @GetMapping("/search/target")
-    fun getNoticeByTarget(@RequestParam target: Int): ResponseEntity<List<Notice>> {
+    fun getNoticeByTarget(@RequestParam target: Target): ResponseEntity<List<Notice>> {
         val result = noticeService.findByTarget(target)
         return ResponseEntity.ok(result)
     }
@@ -96,7 +101,7 @@ class NoticeController(private val noticeService: NoticeService) {
     }
 
     @GetMapping("/search/status")
-    fun getNoticeByStatus(@RequestParam status: Int): ResponseEntity<List<Notice>> {
+    fun getNoticeByStatus(@RequestParam status: Status): ResponseEntity<List<Notice>> {
         val result = noticeService.findByStatus(status)
         return ResponseEntity.ok(result)
     }

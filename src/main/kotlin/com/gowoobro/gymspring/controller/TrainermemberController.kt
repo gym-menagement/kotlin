@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.trainermember.Status
 
 
 @RestController
@@ -66,7 +67,7 @@ class TrainermemberController(private val trainermemberService: TrainermemberSer
     }
 
     @GetMapping("/search/status")
-    fun getTrainermemberByStatus(@RequestParam status: Int): ResponseEntity<List<Trainermember>> {
+    fun getTrainermemberByStatus(@RequestParam status: Status): ResponseEntity<List<Trainermember>> {
         val result = trainermemberService.findByStatus(status)
         return ResponseEntity.ok(result)
     }

@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.membershipusage.Type
+import com.gowoobro.gymspring.enums.membershipusage.Status
 
 
 @Repository
@@ -20,7 +22,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
 
     fun findByUser(user: Long): List<Membershipusage>
 
-    fun findByType(type: Int): List<Membershipusage>
+    fun findByType(type: Type): List<Membershipusage>
 
     fun findByTotaldays(totaldays: Int): List<Membershipusage>
 
@@ -38,7 +40,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
 
     fun findByEnddate(enddate: LocalDateTime): List<Membershipusage>
 
-    fun findByStatus(status: Int): List<Membershipusage>
+    fun findByStatus(status: Status): List<Membershipusage>
 
     fun findByPausedays(pausedays: Int): List<Membershipusage>
 

@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.memberqr.Isactive
 
 @Entity
 @Table(name = "memberqr_tb")
@@ -18,7 +19,7 @@ data class Memberqr(
     @Column(name = "mq_imageurl")
     val imageurl: String = "",
     @Column(name = "mq_isactive")
-    val isactive: Int = 0,
+    val isactive: Isactive = Isactive.0,
     @Column(name = "mq_expiredate")
     val expiredate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "mq_generateddate")
@@ -33,7 +34,7 @@ data class MemberqrCreateRequest(
     val user: Long = 0L,
     val code: String = "",
     val imageurl: String = "",
-    val isactive: Int = 0,
+    val isactive: Isactive = Isactive.0,
     val expiredate: LocalDateTime? = LocalDateTime.now(),
     val generateddate: LocalDateTime? = LocalDateTime.now(),
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
@@ -45,7 +46,7 @@ data class MemberqrUpdateRequest(
     val user: Long = 0L,
     val code: String = "",
     val imageurl: String = "",
-    val isactive: Int = 0,
+    val isactive: Isactive = Isactive.0,
     val expiredate: LocalDateTime? = LocalDateTime.now(),
     val generateddate: LocalDateTime? = LocalDateTime.now(),
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),

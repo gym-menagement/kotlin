@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.inquiry.Type
+import com.gowoobro.gymspring.enums.inquiry.Status
 
 
 @Repository
@@ -20,13 +22,13 @@ interface InquiryRepository : JpaRepository<Inquiry, Long> {
 
     fun findByGym(gym: Long): List<Inquiry>
 
-    fun findByType(type: Int): List<Inquiry>
+    fun findByType(type: Type): List<Inquiry>
 
     fun findByTitle(title: String): List<Inquiry>
 
     fun findByContent(content: String): List<Inquiry>
 
-    fun findByStatus(status: Int): List<Inquiry>
+    fun findByStatus(status: Status): List<Inquiry>
 
     fun findByAnswer(answer: String): List<Inquiry>
 

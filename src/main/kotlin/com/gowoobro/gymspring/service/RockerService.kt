@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.rocker.Available
 
 
 @Service
@@ -40,7 +41,7 @@ class RockerService(private val rockerRepository: RockerRepository) {
         return rockerRepository.findByName(name)
     }
 
-    fun findByAvailable(available: Int): List<Rocker> {
+    fun findByAvailable(available: Available): List<Rocker> {
         return rockerRepository.findByAvailable(available)
     }
 

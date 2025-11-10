@@ -2,31 +2,31 @@ package com.gowoobro.gymspring.enums.user
 
 
 enum class Level {
-    NORMAL,  // 일반
-    MANAGER,  // 팀장
-    ADMIN,  // 관리자
-    SUPERADMIN,  // 승인관리자
-    ROOTADMIN,  // 전체관리자
+    1,  // 일반회원
+    2,  // 트레이너
+    3,  // 헬스장관리자
+    4,  // 플랫폼관리자
+    9,  // 최고관리자
 ;
 
     companion object {
         fun getDisplayName(value: Level): String {
             return when (value) {
-                NORMAL -> "일반"
-                MANAGER -> "팀장"
-                ADMIN -> "관리자"
-                SUPERADMIN -> "승인관리자"
-                ROOTADMIN -> "전체관리자"
+                1 -> "일반회원"
+                2 -> "트레이너"
+                3 -> "헬스장관리자"
+                4 -> "플랫폼관리자"
+                9 -> "최고관리자"
             }
         }
 
         fun fromString(value: String): Level? {
             return when (value) {
-                "일반" -> NORMAL
-                "팀장" -> MANAGER
-                "관리자" -> ADMIN
-                "승인관리자" -> SUPERADMIN
-                "전체관리자" -> ROOTADMIN
+                "일반회원" -> 1
+                "트레이너" -> 2
+                "헬스장관리자" -> 3
+                "플랫폼관리자" -> 4
+                "최고관리자" -> 9
                 else -> null
             }
         }
@@ -92,34 +92,55 @@ enum class Type {
 
 
 enum class Role {
-    SUPERVISOR,  // 감독
-    COACH,  // 코치
-    PARENT,  // 학부모
-    PLAYER,  // 현역선수
-    USE,  // 동호회
-    NORMAL,  // 일반인
+    MEMBER,  // 회원
+    TRAINER,  // 트레이너
+    STAFF,  // 직원
+    GYM_ADMIN,  // 헬스장관리자
+    PLATFORM_ADMIN,  // 플랫폼관리자
 ;
 
     companion object {
         fun getDisplayName(value: Role): String {
             return when (value) {
-                SUPERVISOR -> "감독"
-                COACH -> "코치"
-                PARENT -> "학부모"
-                PLAYER -> "현역선수"
-                USE -> "동호회"
-                NORMAL -> "일반인"
+                MEMBER -> "회원"
+                TRAINER -> "트레이너"
+                STAFF -> "직원"
+                GYM_ADMIN -> "헬스장관리자"
+                PLATFORM_ADMIN -> "플랫폼관리자"
             }
         }
 
         fun fromString(value: String): Role? {
             return when (value) {
-                "감독" -> SUPERVISOR
-                "코치" -> COACH
-                "학부모" -> PARENT
-                "현역선수" -> PLAYER
-                "동호회" -> USE
-                "일반인" -> NORMAL
+                "회원" -> MEMBER
+                "트레이너" -> TRAINER
+                "직원" -> STAFF
+                "헬스장관리자" -> GYM_ADMIN
+                "플랫폼관리자" -> PLATFORM_ADMIN
+                else -> null
+            }
+        }
+    }
+}
+
+
+enum class Sex {
+    0,  // 남성
+    1,  // 여성
+;
+
+    companion object {
+        fun getDisplayName(value: Sex): String {
+            return when (value) {
+                0 -> "남성"
+                1 -> "여성"
+            }
+        }
+
+        fun fromString(value: String): Sex? {
+            return when (value) {
+                "남성" -> 0
+                "여성" -> 1
                 else -> null
             }
         }

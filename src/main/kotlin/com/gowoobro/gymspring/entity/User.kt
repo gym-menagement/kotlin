@@ -7,6 +7,7 @@ import com.gowoobro.gymspring.enums.user.Level
 import com.gowoobro.gymspring.enums.user.Use
 import com.gowoobro.gymspring.enums.user.Type
 import com.gowoobro.gymspring.enums.user.Role
+import com.gowoobro.gymspring.enums.user.Sex
 
 @Entity
 @Table(name = "user_tb")
@@ -30,7 +31,7 @@ data class User(
     @Column(name = "u_image")
     val image: String = "",
     @Column(name = "u_sex")
-    val sex: Int = 0,
+    val sex: Sex = Sex.0,
     @Column(name = "u_birth")
     val birth: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "u_type")
@@ -38,9 +39,9 @@ data class User(
     @Column(name = "u_connectid")
     val connectid: String = "",
     @Column(name = "u_level")
-    val level: Level = Level.NORMAL,
+    val level: Level = Level.1,
     @Column(name = "u_role")
-    val role: Role = Role.SUPERVISOR,
+    val role: Role = Role.MEMBER,
     @Column(name = "u_use")
     val use: Use = Use.USE,
     @Column(name = "u_logindate")
@@ -59,12 +60,12 @@ data class UserCreateRequest(
     val tel: String = "",
     val address: String = "",
     val image: String = "",
-    val sex: Int = 0,
+    val sex: Sex = Sex.0,
     val birth: LocalDateTime? = LocalDateTime.now(),
     val type: Type = Type.NORMAL,
     val connectid: String = "",
-    val level: Level = Level.NORMAL,
-    val role: Role = Role.SUPERVISOR,
+    val level: Level = Level.1,
+    val role: Role = Role.MEMBER,
     val use: Use = Use.USE,
     val logindate: LocalDateTime? = LocalDateTime.now(),
     val lastchangepasswddate: LocalDateTime? = LocalDateTime.now(),
@@ -80,12 +81,12 @@ data class UserUpdateRequest(
     val tel: String = "",
     val address: String = "",
     val image: String = "",
-    val sex: Int = 0,
+    val sex: Sex = Sex.0,
     val birth: LocalDateTime? = LocalDateTime.now(),
     val type: Type = Type.NORMAL,
     val connectid: String = "",
-    val level: Level = Level.NORMAL,
-    val role: Role = Role.SUPERVISOR,
+    val level: Level = Level.1,
+    val role: Role = Role.MEMBER,
     val use: Use = Use.USE,
     val logindate: LocalDateTime? = LocalDateTime.now(),
     val lastchangepasswddate: LocalDateTime? = LocalDateTime.now(),

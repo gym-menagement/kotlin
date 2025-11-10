@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 import java.math.BigDecimal
+import com.gowoobro.gymspring.enums.rockerusage.Status
 
 
 @Repository
@@ -26,7 +27,7 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
 
     fun findByEnddate(enddate: LocalDateTime): List<Rockerusage>
 
-    fun findByStatus(status: Int): List<Rockerusage>
+    fun findByStatus(status: Status): List<Rockerusage>
 
     fun findByDeposit(deposit: BigDecimal): List<Rockerusage>
 

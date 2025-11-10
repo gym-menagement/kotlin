@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.appversion.Forceupdate
+import com.gowoobro.gymspring.enums.appversion.Status
 
 
 @Service
@@ -44,7 +46,7 @@ class AppversionService(private val appversionRepository: AppversionRepository) 
         return appversionRepository.findByMinversion(minversion)
     }
 
-    fun findByForceupdate(forceupdate: Int): List<Appversion> {
+    fun findByForceupdate(forceupdate: Forceupdate): List<Appversion> {
         return appversionRepository.findByForceupdate(forceupdate)
     }
 
@@ -56,7 +58,7 @@ class AppversionService(private val appversionRepository: AppversionRepository) 
         return appversionRepository.findByDownloadurl(downloadurl)
     }
 
-    fun findByStatus(status: Int): List<Appversion> {
+    fun findByStatus(status: Status): List<Appversion> {
         return appversionRepository.findByStatus(status)
     }
 

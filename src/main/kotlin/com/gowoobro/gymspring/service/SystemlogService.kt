@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 import com.gowoobro.gymspring.enums.systemlog.Type
+import com.gowoobro.gymspring.enums.systemlog.Result
 
 
 @Service
@@ -41,7 +42,7 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
         return systemlogRepository.findByContent(content)
     }
 
-    fun findByResult(result: Int): List<Systemlog> {
+    fun findByResult(result: Result): List<Systemlog> {
         return systemlogRepository.findByResult(result)
     }
 

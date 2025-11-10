@@ -3,6 +3,9 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.attendance.Type
+import com.gowoobro.gymspring.enums.attendance.Method
+import com.gowoobro.gymspring.enums.attendance.Status
 
 @Entity
 @Table(name = "attendance_tb")
@@ -18,9 +21,9 @@ data class Attendance(
     @Column(name = "at_gym")
     val gym: Long = 0L,
     @Column(name = "at_type")
-    val type: Int = 0,
+    val type: Type = Type.0,
     @Column(name = "at_method")
-    val method: Int = 0,
+    val method: Method = Method.0,
     @Column(name = "at_checkintime")
     val checkintime: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "at_checkouttime")
@@ -28,7 +31,7 @@ data class Attendance(
     @Column(name = "at_duration")
     val duration: Int = 0,
     @Column(name = "at_status")
-    val status: Int = 0,
+    val status: Status = Status.0,
     @Column(name = "at_note")
     val note: String = "",
     @Column(name = "at_ip")
@@ -45,12 +48,12 @@ data class AttendanceCreateRequest(
     val user: Long = 0L,
     val membership: Long = 0L,
     val gym: Long = 0L,
-    val type: Int = 0,
-    val method: Int = 0,
+    val type: Type = Type.0,
+    val method: Method = Method.0,
     val checkintime: LocalDateTime? = LocalDateTime.now(),
     val checkouttime: LocalDateTime? = LocalDateTime.now(),
     val duration: Int = 0,
-    val status: Int = 0,
+    val status: Status = Status.0,
     val note: String = "",
     val ip: String = "",
     val device: String = "",
@@ -63,12 +66,12 @@ data class AttendanceUpdateRequest(
     val user: Long = 0L,
     val membership: Long = 0L,
     val gym: Long = 0L,
-    val type: Int = 0,
-    val method: Int = 0,
+    val type: Type = Type.0,
+    val method: Method = Method.0,
     val checkintime: LocalDateTime? = LocalDateTime.now(),
     val checkouttime: LocalDateTime? = LocalDateTime.now(),
     val duration: Int = 0,
-    val status: Int = 0,
+    val status: Status = Status.0,
     val note: String = "",
     val ip: String = "",
     val device: String = "",

@@ -14,6 +14,7 @@ import com.gowoobro.gymspring.enums.user.Level
 import com.gowoobro.gymspring.enums.user.Use
 import com.gowoobro.gymspring.enums.user.Type
 import com.gowoobro.gymspring.enums.user.Role
+import com.gowoobro.gymspring.enums.user.Sex
 
 
 @Repository
@@ -34,7 +35,7 @@ interface UserRepository : JpaRepository<User, Long> {
 
     fun findByImage(image: String): List<User>
 
-    fun findBySex(sex: Int): List<User>
+    fun findBySex(sex: Sex): List<User>
 
     fun findByBirth(birth: LocalDateTime): List<User>
 

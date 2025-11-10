@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.token.Status
 
 
 @Repository
@@ -20,7 +21,7 @@ interface TokenRepository : JpaRepository<Token, Long> {
 
     fun findByToken(token: String): List<Token>
 
-    fun findByStatus(status: Int): List<Token>
+    fun findByStatus(status: Status): List<Token>
 
     fun findByDate(date: LocalDateTime): List<Token>
 }

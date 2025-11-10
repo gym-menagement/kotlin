@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.role.Role
 
 
 @Service
@@ -36,7 +37,7 @@ class RoleService(private val roleRepository: RoleRepository) {
         return roleRepository.findByGym(gym)
     }
 
-    fun findByRole(role: Int): List<Role> {
+    fun findByRole(role: Role): List<Role> {
         return roleRepository.findByRole(role)
     }
 

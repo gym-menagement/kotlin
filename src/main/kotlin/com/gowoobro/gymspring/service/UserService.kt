@@ -16,6 +16,7 @@ import com.gowoobro.gymspring.enums.user.Level
 import com.gowoobro.gymspring.enums.user.Use
 import com.gowoobro.gymspring.enums.user.Type
 import com.gowoobro.gymspring.enums.user.Role
+import com.gowoobro.gymspring.enums.user.Sex
 
 
 @Service
@@ -64,7 +65,7 @@ class UserService(private val userRepository: UserRepository, private val passwo
         return userRepository.findByImage(image)
     }
 
-    fun findBySex(sex: Int): List<User> {
+    fun findBySex(sex: Sex): List<User> {
         return userRepository.findBySex(sex)
     }
 

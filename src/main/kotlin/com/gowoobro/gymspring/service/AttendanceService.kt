@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.attendance.Type
+import com.gowoobro.gymspring.enums.attendance.Method
+import com.gowoobro.gymspring.enums.attendance.Status
 
 
 @Service
@@ -44,11 +47,11 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
         return attendanceRepository.findByGym(gym)
     }
 
-    fun findByType(type: Int): List<Attendance> {
+    fun findByType(type: Type): List<Attendance> {
         return attendanceRepository.findByType(type)
     }
 
-    fun findByMethod(method: Int): List<Attendance> {
+    fun findByMethod(method: Method): List<Attendance> {
         return attendanceRepository.findByMethod(method)
     }
 
@@ -64,7 +67,7 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
         return attendanceRepository.findByDuration(duration)
     }
 
-    fun findByStatus(status: Int): List<Attendance> {
+    fun findByStatus(status: Status): List<Attendance> {
         return attendanceRepository.findByStatus(status)
     }
 

@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.trainermember.Status
 
 @Entity
 @Table(name = "trainermember_tb")
@@ -22,7 +23,7 @@ data class Trainermember(
     @Column(name = "tm_enddate")
     val enddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "tm_status")
-    val status: Int = 0,
+    val status: Status = Status.0,
     @Column(name = "tm_note")
     val note: String = "",
     @Column(name = "tm_date")
@@ -35,7 +36,7 @@ data class TrainermemberCreateRequest(
     val gym: Long = 0L,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Int = 0,
+    val status: Status = Status.0,
     val note: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
@@ -47,7 +48,7 @@ data class TrainermemberUpdateRequest(
     val gym: Long = 0L,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Int = 0,
+    val status: Status = Status.0,
     val note: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )

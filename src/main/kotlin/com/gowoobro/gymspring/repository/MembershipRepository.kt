@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.membership.Sex
 
 
 @Repository
@@ -22,7 +23,7 @@ interface MembershipRepository : JpaRepository<Membership, Long> {
 
     fun findByName(name: String): List<Membership>
 
-    fun findBySex(sex: Int): List<Membership>
+    fun findBySex(sex: Sex): List<Membership>
 
     fun findByBirth(birth: LocalDateTime): List<Membership>
 

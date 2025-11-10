@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.trainermember.Status
 
 
 @Repository
@@ -26,7 +27,7 @@ interface TrainermemberRepository : JpaRepository<Trainermember, Long> {
 
     fun findByEnddate(enddate: LocalDateTime): List<Trainermember>
 
-    fun findByStatus(status: Int): List<Trainermember>
+    fun findByStatus(status: Status): List<Trainermember>
 
     fun findByNote(note: String): List<Trainermember>
 

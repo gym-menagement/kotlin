@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.notice.Type
+import com.gowoobro.gymspring.enums.notice.Ispopup
+import com.gowoobro.gymspring.enums.notice.Ispush
+import com.gowoobro.gymspring.enums.notice.Target
+import com.gowoobro.gymspring.enums.notice.Status
 
 
 @Service
@@ -44,19 +49,19 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
         return noticeRepository.findByContent(content)
     }
 
-    fun findByType(type: Int): List<Notice> {
+    fun findByType(type: Type): List<Notice> {
         return noticeRepository.findByType(type)
     }
 
-    fun findByIspopup(ispopup: Int): List<Notice> {
+    fun findByIspopup(ispopup: Ispopup): List<Notice> {
         return noticeRepository.findByIspopup(ispopup)
     }
 
-    fun findByIspush(ispush: Int): List<Notice> {
+    fun findByIspush(ispush: Ispush): List<Notice> {
         return noticeRepository.findByIspush(ispush)
     }
 
-    fun findByTarget(target: Int): List<Notice> {
+    fun findByTarget(target: Target): List<Notice> {
         return noticeRepository.findByTarget(target)
     }
 
@@ -72,7 +77,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
         return noticeRepository.findByEnddate(enddate)
     }
 
-    fun findByStatus(status: Int): List<Notice> {
+    fun findByStatus(status: Status): List<Notice> {
         return noticeRepository.findByStatus(status)
     }
 

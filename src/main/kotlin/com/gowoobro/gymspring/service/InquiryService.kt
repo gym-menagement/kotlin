@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.inquiry.Type
+import com.gowoobro.gymspring.enums.inquiry.Status
 
 
 @Service
@@ -40,7 +42,7 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
         return inquiryRepository.findByGym(gym)
     }
 
-    fun findByType(type: Int): List<Inquiry> {
+    fun findByType(type: Type): List<Inquiry> {
         return inquiryRepository.findByType(type)
     }
 
@@ -52,7 +54,7 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
         return inquiryRepository.findByContent(content)
     }
 
-    fun findByStatus(status: Int): List<Inquiry> {
+    fun findByStatus(status: Status): List<Inquiry> {
         return inquiryRepository.findByStatus(status)
     }
 

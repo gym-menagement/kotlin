@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.memberqr.Isactive
 
 
 @Repository
@@ -22,7 +23,7 @@ interface MemberqrRepository : JpaRepository<Memberqr, Long> {
 
     fun findByImageurl(imageurl: String): List<Memberqr>
 
-    fun findByIsactive(isactive: Int): List<Memberqr>
+    fun findByIsactive(isactive: Isactive): List<Memberqr>
 
     fun findByExpiredate(expiredate: LocalDateTime): List<Memberqr>
 

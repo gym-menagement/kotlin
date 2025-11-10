@@ -23,7 +23,7 @@ data class Setting(
     @Column(name = "se_remark")
     val remark: String = "",
     @Column(name = "se_type")
-    val type: Type = Type.NUMBERTYPE,
+    val type: Type = Type.STRING,
     @Column(name = "se_data")
     val data: String = "",
     @Column(name = "se_order")
@@ -38,7 +38,7 @@ data class SettingCreateRequest(
     val key: String = "",
     val value: String = "",
     val remark: String = "",
-    val type: Type = Type.NUMBERTYPE,
+    val type: Type = Type.STRING,
     val data: String = "",
     val order: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
@@ -51,7 +51,7 @@ data class SettingUpdateRequest(
     val key: String = "",
     val value: String = "",
     val remark: String = "",
-    val type: Type = Type.NUMBERTYPE,
+    val type: Type = Type.STRING,
     val data: String = "",
     val order: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.pushtoken.Isactive
 
 
 @Service
@@ -52,7 +53,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
         return pushtokenRepository.findByAppversion(appversion)
     }
 
-    fun findByIsactive(isactive: Int): List<Pushtoken> {
+    fun findByIsactive(isactive: Isactive): List<Pushtoken> {
         return pushtokenRepository.findByIsactive(isactive)
     }
 

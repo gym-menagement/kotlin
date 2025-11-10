@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.appversion.Forceupdate
+import com.gowoobro.gymspring.enums.appversion.Status
 
 
 @Repository
@@ -22,13 +24,13 @@ interface AppversionRepository : JpaRepository<Appversion, Long> {
 
     fun findByMinversion(minversion: String): List<Appversion>
 
-    fun findByForceupdate(forceupdate: Int): List<Appversion>
+    fun findByForceupdate(forceupdate: Forceupdate): List<Appversion>
 
     fun findByUpdatemessage(updatemessage: String): List<Appversion>
 
     fun findByDownloadurl(downloadurl: String): List<Appversion>
 
-    fun findByStatus(status: Int): List<Appversion>
+    fun findByStatus(status: Status): List<Appversion>
 
     fun findByReleasedate(releasedate: LocalDateTime): List<Appversion>
 

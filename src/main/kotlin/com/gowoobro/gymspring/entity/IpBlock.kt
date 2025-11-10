@@ -17,9 +17,9 @@ data class Ipblock(
     @Column(name = "ib_address")
     val address: String = "",
     @Column(name = "ib_type")
-    val type: Type = Type.ADMIN,
+    val type: Type = Type.IPV4,
     @Column(name = "ib_policy")
-    val policy: Policy = Policy.GRANT,
+    val policy: Policy = Policy.ALLOW,
     @Column(name = "ib_use")
     val use: Use = Use.USE,
     @Column(name = "ib_order")
@@ -30,8 +30,8 @@ data class Ipblock(
 
 data class IpblockCreateRequest(
     val address: String = "",
-    val type: Type = Type.ADMIN,
-    val policy: Policy = Policy.GRANT,
+    val type: Type = Type.IPV4,
+    val policy: Policy = Policy.ALLOW,
     val use: Use = Use.USE,
     val order: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
@@ -40,8 +40,8 @@ data class IpblockCreateRequest(
 data class IpblockUpdateRequest(
     val id: Long = 0,
     val address: String = "",
-    val type: Type = Type.ADMIN,
-    val policy: Policy = Policy.GRANT,
+    val type: Type = Type.IPV4,
+    val policy: Policy = Policy.ALLOW,
     val use: Use = Use.USE,
     val order: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),

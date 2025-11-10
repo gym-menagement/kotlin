@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.ptreservation.Status
 
 
 @RestController
@@ -78,7 +79,7 @@ class PtreservationController(private val ptreservationService: PtreservationSer
     }
 
     @GetMapping("/search/status")
-    fun getPtreservationByStatus(@RequestParam status: Int): ResponseEntity<List<Ptreservation>> {
+    fun getPtreservationByStatus(@RequestParam status: Status): ResponseEntity<List<Ptreservation>> {
         val result = ptreservationService.findByStatus(status)
         return ResponseEntity.ok(result)
     }

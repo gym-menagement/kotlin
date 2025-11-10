@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.membershipusage.Type
+import com.gowoobro.gymspring.enums.membershipusage.Status
 
 
 @RestController
@@ -48,7 +50,7 @@ class MembershipusageController(private val membershipusageService: Membershipus
     }
 
     @GetMapping("/search/type")
-    fun getMembershipusageByType(@RequestParam type: Int): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByType(@RequestParam type: Type): ResponseEntity<List<Membershipusage>> {
         val result = membershipusageService.findByType(type)
         return ResponseEntity.ok(result)
     }
@@ -102,7 +104,7 @@ class MembershipusageController(private val membershipusageService: Membershipus
     }
 
     @GetMapping("/search/status")
-    fun getMembershipusageByStatus(@RequestParam status: Int): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByStatus(@RequestParam status: Status): ResponseEntity<List<Membershipusage>> {
         val result = membershipusageService.findByStatus(status)
         return ResponseEntity.ok(result)
     }

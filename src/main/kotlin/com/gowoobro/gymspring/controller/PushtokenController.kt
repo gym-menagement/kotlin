@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.pushtoken.Isactive
 
 
 @RestController
@@ -66,7 +67,7 @@ class PushtokenController(private val pushtokenService: PushtokenService) {
     }
 
     @GetMapping("/search/isactive")
-    fun getPushtokenByIsactive(@RequestParam isactive: Int): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByIsactive(@RequestParam isactive: Isactive): ResponseEntity<List<Pushtoken>> {
         val result = pushtokenService.findByIsactive(isactive)
         return ResponseEntity.ok(result)
     }

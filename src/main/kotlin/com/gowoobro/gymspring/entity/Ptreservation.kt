@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.ptreservation.Status
 
 @Entity
 @Table(name = "ptreservation_tb")
@@ -26,7 +27,7 @@ data class Ptreservation(
     @Column(name = "pr_duration")
     val duration: Int = 0,
     @Column(name = "pr_status")
-    val status: Int = 0,
+    val status: Status = Status.0,
     @Column(name = "pr_note")
     val note: String = "",
     @Column(name = "pr_cancelreason")
@@ -45,7 +46,7 @@ data class PtreservationCreateRequest(
     val starttime: String = "",
     val endtime: String = "",
     val duration: Int = 0,
-    val status: Int = 0,
+    val status: Status = Status.0,
     val note: String = "",
     val cancelreason: String = "",
     val createddate: LocalDateTime? = LocalDateTime.now(),
@@ -61,7 +62,7 @@ data class PtreservationUpdateRequest(
     val starttime: String = "",
     val endtime: String = "",
     val duration: Int = 0,
-    val status: Int = 0,
+    val status: Status = Status.0,
     val note: String = "",
     val cancelreason: String = "",
     val createddate: LocalDateTime? = LocalDateTime.now(),

@@ -3,6 +3,8 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.membershipusage.Type
+import com.gowoobro.gymspring.enums.membershipusage.Status
 
 @Entity
 @Table(name = "membershipusage_tb")
@@ -16,7 +18,7 @@ data class Membershipusage(
     @Column(name = "mu_user")
     val user: Long = 0L,
     @Column(name = "mu_type")
-    val type: Int = 0,
+    val type: Type = Type.0,
     @Column(name = "mu_totaldays")
     val totaldays: Int = 0,
     @Column(name = "mu_useddays")
@@ -34,7 +36,7 @@ data class Membershipusage(
     @Column(name = "mu_enddate")
     val enddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "mu_status")
-    val status: Int = 0,
+    val status: Status = Status.0,
     @Column(name = "mu_pausedays")
     val pausedays: Int = 0,
     @Column(name = "mu_lastuseddate")
@@ -46,7 +48,7 @@ data class Membershipusage(
 data class MembershipusageCreateRequest(
     val membership: Long = 0L,
     val user: Long = 0L,
-    val type: Int = 0,
+    val type: Type = Type.0,
     val totaldays: Int = 0,
     val useddays: Int = 0,
     val remainingdays: Int = 0,
@@ -55,7 +57,7 @@ data class MembershipusageCreateRequest(
     val remainingcount: Int = 0,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Int = 0,
+    val status: Status = Status.0,
     val pausedays: Int = 0,
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
@@ -65,7 +67,7 @@ data class MembershipusageUpdateRequest(
     val id: Long = 0,
     val membership: Long = 0L,
     val user: Long = 0L,
-    val type: Int = 0,
+    val type: Type = Type.0,
     val totaldays: Int = 0,
     val useddays: Int = 0,
     val remainingdays: Int = 0,
@@ -74,7 +76,7 @@ data class MembershipusageUpdateRequest(
     val remainingcount: Int = 0,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Int = 0,
+    val status: Status = Status.0,
     val pausedays: Int = 0,
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),

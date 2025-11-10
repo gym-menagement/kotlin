@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.rocker.Available
 
 
 @Repository
@@ -20,7 +21,7 @@ interface RockerRepository : JpaRepository<Rocker, Long> {
 
     fun findByName(name: String): List<Rocker>
 
-    fun findByAvailable(available: Int): List<Rocker>
+    fun findByAvailable(available: Available): List<Rocker>
 
     fun findByDate(date: LocalDateTime): List<Rocker>
 }

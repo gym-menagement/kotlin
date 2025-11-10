@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.membershipusage.Type
+import com.gowoobro.gymspring.enums.membershipusage.Status
 
 
 @Service
@@ -40,7 +42,7 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
         return membershipusageRepository.findByUser(user)
     }
 
-    fun findByType(type: Int): List<Membershipusage> {
+    fun findByType(type: Type): List<Membershipusage> {
         return membershipusageRepository.findByType(type)
     }
 
@@ -76,7 +78,7 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
         return membershipusageRepository.findByEnddate(enddate)
     }
 
-    fun findByStatus(status: Int): List<Membershipusage> {
+    fun findByStatus(status: Status): List<Membershipusage> {
         return membershipusageRepository.findByStatus(status)
     }
 

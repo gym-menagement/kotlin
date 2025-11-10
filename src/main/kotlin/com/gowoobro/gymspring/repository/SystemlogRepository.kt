@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
 import com.gowoobro.gymspring.enums.systemlog.Type
+import com.gowoobro.gymspring.enums.systemlog.Result
 
 
 @Repository
@@ -21,7 +22,7 @@ interface SystemlogRepository : JpaRepository<Systemlog, Long> {
 
     fun findByContent(content: String): List<Systemlog>
 
-    fun findByResult(result: Int): List<Systemlog>
+    fun findByResult(result: Result): List<Systemlog>
 
     fun findByDate(date: LocalDateTime): List<Systemlog>
 }

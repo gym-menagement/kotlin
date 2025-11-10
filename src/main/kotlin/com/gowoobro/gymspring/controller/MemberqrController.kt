@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.memberqr.Isactive
 
 
 @RestController
@@ -54,7 +55,7 @@ class MemberqrController(private val memberqrService: MemberqrService) {
     }
 
     @GetMapping("/search/isactive")
-    fun getMemberqrByIsactive(@RequestParam isactive: Int): ResponseEntity<List<Memberqr>> {
+    fun getMemberqrByIsactive(@RequestParam isactive: Isactive): ResponseEntity<List<Memberqr>> {
         val result = memberqrService.findByIsactive(isactive)
         return ResponseEntity.ok(result)
     }

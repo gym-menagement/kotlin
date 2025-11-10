@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.role.Role
 
 
 @RestController
@@ -42,7 +43,7 @@ class RoleController(private val roleService: RoleService) {
     }
 
     @GetMapping("/search/role")
-    fun getRoleByRole(@RequestParam role: Int): ResponseEntity<List<Role>> {
+    fun getRoleByRole(@RequestParam role: Role): ResponseEntity<List<Role>> {
         val result = roleService.findByRole(role)
         return ResponseEntity.ok(result)
     }

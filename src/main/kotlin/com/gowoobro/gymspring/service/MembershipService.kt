@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.membership.Sex
 
 
 @Service
@@ -44,7 +45,7 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
         return membershipRepository.findByName(name)
     }
 
-    fun findBySex(sex: Int): List<Membership> {
+    fun findBySex(sex: Sex): List<Membership> {
         return membershipRepository.findBySex(sex)
     }
 

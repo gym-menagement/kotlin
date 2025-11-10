@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.pushtoken.Isactive
 
 @Entity
 @Table(name = "pushtoken_tb")
@@ -22,7 +23,7 @@ data class Pushtoken(
     @Column(name = "pt_appversion")
     val appversion: String = "",
     @Column(name = "pt_isactive")
-    val isactive: Int = 0,
+    val isactive: Isactive = Isactive.0,
     @Column(name = "pt_createddate")
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "pt_updateddate")
@@ -35,7 +36,7 @@ data class PushtokenCreateRequest(
     val devicetype: String = "",
     val deviceid: String = "",
     val appversion: String = "",
-    val isactive: Int = 0,
+    val isactive: Isactive = Isactive.0,
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
 )
@@ -47,7 +48,7 @@ data class PushtokenUpdateRequest(
     val devicetype: String = "",
     val deviceid: String = "",
     val appversion: String = "",
-    val isactive: Int = 0,
+    val isactive: Isactive = Isactive.0,
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
 )

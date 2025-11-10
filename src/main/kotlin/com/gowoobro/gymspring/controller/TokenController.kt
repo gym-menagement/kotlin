@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.token.Status
 
 
 @RestController
@@ -48,7 +49,7 @@ class TokenController(private val tokenService: TokenService) {
     }
 
     @GetMapping("/search/status")
-    fun getTokenByStatus(@RequestParam status: Int): ResponseEntity<List<Token>> {
+    fun getTokenByStatus(@RequestParam status: Status): ResponseEntity<List<Token>> {
         val result = tokenService.findByStatus(status)
         return ResponseEntity.ok(result)
     }

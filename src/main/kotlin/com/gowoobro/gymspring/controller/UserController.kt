@@ -13,6 +13,7 @@ import com.gowoobro.gymspring.enums.user.Level
 import com.gowoobro.gymspring.enums.user.Use
 import com.gowoobro.gymspring.enums.user.Type
 import com.gowoobro.gymspring.enums.user.Role
+import com.gowoobro.gymspring.enums.user.Sex
 
 
 @RestController
@@ -82,7 +83,7 @@ class UserController(private val userService: UserService) {
     }
 
     @GetMapping("/search/sex")
-    fun getUserBySex(@RequestParam sex: Int): ResponseEntity<List<User>> {
+    fun getUserBySex(@RequestParam sex: Sex): ResponseEntity<List<User>> {
         val result = userService.findBySex(sex)
         return ResponseEntity.ok(result)
     }

@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.token.Status
 
 @Entity
 @Table(name = "token_tb")
@@ -16,7 +17,7 @@ data class Token(
     @Column(name = "to_token")
     val token: String = "",
     @Column(name = "to_status")
-    val status: Int = 0,
+    val status: Status = Status.ACTIVE,
     @Column(name = "to_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 )
@@ -24,7 +25,7 @@ data class Token(
 data class TokenCreateRequest(
     val user: Long = 0L,
     val token: String = "",
-    val status: Int = 0,
+    val status: Status = Status.ACTIVE,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
@@ -32,6 +33,6 @@ data class TokenUpdateRequest(
     val id: Long = 0,
     val user: Long = 0L,
     val token: String = "",
-    val status: Int = 0,
+    val status: Status = Status.ACTIVE,
     val date: LocalDateTime? = LocalDateTime.now(),
 )

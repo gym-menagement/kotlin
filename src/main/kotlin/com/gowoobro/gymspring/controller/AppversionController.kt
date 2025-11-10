@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.appversion.Forceupdate
+import com.gowoobro.gymspring.enums.appversion.Status
 
 
 @RestController
@@ -54,7 +56,7 @@ class AppversionController(private val appversionService: AppversionService) {
     }
 
     @GetMapping("/search/forceupdate")
-    fun getAppversionByForceupdate(@RequestParam forceupdate: Int): ResponseEntity<List<Appversion>> {
+    fun getAppversionByForceupdate(@RequestParam forceupdate: Forceupdate): ResponseEntity<List<Appversion>> {
         val result = appversionService.findByForceupdate(forceupdate)
         return ResponseEntity.ok(result)
     }
@@ -72,7 +74,7 @@ class AppversionController(private val appversionService: AppversionService) {
     }
 
     @GetMapping("/search/status")
-    fun getAppversionByStatus(@RequestParam status: Int): ResponseEntity<List<Appversion>> {
+    fun getAppversionByStatus(@RequestParam status: Status): ResponseEntity<List<Appversion>> {
         val result = appversionService.findByStatus(status)
         return ResponseEntity.ok(result)
     }

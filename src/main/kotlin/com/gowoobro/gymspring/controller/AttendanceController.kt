@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.attendance.Type
+import com.gowoobro.gymspring.enums.attendance.Method
+import com.gowoobro.gymspring.enums.attendance.Status
 
 
 @RestController
@@ -54,13 +57,13 @@ class AttendanceController(private val attendanceService: AttendanceService) {
     }
 
     @GetMapping("/search/type")
-    fun getAttendanceByType(@RequestParam type: Int): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByType(@RequestParam type: Type): ResponseEntity<List<Attendance>> {
         val result = attendanceService.findByType(type)
         return ResponseEntity.ok(result)
     }
 
     @GetMapping("/search/method")
-    fun getAttendanceByMethod(@RequestParam method: Int): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByMethod(@RequestParam method: Method): ResponseEntity<List<Attendance>> {
         val result = attendanceService.findByMethod(method)
         return ResponseEntity.ok(result)
     }
@@ -84,7 +87,7 @@ class AttendanceController(private val attendanceService: AttendanceService) {
     }
 
     @GetMapping("/search/status")
-    fun getAttendanceByStatus(@RequestParam status: Int): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByStatus(@RequestParam status: Status): ResponseEntity<List<Attendance>> {
         val result = attendanceService.findByStatus(status)
         return ResponseEntity.ok(result)
     }

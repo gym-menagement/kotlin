@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.memberqr.Isactive
 
 
 @Service
@@ -44,7 +45,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
         return memberqrRepository.findByImageurl(imageurl)
     }
 
-    fun findByIsactive(isactive: Int): List<Memberqr> {
+    fun findByIsactive(isactive: Isactive): List<Memberqr> {
         return memberqrRepository.findByIsactive(isactive)
     }
 

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 import java.math.BigDecimal
+import com.gowoobro.gymspring.enums.rockerusage.Status
 
 
 @RestController
@@ -66,7 +67,7 @@ class RockerusageController(private val rockerusageService: RockerusageService) 
     }
 
     @GetMapping("/search/status")
-    fun getRockerusageByStatus(@RequestParam status: Int): ResponseEntity<List<Rockerusage>> {
+    fun getRockerusageByStatus(@RequestParam status: Status): ResponseEntity<List<Rockerusage>> {
         val result = rockerusageService.findByStatus(status)
         return ResponseEntity.ok(result)
     }

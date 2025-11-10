@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.pushtoken.Isactive
 
 
 @Repository
@@ -26,7 +27,7 @@ interface PushtokenRepository : JpaRepository<Pushtoken, Long> {
 
     fun findByAppversion(appversion: String): List<Pushtoken>
 
-    fun findByIsactive(isactive: Int): List<Pushtoken>
+    fun findByIsactive(isactive: Isactive): List<Pushtoken>
 
     fun findByCreateddate(createddate: LocalDateTime): List<Pushtoken>
 

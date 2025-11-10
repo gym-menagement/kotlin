@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.membership.Sex
 
 
 @RestController
@@ -54,7 +55,7 @@ class MembershipController(private val membershipService: MembershipService) {
     }
 
     @GetMapping("/search/sex")
-    fun getMembershipBySex(@RequestParam sex: Int): ResponseEntity<List<Membership>> {
+    fun getMembershipBySex(@RequestParam sex: Sex): ResponseEntity<List<Membership>> {
         val result = membershipService.findBySex(sex)
         return ResponseEntity.ok(result)
     }

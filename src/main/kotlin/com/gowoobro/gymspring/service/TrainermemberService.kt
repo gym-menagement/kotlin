@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.trainermember.Status
 
 
 @Service
@@ -52,7 +53,7 @@ class TrainermemberService(private val trainermemberRepository: TrainermemberRep
         return trainermemberRepository.findByEnddate(enddate)
     }
 
-    fun findByStatus(status: Int): List<Trainermember> {
+    fun findByStatus(status: Status): List<Trainermember> {
         return trainermemberRepository.findByStatus(status)
     }
 

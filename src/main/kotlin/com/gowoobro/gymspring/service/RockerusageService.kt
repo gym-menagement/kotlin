@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 import java.math.BigDecimal
+import com.gowoobro.gymspring.enums.rockerusage.Status
 
 
 @Service
@@ -52,7 +53,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
         return rockerusageRepository.findByEnddate(enddate)
     }
 
-    fun findByStatus(status: Int): List<Rockerusage> {
+    fun findByStatus(status: Status): List<Rockerusage> {
         return rockerusageRepository.findByStatus(status)
     }
 

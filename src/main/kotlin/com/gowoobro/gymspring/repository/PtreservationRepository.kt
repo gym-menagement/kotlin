@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.ptreservation.Status
 
 
 @Repository
@@ -30,7 +31,7 @@ interface PtreservationRepository : JpaRepository<Ptreservation, Long> {
 
     fun findByDuration(duration: Int): List<Ptreservation>
 
-    fun findByStatus(status: Int): List<Ptreservation>
+    fun findByStatus(status: Status): List<Ptreservation>
 
     fun findByNote(note: String): List<Ptreservation>
 

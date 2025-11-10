@@ -10,6 +10,9 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.attendance.Type
+import com.gowoobro.gymspring.enums.attendance.Method
+import com.gowoobro.gymspring.enums.attendance.Status
 
 
 @Repository
@@ -22,9 +25,9 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
 
     fun findByGym(gym: Long): List<Attendance>
 
-    fun findByType(type: Int): List<Attendance>
+    fun findByType(type: Type): List<Attendance>
 
-    fun findByMethod(method: Int): List<Attendance>
+    fun findByMethod(method: Method): List<Attendance>
 
     fun findByCheckintime(checkintime: LocalDateTime): List<Attendance>
 
@@ -32,7 +35,7 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
 
     fun findByDuration(duration: Int): List<Attendance>
 
-    fun findByStatus(status: Int): List<Attendance>
+    fun findByStatus(status: Status): List<Attendance>
 
     fun findByNote(note: String): List<Attendance>
 

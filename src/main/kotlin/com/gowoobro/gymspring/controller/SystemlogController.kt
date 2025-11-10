@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
 import com.gowoobro.gymspring.enums.systemlog.Type
+import com.gowoobro.gymspring.enums.systemlog.Result
 
 
 @RestController
@@ -49,7 +50,7 @@ class SystemlogController(private val systemlogService: SystemlogService) {
     }
 
     @GetMapping("/search/result")
-    fun getSystemlogByResult(@RequestParam result: Int): ResponseEntity<List<Systemlog>> {
+    fun getSystemlogByResult(@RequestParam result: Result): ResponseEntity<List<Systemlog>> {
         val result = systemlogService.findByResult(result)
         return ResponseEntity.ok(result)
     }
