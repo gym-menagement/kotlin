@@ -130,3 +130,251 @@ Services are annotated with `@Service` and `@Transactional`, containing business
 **Database Column Naming:**
 - Table columns typically prefixed with abbreviated entity name (e.g., `u_` for user_tb)
 - Example: User entity has `u_id`, `u_loginid`, `u_passwd`, etc.
+
+---
+
+## Business Process & Platform Flow
+
+This is a **multi-gym platform** where multiple gyms operate independently on a single system, and members can access all gyms through one unified app.
+
+### 1. Platform Admin
+
+**Initial Setup:**
+```
+Platform setup → Create system admin account (user_tb, role: ADMIN)
+→ Configure basic settings (discount policies, app version management)
+→ Set IP security policies (ipblock_tb)
+```
+
+**Gym Onboarding:**
+```
+Gym business inquiry → Contract signing
+→ Register gym information (gym_tb)
+→ Create gym admin account (user_tb, role: GYM_ADMIN)
+→ Provide initial data setup support
+```
+
+**Operations Management:**
+- Monitor all gyms (revenue, member count, usage status)
+- Settlement management (settlement_tb) - fee calculation per gym
+- Send system-wide notices (notice_tb, target: all)
+- App version control (appversion_tb) - force update control
+- Log analysis (loginlog_tb) and security management
+
+### 2. Gym Owner/Manager
+
+**Gym Registration & Setup:**
+```
+Receive account from platform admin
+→ Enter gym basic info (gym_tb: name, address, contact)
+→ Set operating hours/days (daytype_tb: weekday/weekend/holiday)
+→ Configure time-slot pricing (timeslot_tb)
+```
+
+**Product Setup:**
+```
+Create exercise categories (healthcategory_tb: gym/PT/yoga/pilates)
+→ Register products per category (health_tb)
+   - Set periods (term_tb: 1/3/6/12 months)
+   - Set count-based passes (e.g., 10/20 sessions)
+   - Set prices and discounts (discount_tb)
+→ Register locker info (rocker_tb: number, location, type)
+```
+
+**Staff Management:**
+```
+Create trainer accounts (user_tb, role: TRAINER)
+→ Set staff permissions (role: STAFF)
+→ Configure PT schedule available time slots
+```
+
+**Daily Operations:**
+- Member management: new registration, membership renewal, refunds
+- Check entry records (attendance_tb)
+- Locker assignment and management (rockerusage_tb)
+- Respond to inquiries (inquiry_tb)
+- Post announcements (notice_tb, target: own gym members)
+- Check revenue (order_tb, payment_tb)
+- View settlement details (settlement_tb)
+
+### 3. Regular Member
+
+**Sign Up:**
+```
+Download app → Sign up (user_tb, role: MEMBER)
+→ Enter basic info (name, phone, birth date)
+→ Login (loginlog_tb recorded)
+→ Register push notification token (pushtoken_tb)
+```
+
+**Find Gym & Purchase Membership:**
+```
+Search gym by location/keyword (gym_tb)
+→ View gym details (hours, facilities, products)
+→ Select exercise pass (health_tb)
+   - Choose category (gym/PT/yoga)
+   - Choose period/count
+   - Check discount
+→ Create order (order_tb)
+→ Payment (payment_tb)
+→ Issue membership (membership_tb)
+→ Auto-generate QR code (memberqr_tb)
+```
+
+**Check-in (Core Feature):**
+```
+Arrive at gym → Open app → Display QR code (memberqr_tb)
+→ Scan QR at entry terminal
+→ Authenticate member and verify membership validity
+   ✓ Check expiration date
+   ✓ Check remaining sessions (if count-based)
+   ✓ Check available time slot (timeslot_tb)
+→ Save entry record (attendance_tb)
+→ Update usage history (membershipusage_tb)
+   - Count-based: remaining sessions -1
+   - Period-based: record only
+```
+
+**PT Usage:**
+```
+Assign trainer (trainermember_tb)
+→ Book PT session (ptreservation_tb: select date, time)
+→ Trainer approval
+→ Booking confirmed notification (alarm_tb, push)
+→ PT session conducted
+→ After completion, measure body metrics (memberbody_tb)
+   - Weight, body fat %, muscle mass, etc.
+   - View progress graphs
+```
+
+**Locker Usage:**
+```
+Request locker → Check available lockers (rocker_tb, status: AVAILABLE)
+→ Assign locker (rockerusage_tb)
+→ Pay deposit/monthly fee
+→ Manage usage period (start date ~ end date)
+→ Notification before expiration (alarm_tb)
+```
+
+**Other Services:**
+- View workout records (attendance_tb, membershipusage_tb)
+- Check payment history (order_tb, payment_tb)
+- Track body changes (memberbody_tb)
+- View announcements (notice_tb)
+- Submit inquiries (inquiry_tb)
+- Reissue QR code (if lost)
+
+### 4. Trainer
+
+**Account & Permissions:**
+```
+Gym admin creates account (user_tb, role: TRAINER)
+→ Login → Auto-mapped to assigned gym
+```
+
+**Member Management:**
+```
+Get assigned members (trainermember_tb)
+→ Manage PT schedule (ptreservation_tb)
+   - Set available time slots
+   - Approve/reject member booking requests
+   - Modify/cancel schedule
+→ Input member body metrics (memberbody_tb)
+→ Manage workout programs and provide feedback
+```
+
+**Schedule Management:**
+- Check daily PT schedule
+- Handle no-show members (pr_status: 3)
+- Mark session completion (pr_status: 1)
+- Check progress per member
+
+### 5. Payment & Settlement Process
+
+**Membership Purchase Payment:**
+```
+Member selects product → Create order (order_tb)
+→ Select payment method (card/transfer/cash)
+→ Process payment (payment_tb)
+   - Payment status: PENDING → SUCCESS/FAIL
+→ On success: activate membership (membership_tb)
+→ On failure: notify and guide retry
+```
+
+**Monthly/Daily Settlement:**
+```
+Daily batch job at midnight
+→ Aggregate daily revenue (settlement_tb)
+   - Revenue per gym
+   - Amount per payment method
+   - Cancellation/refund amounts
+→ Month-end settlement
+   - Calculate platform fees
+   - Confirm settlement amount per gym
+   - Generate settlement report
+```
+
+### 6. Notification System
+
+**Push Notifications:**
+```
+Trigger event (e.g., PT booking confirmed, membership expiring soon)
+→ Create notification (alarm_tb)
+→ Query target member's push token (pushtoken_tb)
+→ Send push via FCM/APNS
+→ Record delivery result
+```
+
+**Notification Types:**
+- Membership expiration D-7, D-3, D-1
+- PT booking confirmed/cancelled
+- Locker expiring soon
+- Payment success/failure
+- Announcements posted (important notices)
+- New events/promotions
+
+### 7. Security & Monitoring
+
+**Login Security:**
+```
+Login attempt → Check IP address (ipblock_tb)
+→ Deny access if blocked IP
+→ On normal login, record (loginlog_tb)
+   - IP, time, device info
+→ Alert on abnormal access pattern detection
+```
+
+**Access Control:**
+- Platform admin: full data access
+- Gym admin: own gym data only
+- Trainer: assigned member data only
+- Member: own data only
+
+### 8. App Version Management
+
+```
+Release new version → Register version info (appversion_tb)
+→ Set force update flag
+→ Check version on app launch
+→ If outdated:
+   - Force update: redirect to store
+   - Optional update: notify and allow usage
+```
+
+### Data Flow Summary
+
+```
+Member sign up (user_tb)
+    ↓
+Purchase gym membership (membership_tb, order_tb, payment_tb)
+    ↓
+Issue QR code (memberqr_tb)
+    ↓
+Scan at entry (attendance_tb, membershipusage_tb)
+    ↓
+Use services (PT, locker, etc.)
+    ↓
+Settlement (settlement_tb)
+```
+
+This architecture allows **multiple gyms to operate independently** on one platform, while members can access **all gyms through a single app**!
