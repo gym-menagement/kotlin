@@ -16,18 +16,18 @@ data class Rockergroup(
     @Column(name = "rg_name")
     val name: String = "",
     @Column(name = "rg_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class RockergroupCreateRequest(
     val gym: Long = 0L,
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class RockergroupUpdateRequest(
     val id: Long = 0,
     val gym: Long = 0L,
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

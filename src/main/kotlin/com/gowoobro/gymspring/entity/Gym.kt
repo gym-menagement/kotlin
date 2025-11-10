@@ -14,16 +14,16 @@ data class Gym(
     @Column(name = "g_name")
     val name: String = "",
     @Column(name = "g_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class GymCreateRequest(
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class GymUpdateRequest(
     val id: Long = 0,
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

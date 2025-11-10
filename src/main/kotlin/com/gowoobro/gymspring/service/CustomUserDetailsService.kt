@@ -13,9 +13,10 @@ class CustomUserDetailsService(
 ) : UserDetailsService {
     
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository.findByLoginid(username) 
+        val users = userRepository.findByLoginid(username)
+        val user = users.firstOrNull()
             ?: throw UsernameNotFoundException("User not found with username: $username")
-        
+
         return org.springframework.security.core.userdetails.User.builder()
             .username(user.loginid)
             .password(user.passwd)

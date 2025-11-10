@@ -7,9 +7,13 @@ import com.gowoobro.gymspring.repository.SettingRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
+
+import com.gowoobro.gymspring.enums.setting.Type
+
 
 @Service
 @Transactional
@@ -29,15 +33,41 @@ class SettingService(private val settingRepository: SettingRepository) {
     }
 
 
+    fun findByCategory(category: String): List<Setting> {
+        return settingRepository.findByCategory(category)
+    }
 
+    fun findByName(name: String): List<Setting> {
+        return settingRepository.findByName(name)
+    }
 
+    fun findByKey(key: String): List<Setting> {
+        return settingRepository.findByKey(key)
+    }
 
+    fun findByValue(value: String): List<Setting> {
+        return settingRepository.findByValue(value)
+    }
 
+    fun findByRemark(remark: String): List<Setting> {
+        return settingRepository.findByRemark(remark)
+    }
 
+    fun findByType(type: Type): List<Setting> {
+        return settingRepository.findByType(type)
+    }
 
+    fun findByData(data: String): List<Setting> {
+        return settingRepository.findByData(data)
+    }
 
+    fun findByOrder(order: Int): List<Setting> {
+        return settingRepository.findByOrder(order)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Setting> {
+        return settingRepository.findByDate(date)
+    }
 
 
     fun create(request: SettingCreateRequest): Setting {
@@ -50,7 +80,7 @@ class SettingService(private val settingRepository: SettingRepository) {
             type = request.type,
             data = request.data,
             order = request.order,
-            date = request.date ?: LocalDateTime.now()
+            date = request.date,
         )
         return settingRepository.save(entity)
     }
@@ -66,7 +96,7 @@ class SettingService(private val settingRepository: SettingRepository) {
                 type = request.type,
                 data = request.data,
                 order = request.order,
-                date = request.date ?: LocalDateTime.now()
+                date = request.date,
             )
         }
         return settingRepository.saveAll(entities)
@@ -74,6 +104,9 @@ class SettingService(private val settingRepository: SettingRepository) {
 
     fun update(request: SettingUpdateRequest): Setting? {
         val existing = settingRepository.findById(request.id).orElse(null) ?: return null
+
+        
+
         val updated = existing.copy(
             category = request.category,
             name = request.name,
@@ -83,7 +116,7 @@ class SettingService(private val settingRepository: SettingRepository) {
             type = request.type,
             data = request.data,
             order = request.order,
-            date = request.date ?: LocalDateTime.now()
+            date = request.date,
         )
         return settingRepository.save(updated)
     }

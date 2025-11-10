@@ -7,6 +7,11 @@ import com.gowoobro.gymspring.service.AlarmService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+import com.gowoobro.gymspring.enums.alarm.Type
+import com.gowoobro.gymspring.enums.alarm.Status
+
 
 @RestController
 @RequestMapping("/api/alarm")
@@ -30,6 +35,44 @@ class AlarmController(private val alarmService: AlarmService) {
             ResponseEntity.notFound().build()
         }
     }
+
+
+    @GetMapping("/search/title")
+    fun getAlarmByTitle(@RequestParam title: String): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByTitle(title)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/content")
+    fun getAlarmByContent(@RequestParam content: String): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByContent(content)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/type")
+    fun getAlarmByType(@RequestParam type: Type): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByType(type)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/status")
+    fun getAlarmByStatus(@RequestParam status: Status): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByStatus(status)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/user")
+    fun getAlarmByUser(@RequestParam user: Long): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByUser(user)
+        return ResponseEntity.ok(result)
+    }
+
+    @GetMapping("/search/date")
+    fun getAlarmByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Alarm>> {
+        val result = alarmService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
 
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {

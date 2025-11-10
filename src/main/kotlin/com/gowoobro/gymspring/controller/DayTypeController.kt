@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.DaytypeService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/daytype")
@@ -32,9 +35,23 @@ class DaytypeController(private val daytypeService: DaytypeService) {
     }
 
 
+    @GetMapping("/search/gym")
+    fun getDaytypeByGym(@RequestParam gym: Long): ResponseEntity<List<Daytype>> {
+        val result = daytypeService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/name")
+    fun getDaytypeByName(@RequestParam name: String): ResponseEntity<List<Daytype>> {
+        val result = daytypeService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getDaytypeByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Daytype>> {
+        val result = daytypeService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

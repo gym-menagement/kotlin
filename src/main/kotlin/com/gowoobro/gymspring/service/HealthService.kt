@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.HealthRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,32 +32,92 @@ class HealthService(private val healthRepository: HealthRepository) {
     }
 
 
+    fun findByCategory(category: Long): List<Health> {
+        return healthRepository.findByCategory(category)
+    }
 
+    fun findByTerm(term: Long): List<Health> {
+        return healthRepository.findByTerm(term)
+    }
 
+    fun findByName(name: String): List<Health> {
+        return healthRepository.findByName(name)
+    }
 
+    fun findByCount(count: Int): List<Health> {
+        return healthRepository.findByCount(count)
+    }
 
+    fun findByCost(cost: Int): List<Health> {
+        return healthRepository.findByCost(cost)
+    }
 
+    fun findByDiscount(discount: Long): List<Health> {
+        return healthRepository.findByDiscount(discount)
+    }
 
+    fun findByCostdiscount(costdiscount: Int): List<Health> {
+        return healthRepository.findByCostdiscount(costdiscount)
+    }
 
+    fun findByContent(content: String): List<Health> {
+        return healthRepository.findByContent(content)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Health> {
+        return healthRepository.findByDate(date)
+    }
 
 
     fun create(request: HealthCreateRequest): Health {
-        val entity = Health()
+        val entity = Health(
+            category = request.category,
+            term = request.term,
+            name = request.name,
+            count = request.count,
+            cost = request.cost,
+            discount = request.discount,
+            costdiscount = request.costdiscount,
+            content = request.content,
+            date = request.date,
+        )
         return healthRepository.save(entity)
     }
 
     fun createBatch(requests: List<HealthCreateRequest>): List<Health> {
         val entities = requests.map { request ->
-            Health()
+            Health(
+                category = request.category,
+                term = request.term,
+                name = request.name,
+                count = request.count,
+                cost = request.cost,
+                discount = request.discount,
+                costdiscount = request.costdiscount,
+                content = request.content,
+                date = request.date,
+            )
         }
         return healthRepository.saveAll(entities)
     }
 
     fun update(request: HealthUpdateRequest): Health? {
         val existing = healthRepository.findById(request.id).orElse(null) ?: return null
-        return healthRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            category = request.category,
+            term = request.term,
+            name = request.name,
+            count = request.count,
+            cost = request.cost,
+            discount = request.discount,
+            costdiscount = request.costdiscount,
+            content = request.content,
+            date = request.date,
+        )
+        return healthRepository.save(updated)
     }
 
     fun delete(entity: Health): Boolean {

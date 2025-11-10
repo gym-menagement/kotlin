@@ -16,18 +16,18 @@ data class Healthcategory(
     @Column(name = "hc_name")
     val name: String = "",
     @Column(name = "hc_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class HealthcategoryCreateRequest(
     val gym: Long = 0L,
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class HealthcategoryUpdateRequest(
     val id: Long = 0,
     val gym: Long = 0L,
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

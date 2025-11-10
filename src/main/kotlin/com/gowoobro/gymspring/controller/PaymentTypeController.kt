@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.PaymenttypeService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/paymenttype")
@@ -32,9 +35,23 @@ class PaymenttypeController(private val paymenttypeService: PaymenttypeService) 
     }
 
 
+    @GetMapping("/search/gym")
+    fun getPaymenttypeByGym(@RequestParam gym: Long): ResponseEntity<List<Paymenttype>> {
+        val result = paymenttypeService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/name")
+    fun getPaymenttypeByName(@RequestParam name: String): ResponseEntity<List<Paymenttype>> {
+        val result = paymenttypeService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getPaymenttypeByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Paymenttype>> {
+        val result = paymenttypeService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

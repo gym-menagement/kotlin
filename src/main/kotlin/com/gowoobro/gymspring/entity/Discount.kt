@@ -16,18 +16,18 @@ data class Discount(
     @Column(name = "d_discount")
     val discount: Int = 0,
     @Column(name = "d_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class DiscountCreateRequest(
     val name: String = "",
     val discount: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class DiscountUpdateRequest(
     val id: Long = 0,
     val name: String = "",
     val discount: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

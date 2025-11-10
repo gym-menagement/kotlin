@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.PaymentRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,28 +32,64 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
     }
 
 
+    fun findByGym(gym: Long): List<Payment> {
+        return paymentRepository.findByGym(gym)
+    }
 
+    fun findByOrder(order: Long): List<Payment> {
+        return paymentRepository.findByOrder(order)
+    }
 
+    fun findByMembership(membership: Long): List<Payment> {
+        return paymentRepository.findByMembership(membership)
+    }
 
+    fun findByCost(cost: Int): List<Payment> {
+        return paymentRepository.findByCost(cost)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Payment> {
+        return paymentRepository.findByDate(date)
+    }
 
 
     fun create(request: PaymentCreateRequest): Payment {
-        val entity = Payment()
+        val entity = Payment(
+            gym = request.gym,
+            order = request.order,
+            membership = request.membership,
+            cost = request.cost,
+            date = request.date,
+        )
         return paymentRepository.save(entity)
     }
 
     fun createBatch(requests: List<PaymentCreateRequest>): List<Payment> {
         val entities = requests.map { request ->
-            Payment()
+            Payment(
+                gym = request.gym,
+                order = request.order,
+                membership = request.membership,
+                cost = request.cost,
+                date = request.date,
+            )
         }
         return paymentRepository.saveAll(entities)
     }
 
     fun update(request: PaymentUpdateRequest): Payment? {
         val existing = paymentRepository.findById(request.id).orElse(null) ?: return null
-        return paymentRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            gym = request.gym,
+            order = request.order,
+            membership = request.membership,
+            cost = request.cost,
+            date = request.date,
+        )
+        return paymentRepository.save(updated)
     }
 
     fun delete(entity: Payment): Boolean {

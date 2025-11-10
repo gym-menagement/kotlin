@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.RockerRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,27 +32,57 @@ class RockerService(private val rockerRepository: RockerRepository) {
     }
 
 
+    fun findByGroup(group: Long): List<Rocker> {
+        return rockerRepository.findByGroup(group)
+    }
 
+    fun findByName(name: String): List<Rocker> {
+        return rockerRepository.findByName(name)
+    }
 
+    fun findByAvailable(available: Int): List<Rocker> {
+        return rockerRepository.findByAvailable(available)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Rocker> {
+        return rockerRepository.findByDate(date)
+    }
 
 
     fun create(request: RockerCreateRequest): Rocker {
-        val entity = Rocker()
+        val entity = Rocker(
+            group = request.group,
+            name = request.name,
+            available = request.available,
+            date = request.date,
+        )
         return rockerRepository.save(entity)
     }
 
     fun createBatch(requests: List<RockerCreateRequest>): List<Rocker> {
         val entities = requests.map { request ->
-            Rocker()
+            Rocker(
+                group = request.group,
+                name = request.name,
+                available = request.available,
+                date = request.date,
+            )
         }
         return rockerRepository.saveAll(entities)
     }
 
     fun update(request: RockerUpdateRequest): Rocker? {
         val existing = rockerRepository.findById(request.id).orElse(null) ?: return null
-        return rockerRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            group = request.group,
+            name = request.name,
+            available = request.available,
+            date = request.date,
+        )
+        return rockerRepository.save(updated)
     }
 
     fun delete(entity: Rocker): Boolean {

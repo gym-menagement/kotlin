@@ -20,7 +20,7 @@ data class Payment(
     @Column(name = "p_cost")
     val cost: Int = 0,
     @Column(name = "p_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PaymentCreateRequest(
@@ -28,7 +28,7 @@ data class PaymentCreateRequest(
     val order: Long = 0L,
     val membership: Long = 0L,
     val cost: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PaymentUpdateRequest(
@@ -37,5 +37,5 @@ data class PaymentUpdateRequest(
     val order: Long = 0L,
     val membership: Long = 0L,
     val cost: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

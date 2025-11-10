@@ -28,7 +28,7 @@ data class Health(
     @Column(name = "h_content")
     val content: String = "",
     @Column(name = "h_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class HealthCreateRequest(
@@ -40,7 +40,7 @@ data class HealthCreateRequest(
     val discount: Long = 0L,
     val costdiscount: Int = 0,
     val content: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class HealthUpdateRequest(
@@ -53,5 +53,5 @@ data class HealthUpdateRequest(
     val discount: Long = 0L,
     val costdiscount: Int = 0,
     val content: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

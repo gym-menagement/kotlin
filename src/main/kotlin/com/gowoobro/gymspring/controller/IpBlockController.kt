@@ -7,6 +7,12 @@ import com.gowoobro.gymspring.service.IpblockService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+import com.gowoobro.gymspring.enums.ipblock.Type
+import com.gowoobro.gymspring.enums.ipblock.Policy
+import com.gowoobro.gymspring.enums.ipblock.Use
+
 
 @RestController
 @RequestMapping("/api/ipblock")
@@ -32,12 +38,41 @@ class IpblockController(private val ipblockService: IpblockService) {
     }
 
 
+    @GetMapping("/search/address")
+    fun getIpblockByAddress(@RequestParam address: String): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByAddress(address)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/type")
+    fun getIpblockByType(@RequestParam type: Type): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByType(type)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/policy")
+    fun getIpblockByPolicy(@RequestParam policy: Policy): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByPolicy(policy)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/use")
+    fun getIpblockByUse(@RequestParam use: Use): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByUse(use)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/order")
+    fun getIpblockByOrder(@RequestParam order: Int): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByOrder(order)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getIpblockByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Ipblock>> {
+        val result = ipblockService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

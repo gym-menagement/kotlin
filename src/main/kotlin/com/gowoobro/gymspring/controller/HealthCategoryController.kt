@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.HealthcategoryService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/healthcategory")
@@ -32,9 +35,23 @@ class HealthcategoryController(private val healthcategoryService: Healthcategory
     }
 
 
+    @GetMapping("/search/gym")
+    fun getHealthcategoryByGym(@RequestParam gym: Long): ResponseEntity<List<Healthcategory>> {
+        val result = healthcategoryService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/name")
+    fun getHealthcategoryByName(@RequestParam name: String): ResponseEntity<List<Healthcategory>> {
+        val result = healthcategoryService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getHealthcategoryByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Healthcategory>> {
+        val result = healthcategoryService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

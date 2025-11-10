@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.RockergroupRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,26 +32,50 @@ class RockergroupService(private val rockergroupRepository: RockergroupRepositor
     }
 
 
+    fun findByGym(gym: Long): List<Rockergroup> {
+        return rockergroupRepository.findByGym(gym)
+    }
 
+    fun findByName(name: String): List<Rockergroup> {
+        return rockergroupRepository.findByName(name)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Rockergroup> {
+        return rockergroupRepository.findByDate(date)
+    }
 
 
     fun create(request: RockergroupCreateRequest): Rockergroup {
-        val entity = Rockergroup()
+        val entity = Rockergroup(
+            gym = request.gym,
+            name = request.name,
+            date = request.date,
+        )
         return rockergroupRepository.save(entity)
     }
 
     fun createBatch(requests: List<RockergroupCreateRequest>): List<Rockergroup> {
         val entities = requests.map { request ->
-            Rockergroup()
+            Rockergroup(
+                gym = request.gym,
+                name = request.name,
+                date = request.date,
+            )
         }
         return rockergroupRepository.saveAll(entities)
     }
 
     fun update(request: RockergroupUpdateRequest): Rockergroup? {
         val existing = rockergroupRepository.findById(request.id).orElse(null) ?: return null
-        return rockergroupRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            gym = request.gym,
+            name = request.name,
+            date = request.date,
+        )
+        return rockergroupRepository.save(updated)
     }
 
     fun delete(entity: Rockergroup): Boolean {

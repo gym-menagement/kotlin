@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.TokenRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,27 +32,57 @@ class TokenService(private val tokenRepository: TokenRepository) {
     }
 
 
+    fun findByUser(user: Long): List<Token> {
+        return tokenRepository.findByUser(user)
+    }
 
+    fun findByToken(token: String): List<Token> {
+        return tokenRepository.findByToken(token)
+    }
 
+    fun findByStatus(status: Int): List<Token> {
+        return tokenRepository.findByStatus(status)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Token> {
+        return tokenRepository.findByDate(date)
+    }
 
 
     fun create(request: TokenCreateRequest): Token {
-        val entity = Token()
+        val entity = Token(
+            user = request.user,
+            token = request.token,
+            status = request.status,
+            date = request.date,
+        )
         return tokenRepository.save(entity)
     }
 
     fun createBatch(requests: List<TokenCreateRequest>): List<Token> {
         val entities = requests.map { request ->
-            Token()
+            Token(
+                user = request.user,
+                token = request.token,
+                status = request.status,
+                date = request.date,
+            )
         }
         return tokenRepository.saveAll(entities)
     }
 
     fun update(request: TokenUpdateRequest): Token? {
         val existing = tokenRepository.findById(request.id).orElse(null) ?: return null
-        return tokenRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            user = request.user,
+            token = request.token,
+            status = request.status,
+            date = request.date,
+        )
+        return tokenRepository.save(updated)
     }
 
     fun delete(entity: Token): Boolean {

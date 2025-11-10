@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.OrderRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,25 +32,43 @@ class OrderService(private val orderRepository: OrderRepository) {
     }
 
 
+    fun findByMembership(membership: Long): List<Order> {
+        return orderRepository.findByMembership(membership)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Order> {
+        return orderRepository.findByDate(date)
+    }
 
 
     fun create(request: OrderCreateRequest): Order {
-        val entity = Order()
+        val entity = Order(
+            membership = request.membership,
+            date = request.date,
+        )
         return orderRepository.save(entity)
     }
 
     fun createBatch(requests: List<OrderCreateRequest>): List<Order> {
         val entities = requests.map { request ->
-            Order()
+            Order(
+                membership = request.membership,
+                date = request.date,
+            )
         }
         return orderRepository.saveAll(entities)
     }
 
     fun update(request: OrderUpdateRequest): Order? {
         val existing = orderRepository.findById(request.id).orElse(null) ?: return null
-        return orderRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            membership = request.membership,
+            date = request.date,
+        )
+        return orderRepository.save(updated)
     }
 
     fun delete(entity: Order): Boolean {

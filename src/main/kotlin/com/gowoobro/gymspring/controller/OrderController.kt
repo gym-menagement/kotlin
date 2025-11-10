@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.OrderService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/order")
@@ -32,8 +35,17 @@ class OrderController(private val orderService: OrderService) {
     }
 
 
+    @GetMapping("/search/membership")
+    fun getOrderByMembership(@RequestParam membership: Long): ResponseEntity<List<Order>> {
+        val result = orderService.findByMembership(membership)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getOrderByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Order>> {
+        val result = orderService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

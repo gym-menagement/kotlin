@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.PaymenttypeRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,26 +32,50 @@ class PaymenttypeService(private val paymenttypeRepository: PaymenttypeRepositor
     }
 
 
+    fun findByGym(gym: Long): List<Paymenttype> {
+        return paymenttypeRepository.findByGym(gym)
+    }
 
+    fun findByName(name: String): List<Paymenttype> {
+        return paymenttypeRepository.findByName(name)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Paymenttype> {
+        return paymenttypeRepository.findByDate(date)
+    }
 
 
     fun create(request: PaymenttypeCreateRequest): Paymenttype {
-        val entity = Paymenttype()
+        val entity = Paymenttype(
+            gym = request.gym,
+            name = request.name,
+            date = request.date,
+        )
         return paymenttypeRepository.save(entity)
     }
 
     fun createBatch(requests: List<PaymenttypeCreateRequest>): List<Paymenttype> {
         val entities = requests.map { request ->
-            Paymenttype()
+            Paymenttype(
+                gym = request.gym,
+                name = request.name,
+                date = request.date,
+            )
         }
         return paymenttypeRepository.saveAll(entities)
     }
 
     fun update(request: PaymenttypeUpdateRequest): Paymenttype? {
         val existing = paymenttypeRepository.findById(request.id).orElse(null) ?: return null
-        return paymenttypeRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            gym = request.gym,
+            name = request.name,
+            date = request.date,
+        )
+        return paymenttypeRepository.save(updated)
     }
 
     fun delete(entity: Paymenttype): Boolean {

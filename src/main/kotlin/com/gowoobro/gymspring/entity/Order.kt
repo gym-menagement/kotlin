@@ -14,16 +14,16 @@ data class Order(
     @Column(name = "o_membership")
     val membership: Long = 0L,
     @Column(name = "o_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class OrderCreateRequest(
     val membership: Long = 0L,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class OrderUpdateRequest(
     val id: Long = 0,
     val membership: Long = 0L,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

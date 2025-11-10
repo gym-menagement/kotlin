@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.UsehealthRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,32 +32,92 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
     }
 
 
+    fun findByOrder(order: Long): List<Usehealth> {
+        return usehealthRepository.findByOrder(order)
+    }
 
+    fun findByHealth(health: Long): List<Usehealth> {
+        return usehealthRepository.findByHealth(health)
+    }
 
+    fun findByUser(user: Long): List<Usehealth> {
+        return usehealthRepository.findByUser(user)
+    }
 
+    fun findByRocker(rocker: Long): List<Usehealth> {
+        return usehealthRepository.findByRocker(rocker)
+    }
 
+    fun findByTerm(term: Long): List<Usehealth> {
+        return usehealthRepository.findByTerm(term)
+    }
 
+    fun findByDiscount(discount: Long): List<Usehealth> {
+        return usehealthRepository.findByDiscount(discount)
+    }
 
+    fun findByStartday(startday: LocalDateTime): List<Usehealth> {
+        return usehealthRepository.findByStartday(startday)
+    }
 
+    fun findByEndday(endday: LocalDateTime): List<Usehealth> {
+        return usehealthRepository.findByEndday(endday)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Usehealth> {
+        return usehealthRepository.findByDate(date)
+    }
 
 
     fun create(request: UsehealthCreateRequest): Usehealth {
-        val entity = Usehealth()
+        val entity = Usehealth(
+            order = request.order,
+            health = request.health,
+            user = request.user,
+            rocker = request.rocker,
+            term = request.term,
+            discount = request.discount,
+            startday = request.startday,
+            endday = request.endday,
+            date = request.date,
+        )
         return usehealthRepository.save(entity)
     }
 
     fun createBatch(requests: List<UsehealthCreateRequest>): List<Usehealth> {
         val entities = requests.map { request ->
-            Usehealth()
+            Usehealth(
+                order = request.order,
+                health = request.health,
+                user = request.user,
+                rocker = request.rocker,
+                term = request.term,
+                discount = request.discount,
+                startday = request.startday,
+                endday = request.endday,
+                date = request.date,
+            )
         }
         return usehealthRepository.saveAll(entities)
     }
 
     fun update(request: UsehealthUpdateRequest): Usehealth? {
         val existing = usehealthRepository.findById(request.id).orElse(null) ?: return null
-        return usehealthRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            order = request.order,
+            health = request.health,
+            user = request.user,
+            rocker = request.rocker,
+            term = request.term,
+            discount = request.discount,
+            startday = request.startday,
+            endday = request.endday,
+            date = request.date,
+        )
+        return usehealthRepository.save(updated)
     }
 
     fun delete(entity: Usehealth): Boolean {

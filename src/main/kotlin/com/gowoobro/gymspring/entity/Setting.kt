@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.setting.Type
 
 @Entity
 @Table(name = "setting_tb")
@@ -22,14 +23,13 @@ data class Setting(
     @Column(name = "se_remark")
     val remark: String = "",
     @Column(name = "se_type")
-    @Enumerated(EnumType.ORDINAL)
-    val type: Type,
+    val type: Type = Type.NUMBERTYPE,
     @Column(name = "se_data")
     val data: String = "",
     @Column(name = "se_order")
     val order: Int = 0,
     @Column(name = "se_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class SettingCreateRequest(
@@ -38,10 +38,10 @@ data class SettingCreateRequest(
     val key: String = "",
     val value: String = "",
     val remark: String = "",
-    val type: Type,
+    val type: Type = Type.NUMBERTYPE,
     val data: String = "",
     val order: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class SettingUpdateRequest(
@@ -51,8 +51,8 @@ data class SettingUpdateRequest(
     val key: String = "",
     val value: String = "",
     val remark: String = "",
-    val type: Type,
+    val type: Type = Type.NUMBERTYPE,
     val data: String = "",
     val order: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

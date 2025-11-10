@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.TermRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,28 +32,64 @@ class TermService(private val termRepository: TermRepository) {
     }
 
 
+    fun findByGym(gym: Long): List<Term> {
+        return termRepository.findByGym(gym)
+    }
 
+    fun findByDaytype(daytype: Long): List<Term> {
+        return termRepository.findByDaytype(daytype)
+    }
 
+    fun findByName(name: String): List<Term> {
+        return termRepository.findByName(name)
+    }
 
+    fun findByTerm(term: Int): List<Term> {
+        return termRepository.findByTerm(term)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Term> {
+        return termRepository.findByDate(date)
+    }
 
 
     fun create(request: TermCreateRequest): Term {
-        val entity = Term()
+        val entity = Term(
+            gym = request.gym,
+            daytype = request.daytype,
+            name = request.name,
+            term = request.term,
+            date = request.date,
+        )
         return termRepository.save(entity)
     }
 
     fun createBatch(requests: List<TermCreateRequest>): List<Term> {
         val entities = requests.map { request ->
-            Term()
+            Term(
+                gym = request.gym,
+                daytype = request.daytype,
+                name = request.name,
+                term = request.term,
+                date = request.date,
+            )
         }
         return termRepository.saveAll(entities)
     }
 
     fun update(request: TermUpdateRequest): Term? {
         val existing = termRepository.findById(request.id).orElse(null) ?: return null
-        return termRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            gym = request.gym,
+            daytype = request.daytype,
+            name = request.name,
+            term = request.term,
+            date = request.date,
+        )
+        return termRepository.save(updated)
     }
 
     fun delete(entity: Term): Boolean {

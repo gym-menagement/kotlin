@@ -7,9 +7,14 @@ import com.gowoobro.gymspring.repository.AlarmRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
+
+import com.gowoobro.gymspring.enums.alarm.Type
+import com.gowoobro.gymspring.enums.alarm.Status
+
 
 @Service
 @Transactional
@@ -29,12 +34,29 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
     }
 
 
+    fun findByTitle(title: String): List<Alarm> {
+        return alarmRepository.findByTitle(title)
+    }
 
+    fun findByContent(content: String): List<Alarm> {
+        return alarmRepository.findByContent(content)
+    }
 
+    fun findByType(type: Type): List<Alarm> {
+        return alarmRepository.findByType(type)
+    }
 
+    fun findByStatus(status: Status): List<Alarm> {
+        return alarmRepository.findByStatus(status)
+    }
 
+    fun findByUser(user: Long): List<Alarm> {
+        return alarmRepository.findByUser(user)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Alarm> {
+        return alarmRepository.findByDate(date)
+    }
 
 
     fun create(request: AlarmCreateRequest): Alarm {
@@ -44,7 +66,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
             type = request.type,
             status = request.status,
             user = request.user,
-            date = request.date ?: LocalDateTime.now()
+            date = request.date,
         )
         return alarmRepository.save(entity)
     }
@@ -57,7 +79,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
                 type = request.type,
                 status = request.status,
                 user = request.user,
-                date = request.date ?: LocalDateTime.now()
+                date = request.date,
             )
         }
         return alarmRepository.saveAll(entities)
@@ -65,13 +87,16 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
 
     fun update(request: AlarmUpdateRequest): Alarm? {
         val existing = alarmRepository.findById(request.id).orElse(null) ?: return null
+
+        
+
         val updated = existing.copy(
             title = request.title,
             content = request.content,
             type = request.type,
             status = request.status,
             user = request.user,
-            date = request.date ?: LocalDateTime.now()
+            date = request.date,
         )
         return alarmRepository.save(updated)
     }

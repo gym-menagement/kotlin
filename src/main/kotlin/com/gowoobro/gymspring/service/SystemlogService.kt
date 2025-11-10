@@ -7,9 +7,13 @@ import com.gowoobro.gymspring.repository.SystemlogRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
+
+import com.gowoobro.gymspring.enums.systemlog.Type
+
 
 @Service
 @Transactional
@@ -29,10 +33,21 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
     }
 
 
+    fun findByType(type: Type): List<Systemlog> {
+        return systemlogRepository.findByType(type)
+    }
 
+    fun findByContent(content: String): List<Systemlog> {
+        return systemlogRepository.findByContent(content)
+    }
 
+    fun findByResult(result: Int): List<Systemlog> {
+        return systemlogRepository.findByResult(result)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Systemlog> {
+        return systemlogRepository.findByDate(date)
+    }
 
 
     fun create(request: SystemlogCreateRequest): Systemlog {
@@ -40,7 +55,7 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
             type = request.type,
             content = request.content,
             result = request.result,
-            date = request.date ?: LocalDateTime.now()
+            date = request.date,
         )
         return systemlogRepository.save(entity)
     }
@@ -51,7 +66,7 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
                 type = request.type,
                 content = request.content,
                 result = request.result,
-                date = request.date ?: LocalDateTime.now()
+                date = request.date,
             )
         }
         return systemlogRepository.saveAll(entities)
@@ -59,11 +74,14 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
 
     fun update(request: SystemlogUpdateRequest): Systemlog? {
         val existing = systemlogRepository.findById(request.id).orElse(null) ?: return null
+
+        
+
         val updated = existing.copy(
             type = request.type,
             content = request.content,
             result = request.result,
-            date = request.date ?: LocalDateTime.now()
+            date = request.date,
         )
         return systemlogRepository.save(updated)
     }

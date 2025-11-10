@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.RoleService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/role")
@@ -32,10 +35,29 @@ class RoleController(private val roleService: RoleService) {
     }
 
 
+    @GetMapping("/search/gym")
+    fun getRoleByGym(@RequestParam gym: Long): ResponseEntity<List<Role>> {
+        val result = roleService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/role")
+    fun getRoleByRole(@RequestParam role: Int): ResponseEntity<List<Role>> {
+        val result = roleService.findByRole(role)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/name")
+    fun getRoleByName(@RequestParam name: String): ResponseEntity<List<Role>> {
+        val result = roleService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getRoleByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Role>> {
+        val result = roleService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

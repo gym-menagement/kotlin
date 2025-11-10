@@ -26,7 +26,8 @@ class AuthController(
     ): ResponseEntity<JwtResponse?> {
         return try {
             println("JWT Login attempt: loginid=$loginid")
-            val user = userService.findByLoginid(loginid)
+            val users = userService.findByLoginid(loginid)
+            val user = users.firstOrNull()
             println("User found: ${user != null}")
 
             if (user != null) {

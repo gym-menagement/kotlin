@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.GymService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/gym")
@@ -32,8 +35,17 @@ class GymController(private val gymService: GymService) {
     }
 
 
+    @GetMapping("/search/name")
+    fun getGymByName(@RequestParam name: String): ResponseEntity<List<Gym>> {
+        val result = gymService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getGymByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Gym>> {
+        val result = gymService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

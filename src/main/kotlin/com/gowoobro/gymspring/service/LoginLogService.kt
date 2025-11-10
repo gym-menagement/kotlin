@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.LoginlogRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,27 +32,57 @@ class LoginlogService(private val loginlogRepository: LoginlogRepository) {
     }
 
 
+    fun findByIp(ip: String): List<Loginlog> {
+        return loginlogRepository.findByIp(ip)
+    }
 
+    fun findByIpvalue(ipvalue: Long): List<Loginlog> {
+        return loginlogRepository.findByIpvalue(ipvalue)
+    }
 
+    fun findByUser(user: Long): List<Loginlog> {
+        return loginlogRepository.findByUser(user)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Loginlog> {
+        return loginlogRepository.findByDate(date)
+    }
 
 
     fun create(request: LoginlogCreateRequest): Loginlog {
-        val entity = Loginlog()
+        val entity = Loginlog(
+            ip = request.ip,
+            ipvalue = request.ipvalue,
+            user = request.user,
+            date = request.date,
+        )
         return loginlogRepository.save(entity)
     }
 
     fun createBatch(requests: List<LoginlogCreateRequest>): List<Loginlog> {
         val entities = requests.map { request ->
-            Loginlog()
+            Loginlog(
+                ip = request.ip,
+                ipvalue = request.ipvalue,
+                user = request.user,
+                date = request.date,
+            )
         }
         return loginlogRepository.saveAll(entities)
     }
 
     fun update(request: LoginlogUpdateRequest): Loginlog? {
         val existing = loginlogRepository.findById(request.id).orElse(null) ?: return null
-        return loginlogRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            ip = request.ip,
+            ipvalue = request.ipvalue,
+            user = request.user,
+            date = request.date,
+        )
+        return loginlogRepository.save(updated)
     }
 
     fun delete(entity: Loginlog): Boolean {

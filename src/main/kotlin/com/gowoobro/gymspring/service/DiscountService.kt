@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.DiscountRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,26 +32,50 @@ class DiscountService(private val discountRepository: DiscountRepository) {
     }
 
 
+    fun findByName(name: String): List<Discount> {
+        return discountRepository.findByName(name)
+    }
 
+    fun findByDiscount(discount: Int): List<Discount> {
+        return discountRepository.findByDiscount(discount)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Discount> {
+        return discountRepository.findByDate(date)
+    }
 
 
     fun create(request: DiscountCreateRequest): Discount {
-        val entity = Discount()
+        val entity = Discount(
+            name = request.name,
+            discount = request.discount,
+            date = request.date,
+        )
         return discountRepository.save(entity)
     }
 
     fun createBatch(requests: List<DiscountCreateRequest>): List<Discount> {
         val entities = requests.map { request ->
-            Discount()
+            Discount(
+                name = request.name,
+                discount = request.discount,
+                date = request.date,
+            )
         }
         return discountRepository.saveAll(entities)
     }
 
     fun update(request: DiscountUpdateRequest): Discount? {
         val existing = discountRepository.findById(request.id).orElse(null) ?: return null
-        return discountRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            name = request.name,
+            discount = request.discount,
+            date = request.date,
+        )
+        return discountRepository.save(updated)
     }
 
     fun delete(entity: Discount): Boolean {

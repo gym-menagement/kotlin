@@ -7,6 +7,10 @@ import com.gowoobro.gymspring.service.SettingService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+import com.gowoobro.gymspring.enums.setting.Type
+
 
 @RestController
 @RequestMapping("/api/setting")
@@ -32,15 +36,59 @@ class SettingController(private val settingService: SettingService) {
     }
 
 
+    @GetMapping("/search/category")
+    fun getSettingByCategory(@RequestParam category: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByCategory(category)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/name")
+    fun getSettingByName(@RequestParam name: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/key")
+    fun getSettingByKey(@RequestParam key: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByKey(key)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/value")
+    fun getSettingByValue(@RequestParam value: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByValue(value)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/remark")
+    fun getSettingByRemark(@RequestParam remark: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByRemark(remark)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/type")
+    fun getSettingByType(@RequestParam type: Type): ResponseEntity<List<Setting>> {
+        val result = settingService.findByType(type)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/data")
+    fun getSettingByData(@RequestParam data: String): ResponseEntity<List<Setting>> {
+        val result = settingService.findByData(data)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/order")
+    fun getSettingByOrder(@RequestParam order: Int): ResponseEntity<List<Setting>> {
+        val result = settingService.findByOrder(order)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getSettingByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Setting>> {
+        val result = settingService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

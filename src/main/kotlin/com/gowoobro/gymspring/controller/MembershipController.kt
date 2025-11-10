@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.MembershipService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/membership")
@@ -32,15 +35,59 @@ class MembershipController(private val membershipService: MembershipService) {
     }
 
 
+    @GetMapping("/search/gym")
+    fun getMembershipByGym(@RequestParam gym: Long): ResponseEntity<List<Membership>> {
+        val result = membershipService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/user")
+    fun getMembershipByUser(@RequestParam user: Long): ResponseEntity<List<Membership>> {
+        val result = membershipService.findByUser(user)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/name")
+    fun getMembershipByName(@RequestParam name: String): ResponseEntity<List<Membership>> {
+        val result = membershipService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/sex")
+    fun getMembershipBySex(@RequestParam sex: Int): ResponseEntity<List<Membership>> {
+        val result = membershipService.findBySex(sex)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/birth")
+    fun getMembershipByBirth(@RequestParam birth: LocalDateTime): ResponseEntity<List<Membership>> {
+        val result = membershipService.findByBirth(birth)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/phonenum")
+    fun getMembershipByPhonenum(@RequestParam phonenum: String): ResponseEntity<List<Membership>> {
+        val result = membershipService.findByPhonenum(phonenum)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/address")
+    fun getMembershipByAddress(@RequestParam address: String): ResponseEntity<List<Membership>> {
+        val result = membershipService.findByAddress(address)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/image")
+    fun getMembershipByImage(@RequestParam image: String): ResponseEntity<List<Membership>> {
+        val result = membershipService.findByImage(image)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getMembershipByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Membership>> {
+        val result = membershipService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

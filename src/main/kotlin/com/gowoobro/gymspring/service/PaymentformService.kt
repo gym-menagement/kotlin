@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.PaymentformRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,28 +32,64 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
     }
 
 
+    fun findByGym(gym: Long): List<Paymentform> {
+        return paymentformRepository.findByGym(gym)
+    }
 
+    fun findByPayment(payment: Long): List<Paymentform> {
+        return paymentformRepository.findByPayment(payment)
+    }
 
+    fun findByType(type: Long): List<Paymentform> {
+        return paymentformRepository.findByType(type)
+    }
 
+    fun findByCost(cost: Int): List<Paymentform> {
+        return paymentformRepository.findByCost(cost)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Paymentform> {
+        return paymentformRepository.findByDate(date)
+    }
 
 
     fun create(request: PaymentformCreateRequest): Paymentform {
-        val entity = Paymentform()
+        val entity = Paymentform(
+            gym = request.gym,
+            payment = request.payment,
+            type = request.type,
+            cost = request.cost,
+            date = request.date,
+        )
         return paymentformRepository.save(entity)
     }
 
     fun createBatch(requests: List<PaymentformCreateRequest>): List<Paymentform> {
         val entities = requests.map { request ->
-            Paymentform()
+            Paymentform(
+                gym = request.gym,
+                payment = request.payment,
+                type = request.type,
+                cost = request.cost,
+                date = request.date,
+            )
         }
         return paymentformRepository.saveAll(entities)
     }
 
     fun update(request: PaymentformUpdateRequest): Paymentform? {
         val existing = paymentformRepository.findById(request.id).orElse(null) ?: return null
-        return paymentformRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            gym = request.gym,
+            payment = request.payment,
+            type = request.type,
+            cost = request.cost,
+            date = request.date,
+        )
+        return paymentformRepository.save(updated)
     }
 
     fun delete(entity: Paymentform): Boolean {

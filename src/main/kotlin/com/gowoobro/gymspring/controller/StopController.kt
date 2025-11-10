@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.StopService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/stop")
@@ -32,11 +35,35 @@ class StopController(private val stopService: StopService) {
     }
 
 
+    @GetMapping("/search/usehelth")
+    fun getStopByUsehelth(@RequestParam usehelth: Long): ResponseEntity<List<Stop>> {
+        val result = stopService.findByUsehelth(usehelth)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/startday")
+    fun getStopByStartday(@RequestParam startday: LocalDateTime): ResponseEntity<List<Stop>> {
+        val result = stopService.findByStartday(startday)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/endday")
+    fun getStopByEndday(@RequestParam endday: LocalDateTime): ResponseEntity<List<Stop>> {
+        val result = stopService.findByEndday(endday)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/count")
+    fun getStopByCount(@RequestParam count: Int): ResponseEntity<List<Stop>> {
+        val result = stopService.findByCount(count)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getStopByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Stop>> {
+        val result = stopService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

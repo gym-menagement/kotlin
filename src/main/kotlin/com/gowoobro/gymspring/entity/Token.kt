@@ -18,14 +18,14 @@ data class Token(
     @Column(name = "to_status")
     val status: Int = 0,
     @Column(name = "to_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class TokenCreateRequest(
     val user: Long = 0L,
     val token: String = "",
     val status: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class TokenUpdateRequest(
@@ -33,5 +33,5 @@ data class TokenUpdateRequest(
     val user: Long = 0L,
     val token: String = "",
     val status: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

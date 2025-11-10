@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.DiscountService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/discount")
@@ -32,9 +35,23 @@ class DiscountController(private val discountService: DiscountService) {
     }
 
 
+    @GetMapping("/search/name")
+    fun getDiscountByName(@RequestParam name: String): ResponseEntity<List<Discount>> {
+        val result = discountService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/discount")
+    fun getDiscountByDiscount(@RequestParam discount: Int): ResponseEntity<List<Discount>> {
+        val result = discountService.findByDiscount(discount)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getDiscountByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Discount>> {
+        val result = discountService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

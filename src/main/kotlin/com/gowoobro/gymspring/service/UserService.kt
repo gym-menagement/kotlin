@@ -12,12 +12,15 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.user.Level
+import com.gowoobro.gymspring.enums.user.Use
+import com.gowoobro.gymspring.enums.user.Type
+import com.gowoobro.gymspring.enums.user.Role
+
+
 @Service
 @Transactional
-class UserService(
-    private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder
-) {
+class UserService(private val userRepository: UserRepository, private val passwordEncoder: PasswordEncoder) {
 
     fun findAll(page: Int = 0, pageSize: Int = 10): Page<User> {
         val pageable: Pageable = PageRequest.of(page, pageSize)
@@ -32,9 +35,75 @@ class UserService(
         return userRepository.count()
     }
 
-    fun findByLoginid(loginid: String): User? {
+
+    fun findByLoginid(loginid: String): List<User> {
         return userRepository.findByLoginid(loginid)
     }
+
+    fun findByPasswd(passwd: String): List<User> {
+        return userRepository.findByPasswd(passwd)
+    }
+
+    fun findByEmail(email: String): List<User> {
+        return userRepository.findByEmail(email)
+    }
+
+    fun findByName(name: String): List<User> {
+        return userRepository.findByName(name)
+    }
+
+    fun findByTel(tel: String): List<User> {
+        return userRepository.findByTel(tel)
+    }
+
+    fun findByAddress(address: String): List<User> {
+        return userRepository.findByAddress(address)
+    }
+
+    fun findByImage(image: String): List<User> {
+        return userRepository.findByImage(image)
+    }
+
+    fun findBySex(sex: Int): List<User> {
+        return userRepository.findBySex(sex)
+    }
+
+    fun findByBirth(birth: LocalDateTime): List<User> {
+        return userRepository.findByBirth(birth)
+    }
+
+    fun findByType(type: Type): List<User> {
+        return userRepository.findByType(type)
+    }
+
+    fun findByConnectid(connectid: String): List<User> {
+        return userRepository.findByConnectid(connectid)
+    }
+
+    fun findByLevel(level: Level): List<User> {
+        return userRepository.findByLevel(level)
+    }
+
+    fun findByRole(role: Role): List<User> {
+        return userRepository.findByRole(role)
+    }
+
+    fun findByUse(use: Use): List<User> {
+        return userRepository.findByUse(use)
+    }
+
+    fun findByLogindate(logindate: LocalDateTime): List<User> {
+        return userRepository.findByLogindate(logindate)
+    }
+
+    fun findByLastchangepasswddate(lastchangepasswddate: LocalDateTime): List<User> {
+        return userRepository.findByLastchangepasswddate(lastchangepasswddate)
+    }
+
+    fun findByDate(date: LocalDateTime): List<User> {
+        return userRepository.findByDate(date)
+    }
+
 
     fun create(request: UserCreateRequest): User {
         val entity = User(
@@ -54,7 +123,7 @@ class UserService(
             use = request.use,
             logindate = request.logindate,
             lastchangepasswddate = request.lastchangepasswddate,
-            date = request.date ?: LocalDateTime.now()
+            date = request.date,
         )
         return userRepository.save(entity)
     }
@@ -78,7 +147,7 @@ class UserService(
                 use = request.use,
                 logindate = request.logindate,
                 lastchangepasswddate = request.lastchangepasswddate,
-                date = request.date ?: LocalDateTime.now()
+                date = request.date,
             )
         }
         return userRepository.saveAll(entities)
@@ -87,16 +156,17 @@ class UserService(
     fun update(request: UserUpdateRequest): User? {
         val existing = userRepository.findById(request.id).orElse(null) ?: return null
 
-        // 비밀번호가 변경되었는지 확인 (기존 암호화된 비밀번호와 다른 경우에만 암호화)
-        val encodedPassword = if (request.passwd != existing.passwd && !request.passwd.startsWith("$2a$")) {
+        
+        val encodedPassword = if (request.passwd != existing.passwd && !request.passwd.startsWith("\$2a\$")) {
             passwordEncoder.encode(request.passwd)
         } else {
             request.passwd
         }
+        
 
         val updated = existing.copy(
             loginid = request.loginid,
-            passwd = encodedPassword,
+            passwd = passwordEncoder.encode(request.passwd),
             email = request.email,
             name = request.name,
             tel = request.tel,
@@ -111,7 +181,7 @@ class UserService(
             use = request.use,
             logindate = request.logindate,
             lastchangepasswddate = request.lastchangepasswddate,
-            date = request.date
+            date = request.date,
         )
         return userRepository.save(updated)
     }

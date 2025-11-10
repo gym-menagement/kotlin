@@ -14,28 +14,28 @@ data class Stop(
     @Column(name = "s_usehelth")
     val usehelth: Long = 0L,
     @Column(name = "s_startday")
-    val startday: LocalDateTime? = null,
+    val startday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "s_endday")
-    val endday: LocalDateTime? = null,
+    val endday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "s_count")
     val count: Int = 0,
     @Column(name = "s_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class StopCreateRequest(
     val usehelth: Long = 0L,
-    val startday: LocalDateTime? = null,
-    val endday: LocalDateTime? = null,
+    val startday: LocalDateTime? = LocalDateTime.now(),
+    val endday: LocalDateTime? = LocalDateTime.now(),
     val count: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class StopUpdateRequest(
     val id: Long = 0,
     val usehelth: Long = 0L,
-    val startday: LocalDateTime? = null,
-    val endday: LocalDateTime? = null,
+    val startday: LocalDateTime? = LocalDateTime.now(),
+    val endday: LocalDateTime? = LocalDateTime.now(),
     val count: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.MembershipRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,32 +32,92 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
     }
 
 
+    fun findByGym(gym: Long): List<Membership> {
+        return membershipRepository.findByGym(gym)
+    }
 
+    fun findByUser(user: Long): List<Membership> {
+        return membershipRepository.findByUser(user)
+    }
 
+    fun findByName(name: String): List<Membership> {
+        return membershipRepository.findByName(name)
+    }
 
+    fun findBySex(sex: Int): List<Membership> {
+        return membershipRepository.findBySex(sex)
+    }
 
+    fun findByBirth(birth: LocalDateTime): List<Membership> {
+        return membershipRepository.findByBirth(birth)
+    }
 
+    fun findByPhonenum(phonenum: String): List<Membership> {
+        return membershipRepository.findByPhonenum(phonenum)
+    }
 
+    fun findByAddress(address: String): List<Membership> {
+        return membershipRepository.findByAddress(address)
+    }
 
+    fun findByImage(image: String): List<Membership> {
+        return membershipRepository.findByImage(image)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Membership> {
+        return membershipRepository.findByDate(date)
+    }
 
 
     fun create(request: MembershipCreateRequest): Membership {
-        val entity = Membership()
+        val entity = Membership(
+            gym = request.gym,
+            user = request.user,
+            name = request.name,
+            sex = request.sex,
+            birth = request.birth,
+            phonenum = request.phonenum,
+            address = request.address,
+            image = request.image,
+            date = request.date,
+        )
         return membershipRepository.save(entity)
     }
 
     fun createBatch(requests: List<MembershipCreateRequest>): List<Membership> {
         val entities = requests.map { request ->
-            Membership()
+            Membership(
+                gym = request.gym,
+                user = request.user,
+                name = request.name,
+                sex = request.sex,
+                birth = request.birth,
+                phonenum = request.phonenum,
+                address = request.address,
+                image = request.image,
+                date = request.date,
+            )
         }
         return membershipRepository.saveAll(entities)
     }
 
     fun update(request: MembershipUpdateRequest): Membership? {
         val existing = membershipRepository.findById(request.id).orElse(null) ?: return null
-        return membershipRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            gym = request.gym,
+            user = request.user,
+            name = request.name,
+            sex = request.sex,
+            birth = request.birth,
+            phonenum = request.phonenum,
+            address = request.address,
+            image = request.image,
+            date = request.date,
+        )
+        return membershipRepository.save(updated)
     }
 
     fun delete(entity: Membership): Boolean {

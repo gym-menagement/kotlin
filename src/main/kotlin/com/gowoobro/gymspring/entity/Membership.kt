@@ -20,7 +20,7 @@ data class Membership(
     @Column(name = "m_sex")
     val sex: Int = 0,
     @Column(name = "m_birth")
-    val birth: LocalDateTime? = null,
+    val birth: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "m_phonenum")
     val phonenum: String = "",
     @Column(name = "m_address")
@@ -28,7 +28,7 @@ data class Membership(
     @Column(name = "m_image")
     val image: String = "",
     @Column(name = "m_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class MembershipCreateRequest(
@@ -36,11 +36,11 @@ data class MembershipCreateRequest(
     val user: Long = 0L,
     val name: String = "",
     val sex: Int = 0,
-    val birth: LocalDateTime? = null,
+    val birth: LocalDateTime? = LocalDateTime.now(),
     val phonenum: String = "",
     val address: String = "",
     val image: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class MembershipUpdateRequest(
@@ -49,9 +49,9 @@ data class MembershipUpdateRequest(
     val user: Long = 0L,
     val name: String = "",
     val sex: Int = 0,
-    val birth: LocalDateTime? = null,
+    val birth: LocalDateTime? = LocalDateTime.now(),
     val phonenum: String = "",
     val address: String = "",
     val image: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

@@ -3,6 +3,10 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.user.Level
+import com.gowoobro.gymspring.enums.user.Use
+import com.gowoobro.gymspring.enums.user.Type
+import com.gowoobro.gymspring.enums.user.Role
 
 @Entity
 @Table(name = "user_tb")
@@ -28,27 +32,23 @@ data class User(
     @Column(name = "u_sex")
     val sex: Int = 0,
     @Column(name = "u_birth")
-    val birth: LocalDateTime? = null,
+    val birth: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "u_type")
-    @Enumerated(EnumType.ORDINAL)
-    val type: Type,
+    val type: Type = Type.NORMAL,
     @Column(name = "u_connectid")
     val connectid: String = "",
     @Column(name = "u_level")
-    @Enumerated(EnumType.ORDINAL)
-    val level: Level,
+    val level: Level = Level.NORMAL,
     @Column(name = "u_role")
-    @Enumerated(EnumType.ORDINAL)
-    val role: UserRole,
+    val role: Role = Role.SUPERVISOR,
     @Column(name = "u_use")
-    @Enumerated(EnumType.ORDINAL)
-    val use: Use,
+    val use: Use = Use.USE,
     @Column(name = "u_logindate")
-    val logindate: LocalDateTime? = null,
+    val logindate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "u_lastchangepasswddate")
-    val lastchangepasswddate: LocalDateTime? = null,
+    val lastchangepasswddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "u_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class UserCreateRequest(
@@ -60,15 +60,15 @@ data class UserCreateRequest(
     val address: String = "",
     val image: String = "",
     val sex: Int = 0,
-    val birth: LocalDateTime? = null,
-    val type: Type,
+    val birth: LocalDateTime? = LocalDateTime.now(),
+    val type: Type = Type.NORMAL,
     val connectid: String = "",
-    val level: Level,
-    val role: UserRole,
-    val use: Use,
-    val logindate: LocalDateTime? = null,
-    val lastchangepasswddate: LocalDateTime? = null,
-    val date: LocalDateTime? = null,
+    val level: Level = Level.NORMAL,
+    val role: Role = Role.SUPERVISOR,
+    val use: Use = Use.USE,
+    val logindate: LocalDateTime? = LocalDateTime.now(),
+    val lastchangepasswddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class UserUpdateRequest(
@@ -81,13 +81,13 @@ data class UserUpdateRequest(
     val address: String = "",
     val image: String = "",
     val sex: Int = 0,
-    val birth: LocalDateTime? = null,
-    val type: Type,
+    val birth: LocalDateTime? = LocalDateTime.now(),
+    val type: Type = Type.NORMAL,
     val connectid: String = "",
-    val level: Level,
-    val role: UserRole,
-    val use: Use,
-    val logindate: LocalDateTime? = null,
-    val lastchangepasswddate: LocalDateTime? = null,
-    val date: LocalDateTime? = null,
+    val level: Level = Level.NORMAL,
+    val role: Role = Role.SUPERVISOR,
+    val use: Use = Use.USE,
+    val logindate: LocalDateTime? = LocalDateTime.now(),
+    val lastchangepasswddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

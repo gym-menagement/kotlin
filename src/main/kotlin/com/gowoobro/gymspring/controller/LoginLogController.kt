@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.LoginlogService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/loginlog")
@@ -32,10 +35,29 @@ class LoginlogController(private val loginlogService: LoginlogService) {
     }
 
 
+    @GetMapping("/search/ip")
+    fun getLoginlogByIp(@RequestParam ip: String): ResponseEntity<List<Loginlog>> {
+        val result = loginlogService.findByIp(ip)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/ipvalue")
+    fun getLoginlogByIpvalue(@RequestParam ipvalue: Long): ResponseEntity<List<Loginlog>> {
+        val result = loginlogService.findByIpvalue(ipvalue)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/user")
+    fun getLoginlogByUser(@RequestParam user: Long): ResponseEntity<List<Loginlog>> {
+        val result = loginlogService.findByUser(user)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getLoginlogByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Loginlog>> {
+        val result = loginlogService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

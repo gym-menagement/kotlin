@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.HealthService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/health")
@@ -32,15 +35,59 @@ class HealthController(private val healthService: HealthService) {
     }
 
 
+    @GetMapping("/search/category")
+    fun getHealthByCategory(@RequestParam category: Long): ResponseEntity<List<Health>> {
+        val result = healthService.findByCategory(category)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/term")
+    fun getHealthByTerm(@RequestParam term: Long): ResponseEntity<List<Health>> {
+        val result = healthService.findByTerm(term)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/name")
+    fun getHealthByName(@RequestParam name: String): ResponseEntity<List<Health>> {
+        val result = healthService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/count")
+    fun getHealthByCount(@RequestParam count: Int): ResponseEntity<List<Health>> {
+        val result = healthService.findByCount(count)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/cost")
+    fun getHealthByCost(@RequestParam cost: Int): ResponseEntity<List<Health>> {
+        val result = healthService.findByCost(cost)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/discount")
+    fun getHealthByDiscount(@RequestParam discount: Long): ResponseEntity<List<Health>> {
+        val result = healthService.findByDiscount(discount)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/costdiscount")
+    fun getHealthByCostdiscount(@RequestParam costdiscount: Int): ResponseEntity<List<Health>> {
+        val result = healthService.findByCostdiscount(costdiscount)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/content")
+    fun getHealthByContent(@RequestParam content: String): ResponseEntity<List<Health>> {
+        val result = healthService.findByContent(content)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getHealthByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Health>> {
+        val result = healthService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

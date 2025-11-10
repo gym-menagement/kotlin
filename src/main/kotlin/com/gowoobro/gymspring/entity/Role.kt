@@ -18,14 +18,14 @@ data class Role(
     @Column(name = "r_name")
     val name: String = "",
     @Column(name = "r_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class RoleCreateRequest(
     val gym: Long = 0L,
     val role: Int = 0,
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class RoleUpdateRequest(
@@ -33,5 +33,5 @@ data class RoleUpdateRequest(
     val gym: Long = 0L,
     val role: Int = 0,
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

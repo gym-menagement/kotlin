@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.PaymentService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/payment")
@@ -32,11 +35,35 @@ class PaymentController(private val paymentService: PaymentService) {
     }
 
 
+    @GetMapping("/search/gym")
+    fun getPaymentByGym(@RequestParam gym: Long): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/order")
+    fun getPaymentByOrder(@RequestParam order: Long): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByOrder(order)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/membership")
+    fun getPaymentByMembership(@RequestParam membership: Long): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByMembership(membership)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/cost")
+    fun getPaymentByCost(@RequestParam cost: Int): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByCost(cost)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getPaymentByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Payment>> {
+        val result = paymentService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

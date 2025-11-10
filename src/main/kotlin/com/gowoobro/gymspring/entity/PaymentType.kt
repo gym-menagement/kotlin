@@ -16,18 +16,18 @@ data class Paymenttype(
     @Column(name = "pt_name")
     val name: String = "",
     @Column(name = "pt_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PaymenttypeCreateRequest(
     val gym: Long = 0L,
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PaymenttypeUpdateRequest(
     val id: Long = 0,
     val gym: Long = 0L,
     val name: String = "",
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

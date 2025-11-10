@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.DaytypeRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,26 +32,50 @@ class DaytypeService(private val daytypeRepository: DaytypeRepository) {
     }
 
 
+    fun findByGym(gym: Long): List<Daytype> {
+        return daytypeRepository.findByGym(gym)
+    }
 
+    fun findByName(name: String): List<Daytype> {
+        return daytypeRepository.findByName(name)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Daytype> {
+        return daytypeRepository.findByDate(date)
+    }
 
 
     fun create(request: DaytypeCreateRequest): Daytype {
-        val entity = Daytype()
+        val entity = Daytype(
+            gym = request.gym,
+            name = request.name,
+            date = request.date,
+        )
         return daytypeRepository.save(entity)
     }
 
     fun createBatch(requests: List<DaytypeCreateRequest>): List<Daytype> {
         val entities = requests.map { request ->
-            Daytype()
+            Daytype(
+                gym = request.gym,
+                name = request.name,
+                date = request.date,
+            )
         }
         return daytypeRepository.saveAll(entities)
     }
 
     fun update(request: DaytypeUpdateRequest): Daytype? {
         val existing = daytypeRepository.findById(request.id).orElse(null) ?: return null
-        return daytypeRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            gym = request.gym,
+            name = request.name,
+            date = request.date,
+        )
+        return daytypeRepository.save(updated)
     }
 
     fun delete(entity: Daytype): Boolean {

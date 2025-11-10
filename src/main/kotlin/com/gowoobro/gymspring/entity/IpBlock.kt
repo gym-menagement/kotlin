@@ -3,6 +3,9 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.ipblock.Type
+import com.gowoobro.gymspring.enums.ipblock.Policy
+import com.gowoobro.gymspring.enums.ipblock.Use
 
 @Entity
 @Table(name = "ipblock_tb")
@@ -14,35 +17,32 @@ data class Ipblock(
     @Column(name = "ib_address")
     val address: String = "",
     @Column(name = "ib_type")
-    @Enumerated(EnumType.ORDINAL)
-    val type: Type,
+    val type: Type = Type.ADMIN,
     @Column(name = "ib_policy")
-    @Enumerated(EnumType.ORDINAL)
-    val policy: Policy,
+    val policy: Policy = Policy.GRANT,
     @Column(name = "ib_use")
-    @Enumerated(EnumType.ORDINAL)
-    val use: Use,
+    val use: Use = Use.USE,
     @Column(name = "ib_order")
     val order: Int = 0,
     @Column(name = "ib_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class IpblockCreateRequest(
     val address: String = "",
-    val type: Type,
-    val policy: Policy,
-    val use: Use,
+    val type: Type = Type.ADMIN,
+    val policy: Policy = Policy.GRANT,
+    val use: Use = Use.USE,
     val order: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class IpblockUpdateRequest(
     val id: Long = 0,
     val address: String = "",
-    val type: Type,
-    val policy: Policy,
-    val use: Use,
+    val type: Type = Type.ADMIN,
+    val policy: Policy = Policy.GRANT,
+    val use: Use = Use.USE,
     val order: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

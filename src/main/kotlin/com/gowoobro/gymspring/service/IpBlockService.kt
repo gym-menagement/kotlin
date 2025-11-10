@@ -7,9 +7,15 @@ import com.gowoobro.gymspring.repository.IpblockRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
+
+import com.gowoobro.gymspring.enums.ipblock.Type
+import com.gowoobro.gymspring.enums.ipblock.Policy
+import com.gowoobro.gymspring.enums.ipblock.Use
+
 
 @Service
 @Transactional
@@ -29,12 +35,29 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
     }
 
 
+    fun findByAddress(address: String): List<Ipblock> {
+        return ipblockRepository.findByAddress(address)
+    }
 
+    fun findByType(type: Type): List<Ipblock> {
+        return ipblockRepository.findByType(type)
+    }
 
+    fun findByPolicy(policy: Policy): List<Ipblock> {
+        return ipblockRepository.findByPolicy(policy)
+    }
 
+    fun findByUse(use: Use): List<Ipblock> {
+        return ipblockRepository.findByUse(use)
+    }
 
+    fun findByOrder(order: Int): List<Ipblock> {
+        return ipblockRepository.findByOrder(order)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Ipblock> {
+        return ipblockRepository.findByDate(date)
+    }
 
 
     fun create(request: IpblockCreateRequest): Ipblock {
@@ -44,7 +67,7 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
             policy = request.policy,
             use = request.use,
             order = request.order,
-            date = request.date ?: LocalDateTime.now()
+            date = request.date,
         )
         return ipblockRepository.save(entity)
     }
@@ -57,7 +80,7 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
                 policy = request.policy,
                 use = request.use,
                 order = request.order,
-                date = request.date ?: LocalDateTime.now()
+                date = request.date,
             )
         }
         return ipblockRepository.saveAll(entities)
@@ -65,13 +88,16 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
 
     fun update(request: IpblockUpdateRequest): Ipblock? {
         val existing = ipblockRepository.findById(request.id).orElse(null) ?: return null
+
+        
+
         val updated = existing.copy(
             address = request.address,
             type = request.type,
             policy = request.policy,
             use = request.use,
             order = request.order,
-            date = request.date ?: LocalDateTime.now()
+            date = request.date,
         )
         return ipblockRepository.save(updated)
     }

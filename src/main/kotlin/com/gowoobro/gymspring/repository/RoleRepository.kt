@@ -8,12 +8,20 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
+
+
 
 @Repository
 interface RoleRepository : JpaRepository<Role, Long> {
     override fun findAll(pageable: Pageable): Page<Role>
 
 
+    fun findByGym(gym: Long): List<Role>
 
+    fun findByRole(role: Int): List<Role>
 
+    fun findByName(name: String): List<Role>
+
+    fun findByDate(date: LocalDateTime): List<Role>
 }

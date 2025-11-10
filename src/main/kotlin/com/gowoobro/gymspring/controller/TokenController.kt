@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.TokenService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/token")
@@ -32,10 +35,29 @@ class TokenController(private val tokenService: TokenService) {
     }
 
 
+    @GetMapping("/search/user")
+    fun getTokenByUser(@RequestParam user: Long): ResponseEntity<List<Token>> {
+        val result = tokenService.findByUser(user)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/token")
+    fun getTokenByToken(@RequestParam token: String): ResponseEntity<List<Token>> {
+        val result = tokenService.findByToken(token)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/status")
+    fun getTokenByStatus(@RequestParam status: Int): ResponseEntity<List<Token>> {
+        val result = tokenService.findByStatus(status)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getTokenByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Token>> {
+        val result = tokenService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

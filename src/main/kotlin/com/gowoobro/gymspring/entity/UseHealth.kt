@@ -24,11 +24,11 @@ data class Usehealth(
     @Column(name = "uh_discount")
     val discount: Long = 0L,
     @Column(name = "uh_startday")
-    val startday: LocalDateTime? = null,
+    val startday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "uh_endday")
-    val endday: LocalDateTime? = null,
+    val endday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "uh_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class UsehealthCreateRequest(
@@ -38,9 +38,9 @@ data class UsehealthCreateRequest(
     val rocker: Long = 0L,
     val term: Long = 0L,
     val discount: Long = 0L,
-    val startday: LocalDateTime? = null,
-    val endday: LocalDateTime? = null,
-    val date: LocalDateTime? = null,
+    val startday: LocalDateTime? = LocalDateTime.now(),
+    val endday: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class UsehealthUpdateRequest(
@@ -51,7 +51,7 @@ data class UsehealthUpdateRequest(
     val rocker: Long = 0L,
     val term: Long = 0L,
     val discount: Long = 0L,
-    val startday: LocalDateTime? = null,
-    val endday: LocalDateTime? = null,
-    val date: LocalDateTime? = null,
+    val startday: LocalDateTime? = LocalDateTime.now(),
+    val endday: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

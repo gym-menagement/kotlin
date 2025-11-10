@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.TermService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/term")
@@ -32,11 +35,35 @@ class TermController(private val termService: TermService) {
     }
 
 
+    @GetMapping("/search/gym")
+    fun getTermByGym(@RequestParam gym: Long): ResponseEntity<List<Term>> {
+        val result = termService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/daytype")
+    fun getTermByDaytype(@RequestParam daytype: Long): ResponseEntity<List<Term>> {
+        val result = termService.findByDaytype(daytype)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/name")
+    fun getTermByName(@RequestParam name: String): ResponseEntity<List<Term>> {
+        val result = termService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/term")
+    fun getTermByTerm(@RequestParam term: Int): ResponseEntity<List<Term>> {
+        val result = termService.findByTerm(term)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getTermByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Term>> {
+        val result = termService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

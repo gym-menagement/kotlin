@@ -18,14 +18,14 @@ data class Loginlog(
     @Column(name = "ll_user")
     val user: Long = 0L,
     @Column(name = "ll_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class LoginlogCreateRequest(
     val ip: String = "",
     val ipvalue: Long = 0L,
     val user: Long = 0L,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class LoginlogUpdateRequest(
@@ -33,5 +33,5 @@ data class LoginlogUpdateRequest(
     val ip: String = "",
     val ipvalue: Long = 0L,
     val user: Long = 0L,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

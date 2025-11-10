@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.GymRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,25 +32,43 @@ class GymService(private val gymRepository: GymRepository) {
     }
 
 
+    fun findByName(name: String): List<Gym> {
+        return gymRepository.findByName(name)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Gym> {
+        return gymRepository.findByDate(date)
+    }
 
 
     fun create(request: GymCreateRequest): Gym {
-        val entity = Gym()
+        val entity = Gym(
+            name = request.name,
+            date = request.date,
+        )
         return gymRepository.save(entity)
     }
 
     fun createBatch(requests: List<GymCreateRequest>): List<Gym> {
         val entities = requests.map { request ->
-            Gym()
+            Gym(
+                name = request.name,
+                date = request.date,
+            )
         }
         return gymRepository.saveAll(entities)
     }
 
     fun update(request: GymUpdateRequest): Gym? {
         val existing = gymRepository.findById(request.id).orElse(null) ?: return null
-        return gymRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            name = request.name,
+            date = request.date,
+        )
+        return gymRepository.save(updated)
     }
 
     fun delete(entity: Gym): Boolean {

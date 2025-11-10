@@ -7,6 +7,9 @@ import com.gowoobro.gymspring.service.RockergroupService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+
 
 @RestController
 @RequestMapping("/api/rockergroup")
@@ -32,9 +35,23 @@ class RockergroupController(private val rockergroupService: RockergroupService) 
     }
 
 
+    @GetMapping("/search/gym")
+    fun getRockergroupByGym(@RequestParam gym: Long): ResponseEntity<List<Rockergroup>> {
+        val result = rockergroupService.findByGym(gym)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/name")
+    fun getRockergroupByName(@RequestParam name: String): ResponseEntity<List<Rockergroup>> {
+        val result = rockergroupService.findByName(name)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getRockergroupByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Rockergroup>> {
+        val result = rockergroupService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

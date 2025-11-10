@@ -20,7 +20,7 @@ data class Paymentform(
     @Column(name = "pf_cost")
     val cost: Int = 0,
     @Column(name = "pf_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PaymentformCreateRequest(
@@ -28,7 +28,7 @@ data class PaymentformCreateRequest(
     val payment: Long = 0L,
     val type: Long = 0L,
     val cost: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PaymentformUpdateRequest(
@@ -37,5 +37,5 @@ data class PaymentformUpdateRequest(
     val payment: Long = 0L,
     val type: Long = 0L,
     val cost: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

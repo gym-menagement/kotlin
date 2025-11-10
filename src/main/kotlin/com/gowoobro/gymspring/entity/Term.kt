@@ -20,7 +20,7 @@ data class Term(
     @Column(name = "t_term")
     val term: Int = 0,
     @Column(name = "t_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class TermCreateRequest(
@@ -28,7 +28,7 @@ data class TermCreateRequest(
     val daytype: Long = 0L,
     val name: String = "",
     val term: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class TermUpdateRequest(
@@ -37,5 +37,5 @@ data class TermUpdateRequest(
     val daytype: Long = 0L,
     val name: String = "",
     val term: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

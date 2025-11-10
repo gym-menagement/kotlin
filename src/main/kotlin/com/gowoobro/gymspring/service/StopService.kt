@@ -7,8 +7,12 @@ import com.gowoobro.gymspring.repository.StopRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
+
+
 
 @Service
 @Transactional
@@ -28,28 +32,64 @@ class StopService(private val stopRepository: StopRepository) {
     }
 
 
+    fun findByUsehelth(usehelth: Long): List<Stop> {
+        return stopRepository.findByUsehelth(usehelth)
+    }
 
+    fun findByStartday(startday: LocalDateTime): List<Stop> {
+        return stopRepository.findByStartday(startday)
+    }
 
+    fun findByEndday(endday: LocalDateTime): List<Stop> {
+        return stopRepository.findByEndday(endday)
+    }
 
+    fun findByCount(count: Int): List<Stop> {
+        return stopRepository.findByCount(count)
+    }
 
-
+    fun findByDate(date: LocalDateTime): List<Stop> {
+        return stopRepository.findByDate(date)
+    }
 
 
     fun create(request: StopCreateRequest): Stop {
-        val entity = Stop()
+        val entity = Stop(
+            usehelth = request.usehelth,
+            startday = request.startday,
+            endday = request.endday,
+            count = request.count,
+            date = request.date,
+        )
         return stopRepository.save(entity)
     }
 
     fun createBatch(requests: List<StopCreateRequest>): List<Stop> {
         val entities = requests.map { request ->
-            Stop()
+            Stop(
+                usehelth = request.usehelth,
+                startday = request.startday,
+                endday = request.endday,
+                count = request.count,
+                date = request.date,
+            )
         }
         return stopRepository.saveAll(entities)
     }
 
     fun update(request: StopUpdateRequest): Stop? {
         val existing = stopRepository.findById(request.id).orElse(null) ?: return null
-        return stopRepository.save(existing)
+
+        
+
+        val updated = existing.copy(
+            usehelth = request.usehelth,
+            startday = request.startday,
+            endday = request.endday,
+            count = request.count,
+            date = request.date,
+        )
+        return stopRepository.save(updated)
     }
 
     fun delete(entity: Stop): Boolean {

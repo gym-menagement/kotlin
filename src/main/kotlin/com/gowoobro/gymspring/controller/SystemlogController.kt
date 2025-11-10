@@ -7,6 +7,10 @@ import com.gowoobro.gymspring.service.SystemlogService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+
+import com.gowoobro.gymspring.enums.systemlog.Type
+
 
 @RestController
 @RequestMapping("/api/systemlog")
@@ -32,10 +36,29 @@ class SystemlogController(private val systemlogService: SystemlogService) {
     }
 
 
+    @GetMapping("/search/type")
+    fun getSystemlogByType(@RequestParam type: Type): ResponseEntity<List<Systemlog>> {
+        val result = systemlogService.findByType(type)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/content")
+    fun getSystemlogByContent(@RequestParam content: String): ResponseEntity<List<Systemlog>> {
+        val result = systemlogService.findByContent(content)
+        return ResponseEntity.ok(result)
+    }
 
+    @GetMapping("/search/result")
+    fun getSystemlogByResult(@RequestParam result: Int): ResponseEntity<List<Systemlog>> {
+        val result = systemlogService.findByResult(result)
+        return ResponseEntity.ok(result)
+    }
 
-
+    @GetMapping("/search/date")
+    fun getSystemlogByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Systemlog>> {
+        val result = systemlogService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
 
 
     @GetMapping("/count")

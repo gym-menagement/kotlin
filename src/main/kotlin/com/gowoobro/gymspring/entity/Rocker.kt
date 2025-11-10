@@ -18,14 +18,14 @@ data class Rocker(
     @Column(name = "r_available")
     val available: Int = 0,
     @Column(name = "r_date")
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class RockerCreateRequest(
     val group: Long = 0L,
     val name: String = "",
     val available: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class RockerUpdateRequest(
@@ -33,5 +33,5 @@ data class RockerUpdateRequest(
     val group: Long = 0L,
     val name: String = "",
     val available: Int = 0,
-    val date: LocalDateTime? = null,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
