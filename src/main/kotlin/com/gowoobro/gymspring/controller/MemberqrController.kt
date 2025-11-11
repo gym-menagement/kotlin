@@ -84,6 +84,12 @@ class MemberqrController(private val memberqrService: MemberqrService) {
         return ResponseEntity.ok(result)
     }
 
+    @GetMapping("/search/date")
+    fun getMemberqrByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Memberqr>> {
+        val result = memberqrService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
 
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {

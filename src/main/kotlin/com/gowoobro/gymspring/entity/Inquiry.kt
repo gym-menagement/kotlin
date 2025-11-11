@@ -33,6 +33,8 @@ data class Inquiry(
     val answereddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "iq_createddate")
     val createddate: LocalDateTime? = LocalDateTime.now(),
+    @Column(name = "iq_date")
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class InquiryCreateRequest(
@@ -46,6 +48,7 @@ data class InquiryCreateRequest(
     val answeredby: Long = 0L,
     val answereddate: LocalDateTime? = LocalDateTime.now(),
     val createddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class InquiryUpdateRequest(
@@ -60,4 +63,5 @@ data class InquiryUpdateRequest(
     val answeredby: Long = 0L,
     val answereddate: LocalDateTime? = LocalDateTime.now(),
     val createddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

@@ -37,4 +37,6 @@ interface InquiryRepository : JpaRepository<Inquiry, Long> {
     fun findByAnswereddate(answereddate: LocalDateTime): List<Inquiry>
 
     fun findByCreateddate(createddate: LocalDateTime): List<Inquiry>
+
+    fun findByDate(date: LocalDateTime): List<Inquiry>
 }

@@ -84,6 +84,12 @@ class PushtokenController(private val pushtokenService: PushtokenService) {
         return ResponseEntity.ok(result)
     }
 
+    @GetMapping("/search/date")
+    fun getPushtokenByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Pushtoken>> {
+        val result = pushtokenService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
 
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {

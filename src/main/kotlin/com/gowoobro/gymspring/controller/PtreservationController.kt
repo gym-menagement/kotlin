@@ -108,6 +108,12 @@ class PtreservationController(private val ptreservationService: PtreservationSer
         return ResponseEntity.ok(result)
     }
 
+    @GetMapping("/search/date")
+    fun getPtreservationByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Ptreservation>> {
+        val result = ptreservationService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
 
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {

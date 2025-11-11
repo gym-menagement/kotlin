@@ -48,4 +48,6 @@ interface NoticeRepository : JpaRepository<Notice, Long> {
     fun findByCreateddate(createddate: LocalDateTime): List<Notice>
 
     fun findByUpdateddate(updateddate: LocalDateTime): List<Notice>
+
+    fun findByDate(date: LocalDateTime): List<Notice>
 }

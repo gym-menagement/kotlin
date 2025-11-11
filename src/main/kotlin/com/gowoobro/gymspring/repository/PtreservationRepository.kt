@@ -40,4 +40,6 @@ interface PtreservationRepository : JpaRepository<Ptreservation, Long> {
     fun findByCreateddate(createddate: LocalDateTime): List<Ptreservation>
 
     fun findByUpdateddate(updateddate: LocalDateTime): List<Ptreservation>
+
+    fun findByDate(date: LocalDateTime): List<Ptreservation>
 }

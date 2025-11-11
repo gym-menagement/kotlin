@@ -32,4 +32,6 @@ interface MemberqrRepository : JpaRepository<Memberqr, Long> {
     fun findByLastuseddate(lastuseddate: LocalDateTime): List<Memberqr>
 
     fun findByUsecount(usecount: Int): List<Memberqr>
+
+    fun findByDate(date: LocalDateTime): List<Memberqr>
 }

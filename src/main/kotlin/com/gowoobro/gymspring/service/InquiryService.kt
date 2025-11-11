@@ -74,6 +74,10 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
         return inquiryRepository.findByCreateddate(createddate)
     }
 
+    fun findByDate(date: LocalDateTime): List<Inquiry> {
+        return inquiryRepository.findByDate(date)
+    }
+
 
     fun create(request: InquiryCreateRequest): Inquiry {
         val entity = Inquiry(
@@ -87,6 +91,7 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
             answeredby = request.answeredby,
             answereddate = request.answereddate,
             createddate = request.createddate,
+            date = request.date,
         )
         return inquiryRepository.save(entity)
     }
@@ -104,6 +109,7 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
                 answeredby = request.answeredby,
                 answereddate = request.answereddate,
                 createddate = request.createddate,
+                date = request.date,
             )
         }
         return inquiryRepository.saveAll(entities)
@@ -125,6 +131,7 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
             answeredby = request.answeredby,
             answereddate = request.answereddate,
             createddate = request.createddate,
+            date = request.date,
         )
         return inquiryRepository.save(updated)
     }

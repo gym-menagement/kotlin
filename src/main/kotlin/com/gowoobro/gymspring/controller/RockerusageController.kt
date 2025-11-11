@@ -102,6 +102,12 @@ class RockerusageController(private val rockerusageService: RockerusageService) 
         return ResponseEntity.ok(result)
     }
 
+    @GetMapping("/search/date")
+    fun getRockerusageByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Rockerusage>> {
+        val result = rockerusageService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
 
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {

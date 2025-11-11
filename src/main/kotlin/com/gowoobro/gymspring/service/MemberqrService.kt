@@ -65,6 +65,10 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
         return memberqrRepository.findByUsecount(usecount)
     }
 
+    fun findByDate(date: LocalDateTime): List<Memberqr> {
+        return memberqrRepository.findByDate(date)
+    }
+
 
     fun create(request: MemberqrCreateRequest): Memberqr {
         val entity = Memberqr(
@@ -76,6 +80,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
             generateddate = request.generateddate,
             lastuseddate = request.lastuseddate,
             usecount = request.usecount,
+            date = request.date,
         )
         return memberqrRepository.save(entity)
     }
@@ -91,6 +96,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
                 generateddate = request.generateddate,
                 lastuseddate = request.lastuseddate,
                 usecount = request.usecount,
+                date = request.date,
             )
         }
         return memberqrRepository.saveAll(entities)
@@ -110,6 +116,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
             generateddate = request.generateddate,
             lastuseddate = request.lastuseddate,
             usecount = request.usecount,
+            date = request.date,
         )
         return memberqrRepository.save(updated)
     }

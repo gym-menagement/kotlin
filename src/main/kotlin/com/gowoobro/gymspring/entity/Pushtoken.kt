@@ -28,6 +28,8 @@ data class Pushtoken(
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "pt_updateddate")
     val updateddate: LocalDateTime? = LocalDateTime.now(),
+    @Column(name = "pt_date")
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PushtokenCreateRequest(
@@ -39,6 +41,7 @@ data class PushtokenCreateRequest(
     val isactive: Isactive = Isactive.0,
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PushtokenUpdateRequest(
@@ -51,4 +54,5 @@ data class PushtokenUpdateRequest(
     val isactive: Isactive = Isactive.0,
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

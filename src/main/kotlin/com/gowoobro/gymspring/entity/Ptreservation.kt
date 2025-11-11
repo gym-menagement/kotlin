@@ -36,6 +36,8 @@ data class Ptreservation(
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "pr_updateddate")
     val updateddate: LocalDateTime? = LocalDateTime.now(),
+    @Column(name = "pr_date")
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PtreservationCreateRequest(
@@ -51,6 +53,7 @@ data class PtreservationCreateRequest(
     val cancelreason: String = "",
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class PtreservationUpdateRequest(
@@ -67,4 +70,5 @@ data class PtreservationUpdateRequest(
     val cancelreason: String = "",
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

@@ -44,6 +44,8 @@ data class Notice(
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "nt_updateddate")
     val updateddate: LocalDateTime? = LocalDateTime.now(),
+    @Column(name = "nt_date")
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class NoticeCreateRequest(
@@ -61,6 +63,7 @@ data class NoticeCreateRequest(
     val createdby: Long = 0L,
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class NoticeUpdateRequest(
@@ -79,4 +82,5 @@ data class NoticeUpdateRequest(
     val createdby: Long = 0L,
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

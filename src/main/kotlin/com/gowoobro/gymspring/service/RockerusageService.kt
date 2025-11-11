@@ -77,6 +77,10 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
         return rockerusageRepository.findByAssigneddate(assigneddate)
     }
 
+    fun findByDate(date: LocalDateTime): List<Rockerusage> {
+        return rockerusageRepository.findByDate(date)
+    }
+
 
     fun create(request: RockerusageCreateRequest): Rockerusage {
         val entity = Rockerusage(
@@ -91,6 +95,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
             note = request.note,
             assignedby = request.assignedby,
             assigneddate = request.assigneddate,
+            date = request.date,
         )
         return rockerusageRepository.save(entity)
     }
@@ -109,6 +114,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
                 note = request.note,
                 assignedby = request.assignedby,
                 assigneddate = request.assigneddate,
+                date = request.date,
             )
         }
         return rockerusageRepository.saveAll(entities)
@@ -131,6 +137,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
             note = request.note,
             assignedby = request.assignedby,
             assigneddate = request.assigneddate,
+            date = request.date,
         )
         return rockerusageRepository.save(updated)
     }

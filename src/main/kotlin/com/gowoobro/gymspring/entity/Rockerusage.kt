@@ -34,6 +34,8 @@ data class Rockerusage(
     val assignedby: Long = 0L,
     @Column(name = "ru_assigneddate")
     val assigneddate: LocalDateTime? = LocalDateTime.now(),
+    @Column(name = "ru_date")
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class RockerusageCreateRequest(
@@ -48,6 +50,7 @@ data class RockerusageCreateRequest(
     val note: String = "",
     val assignedby: Long = 0L,
     val assigneddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class RockerusageUpdateRequest(
@@ -63,4 +66,5 @@ data class RockerusageUpdateRequest(
     val note: String = "",
     val assignedby: Long = 0L,
     val assigneddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

@@ -70,6 +70,10 @@ class AppversionService(private val appversionRepository: AppversionRepository) 
         return appversionRepository.findByCreateddate(createddate)
     }
 
+    fun findByDate(date: LocalDateTime): List<Appversion> {
+        return appversionRepository.findByDate(date)
+    }
+
 
     fun create(request: AppversionCreateRequest): Appversion {
         val entity = Appversion(
@@ -82,6 +86,7 @@ class AppversionService(private val appversionRepository: AppversionRepository) 
             status = request.status,
             releasedate = request.releasedate,
             createddate = request.createddate,
+            date = request.date,
         )
         return appversionRepository.save(entity)
     }
@@ -98,6 +103,7 @@ class AppversionService(private val appversionRepository: AppversionRepository) 
                 status = request.status,
                 releasedate = request.releasedate,
                 createddate = request.createddate,
+                date = request.date,
             )
         }
         return appversionRepository.saveAll(entities)
@@ -118,6 +124,7 @@ class AppversionService(private val appversionRepository: AppversionRepository) 
             status = request.status,
             releasedate = request.releasedate,
             createddate = request.createddate,
+            date = request.date,
         )
         return appversionRepository.save(updated)
     }

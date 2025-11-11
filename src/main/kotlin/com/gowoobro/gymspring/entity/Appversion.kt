@@ -31,6 +31,8 @@ data class Appversion(
     val releasedate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "av_createddate")
     val createddate: LocalDateTime? = LocalDateTime.now(),
+    @Column(name = "av_date")
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class AppversionCreateRequest(
@@ -43,6 +45,7 @@ data class AppversionCreateRequest(
     val status: Status = Status.0,
     val releasedate: LocalDateTime? = LocalDateTime.now(),
     val createddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class AppversionUpdateRequest(
@@ -56,4 +59,5 @@ data class AppversionUpdateRequest(
     val status: Status = Status.0,
     val releasedate: LocalDateTime? = LocalDateTime.now(),
     val createddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )

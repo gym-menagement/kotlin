@@ -32,4 +32,6 @@ interface PushtokenRepository : JpaRepository<Pushtoken, Long> {
     fun findByCreateddate(createddate: LocalDateTime): List<Pushtoken>
 
     fun findByUpdateddate(updateddate: LocalDateTime): List<Pushtoken>
+
+    fun findByDate(date: LocalDateTime): List<Pushtoken>
 }

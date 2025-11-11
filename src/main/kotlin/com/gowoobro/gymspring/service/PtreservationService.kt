@@ -81,6 +81,10 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
         return ptreservationRepository.findByUpdateddate(updateddate)
     }
 
+    fun findByDate(date: LocalDateTime): List<Ptreservation> {
+        return ptreservationRepository.findByDate(date)
+    }
+
 
     fun create(request: PtreservationCreateRequest): Ptreservation {
         val entity = Ptreservation(
@@ -96,6 +100,7 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
             cancelreason = request.cancelreason,
             createddate = request.createddate,
             updateddate = request.updateddate,
+            date = request.date,
         )
         return ptreservationRepository.save(entity)
     }
@@ -115,6 +120,7 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
                 cancelreason = request.cancelreason,
                 createddate = request.createddate,
                 updateddate = request.updateddate,
+                date = request.date,
             )
         }
         return ptreservationRepository.saveAll(entities)
@@ -138,6 +144,7 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
             cancelreason = request.cancelreason,
             createddate = request.createddate,
             updateddate = request.updateddate,
+            date = request.date,
         )
         return ptreservationRepository.save(updated)
     }

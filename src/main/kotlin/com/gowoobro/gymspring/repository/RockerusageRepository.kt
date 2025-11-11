@@ -38,4 +38,6 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByAssignedby(assignedby: Long): List<Rockerusage>
 
     fun findByAssigneddate(assigneddate: LocalDateTime): List<Rockerusage>
+
+    fun findByDate(date: LocalDateTime): List<Rockerusage>
 }

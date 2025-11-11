@@ -65,6 +65,10 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
         return pushtokenRepository.findByUpdateddate(updateddate)
     }
 
+    fun findByDate(date: LocalDateTime): List<Pushtoken> {
+        return pushtokenRepository.findByDate(date)
+    }
+
 
     fun create(request: PushtokenCreateRequest): Pushtoken {
         val entity = Pushtoken(
@@ -76,6 +80,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
             isactive = request.isactive,
             createddate = request.createddate,
             updateddate = request.updateddate,
+            date = request.date,
         )
         return pushtokenRepository.save(entity)
     }
@@ -91,6 +96,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
                 isactive = request.isactive,
                 createddate = request.createddate,
                 updateddate = request.updateddate,
+                date = request.date,
             )
         }
         return pushtokenRepository.saveAll(entities)
@@ -110,6 +116,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
             isactive = request.isactive,
             createddate = request.createddate,
             updateddate = request.updateddate,
+            date = request.date,
         )
         return pushtokenRepository.save(updated)
     }

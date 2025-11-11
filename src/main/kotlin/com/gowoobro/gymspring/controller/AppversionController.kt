@@ -91,6 +91,12 @@ class AppversionController(private val appversionService: AppversionService) {
         return ResponseEntity.ok(result)
     }
 
+    @GetMapping("/search/date")
+    fun getAppversionByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Appversion>> {
+        val result = appversionService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
 
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {

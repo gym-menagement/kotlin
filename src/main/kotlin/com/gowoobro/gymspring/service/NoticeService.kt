@@ -93,6 +93,10 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
         return noticeRepository.findByUpdateddate(updateddate)
     }
 
+    fun findByDate(date: LocalDateTime): List<Notice> {
+        return noticeRepository.findByDate(date)
+    }
+
 
     fun create(request: NoticeCreateRequest): Notice {
         val entity = Notice(
@@ -110,6 +114,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
             createdby = request.createdby,
             createddate = request.createddate,
             updateddate = request.updateddate,
+            date = request.date,
         )
         return noticeRepository.save(entity)
     }
@@ -131,6 +136,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
                 createdby = request.createdby,
                 createddate = request.createddate,
                 updateddate = request.updateddate,
+                date = request.date,
             )
         }
         return noticeRepository.saveAll(entities)
@@ -156,6 +162,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
             createdby = request.createdby,
             createddate = request.createddate,
             updateddate = request.updateddate,
+            date = request.date,
         )
         return noticeRepository.save(updated)
     }

@@ -35,4 +35,6 @@ interface AppversionRepository : JpaRepository<Appversion, Long> {
     fun findByReleasedate(releasedate: LocalDateTime): List<Appversion>
 
     fun findByCreateddate(createddate: LocalDateTime): List<Appversion>
+
+    fun findByDate(date: LocalDateTime): List<Appversion>
 }

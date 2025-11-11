@@ -97,6 +97,12 @@ class InquiryController(private val inquiryService: InquiryService) {
         return ResponseEntity.ok(result)
     }
 
+    @GetMapping("/search/date")
+    fun getInquiryByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Inquiry>> {
+        val result = inquiryService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
 
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {

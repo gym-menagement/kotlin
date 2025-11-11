@@ -124,6 +124,12 @@ class NoticeController(private val noticeService: NoticeService) {
         return ResponseEntity.ok(result)
     }
 
+    @GetMapping("/search/date")
+    fun getNoticeByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Notice>> {
+        val result = noticeService.findByDate(date)
+        return ResponseEntity.ok(result)
+    }
+
 
     @GetMapping("/count")
     fun getCount(): ResponseEntity<Map<String, Long>> {

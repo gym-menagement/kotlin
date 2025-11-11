@@ -28,6 +28,8 @@ data class Memberqr(
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "mq_usecount")
     val usecount: Int = 0,
+    @Column(name = "mq_date")
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class MemberqrCreateRequest(
@@ -39,6 +41,7 @@ data class MemberqrCreateRequest(
     val generateddate: LocalDateTime? = LocalDateTime.now(),
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val usecount: Int = 0,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class MemberqrUpdateRequest(
@@ -51,4 +54,5 @@ data class MemberqrUpdateRequest(
     val generateddate: LocalDateTime? = LocalDateTime.now(),
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val usecount: Int = 0,
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
