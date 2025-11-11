@@ -7,7 +7,7 @@
   "auth": "jwt",
   "authTimeout": "not",
   "adminLevel": "3",
-  "language": "kotlin",
+  "language": "go",
   "goModelFilePath": "../gym/back/",
   "dartModelFilePath": "../../gym/gym/lib/model/",
   "kotlinModelFilePath": "../../gym/android/app/src/main/kotlin/com/gowoobro/gymspring/",
@@ -19,11 +19,11 @@
           "name": "level",
           "data": [
             "",
-            "1:일반회원",
-            "2:트레이너",
-            "3:헬스장관리자",
-            "4:플랫폼관리자",
-            "9:최고관리자"
+            "normal:일반회원",
+            "manager:트레이너/직원",
+            "admin:헬스장관리자",
+            "superadmin:플랫폼관리자",
+            "rootadmin:최고관리자"
           ]
         },
         {
@@ -72,13 +72,7 @@
       "map": [
         {
           "name": "type",
-          "data": [
-            "",
-            "notice:공지",
-            "warning:경고",
-            "error:에러",
-            "info:정보"
-          ]
+          "data": ["", "notice:공지", "warning:경고", "error:에러", "info:정보"]
         },
         {
           "name": "status",
@@ -97,11 +91,11 @@
       "map": [
         {
           "name": "type",
-          "data": ["", "ipv4:IPv4", "ipv6:IPv6", "range:범위"]
+          "data": ["", "admin:관리자 접근", "normal:일반 접근"]
         },
         {
           "name": "policy",
-          "data": ["", "allow:허용", "deny:거부", "block:차단"]
+          "data": ["", "grant:허용", "deny:거부"]
         },
         {
           "name": "use",
@@ -129,12 +123,7 @@
       "map": [
         {
           "name": "type",
-          "data": [
-            "",
-            "string:문자열",
-            "number:숫자",
-            "boolean:참거짓"
-          ]
+          "data": ["", "string:문자열", "number:숫자", "boolean:참거짓"]
         }
       ],
       "compare": [
@@ -153,7 +142,7 @@
       "map": [
         {
           "name": "type",
-          "data": ["", "system:시스템", "user:사용자", "admin:관리자", "error:에러"]
+          "data": ["", "login:로그인", "crawling:크롤링"]
         },
         {
           "name": "result",
@@ -623,11 +612,13 @@
       "join": [
         {
           "name": "user",
-          "column": "trainer"
+          "column": "trainer",
+          "alias": "trainerUser"
         },
         {
           "name": "user",
-          "column": "member"
+          "column": "member",
+          "alias": "memberUser"
         },
         {
           "name": "gym",
@@ -652,11 +643,13 @@
       "join": [
         {
           "name": "user",
-          "column": "trainer"
+          "column": "trainer",
+          "alias": "trainerUser"
         },
         {
           "name": "user",
-          "column": "member"
+          "column": "member",
+          "alias": "memberUser"
         },
         {
           "name": "gym",
@@ -685,11 +678,13 @@
       "join": [
         {
           "name": "user",
-          "column": "user"
+          "column": "user",
+          "alias": "memberUser"
         },
         {
           "name": "user",
-          "column": "measuredby"
+          "column": "measuredby",
+          "alias": "measuredbyUser"
         }
       ],
       "compare": [
@@ -704,7 +699,8 @@
       "join": [
         {
           "name": "user",
-          "column": "user"
+          "column": "user",
+          "alias": "inquirerUser"
         },
         {
           "name": "gym",
@@ -712,7 +708,8 @@
         },
         {
           "name": "user",
-          "column": "answeredby"
+          "column": "answeredby",
+          "alias": "answeredbyUser"
         }
       ],
       "map": [
@@ -749,7 +746,8 @@
         },
         {
           "name": "user",
-          "column": "user"
+          "column": "user",
+          "alias": "memberUser"
         },
         {
           "name": "membership",
@@ -757,7 +755,8 @@
         },
         {
           "name": "user",
-          "column": "assignedby"
+          "column": "assignedby",
+          "alias": "assignedbyUser"
         }
       ],
       "map": [
