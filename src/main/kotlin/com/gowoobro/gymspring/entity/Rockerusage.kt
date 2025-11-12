@@ -23,7 +23,7 @@ data class Rockerusage(
     @Column(name = "ru_enddate")
     val enddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "ru_status")
-    val status: Status = Status.0,
+    val status: Status = Status.TERMINATED,
     @Column(name = "ru_deposit")
     val deposit: BigDecimal = BigDecimal.ZERO,
     @Column(name = "ru_monthlyfee")
@@ -44,7 +44,7 @@ data class RockerusageCreateRequest(
     val membership: Long = 0L,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Status = Status.0,
+    val status: Status = Status.TERMINATED,
     val deposit: BigDecimal = BigDecimal.ZERO,
     val monthlyfee: BigDecimal = BigDecimal.ZERO,
     val note: String = "",
@@ -60,7 +60,7 @@ data class RockerusageUpdateRequest(
     val membership: Long = 0L,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Status = Status.0,
+    val status: Status = Status.TERMINATED,
     val deposit: BigDecimal = BigDecimal.ZERO,
     val monthlyfee: BigDecimal = BigDecimal.ZERO,
     val note: String = "",

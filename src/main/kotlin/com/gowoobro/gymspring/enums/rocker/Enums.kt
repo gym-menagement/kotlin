@@ -2,22 +2,22 @@ package com.gowoobro.gymspring.enums.rocker
 
 
 enum class Available {
-    0,  // 사용중
-    1,  // 사용가능
+    IN_USE,  // 사용중
+    AVAILABLE,  // 사용가능
 ;
 
     companion object {
         fun getDisplayName(value: Available): String {
             return when (value) {
-                0 -> "사용중"
-                1 -> "사용가능"
+                IN_USE -> "사용중"
+                AVAILABLE -> "사용가능"
             }
         }
 
         fun fromString(value: String): Available? {
             return when (value) {
-                "사용중" -> 0
-                "사용가능" -> 1
+                "사용중" -> IN_USE
+                "사용가능" -> AVAILABLE
                 else -> null
             }
         }

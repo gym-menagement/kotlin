@@ -18,13 +18,13 @@ data class Inquiry(
     @Column(name = "iq_gym")
     val gym: Long = 0L,
     @Column(name = "iq_type")
-    val type: Type = Type.0,
+    val type: Type = Type.GENERAL,
     @Column(name = "iq_title")
     val title: String = "",
     @Column(name = "iq_content")
     val content: String = "",
     @Column(name = "iq_status")
-    val status: Status = Status.0,
+    val status: Status = Status.WAITING,
     @Column(name = "iq_answer")
     val answer: String = "",
     @Column(name = "iq_answeredby")
@@ -40,10 +40,10 @@ data class Inquiry(
 data class InquiryCreateRequest(
     val user: Long = 0L,
     val gym: Long = 0L,
-    val type: Type = Type.0,
+    val type: Type = Type.GENERAL,
     val title: String = "",
     val content: String = "",
-    val status: Status = Status.0,
+    val status: Status = Status.WAITING,
     val answer: String = "",
     val answeredby: Long = 0L,
     val answereddate: LocalDateTime? = LocalDateTime.now(),
@@ -55,10 +55,10 @@ data class InquiryUpdateRequest(
     val id: Long = 0,
     val user: Long = 0L,
     val gym: Long = 0L,
-    val type: Type = Type.0,
+    val type: Type = Type.GENERAL,
     val title: String = "",
     val content: String = "",
-    val status: Status = Status.0,
+    val status: Status = Status.WAITING,
     val answer: String = "",
     val answeredby: Long = 0L,
     val answereddate: LocalDateTime? = LocalDateTime.now(),

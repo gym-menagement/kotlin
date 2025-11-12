@@ -19,7 +19,7 @@ data class Memberqr(
     @Column(name = "mq_imageurl")
     val imageurl: String = "",
     @Column(name = "mq_isactive")
-    val isactive: Isactive = Isactive.0,
+    val isactive: Isactive = Isactive.INACTIVE,
     @Column(name = "mq_expiredate")
     val expiredate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "mq_generateddate")
@@ -36,7 +36,7 @@ data class MemberqrCreateRequest(
     val user: Long = 0L,
     val code: String = "",
     val imageurl: String = "",
-    val isactive: Isactive = Isactive.0,
+    val isactive: Isactive = Isactive.INACTIVE,
     val expiredate: LocalDateTime? = LocalDateTime.now(),
     val generateddate: LocalDateTime? = LocalDateTime.now(),
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
@@ -49,7 +49,7 @@ data class MemberqrUpdateRequest(
     val user: Long = 0L,
     val code: String = "",
     val imageurl: String = "",
-    val isactive: Isactive = Isactive.0,
+    val isactive: Isactive = Isactive.INACTIVE,
     val expiredate: LocalDateTime? = LocalDateTime.now(),
     val generateddate: LocalDateTime? = LocalDateTime.now(),
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),

@@ -2,31 +2,31 @@ package com.gowoobro.gymspring.enums.user
 
 
 enum class Level {
-    1,  // 일반회원
-    2,  // 트레이너
-    3,  // 헬스장관리자
-    4,  // 플랫폼관리자
-    9,  // 최고관리자
+    LEVEL_1,  // 일반회원
+    LEVEL_2,  // 트레이너
+    LEVEL_3,  // 헬스장관리자
+    LEVEL_4,  // 플랫폼관리자
+    LEVEL_9,  // 최고관리자
 ;
 
     companion object {
         fun getDisplayName(value: Level): String {
             return when (value) {
-                1 -> "일반회원"
-                2 -> "트레이너"
-                3 -> "헬스장관리자"
-                4 -> "플랫폼관리자"
-                9 -> "최고관리자"
+                LEVEL_1 -> "일반회원"
+                LEVEL_2 -> "트레이너"
+                LEVEL_3 -> "헬스장관리자"
+                LEVEL_4 -> "플랫폼관리자"
+                LEVEL_9 -> "최고관리자"
             }
         }
 
         fun fromString(value: String): Level? {
             return when (value) {
-                "일반회원" -> 1
-                "트레이너" -> 2
-                "헬스장관리자" -> 3
-                "플랫폼관리자" -> 4
-                "최고관리자" -> 9
+                "일반회원" -> LEVEL_1
+                "트레이너" -> LEVEL_2
+                "헬스장관리자" -> LEVEL_3
+                "플랫폼관리자" -> LEVEL_4
+                "최고관리자" -> LEVEL_9
                 else -> null
             }
         }
@@ -125,22 +125,22 @@ enum class Role {
 
 
 enum class Sex {
-    0,  // 남성
-    1,  // 여성
+    MALE,  // 남성
+    FEMALE,  // 여성
 ;
 
     companion object {
         fun getDisplayName(value: Sex): String {
             return when (value) {
-                0 -> "남성"
-                1 -> "여성"
+                MALE -> "남성"
+                FEMALE -> "여성"
             }
         }
 
         fun fromString(value: String): Sex? {
             return when (value) {
-                "남성" -> 0
-                "여성" -> 1
+                "남성" -> MALE
+                "여성" -> FEMALE
                 else -> null
             }
         }

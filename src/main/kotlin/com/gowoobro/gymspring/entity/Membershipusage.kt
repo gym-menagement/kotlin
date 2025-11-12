@@ -18,7 +18,7 @@ data class Membershipusage(
     @Column(name = "mu_user")
     val user: Long = 0L,
     @Column(name = "mu_type")
-    val type: Type = Type.0,
+    val type: Type = Type.PERIOD_BASED,
     @Column(name = "mu_totaldays")
     val totaldays: Int = 0,
     @Column(name = "mu_useddays")
@@ -36,7 +36,7 @@ data class Membershipusage(
     @Column(name = "mu_enddate")
     val enddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "mu_status")
-    val status: Status = Status.0,
+    val status: Status = Status.IN_USE,
     @Column(name = "mu_pausedays")
     val pausedays: Int = 0,
     @Column(name = "mu_lastuseddate")
@@ -48,7 +48,7 @@ data class Membershipusage(
 data class MembershipusageCreateRequest(
     val membership: Long = 0L,
     val user: Long = 0L,
-    val type: Type = Type.0,
+    val type: Type = Type.PERIOD_BASED,
     val totaldays: Int = 0,
     val useddays: Int = 0,
     val remainingdays: Int = 0,
@@ -57,7 +57,7 @@ data class MembershipusageCreateRequest(
     val remainingcount: Int = 0,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Status = Status.0,
+    val status: Status = Status.IN_USE,
     val pausedays: Int = 0,
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
@@ -67,7 +67,7 @@ data class MembershipusageUpdateRequest(
     val id: Long = 0,
     val membership: Long = 0L,
     val user: Long = 0L,
-    val type: Type = Type.0,
+    val type: Type = Type.PERIOD_BASED,
     val totaldays: Int = 0,
     val useddays: Int = 0,
     val remainingdays: Int = 0,
@@ -76,7 +76,7 @@ data class MembershipusageUpdateRequest(
     val remainingcount: Int = 0,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Status = Status.0,
+    val status: Status = Status.IN_USE,
     val pausedays: Int = 0,
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),

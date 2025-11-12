@@ -27,7 +27,7 @@ data class Ptreservation(
     @Column(name = "pr_duration")
     val duration: Int = 0,
     @Column(name = "pr_status")
-    val status: Status = Status.0,
+    val status: Status = Status.RESERVED,
     @Column(name = "pr_note")
     val note: String = "",
     @Column(name = "pr_cancelreason")
@@ -48,7 +48,7 @@ data class PtreservationCreateRequest(
     val starttime: String = "",
     val endtime: String = "",
     val duration: Int = 0,
-    val status: Status = Status.0,
+    val status: Status = Status.RESERVED,
     val note: String = "",
     val cancelreason: String = "",
     val createddate: LocalDateTime? = LocalDateTime.now(),
@@ -65,7 +65,7 @@ data class PtreservationUpdateRequest(
     val starttime: String = "",
     val endtime: String = "",
     val duration: Int = 0,
-    val status: Status = Status.0,
+    val status: Status = Status.RESERVED,
     val note: String = "",
     val cancelreason: String = "",
     val createddate: LocalDateTime? = LocalDateTime.now(),

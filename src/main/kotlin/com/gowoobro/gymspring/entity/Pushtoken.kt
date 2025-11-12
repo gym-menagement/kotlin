@@ -23,7 +23,7 @@ data class Pushtoken(
     @Column(name = "pt_appversion")
     val appversion: String = "",
     @Column(name = "pt_isactive")
-    val isactive: Isactive = Isactive.0,
+    val isactive: Isactive = Isactive.INACTIVE,
     @Column(name = "pt_createddate")
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "pt_updateddate")
@@ -38,7 +38,7 @@ data class PushtokenCreateRequest(
     val devicetype: String = "",
     val deviceid: String = "",
     val appversion: String = "",
-    val isactive: Isactive = Isactive.0,
+    val isactive: Isactive = Isactive.INACTIVE,
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
@@ -51,7 +51,7 @@ data class PushtokenUpdateRequest(
     val devicetype: String = "",
     val deviceid: String = "",
     val appversion: String = "",
-    val isactive: Isactive = Isactive.0,
+    val isactive: Isactive = Isactive.INACTIVE,
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val updateddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),

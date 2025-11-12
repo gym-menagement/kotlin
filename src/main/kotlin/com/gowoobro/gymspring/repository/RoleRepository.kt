@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.role.Role
+import com.gowoobro.gymspring.enums.role.Role as RoleEnum
 
 
 @Repository
@@ -19,7 +19,7 @@ interface RoleRepository : JpaRepository<Role, Long> {
 
     fun findByGym(gym: Long): List<Role>
 
-    fun findByRole(role: Role): List<Role>
+    fun findByRole(role: RoleEnum): List<Role>
 
     fun findByName(name: String): List<Role>
 

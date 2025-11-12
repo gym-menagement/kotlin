@@ -54,7 +54,7 @@
         },
         {
           "name": "sex",
-          "data": ["", "0:남성", "1:여성"]
+          "data": ["", "male:남성", "female:여성"]
         }
       ],
       "method": [
@@ -265,7 +265,7 @@
       "map": [
         {
           "name": "sex",
-          "data": ["", "0:남성", "1:여성"]
+          "data": ["", "male:남성", "female:여성"]
         }
       ],
       "compare": [
@@ -363,7 +363,7 @@
       "map": [
         {
           "name": "available",
-          "data": ["", "0:사용중", "1:사용가능"]
+          "data": ["", "in_use:사용중", "available:사용가능"]
         }
       ],
       "compare": [
@@ -473,15 +473,15 @@
       "map": [
         {
           "name": "type",
-          "data": ["", "0:입장", "1:퇴장"]
+          "data": ["", "entry:입장", "exit:퇴장"]
         },
         {
           "name": "method",
-          "data": ["", "0:QR코드", "1:수동", "2:카드"]
+          "data": ["", "qr_code:QR코드", "manual:수동", "card:카드"]
         },
         {
           "name": "status",
-          "data": ["", "0:정상", "1:지각", "2:무단입장"]
+          "data": ["", "normal:정상", "late:지각", "unauthorized:무단입장"]
         }
       ],
       "compare": [
@@ -502,7 +502,7 @@
       "map": [
         {
           "name": "isactive",
-          "data": ["", "0:비활성", "1:활성"]
+          "data": ["", "inactive:비활성", "active:활성"]
         }
       ],
       "compare": [
@@ -554,11 +554,11 @@
       "map": [
         {
           "name": "type",
-          "data": ["", "0:기간제", "1:횟수제"]
+          "data": ["", "period_based:기간제", "count_based:횟수제"]
         },
         {
           "name": "status",
-          "data": ["", "0:사용중", "1:일시정지", "2:만료", "3:환불"]
+          "data": ["", "in_use:사용중", "paused:일시정지", "expired:만료", "refunded:환불"]
         }
       ]
     },
@@ -577,23 +577,23 @@
       "map": [
         {
           "name": "type",
-          "data": ["", "0:일반", "1:중요", "2:이벤트"]
+          "data": ["", "general:일반", "important:중요", "event:이벤트"]
         },
         {
           "name": "ispopup",
-          "data": ["", "0:아니오", "1:예"]
+          "data": ["", "no:아니오", "yes:예"]
         },
         {
           "name": "ispush",
-          "data": ["", "0:아니오", "1:예"]
+          "data": ["", "no:아니오", "yes:예"]
         },
         {
           "name": "target",
-          "data": ["", "0:전체", "1:회원만", "2:특정회원"]
+          "data": ["", "all:전체", "members_only:회원만", "specific_members:특정회원"]
         },
         {
           "name": "status",
-          "data": ["", "0:비공개", "1:공개"]
+          "data": ["", "private:비공개", "public:공개"]
         }
       ],
       "compare": [
@@ -628,7 +628,7 @@
       "map": [
         {
           "name": "status",
-          "data": ["", "0:종료", "1:진행중"]
+          "data": ["", "terminated:종료", "in_progress:진행중"]
         }
       ],
       "compare": [
@@ -659,7 +659,7 @@
       "map": [
         {
           "name": "status",
-          "data": ["", "0:예약", "1:완료", "2:취소", "3:노쇼"]
+          "data": ["", "reserved:예약", "completed:완료", "cancelled:취소", "no_show:노쇼"]
         }
       ],
       "compare": [
@@ -715,11 +715,11 @@
       "map": [
         {
           "name": "type",
-          "data": ["", "0:일반", "1:회원권", "2:환불", "3:시설", "4:기타"]
+          "data": ["", "general:일반", "membership:회원권", "refund:환불", "facility:시설", "other:기타"]
         },
         {
           "name": "status",
-          "data": ["", "0:대기", "1:답변완료"]
+          "data": ["", "waiting:대기", "answered:답변완료"]
         }
       ],
       "compare": [
@@ -762,7 +762,7 @@
       "map": [
         {
           "name": "status",
-          "data": ["", "0:종료", "1:사용중", "2:연체"]
+          "data": ["", "terminated:종료", "in_use:사용중", "overdue:연체"]
         }
       ],
       "compare": [
@@ -783,7 +783,7 @@
       "map": [
         {
           "name": "isactive",
-          "data": ["", "0:비활성", "1:활성"]
+          "data": ["", "inactive:비활성", "active:활성"]
         }
       ],
       "compare": [
@@ -802,11 +802,11 @@
       "map": [
         {
           "name": "forceupdate",
-          "data": ["", "0:아니오", "1:예"]
+          "data": ["", "no:아니오", "yes:예"]
         },
         {
           "name": "status",
-          "data": ["", "0:비활성", "1:활성"]
+          "data": ["", "inactive:비활성", "active:활성"]
         }
       ],
       "compare": [

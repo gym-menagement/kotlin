@@ -19,7 +19,7 @@ data class Membership(
     @Column(name = "m_name")
     val name: String = "",
     @Column(name = "m_sex")
-    val sex: Sex = Sex.0,
+    val sex: Sex = Sex.MALE,
     @Column(name = "m_birth")
     val birth: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "m_phonenum")
@@ -36,7 +36,7 @@ data class MembershipCreateRequest(
     val gym: Long = 0L,
     val user: Long = 0L,
     val name: String = "",
-    val sex: Sex = Sex.0,
+    val sex: Sex = Sex.MALE,
     val birth: LocalDateTime? = LocalDateTime.now(),
     val phonenum: String = "",
     val address: String = "",
@@ -49,7 +49,7 @@ data class MembershipUpdateRequest(
     val gym: Long = 0L,
     val user: Long = 0L,
     val name: String = "",
-    val sex: Sex = Sex.0,
+    val sex: Sex = Sex.MALE,
     val birth: LocalDateTime? = LocalDateTime.now(),
     val phonenum: String = "",
     val address: String = "",
