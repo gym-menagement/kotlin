@@ -69,10 +69,10 @@ data class PushtokenResponse(
     val devicetype: String,
     val deviceid: String,
     val appversion: String,
-    val isactive: Isactive,
-    val createddate: LocalDateTime?,
-    val updateddate: LocalDateTime?,
-    val date: LocalDateTime?,
+    val isactive: Int,
+    val createddate: String?,
+    val updateddate: String?,
+    val date: String?,
 
     val extra: PushtokenExtraInfo
 ){
@@ -85,10 +85,10 @@ data class PushtokenResponse(
                 devicetype = pushtoken.devicetype,
                 deviceid = pushtoken.deviceid,
                 appversion = pushtoken.appversion,
-                isactive = pushtoken.isactive,
-                createddate = pushtoken.createddate,
-                updateddate = pushtoken.updateddate,
-                date = pushtoken.date,
+                isactive = pushtoken.isactive.ordinal,
+                createddate = pushtoken.createddate?.toString()?.replace("T", " ") ?: "",
+                updateddate = pushtoken.updateddate?.toString()?.replace("T", " ") ?: "",
+                date = pushtoken.date?.toString()?.replace("T", " ") ?: "",
                 extra = PushtokenExtraInfo(
                     isactive = Isactive.getDisplayName(pushtoken.isactive),
                 )

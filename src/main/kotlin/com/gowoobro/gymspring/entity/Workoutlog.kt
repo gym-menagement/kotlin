@@ -78,7 +78,7 @@ data class WorkoutlogResponse(
     val duration: Int,
     val calories: Int,
     val note: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -95,7 +95,7 @@ data class WorkoutlogResponse(
                 duration = workoutlog.duration,
                 calories = workoutlog.calories,
                 note = workoutlog.note,
-                date = workoutlog.date,
+                date = workoutlog.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

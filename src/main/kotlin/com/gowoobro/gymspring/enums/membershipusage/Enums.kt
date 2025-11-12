@@ -2,6 +2,7 @@ package com.gowoobro.gymspring.enums.membershipusage
 
 
 enum class Type {
+    NONE,
     PERIOD_BASED,  // 기간제
     COUNT_BASED,  // 횟수제
 ;
@@ -9,6 +10,7 @@ enum class Type {
     companion object {
         fun getDisplayName(value: Type): String {
             return when (value) {
+                NONE -> ""
                 PERIOD_BASED -> "기간제"
                 COUNT_BASED -> "횟수제"
             }
@@ -16,6 +18,7 @@ enum class Type {
 
         fun fromString(value: String): Type? {
             return when (value) {
+                "" -> NONE
                 "기간제" -> PERIOD_BASED
                 "횟수제" -> COUNT_BASED
                 else -> null
@@ -26,6 +29,7 @@ enum class Type {
 
 
 enum class Status {
+    NONE,
     IN_USE,  // 사용중
     PAUSED,  // 일시정지
     EXPIRED,  // 만료
@@ -35,6 +39,7 @@ enum class Status {
     companion object {
         fun getDisplayName(value: Status): String {
             return when (value) {
+                NONE -> ""
                 IN_USE -> "사용중"
                 PAUSED -> "일시정지"
                 EXPIRED -> "만료"
@@ -44,6 +49,7 @@ enum class Status {
 
         fun fromString(value: String): Status? {
             return when (value) {
+                "" -> NONE
                 "사용중" -> IN_USE
                 "일시정지" -> PAUSED
                 "만료" -> EXPIRED

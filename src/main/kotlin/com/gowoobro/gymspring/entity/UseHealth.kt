@@ -66,9 +66,9 @@ data class UsehealthResponse(
     val rocker: Long,
     val term: Long,
     val discount: Long,
-    val startday: LocalDateTime?,
-    val endday: LocalDateTime?,
-    val date: LocalDateTime?,
+    val startday: String?,
+    val endday: String?,
+    val date: String?,
 
 ){
     companion object {
@@ -81,9 +81,9 @@ data class UsehealthResponse(
                 rocker = usehealth.rocker,
                 term = usehealth.term,
                 discount = usehealth.discount,
-                startday = usehealth.startday,
-                endday = usehealth.endday,
-                date = usehealth.date,
+                startday = usehealth.startday?.toString()?.replace("T", " ") ?: "",
+                endday = usehealth.endday?.toString()?.replace("T", " ") ?: "",
+                date = usehealth.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

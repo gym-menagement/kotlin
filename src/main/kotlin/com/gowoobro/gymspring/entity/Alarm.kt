@@ -56,10 +56,10 @@ data class AlarmResponse(
     val id: Long,
     val title: String,
     val content: String,
-    val type: Type,
-    val status: Status,
+    val type: Int,
+    val status: Int,
     val user: Long,
-    val date: LocalDateTime?,
+    val date: String?,
 
     val extra: AlarmExtraInfo
 ){
@@ -69,10 +69,10 @@ data class AlarmResponse(
                 id = alarm.id,
                 title = alarm.title,
                 content = alarm.content,
-                type = alarm.type,
-                status = alarm.status,
+                type = alarm.type.ordinal,
+                status = alarm.status.ordinal,
                 user = alarm.user,
-                date = alarm.date,
+                date = alarm.date?.toString()?.replace("T", " ") ?: "",
                 extra = AlarmExtraInfo(
                     type = Type.getDisplayName(alarm.type),
                     status = Status.getDisplayName(alarm.status),

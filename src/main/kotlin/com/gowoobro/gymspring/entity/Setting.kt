@@ -69,10 +69,10 @@ data class SettingResponse(
     val key: String,
     val value: String,
     val remark: String,
-    val type: Type,
+    val type: Int,
     val data: String,
     val order: Int,
-    val date: LocalDateTime?,
+    val date: String?,
 
     val extra: SettingExtraInfo
 ){
@@ -85,10 +85,10 @@ data class SettingResponse(
                 key = setting.key,
                 value = setting.value,
                 remark = setting.remark,
-                type = setting.type,
+                type = setting.type.ordinal,
                 data = setting.data,
                 order = setting.order,
-                date = setting.date,
+                date = setting.date?.toString()?.replace("T", " ") ?: "",
                 extra = SettingExtraInfo(
                     type = Type.getDisplayName(setting.type),
                 )

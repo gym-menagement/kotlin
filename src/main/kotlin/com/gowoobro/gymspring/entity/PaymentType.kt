@@ -38,7 +38,7 @@ data class PaymenttypeResponse(
     val id: Long,
     val gym: Long,
     val name: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -47,7 +47,7 @@ data class PaymenttypeResponse(
                 id = paymenttype.id,
                 gym = paymenttype.gym,
                 name = paymenttype.name,
-                date = paymenttype.date,
+                date = paymenttype.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

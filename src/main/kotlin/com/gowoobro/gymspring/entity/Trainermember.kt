@@ -63,11 +63,11 @@ data class TrainermemberResponse(
     val trainer: Long,
     val member: Long,
     val gym: Long,
-    val startdate: LocalDateTime?,
-    val enddate: LocalDateTime?,
-    val status: Status,
+    val startdate: String?,
+    val enddate: String?,
+    val status: Int,
     val note: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
     val extra: TrainermemberExtraInfo
 ){
@@ -78,11 +78,11 @@ data class TrainermemberResponse(
                 trainer = trainermember.trainer,
                 member = trainermember.member,
                 gym = trainermember.gym,
-                startdate = trainermember.startdate,
-                enddate = trainermember.enddate,
-                status = trainermember.status,
+                startdate = trainermember.startdate?.toString()?.replace("T", " ") ?: "",
+                enddate = trainermember.enddate?.toString()?.replace("T", " ") ?: "",
+                status = trainermember.status.ordinal,
                 note = trainermember.note,
-                date = trainermember.date,
+                date = trainermember.date?.toString()?.replace("T", " ") ?: "",
                 extra = TrainermemberExtraInfo(
                     status = Status.getDisplayName(trainermember.status),
                 )

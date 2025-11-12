@@ -68,7 +68,7 @@ data class HealthResponse(
     val discount: Long,
     val costdiscount: Int,
     val content: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -83,7 +83,7 @@ data class HealthResponse(
                 discount = health.discount,
                 costdiscount = health.costdiscount,
                 content = health.content,
-                date = health.date,
+                date = health.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

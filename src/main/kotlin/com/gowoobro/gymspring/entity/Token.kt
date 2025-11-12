@@ -46,8 +46,8 @@ data class TokenResponse(
     val id: Long,
     val user: Long,
     val token: String,
-    val status: Status,
-    val date: LocalDateTime?,
+    val status: Int,
+    val date: String?,
 
     val extra: TokenExtraInfo
 ){
@@ -57,8 +57,8 @@ data class TokenResponse(
                 id = token.id,
                 user = token.user,
                 token = token.token,
-                status = token.status,
-                date = token.date,
+                status = token.status.ordinal,
+                date = token.date?.toString()?.replace("T", " ") ?: "",
                 extra = TokenExtraInfo(
                     status = Status.getDisplayName(token.status),
                 )

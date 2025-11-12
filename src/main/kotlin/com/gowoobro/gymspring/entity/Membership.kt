@@ -67,12 +67,12 @@ data class MembershipResponse(
     val gym: Long,
     val user: Long,
     val name: String,
-    val sex: Sex,
-    val birth: LocalDateTime?,
+    val sex: Int,
+    val birth: String?,
     val phonenum: String,
     val address: String,
     val image: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
     val extra: MembershipExtraInfo
 ){
@@ -83,12 +83,12 @@ data class MembershipResponse(
                 gym = membership.gym,
                 user = membership.user,
                 name = membership.name,
-                sex = membership.sex,
-                birth = membership.birth,
+                sex = membership.sex.ordinal,
+                birth = membership.birth?.toString()?.replace("T", " ") ?: "",
                 phonenum = membership.phonenum,
                 address = membership.address,
                 image = membership.image,
-                date = membership.date,
+                date = membership.date?.toString()?.replace("T", " ") ?: "",
                 extra = MembershipExtraInfo(
                     sex = Sex.getDisplayName(membership.sex),
                 )

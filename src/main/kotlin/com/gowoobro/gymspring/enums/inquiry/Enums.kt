@@ -2,6 +2,7 @@ package com.gowoobro.gymspring.enums.inquiry
 
 
 enum class Type {
+    NONE,
     GENERAL,  // 일반
     MEMBERSHIP,  // 회원권
     REFUND,  // 환불
@@ -12,6 +13,7 @@ enum class Type {
     companion object {
         fun getDisplayName(value: Type): String {
             return when (value) {
+                NONE -> ""
                 GENERAL -> "일반"
                 MEMBERSHIP -> "회원권"
                 REFUND -> "환불"
@@ -22,6 +24,7 @@ enum class Type {
 
         fun fromString(value: String): Type? {
             return when (value) {
+                "" -> NONE
                 "일반" -> GENERAL
                 "회원권" -> MEMBERSHIP
                 "환불" -> REFUND
@@ -35,6 +38,7 @@ enum class Type {
 
 
 enum class Status {
+    NONE,
     WAITING,  // 대기
     ANSWERED,  // 답변완료
 ;
@@ -42,6 +46,7 @@ enum class Status {
     companion object {
         fun getDisplayName(value: Status): String {
             return when (value) {
+                NONE -> ""
                 WAITING -> "대기"
                 ANSWERED -> "답변완료"
             }
@@ -49,6 +54,7 @@ enum class Status {
 
         fun fromString(value: String): Status? {
             return when (value) {
+                "" -> NONE
                 "대기" -> WAITING
                 "답변완료" -> ANSWERED
                 else -> null

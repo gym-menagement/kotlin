@@ -2,6 +2,7 @@ package com.gowoobro.gymspring.enums.ptreservation
 
 
 enum class Status {
+    NONE,
     RESERVED,  // 예약
     COMPLETED,  // 완료
     CANCELLED,  // 취소
@@ -11,6 +12,7 @@ enum class Status {
     companion object {
         fun getDisplayName(value: Status): String {
             return when (value) {
+                NONE -> ""
                 RESERVED -> "예약"
                 COMPLETED -> "완료"
                 CANCELLED -> "취소"
@@ -20,6 +22,7 @@ enum class Status {
 
         fun fromString(value: String): Status? {
             return when (value) {
+                "" -> NONE
                 "예약" -> RESERVED
                 "완료" -> COMPLETED
                 "취소" -> CANCELLED

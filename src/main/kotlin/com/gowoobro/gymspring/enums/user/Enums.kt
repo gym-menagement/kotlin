@@ -2,6 +2,7 @@ package com.gowoobro.gymspring.enums.user
 
 
 enum class Level {
+    NONE,
     NORMAL,  // 일반회원
     MANAGER,  // 트레이너/직원
     ADMIN,  // 헬스장관리자
@@ -12,6 +13,7 @@ enum class Level {
     companion object {
         fun getDisplayName(value: Level): String {
             return when (value) {
+                NONE -> ""
                 NORMAL -> "일반회원"
                 MANAGER -> "트레이너/직원"
                 ADMIN -> "헬스장관리자"
@@ -22,6 +24,7 @@ enum class Level {
 
         fun fromString(value: String): Level? {
             return when (value) {
+                "" -> NONE
                 "일반회원" -> NORMAL
                 "트레이너/직원" -> MANAGER
                 "헬스장관리자" -> ADMIN
@@ -35,6 +38,7 @@ enum class Level {
 
 
 enum class Use {
+    NONE,
     USE,  // 사용
     NOTUSE,  // 사용안함
 ;
@@ -42,6 +46,7 @@ enum class Use {
     companion object {
         fun getDisplayName(value: Use): String {
             return when (value) {
+                NONE -> ""
                 USE -> "사용"
                 NOTUSE -> "사용안함"
             }
@@ -49,6 +54,7 @@ enum class Use {
 
         fun fromString(value: String): Use? {
             return when (value) {
+                "" -> NONE
                 "사용" -> USE
                 "사용안함" -> NOTUSE
                 else -> null
@@ -59,6 +65,7 @@ enum class Use {
 
 
 enum class Type {
+    NONE,
     NORMAL,  // 일반
     KAKAO,  // 카카오
     NAVER,  // 네이버
@@ -69,6 +76,7 @@ enum class Type {
     companion object {
         fun getDisplayName(value: Type): String {
             return when (value) {
+                NONE -> ""
                 NORMAL -> "일반"
                 KAKAO -> "카카오"
                 NAVER -> "네이버"
@@ -79,6 +87,7 @@ enum class Type {
 
         fun fromString(value: String): Type? {
             return when (value) {
+                "" -> NONE
                 "일반" -> NORMAL
                 "카카오" -> KAKAO
                 "네이버" -> NAVER
@@ -92,6 +101,7 @@ enum class Type {
 
 
 enum class Role {
+    NONE,
     MEMBER,  // 회원
     TRAINER,  // 트레이너
     STAFF,  // 직원
@@ -102,6 +112,7 @@ enum class Role {
     companion object {
         fun getDisplayName(value: Role): String {
             return when (value) {
+                NONE -> ""
                 MEMBER -> "회원"
                 TRAINER -> "트레이너"
                 STAFF -> "직원"
@@ -112,6 +123,7 @@ enum class Role {
 
         fun fromString(value: String): Role? {
             return when (value) {
+                "" -> NONE
                 "회원" -> MEMBER
                 "트레이너" -> TRAINER
                 "직원" -> STAFF
@@ -125,6 +137,7 @@ enum class Role {
 
 
 enum class Sex {
+    NONE,
     MALE,  // 남성
     FEMALE,  // 여성
 ;
@@ -132,6 +145,7 @@ enum class Sex {
     companion object {
         fun getDisplayName(value: Sex): String {
             return when (value) {
+                NONE -> ""
                 MALE -> "남성"
                 FEMALE -> "여성"
             }
@@ -139,6 +153,7 @@ enum class Sex {
 
         fun fromString(value: String): Sex? {
             return when (value) {
+                "" -> NONE
                 "남성" -> MALE
                 "여성" -> FEMALE
                 else -> null

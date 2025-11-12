@@ -43,7 +43,7 @@ data class RoleResponse(
     val gym: Long,
     val roleid: Int,
     val name: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -53,7 +53,7 @@ data class RoleResponse(
                 gym = role.gym,
                 roleid = role.roleid,
                 name = role.name,
-                date = role.date,
+                date = role.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

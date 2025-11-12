@@ -57,11 +57,11 @@ data class IpblockExtraInfo(
 data class IpblockResponse(
     val id: Long,
     val address: String,
-    val type: Type,
-    val policy: Policy,
-    val use: Use,
+    val type: Int,
+    val policy: Int,
+    val use: Int,
     val order: Int,
-    val date: LocalDateTime?,
+    val date: String?,
 
     val extra: IpblockExtraInfo
 ){
@@ -70,11 +70,11 @@ data class IpblockResponse(
             return IpblockResponse(
                 id = ipblock.id,
                 address = ipblock.address,
-                type = ipblock.type,
-                policy = ipblock.policy,
-                use = ipblock.use,
+                type = ipblock.type.ordinal,
+                policy = ipblock.policy.ordinal,
+                use = ipblock.use.ordinal,
                 order = ipblock.order,
-                date = ipblock.date,
+                date = ipblock.date?.toString()?.replace("T", " ") ?: "",
                 extra = IpblockExtraInfo(
                     type = Type.getDisplayName(ipblock.type),
                     policy = Policy.getDisplayName(ipblock.policy),

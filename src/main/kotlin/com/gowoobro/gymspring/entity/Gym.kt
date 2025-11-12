@@ -33,7 +33,7 @@ data class GymUpdateRequest(
 data class GymResponse(
     val id: Long,
     val name: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -41,7 +41,7 @@ data class GymResponse(
             return GymResponse(
                 id = gym.id,
                 name = gym.name,
-                date = gym.date,
+                date = gym.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

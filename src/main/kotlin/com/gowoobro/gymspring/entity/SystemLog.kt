@@ -46,10 +46,10 @@ data class SystemlogExtraInfo(
 
 data class SystemlogResponse(
     val id: Long,
-    val type: Type,
+    val type: Int,
     val content: String,
-    val result: Result,
-    val date: LocalDateTime?,
+    val result: Int,
+    val date: String?,
 
     val extra: SystemlogExtraInfo
 ){
@@ -57,10 +57,10 @@ data class SystemlogResponse(
         fun from(systemlog: Systemlog): SystemlogResponse {
             return SystemlogResponse(
                 id = systemlog.id,
-                type = systemlog.type,
+                type = systemlog.type.ordinal,
                 content = systemlog.content,
-                result = systemlog.result,
-                date = systemlog.date,
+                result = systemlog.result.ordinal,
+                date = systemlog.date?.toString()?.replace("T", " ") ?: "",
                 extra = SystemlogExtraInfo(
                     type = Type.getDisplayName(systemlog.type),
                     result = Result.getDisplayName(systemlog.result),

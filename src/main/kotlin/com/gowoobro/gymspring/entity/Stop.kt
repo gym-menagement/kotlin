@@ -45,10 +45,10 @@ data class StopUpdateRequest(
 data class StopResponse(
     val id: Long,
     val usehelth: Long,
-    val startday: LocalDateTime?,
-    val endday: LocalDateTime?,
+    val startday: String?,
+    val endday: String?,
     val count: Int,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -56,10 +56,10 @@ data class StopResponse(
             return StopResponse(
                 id = stop.id,
                 usehelth = stop.usehelth,
-                startday = stop.startday,
-                endday = stop.endday,
+                startday = stop.startday?.toString()?.replace("T", " ") ?: "",
+                endday = stop.endday?.toString()?.replace("T", " ") ?: "",
                 count = stop.count,
-                date = stop.date,
+                date = stop.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

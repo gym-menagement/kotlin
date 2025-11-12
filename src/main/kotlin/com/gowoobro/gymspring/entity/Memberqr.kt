@@ -67,12 +67,12 @@ data class MemberqrResponse(
     val user: Long,
     val code: String,
     val imageurl: String,
-    val isactive: Isactive,
-    val expiredate: LocalDateTime?,
-    val generateddate: LocalDateTime?,
-    val lastuseddate: LocalDateTime?,
+    val isactive: Int,
+    val expiredate: String?,
+    val generateddate: String?,
+    val lastuseddate: String?,
     val usecount: Int,
-    val date: LocalDateTime?,
+    val date: String?,
 
     val extra: MemberqrExtraInfo
 ){
@@ -83,12 +83,12 @@ data class MemberqrResponse(
                 user = memberqr.user,
                 code = memberqr.code,
                 imageurl = memberqr.imageurl,
-                isactive = memberqr.isactive,
-                expiredate = memberqr.expiredate,
-                generateddate = memberqr.generateddate,
-                lastuseddate = memberqr.lastuseddate,
+                isactive = memberqr.isactive.ordinal,
+                expiredate = memberqr.expiredate?.toString()?.replace("T", " ") ?: "",
+                generateddate = memberqr.generateddate?.toString()?.replace("T", " ") ?: "",
+                lastuseddate = memberqr.lastuseddate?.toString()?.replace("T", " ") ?: "",
                 usecount = memberqr.usecount,
-                date = memberqr.date,
+                date = memberqr.date?.toString()?.replace("T", " ") ?: "",
                 extra = MemberqrExtraInfo(
                     isactive = Isactive.getDisplayName(memberqr.isactive),
                 )

@@ -43,7 +43,7 @@ data class LoginlogResponse(
     val ip: String,
     val ipvalue: Long,
     val user: Long,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -53,7 +53,7 @@ data class LoginlogResponse(
                 ip = loginlog.ip,
                 ipvalue = loginlog.ipvalue,
                 user = loginlog.user,
-                date = loginlog.date,
+                date = loginlog.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

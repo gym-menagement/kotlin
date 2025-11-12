@@ -38,7 +38,7 @@ data class DiscountResponse(
     val id: Long,
     val name: String,
     val discount: Int,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -47,7 +47,7 @@ data class DiscountResponse(
                 id = discount.id,
                 name = discount.name,
                 discount = discount.discount,
-                date = discount.date,
+                date = discount.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

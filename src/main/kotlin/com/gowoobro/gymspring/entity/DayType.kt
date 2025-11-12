@@ -38,7 +38,7 @@ data class DaytypeResponse(
     val id: Long,
     val gym: Long,
     val name: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -47,7 +47,7 @@ data class DaytypeResponse(
                 id = daytype.id,
                 gym = daytype.gym,
                 name = daytype.name,
-                date = daytype.date,
+                date = daytype.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

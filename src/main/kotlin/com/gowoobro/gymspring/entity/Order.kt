@@ -33,7 +33,7 @@ data class OrderUpdateRequest(
 data class OrderResponse(
     val id: Long,
     val membership: Long,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -41,7 +41,7 @@ data class OrderResponse(
             return OrderResponse(
                 id = order.id,
                 membership = order.membership,
-                date = order.date,
+                date = order.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

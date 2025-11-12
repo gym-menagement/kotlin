@@ -48,7 +48,7 @@ data class PaymentResponse(
     val order: Long,
     val membership: Long,
     val cost: Int,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -59,7 +59,7 @@ data class PaymentResponse(
                 order = payment.order,
                 membership = payment.membership,
                 cost = payment.cost,
-                date = payment.date,
+                date = payment.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

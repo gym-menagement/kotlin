@@ -46,8 +46,8 @@ data class RockerResponse(
     val id: Long,
     val group: Long,
     val name: String,
-    val available: Available,
-    val date: LocalDateTime?,
+    val available: Int,
+    val date: String?,
 
     val extra: RockerExtraInfo
 ){
@@ -57,8 +57,8 @@ data class RockerResponse(
                 id = rocker.id,
                 group = rocker.group,
                 name = rocker.name,
-                available = rocker.available,
-                date = rocker.date,
+                available = rocker.available.ordinal,
+                date = rocker.date?.toString()?.replace("T", " ") ?: "",
                 extra = RockerExtraInfo(
                     available = Available.getDisplayName(rocker.available),
                 )

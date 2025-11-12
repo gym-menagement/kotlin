@@ -2,6 +2,7 @@ package com.gowoobro.gymspring.enums.appversion
 
 
 enum class Forceupdate {
+    NONE,
     NO,  // 아니오
     YES,  // 예
 ;
@@ -9,6 +10,7 @@ enum class Forceupdate {
     companion object {
         fun getDisplayName(value: Forceupdate): String {
             return when (value) {
+                NONE -> ""
                 NO -> "아니오"
                 YES -> "예"
             }
@@ -16,6 +18,7 @@ enum class Forceupdate {
 
         fun fromString(value: String): Forceupdate? {
             return when (value) {
+                "" -> NONE
                 "아니오" -> NO
                 "예" -> YES
                 else -> null
@@ -26,6 +29,7 @@ enum class Forceupdate {
 
 
 enum class Status {
+    NONE,
     INACTIVE,  // 비활성
     ACTIVE,  // 활성
 ;
@@ -33,6 +37,7 @@ enum class Status {
     companion object {
         fun getDisplayName(value: Status): String {
             return when (value) {
+                NONE -> ""
                 INACTIVE -> "비활성"
                 ACTIVE -> "활성"
             }
@@ -40,6 +45,7 @@ enum class Status {
 
         fun fromString(value: String): Status? {
             return when (value) {
+                "" -> NONE
                 "비활성" -> INACTIVE
                 "활성" -> ACTIVE
                 else -> null

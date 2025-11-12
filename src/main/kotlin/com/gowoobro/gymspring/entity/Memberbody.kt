@@ -106,9 +106,9 @@ data class MemberbodyResponse(
     val arm: BigDecimal,
     val thigh: BigDecimal,
     val note: String,
-    val measureddate: LocalDateTime?,
+    val measureddate: String?,
     val measuredby: Long,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -129,9 +129,9 @@ data class MemberbodyResponse(
                 arm = memberbody.arm,
                 thigh = memberbody.thigh,
                 note = memberbody.note,
-                measureddate = memberbody.measureddate,
+                measureddate = memberbody.measureddate?.toString()?.replace("T", " ") ?: "",
                 measuredby = memberbody.measuredby,
-                date = memberbody.date,
+                date = memberbody.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

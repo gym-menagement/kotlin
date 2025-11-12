@@ -38,7 +38,7 @@ data class HealthcategoryResponse(
     val id: Long,
     val gym: Long,
     val name: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -47,7 +47,7 @@ data class HealthcategoryResponse(
                 id = healthcategory.id,
                 gym = healthcategory.gym,
                 name = healthcategory.name,
-                date = healthcategory.date,
+                date = healthcategory.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

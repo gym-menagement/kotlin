@@ -38,7 +38,7 @@ data class RockergroupResponse(
     val id: Long,
     val gym: Long,
     val name: String,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -47,7 +47,7 @@ data class RockergroupResponse(
                 id = rockergroup.id,
                 gym = rockergroup.gym,
                 name = rockergroup.name,
-                date = rockergroup.date,
+                date = rockergroup.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }

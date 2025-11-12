@@ -48,7 +48,7 @@ data class TermResponse(
     val daytype: Long,
     val name: String,
     val term: Int,
-    val date: LocalDateTime?,
+    val date: String?,
 
 ){
     companion object {
@@ -59,7 +59,7 @@ data class TermResponse(
                 daytype = term.daytype,
                 name = term.name,
                 term = term.term,
-                date = term.date,
+                date = term.date?.toString()?.replace("T", " ") ?: "",
             )
         }
     }
