@@ -55,7 +55,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/jwt?loginid=admin1&passwd=admin1",
+							"raw": "{{base_url}}/api/jwt?loginid=admin&passwd=0000",
 							"host": [
 								"{{base_url}}"
 							],
@@ -66,11 +66,11 @@
 							"query": [
 								{
 									"key": "loginid",
-									"value": "admin1"
+									"value": "admin"
 								},
 								{
 									"key": "passwd",
-									"value": "admin1"
+									"value": "0000"
 								}
 							]
 						}
@@ -135,7 +135,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/user/search/loginid?loginid=admin1",
+							"raw": "{{base_url}}/api/user/search/loginid?loginid=admin",
 							"host": [
 								"{{base_url}}"
 							],
@@ -148,7 +148,7 @@
 							"query": [
 								{
 									"key": "loginid",
-									"value": "admin1"
+									"value": "admin"
 								}
 							]
 						}
@@ -186,7 +186,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"loginid\": \"newuser\", \"passwd\": \"password123\", \"email\": \"user@example.com\", \"name\": \"홍길동\", \"tel\": \"01012345678\", \"address\": \"서울시 강남구\", \"image\": \"profile.jpg\", \"sex\": 1, \"birth\": \"1990-01-01T00:00:00\", \"type\": \"USER\", \"connectid\": \"\", \"level\": \"BEGINNER\", \"role\": \"MEMBER\", \"use\": \"YES\"}"
+							"raw": "{\"loginid\": \"newuser\", \"passwd\": \"0000\", \"email\": \"user@example.com\", \"name\": \"홍길동\", \"tel\": \"01012345678\", \"address\": \"서울시 강남구\", \"image\": \"profile.jpg\", \"sex\": \"MALE\", \"birth\": \"1990-01-01T00:00:00\", \"type\": \"NORMAL\", \"connectid\": \"\", \"level\": \"NORMAL\", \"role\": \"MEMBER\", \"use\": \"USE\"}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/user",
