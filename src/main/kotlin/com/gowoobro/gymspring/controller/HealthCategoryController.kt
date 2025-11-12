@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Healthcategory
 import com.gowoobro.gymspring.entity.HealthcategoryCreateRequest
 import com.gowoobro.gymspring.entity.HealthcategoryUpdateRequest
 import com.gowoobro.gymspring.service.HealthcategoryService
+import com.gowoobro.gymspring.entity.HealthcategoryResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class HealthcategoryController(private val healthcategoryService: Healthcategory
     fun getHealthcategorys(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Healthcategory>> {
+    ): ResponseEntity<Page<HealthcategoryResponse>> {
         val result = healthcategoryService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { HealthcategoryResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getHealthcategory(@PathVariable id: Long): ResponseEntity<Healthcategory> {
+    fun getHealthcategory(@PathVariable id: Long): ResponseEntity<HealthcategoryResponse> {
         val result = healthcategoryService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(HealthcategoryResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,21 +38,21 @@ class HealthcategoryController(private val healthcategoryService: Healthcategory
 
 
     @GetMapping("/search/gym")
-    fun getHealthcategoryByGym(@RequestParam gym: Long): ResponseEntity<List<Healthcategory>> {
+    fun getHealthcategoryByGym(@RequestParam gym: Long): ResponseEntity<List<HealthcategoryResponse>> {
         val result = healthcategoryService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthcategoryResponse.from(it) } )
     }
 
     @GetMapping("/search/name")
-    fun getHealthcategoryByName(@RequestParam name: String): ResponseEntity<List<Healthcategory>> {
+    fun getHealthcategoryByName(@RequestParam name: String): ResponseEntity<List<HealthcategoryResponse>> {
         val result = healthcategoryService.findByName(name)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthcategoryResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getHealthcategoryByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Healthcategory>> {
+    fun getHealthcategoryByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<HealthcategoryResponse>> {
         val result = healthcategoryService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthcategoryResponse.from(it) } )
     }
 
 
@@ -61,20 +63,20 @@ class HealthcategoryController(private val healthcategoryService: Healthcategory
     }
 
     @PostMapping
-    fun createHealthcategory(@RequestBody request: HealthcategoryCreateRequest): ResponseEntity<Healthcategory> {
+    fun createHealthcategory(@RequestBody request: HealthcategoryCreateRequest): ResponseEntity<HealthcategoryResponse> {
         return try {
             val result = healthcategoryService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(HealthcategoryResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createHealthcategorys(@RequestBody requests: List<HealthcategoryCreateRequest>): ResponseEntity<List<Healthcategory>> {
+    fun createHealthcategorys(@RequestBody requests: List<HealthcategoryCreateRequest>): ResponseEntity<List<HealthcategoryResponse>> {
         return try {
             val result = healthcategoryService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { HealthcategoryResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -84,11 +86,11 @@ class HealthcategoryController(private val healthcategoryService: Healthcategory
     fun updateHealthcategory(
         @PathVariable id: Long,
         @RequestBody request: HealthcategoryUpdateRequest
-    ): ResponseEntity<Healthcategory> {
+    ): ResponseEntity<HealthcategoryResponse> {
         val updatedRequest = request.copy(id = id)
         val result = healthcategoryService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(HealthcategoryResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

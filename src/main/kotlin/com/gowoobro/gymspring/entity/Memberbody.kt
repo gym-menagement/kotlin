@@ -87,3 +87,52 @@ data class MemberbodyUpdateRequest(
     val measuredby: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class MemberbodyResponse(
+    val id: Long,
+    val user: Long,
+    val height: BigDecimal,
+    val weight: BigDecimal,
+    val bodyfat: BigDecimal,
+    val musclemass: BigDecimal,
+    val bmi: BigDecimal,
+    val skeletalmuscle: BigDecimal,
+    val bodywater: BigDecimal,
+    val chest: BigDecimal,
+    val waist: BigDecimal,
+    val hip: BigDecimal,
+    val arm: BigDecimal,
+    val thigh: BigDecimal,
+    val note: String,
+    val measureddate: LocalDateTime?,
+    val measuredby: Long,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(memberbody: Memberbody): MemberbodyResponse {
+            return MemberbodyResponse(
+                id = memberbody.id,
+                user = memberbody.user,
+                height = memberbody.height,
+                weight = memberbody.weight,
+                bodyfat = memberbody.bodyfat,
+                musclemass = memberbody.musclemass,
+                bmi = memberbody.bmi,
+                skeletalmuscle = memberbody.skeletalmuscle,
+                bodywater = memberbody.bodywater,
+                chest = memberbody.chest,
+                waist = memberbody.waist,
+                hip = memberbody.hip,
+                arm = memberbody.arm,
+                thigh = memberbody.thigh,
+                note = memberbody.note,
+                measureddate = memberbody.measureddate,
+                measuredby = memberbody.measuredby,
+                date = memberbody.date,
+            )
+        }
+    }
+}

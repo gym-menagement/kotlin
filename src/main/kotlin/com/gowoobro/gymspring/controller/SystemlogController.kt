@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Systemlog
 import com.gowoobro.gymspring.entity.SystemlogCreateRequest
 import com.gowoobro.gymspring.entity.SystemlogUpdateRequest
 import com.gowoobro.gymspring.service.SystemlogService
+import com.gowoobro.gymspring.entity.SystemlogResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -21,16 +22,17 @@ class SystemlogController(private val systemlogService: SystemlogService) {
     fun getSystemlogs(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Systemlog>> {
+    ): ResponseEntity<Page<SystemlogResponse>> {
         val result = systemlogService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { SystemlogResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getSystemlog(@PathVariable id: Long): ResponseEntity<Systemlog> {
+    fun getSystemlog(@PathVariable id: Long): ResponseEntity<SystemlogResponse> {
         val result = systemlogService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(SystemlogResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -38,27 +40,27 @@ class SystemlogController(private val systemlogService: SystemlogService) {
 
 
     @GetMapping("/search/type")
-    fun getSystemlogByType(@RequestParam type: Type): ResponseEntity<List<Systemlog>> {
+    fun getSystemlogByType(@RequestParam type: Type): ResponseEntity<List<SystemlogResponse>> {
         val result = systemlogService.findByType(type)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { SystemlogResponse.from(it) } )
     }
 
     @GetMapping("/search/content")
-    fun getSystemlogByContent(@RequestParam content: String): ResponseEntity<List<Systemlog>> {
+    fun getSystemlogByContent(@RequestParam content: String): ResponseEntity<List<SystemlogResponse>> {
         val result = systemlogService.findByContent(content)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { SystemlogResponse.from(it) } )
     }
 
     @GetMapping("/search/result")
-    fun getSystemlogByResult(@RequestParam result: Result): ResponseEntity<List<Systemlog>> {
+    fun getSystemlogByResult(@RequestParam result: Result): ResponseEntity<List<SystemlogResponse>> {
         val result = systemlogService.findByResult(result)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { SystemlogResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getSystemlogByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Systemlog>> {
+    fun getSystemlogByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<SystemlogResponse>> {
         val result = systemlogService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { SystemlogResponse.from(it) } )
     }
 
 
@@ -69,20 +71,20 @@ class SystemlogController(private val systemlogService: SystemlogService) {
     }
 
     @PostMapping
-    fun createSystemlog(@RequestBody request: SystemlogCreateRequest): ResponseEntity<Systemlog> {
+    fun createSystemlog(@RequestBody request: SystemlogCreateRequest): ResponseEntity<SystemlogResponse> {
         return try {
             val result = systemlogService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(SystemlogResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createSystemlogs(@RequestBody requests: List<SystemlogCreateRequest>): ResponseEntity<List<Systemlog>> {
+    fun createSystemlogs(@RequestBody requests: List<SystemlogCreateRequest>): ResponseEntity<List<SystemlogResponse>> {
         return try {
             val result = systemlogService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { SystemlogResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -92,11 +94,11 @@ class SystemlogController(private val systemlogService: SystemlogService) {
     fun updateSystemlog(
         @PathVariable id: Long,
         @RequestBody request: SystemlogUpdateRequest
-    ): ResponseEntity<Systemlog> {
+    ): ResponseEntity<SystemlogResponse> {
         val updatedRequest = request.copy(id = id)
         val result = systemlogService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(SystemlogResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

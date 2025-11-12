@@ -56,3 +56,43 @@ data class PushtokenUpdateRequest(
     val updateddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class PushtokenExtraInfo(
+    val isactive: String = "",
+)
+
+
+data class PushtokenResponse(
+    val id: Long,
+    val user: Long,
+    val token: String,
+    val devicetype: String,
+    val deviceid: String,
+    val appversion: String,
+    val isactive: Isactive,
+    val createddate: LocalDateTime?,
+    val updateddate: LocalDateTime?,
+    val date: LocalDateTime?,
+
+    val extra: PushtokenExtraInfo
+){
+    companion object {
+        fun from(pushtoken: Pushtoken): PushtokenResponse {
+            return PushtokenResponse(
+                id = pushtoken.id,
+                user = pushtoken.user,
+                token = pushtoken.token,
+                devicetype = pushtoken.devicetype,
+                deviceid = pushtoken.deviceid,
+                appversion = pushtoken.appversion,
+                isactive = pushtoken.isactive,
+                createddate = pushtoken.createddate,
+                updateddate = pushtoken.updateddate,
+                date = pushtoken.date,
+                extra = PushtokenExtraInfo(
+                    isactive = Isactive.getDisplayName(pushtoken.isactive),
+                )
+            )
+        }
+    }
+}

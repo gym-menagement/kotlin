@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Health
 import com.gowoobro.gymspring.entity.HealthCreateRequest
 import com.gowoobro.gymspring.entity.HealthUpdateRequest
 import com.gowoobro.gymspring.service.HealthService
+import com.gowoobro.gymspring.entity.HealthResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class HealthController(private val healthService: HealthService) {
     fun getHealths(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Health>> {
+    ): ResponseEntity<Page<HealthResponse>> {
         val result = healthService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { HealthResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getHealth(@PathVariable id: Long): ResponseEntity<Health> {
+    fun getHealth(@PathVariable id: Long): ResponseEntity<HealthResponse> {
         val result = healthService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(HealthResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,57 +38,57 @@ class HealthController(private val healthService: HealthService) {
 
 
     @GetMapping("/search/category")
-    fun getHealthByCategory(@RequestParam category: Long): ResponseEntity<List<Health>> {
+    fun getHealthByCategory(@RequestParam category: Long): ResponseEntity<List<HealthResponse>> {
         val result = healthService.findByCategory(category)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
     }
 
     @GetMapping("/search/term")
-    fun getHealthByTerm(@RequestParam term: Long): ResponseEntity<List<Health>> {
+    fun getHealthByTerm(@RequestParam term: Long): ResponseEntity<List<HealthResponse>> {
         val result = healthService.findByTerm(term)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
     }
 
     @GetMapping("/search/name")
-    fun getHealthByName(@RequestParam name: String): ResponseEntity<List<Health>> {
+    fun getHealthByName(@RequestParam name: String): ResponseEntity<List<HealthResponse>> {
         val result = healthService.findByName(name)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
     }
 
     @GetMapping("/search/count")
-    fun getHealthByCount(@RequestParam count: Int): ResponseEntity<List<Health>> {
+    fun getHealthByCount(@RequestParam count: Int): ResponseEntity<List<HealthResponse>> {
         val result = healthService.findByCount(count)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
     }
 
     @GetMapping("/search/cost")
-    fun getHealthByCost(@RequestParam cost: Int): ResponseEntity<List<Health>> {
+    fun getHealthByCost(@RequestParam cost: Int): ResponseEntity<List<HealthResponse>> {
         val result = healthService.findByCost(cost)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
     }
 
     @GetMapping("/search/discount")
-    fun getHealthByDiscount(@RequestParam discount: Long): ResponseEntity<List<Health>> {
+    fun getHealthByDiscount(@RequestParam discount: Long): ResponseEntity<List<HealthResponse>> {
         val result = healthService.findByDiscount(discount)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
     }
 
     @GetMapping("/search/costdiscount")
-    fun getHealthByCostdiscount(@RequestParam costdiscount: Int): ResponseEntity<List<Health>> {
+    fun getHealthByCostdiscount(@RequestParam costdiscount: Int): ResponseEntity<List<HealthResponse>> {
         val result = healthService.findByCostdiscount(costdiscount)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
     }
 
     @GetMapping("/search/content")
-    fun getHealthByContent(@RequestParam content: String): ResponseEntity<List<Health>> {
+    fun getHealthByContent(@RequestParam content: String): ResponseEntity<List<HealthResponse>> {
         val result = healthService.findByContent(content)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getHealthByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Health>> {
+    fun getHealthByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<HealthResponse>> {
         val result = healthService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
     }
 
 
@@ -97,20 +99,20 @@ class HealthController(private val healthService: HealthService) {
     }
 
     @PostMapping
-    fun createHealth(@RequestBody request: HealthCreateRequest): ResponseEntity<Health> {
+    fun createHealth(@RequestBody request: HealthCreateRequest): ResponseEntity<HealthResponse> {
         return try {
             val result = healthService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(HealthResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createHealths(@RequestBody requests: List<HealthCreateRequest>): ResponseEntity<List<Health>> {
+    fun createHealths(@RequestBody requests: List<HealthCreateRequest>): ResponseEntity<List<HealthResponse>> {
         return try {
             val result = healthService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { HealthResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -120,11 +122,11 @@ class HealthController(private val healthService: HealthService) {
     fun updateHealth(
         @PathVariable id: Long,
         @RequestBody request: HealthUpdateRequest
-    ): ResponseEntity<Health> {
+    ): ResponseEntity<HealthResponse> {
         val updatedRequest = request.copy(id = id)
         val result = healthService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(HealthResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

@@ -39,3 +39,28 @@ data class PaymentUpdateRequest(
     val cost: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class PaymentResponse(
+    val id: Long,
+    val gym: Long,
+    val order: Long,
+    val membership: Long,
+    val cost: Int,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(payment: Payment): PaymentResponse {
+            return PaymentResponse(
+                id = payment.id,
+                gym = payment.gym,
+                order = payment.order,
+                membership = payment.membership,
+                cost = payment.cost,
+                date = payment.date,
+            )
+        }
+    }
+}

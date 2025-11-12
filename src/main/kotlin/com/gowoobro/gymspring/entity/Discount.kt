@@ -31,3 +31,24 @@ data class DiscountUpdateRequest(
     val discount: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class DiscountResponse(
+    val id: Long,
+    val name: String,
+    val discount: Int,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(discount: Discount): DiscountResponse {
+            return DiscountResponse(
+                id = discount.id,
+                name = discount.name,
+                discount = discount.discount,
+                date = discount.date,
+            )
+        }
+    }
+}

@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Attendance
 import com.gowoobro.gymspring.entity.AttendanceCreateRequest
 import com.gowoobro.gymspring.entity.AttendanceUpdateRequest
 import com.gowoobro.gymspring.service.AttendanceService
+import com.gowoobro.gymspring.entity.AttendanceResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -22,16 +23,17 @@ class AttendanceController(private val attendanceService: AttendanceService) {
     fun getAttendances(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Attendance>> {
+    ): ResponseEntity<Page<AttendanceResponse>> {
         val result = attendanceService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { AttendanceResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getAttendance(@PathVariable id: Long): ResponseEntity<Attendance> {
+    fun getAttendance(@PathVariable id: Long): ResponseEntity<AttendanceResponse> {
         val result = attendanceService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(AttendanceResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -39,87 +41,87 @@ class AttendanceController(private val attendanceService: AttendanceService) {
 
 
     @GetMapping("/search/user")
-    fun getAttendanceByUser(@RequestParam user: Long): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByUser(@RequestParam user: Long): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByUser(user)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/membership")
-    fun getAttendanceByMembership(@RequestParam membership: Long): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByMembership(@RequestParam membership: Long): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByMembership(membership)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/gym")
-    fun getAttendanceByGym(@RequestParam gym: Long): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByGym(@RequestParam gym: Long): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/type")
-    fun getAttendanceByType(@RequestParam type: Type): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByType(@RequestParam type: Type): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByType(type)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/method")
-    fun getAttendanceByMethod(@RequestParam method: Method): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByMethod(@RequestParam method: Method): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByMethod(method)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/checkintime")
-    fun getAttendanceByCheckintime(@RequestParam checkintime: LocalDateTime): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByCheckintime(@RequestParam checkintime: LocalDateTime): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByCheckintime(checkintime)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/checkouttime")
-    fun getAttendanceByCheckouttime(@RequestParam checkouttime: LocalDateTime): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByCheckouttime(@RequestParam checkouttime: LocalDateTime): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByCheckouttime(checkouttime)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/duration")
-    fun getAttendanceByDuration(@RequestParam duration: Int): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByDuration(@RequestParam duration: Int): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByDuration(duration)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/status")
-    fun getAttendanceByStatus(@RequestParam status: Status): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByStatus(@RequestParam status: Status): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByStatus(status)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/note")
-    fun getAttendanceByNote(@RequestParam note: String): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByNote(@RequestParam note: String): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByNote(note)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/ip")
-    fun getAttendanceByIp(@RequestParam ip: String): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByIp(@RequestParam ip: String): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByIp(ip)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/device")
-    fun getAttendanceByDevice(@RequestParam device: String): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByDevice(@RequestParam device: String): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByDevice(device)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/createdby")
-    fun getAttendanceByCreatedby(@RequestParam createdby: Long): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByCreatedby(@RequestParam createdby: Long): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByCreatedby(createdby)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getAttendanceByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Attendance>> {
+    fun getAttendanceByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<AttendanceResponse>> {
         val result = attendanceService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
     }
 
 
@@ -130,20 +132,20 @@ class AttendanceController(private val attendanceService: AttendanceService) {
     }
 
     @PostMapping
-    fun createAttendance(@RequestBody request: AttendanceCreateRequest): ResponseEntity<Attendance> {
+    fun createAttendance(@RequestBody request: AttendanceCreateRequest): ResponseEntity<AttendanceResponse> {
         return try {
             val result = attendanceService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(AttendanceResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createAttendances(@RequestBody requests: List<AttendanceCreateRequest>): ResponseEntity<List<Attendance>> {
+    fun createAttendances(@RequestBody requests: List<AttendanceCreateRequest>): ResponseEntity<List<AttendanceResponse>> {
         return try {
             val result = attendanceService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { AttendanceResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -153,11 +155,11 @@ class AttendanceController(private val attendanceService: AttendanceService) {
     fun updateAttendance(
         @PathVariable id: Long,
         @RequestBody request: AttendanceUpdateRequest
-    ): ResponseEntity<Attendance> {
+    ): ResponseEntity<AttendanceResponse> {
         val updatedRequest = request.copy(id = id)
         val result = attendanceService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(AttendanceResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

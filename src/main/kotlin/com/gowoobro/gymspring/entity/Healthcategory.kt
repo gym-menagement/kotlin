@@ -31,3 +31,24 @@ data class HealthcategoryUpdateRequest(
     val name: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class HealthcategoryResponse(
+    val id: Long,
+    val gym: Long,
+    val name: String,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(healthcategory: Healthcategory): HealthcategoryResponse {
+            return HealthcategoryResponse(
+                id = healthcategory.id,
+                gym = healthcategory.gym,
+                name = healthcategory.name,
+                date = healthcategory.date,
+            )
+        }
+    }
+}

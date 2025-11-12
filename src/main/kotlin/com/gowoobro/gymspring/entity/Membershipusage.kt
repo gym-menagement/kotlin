@@ -81,3 +81,57 @@ data class MembershipusageUpdateRequest(
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class MembershipusageExtraInfo(
+    val type: String = "",
+    val status: String = "",
+)
+
+
+data class MembershipusageResponse(
+    val id: Long,
+    val membership: Long,
+    val user: Long,
+    val type: Type,
+    val totaldays: Int,
+    val useddays: Int,
+    val remainingdays: Int,
+    val totalcount: Int,
+    val usedcount: Int,
+    val remainingcount: Int,
+    val startdate: LocalDateTime?,
+    val enddate: LocalDateTime?,
+    val status: Status,
+    val pausedays: Int,
+    val lastuseddate: LocalDateTime?,
+    val date: LocalDateTime?,
+
+    val extra: MembershipusageExtraInfo
+){
+    companion object {
+        fun from(membershipusage: Membershipusage): MembershipusageResponse {
+            return MembershipusageResponse(
+                id = membershipusage.id,
+                membership = membershipusage.membership,
+                user = membershipusage.user,
+                type = membershipusage.type,
+                totaldays = membershipusage.totaldays,
+                useddays = membershipusage.useddays,
+                remainingdays = membershipusage.remainingdays,
+                totalcount = membershipusage.totalcount,
+                usedcount = membershipusage.usedcount,
+                remainingcount = membershipusage.remainingcount,
+                startdate = membershipusage.startdate,
+                enddate = membershipusage.enddate,
+                status = membershipusage.status,
+                pausedays = membershipusage.pausedays,
+                lastuseddate = membershipusage.lastuseddate,
+                date = membershipusage.date,
+                extra = MembershipusageExtraInfo(
+                    type = Type.getDisplayName(membershipusage.type),
+                    status = Status.getDisplayName(membershipusage.status),
+                )
+            )
+        }
+    }
+}

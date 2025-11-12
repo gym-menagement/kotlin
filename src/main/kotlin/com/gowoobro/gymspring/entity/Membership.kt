@@ -56,3 +56,43 @@ data class MembershipUpdateRequest(
     val image: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class MembershipExtraInfo(
+    val sex: String = "",
+)
+
+
+data class MembershipResponse(
+    val id: Long,
+    val gym: Long,
+    val user: Long,
+    val name: String,
+    val sex: Sex,
+    val birth: LocalDateTime?,
+    val phonenum: String,
+    val address: String,
+    val image: String,
+    val date: LocalDateTime?,
+
+    val extra: MembershipExtraInfo
+){
+    companion object {
+        fun from(membership: Membership): MembershipResponse {
+            return MembershipResponse(
+                id = membership.id,
+                gym = membership.gym,
+                user = membership.user,
+                name = membership.name,
+                sex = membership.sex,
+                birth = membership.birth,
+                phonenum = membership.phonenum,
+                address = membership.address,
+                image = membership.image,
+                date = membership.date,
+                extra = MembershipExtraInfo(
+                    sex = Sex.getDisplayName(membership.sex),
+                )
+            )
+        }
+    }
+}

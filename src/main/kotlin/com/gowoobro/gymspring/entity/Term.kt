@@ -39,3 +39,28 @@ data class TermUpdateRequest(
     val term: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class TermResponse(
+    val id: Long,
+    val gym: Long,
+    val daytype: Long,
+    val name: String,
+    val term: Int,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(term: Term): TermResponse {
+            return TermResponse(
+                id = term.id,
+                gym = term.gym,
+                daytype = term.daytype,
+                name = term.name,
+                term = term.term,
+                date = term.date,
+            )
+        }
+    }
+}

@@ -36,3 +36,33 @@ data class RockerUpdateRequest(
     val available: Available = Available.IN_USE,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class RockerExtraInfo(
+    val available: String = "",
+)
+
+
+data class RockerResponse(
+    val id: Long,
+    val group: Long,
+    val name: String,
+    val available: Available,
+    val date: LocalDateTime?,
+
+    val extra: RockerExtraInfo
+){
+    companion object {
+        fun from(rocker: Rocker): RockerResponse {
+            return RockerResponse(
+                id = rocker.id,
+                group = rocker.group,
+                name = rocker.name,
+                available = rocker.available,
+                date = rocker.date,
+                extra = RockerExtraInfo(
+                    available = Available.getDisplayName(rocker.available),
+                )
+            )
+        }
+    }
+}

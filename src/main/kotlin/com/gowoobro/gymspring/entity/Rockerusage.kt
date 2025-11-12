@@ -68,3 +68,49 @@ data class RockerusageUpdateRequest(
     val assigneddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class RockerusageExtraInfo(
+    val status: String = "",
+)
+
+
+data class RockerusageResponse(
+    val id: Long,
+    val rocker: Long,
+    val user: Long,
+    val membership: Long,
+    val startdate: LocalDateTime?,
+    val enddate: LocalDateTime?,
+    val status: Status,
+    val deposit: BigDecimal,
+    val monthlyfee: BigDecimal,
+    val note: String,
+    val assignedby: Long,
+    val assigneddate: LocalDateTime?,
+    val date: LocalDateTime?,
+
+    val extra: RockerusageExtraInfo
+){
+    companion object {
+        fun from(rockerusage: Rockerusage): RockerusageResponse {
+            return RockerusageResponse(
+                id = rockerusage.id,
+                rocker = rockerusage.rocker,
+                user = rockerusage.user,
+                membership = rockerusage.membership,
+                startdate = rockerusage.startdate,
+                enddate = rockerusage.enddate,
+                status = rockerusage.status,
+                deposit = rockerusage.deposit,
+                monthlyfee = rockerusage.monthlyfee,
+                note = rockerusage.note,
+                assignedby = rockerusage.assignedby,
+                assigneddate = rockerusage.assigneddate,
+                date = rockerusage.date,
+                extra = RockerusageExtraInfo(
+                    status = Status.getDisplayName(rockerusage.status),
+                )
+            )
+        }
+    }
+}

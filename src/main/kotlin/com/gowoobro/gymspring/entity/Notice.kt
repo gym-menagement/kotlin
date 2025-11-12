@@ -84,3 +84,63 @@ data class NoticeUpdateRequest(
     val updateddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class NoticeExtraInfo(
+    val type: String = "",
+    val ispopup: String = "",
+    val ispush: String = "",
+    val target: String = "",
+    val status: String = "",
+)
+
+
+data class NoticeResponse(
+    val id: Long,
+    val gym: Long,
+    val title: String,
+    val content: String,
+    val type: Type,
+    val ispopup: Ispopup,
+    val ispush: Ispush,
+    val target: Target,
+    val viewcount: Int,
+    val startdate: LocalDateTime?,
+    val enddate: LocalDateTime?,
+    val status: Status,
+    val createdby: Long,
+    val createddate: LocalDateTime?,
+    val updateddate: LocalDateTime?,
+    val date: LocalDateTime?,
+
+    val extra: NoticeExtraInfo
+){
+    companion object {
+        fun from(notice: Notice): NoticeResponse {
+            return NoticeResponse(
+                id = notice.id,
+                gym = notice.gym,
+                title = notice.title,
+                content = notice.content,
+                type = notice.type,
+                ispopup = notice.ispopup,
+                ispush = notice.ispush,
+                target = notice.target,
+                viewcount = notice.viewcount,
+                startdate = notice.startdate,
+                enddate = notice.enddate,
+                status = notice.status,
+                createdby = notice.createdby,
+                createddate = notice.createddate,
+                updateddate = notice.updateddate,
+                date = notice.date,
+                extra = NoticeExtraInfo(
+                    type = Type.getDisplayName(notice.type),
+                    ispopup = Ispopup.getDisplayName(notice.ispopup),
+                    ispush = Ispush.getDisplayName(notice.ispush),
+                    target = Target.getDisplayName(notice.target),
+                    status = Status.getDisplayName(notice.status),
+                )
+            )
+        }
+    }
+}

@@ -31,3 +31,24 @@ data class PaymenttypeUpdateRequest(
     val name: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class PaymenttypeResponse(
+    val id: Long,
+    val gym: Long,
+    val name: String,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(paymenttype: Paymenttype): PaymenttypeResponse {
+            return PaymenttypeResponse(
+                id = paymenttype.id,
+                gym = paymenttype.gym,
+                name = paymenttype.name,
+                date = paymenttype.date,
+            )
+        }
+    }
+}

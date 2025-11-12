@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Inquiry
 import com.gowoobro.gymspring.entity.InquiryCreateRequest
 import com.gowoobro.gymspring.entity.InquiryUpdateRequest
 import com.gowoobro.gymspring.service.InquiryService
+import com.gowoobro.gymspring.entity.InquiryResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -21,16 +22,17 @@ class InquiryController(private val inquiryService: InquiryService) {
     fun getInquirys(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Inquiry>> {
+    ): ResponseEntity<Page<InquiryResponse>> {
         val result = inquiryService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { InquiryResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getInquiry(@PathVariable id: Long): ResponseEntity<Inquiry> {
+    fun getInquiry(@PathVariable id: Long): ResponseEntity<InquiryResponse> {
         val result = inquiryService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(InquiryResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -38,69 +40,69 @@ class InquiryController(private val inquiryService: InquiryService) {
 
 
     @GetMapping("/search/user")
-    fun getInquiryByUser(@RequestParam user: Long): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByUser(@RequestParam user: Long): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByUser(user)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/gym")
-    fun getInquiryByGym(@RequestParam gym: Long): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByGym(@RequestParam gym: Long): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/type")
-    fun getInquiryByType(@RequestParam type: Type): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByType(@RequestParam type: Type): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByType(type)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/title")
-    fun getInquiryByTitle(@RequestParam title: String): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByTitle(@RequestParam title: String): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByTitle(title)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/content")
-    fun getInquiryByContent(@RequestParam content: String): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByContent(@RequestParam content: String): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByContent(content)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/status")
-    fun getInquiryByStatus(@RequestParam status: Status): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByStatus(@RequestParam status: Status): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByStatus(status)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/answer")
-    fun getInquiryByAnswer(@RequestParam answer: String): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByAnswer(@RequestParam answer: String): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByAnswer(answer)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/answeredby")
-    fun getInquiryByAnsweredby(@RequestParam answeredby: Long): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByAnsweredby(@RequestParam answeredby: Long): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByAnsweredby(answeredby)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/answereddate")
-    fun getInquiryByAnswereddate(@RequestParam answereddate: LocalDateTime): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByAnswereddate(@RequestParam answereddate: LocalDateTime): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByAnswereddate(answereddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/createddate")
-    fun getInquiryByCreateddate(@RequestParam createddate: LocalDateTime): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByCreateddate(@RequestParam createddate: LocalDateTime): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByCreateddate(createddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getInquiryByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Inquiry>> {
+    fun getInquiryByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<InquiryResponse>> {
         val result = inquiryService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
     }
 
 
@@ -111,20 +113,20 @@ class InquiryController(private val inquiryService: InquiryService) {
     }
 
     @PostMapping
-    fun createInquiry(@RequestBody request: InquiryCreateRequest): ResponseEntity<Inquiry> {
+    fun createInquiry(@RequestBody request: InquiryCreateRequest): ResponseEntity<InquiryResponse> {
         return try {
             val result = inquiryService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(InquiryResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createInquirys(@RequestBody requests: List<InquiryCreateRequest>): ResponseEntity<List<Inquiry>> {
+    fun createInquirys(@RequestBody requests: List<InquiryCreateRequest>): ResponseEntity<List<InquiryResponse>> {
         return try {
             val result = inquiryService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { InquiryResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -134,11 +136,11 @@ class InquiryController(private val inquiryService: InquiryService) {
     fun updateInquiry(
         @PathVariable id: Long,
         @RequestBody request: InquiryUpdateRequest
-    ): ResponseEntity<Inquiry> {
+    ): ResponseEntity<InquiryResponse> {
         val updatedRequest = request.copy(id = id)
         val result = inquiryService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(InquiryResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

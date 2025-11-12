@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Rockergroup
 import com.gowoobro.gymspring.entity.RockergroupCreateRequest
 import com.gowoobro.gymspring.entity.RockergroupUpdateRequest
 import com.gowoobro.gymspring.service.RockergroupService
+import com.gowoobro.gymspring.entity.RockergroupResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class RockergroupController(private val rockergroupService: RockergroupService) 
     fun getRockergroups(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Rockergroup>> {
+    ): ResponseEntity<Page<RockergroupResponse>> {
         val result = rockergroupService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { RockergroupResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getRockergroup(@PathVariable id: Long): ResponseEntity<Rockergroup> {
+    fun getRockergroup(@PathVariable id: Long): ResponseEntity<RockergroupResponse> {
         val result = rockergroupService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(RockergroupResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,21 +38,21 @@ class RockergroupController(private val rockergroupService: RockergroupService) 
 
 
     @GetMapping("/search/gym")
-    fun getRockergroupByGym(@RequestParam gym: Long): ResponseEntity<List<Rockergroup>> {
+    fun getRockergroupByGym(@RequestParam gym: Long): ResponseEntity<List<RockergroupResponse>> {
         val result = rockergroupService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { RockergroupResponse.from(it) } )
     }
 
     @GetMapping("/search/name")
-    fun getRockergroupByName(@RequestParam name: String): ResponseEntity<List<Rockergroup>> {
+    fun getRockergroupByName(@RequestParam name: String): ResponseEntity<List<RockergroupResponse>> {
         val result = rockergroupService.findByName(name)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { RockergroupResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getRockergroupByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Rockergroup>> {
+    fun getRockergroupByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<RockergroupResponse>> {
         val result = rockergroupService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { RockergroupResponse.from(it) } )
     }
 
 
@@ -61,20 +63,20 @@ class RockergroupController(private val rockergroupService: RockergroupService) 
     }
 
     @PostMapping
-    fun createRockergroup(@RequestBody request: RockergroupCreateRequest): ResponseEntity<Rockergroup> {
+    fun createRockergroup(@RequestBody request: RockergroupCreateRequest): ResponseEntity<RockergroupResponse> {
         return try {
             val result = rockergroupService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(RockergroupResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createRockergroups(@RequestBody requests: List<RockergroupCreateRequest>): ResponseEntity<List<Rockergroup>> {
+    fun createRockergroups(@RequestBody requests: List<RockergroupCreateRequest>): ResponseEntity<List<RockergroupResponse>> {
         return try {
             val result = rockergroupService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { RockergroupResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -84,11 +86,11 @@ class RockergroupController(private val rockergroupService: RockergroupService) 
     fun updateRockergroup(
         @PathVariable id: Long,
         @RequestBody request: RockergroupUpdateRequest
-    ): ResponseEntity<Rockergroup> {
+    ): ResponseEntity<RockergroupResponse> {
         val updatedRequest = request.copy(id = id)
         val result = rockergroupService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(RockergroupResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

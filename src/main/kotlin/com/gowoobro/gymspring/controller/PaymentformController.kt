@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Paymentform
 import com.gowoobro.gymspring.entity.PaymentformCreateRequest
 import com.gowoobro.gymspring.entity.PaymentformUpdateRequest
 import com.gowoobro.gymspring.service.PaymentformService
+import com.gowoobro.gymspring.entity.PaymentformResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class PaymentformController(private val paymentformService: PaymentformService) 
     fun getPaymentforms(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Paymentform>> {
+    ): ResponseEntity<Page<PaymentformResponse>> {
         val result = paymentformService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { PaymentformResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getPaymentform(@PathVariable id: Long): ResponseEntity<Paymentform> {
+    fun getPaymentform(@PathVariable id: Long): ResponseEntity<PaymentformResponse> {
         val result = paymentformService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(PaymentformResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,33 +38,33 @@ class PaymentformController(private val paymentformService: PaymentformService) 
 
 
     @GetMapping("/search/gym")
-    fun getPaymentformByGym(@RequestParam gym: Long): ResponseEntity<List<Paymentform>> {
+    fun getPaymentformByGym(@RequestParam gym: Long): ResponseEntity<List<PaymentformResponse>> {
         val result = paymentformService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PaymentformResponse.from(it) } )
     }
 
     @GetMapping("/search/payment")
-    fun getPaymentformByPayment(@RequestParam payment: Long): ResponseEntity<List<Paymentform>> {
+    fun getPaymentformByPayment(@RequestParam payment: Long): ResponseEntity<List<PaymentformResponse>> {
         val result = paymentformService.findByPayment(payment)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PaymentformResponse.from(it) } )
     }
 
     @GetMapping("/search/type")
-    fun getPaymentformByType(@RequestParam type: Long): ResponseEntity<List<Paymentform>> {
+    fun getPaymentformByType(@RequestParam type: Long): ResponseEntity<List<PaymentformResponse>> {
         val result = paymentformService.findByType(type)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PaymentformResponse.from(it) } )
     }
 
     @GetMapping("/search/cost")
-    fun getPaymentformByCost(@RequestParam cost: Int): ResponseEntity<List<Paymentform>> {
+    fun getPaymentformByCost(@RequestParam cost: Int): ResponseEntity<List<PaymentformResponse>> {
         val result = paymentformService.findByCost(cost)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PaymentformResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getPaymentformByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Paymentform>> {
+    fun getPaymentformByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<PaymentformResponse>> {
         val result = paymentformService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PaymentformResponse.from(it) } )
     }
 
 
@@ -73,20 +75,20 @@ class PaymentformController(private val paymentformService: PaymentformService) 
     }
 
     @PostMapping
-    fun createPaymentform(@RequestBody request: PaymentformCreateRequest): ResponseEntity<Paymentform> {
+    fun createPaymentform(@RequestBody request: PaymentformCreateRequest): ResponseEntity<PaymentformResponse> {
         return try {
             val result = paymentformService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(PaymentformResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createPaymentforms(@RequestBody requests: List<PaymentformCreateRequest>): ResponseEntity<List<Paymentform>> {
+    fun createPaymentforms(@RequestBody requests: List<PaymentformCreateRequest>): ResponseEntity<List<PaymentformResponse>> {
         return try {
             val result = paymentformService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { PaymentformResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -96,11 +98,11 @@ class PaymentformController(private val paymentformService: PaymentformService) 
     fun updatePaymentform(
         @PathVariable id: Long,
         @RequestBody request: PaymentformUpdateRequest
-    ): ResponseEntity<Paymentform> {
+    ): ResponseEntity<PaymentformResponse> {
         val updatedRequest = request.copy(id = id)
         val result = paymentformService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(PaymentformResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

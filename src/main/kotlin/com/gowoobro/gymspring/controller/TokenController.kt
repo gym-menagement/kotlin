@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Token
 import com.gowoobro.gymspring.entity.TokenCreateRequest
 import com.gowoobro.gymspring.entity.TokenUpdateRequest
 import com.gowoobro.gymspring.service.TokenService
+import com.gowoobro.gymspring.entity.TokenResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -20,16 +21,17 @@ class TokenController(private val tokenService: TokenService) {
     fun getTokens(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Token>> {
+    ): ResponseEntity<Page<TokenResponse>> {
         val result = tokenService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { TokenResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getToken(@PathVariable id: Long): ResponseEntity<Token> {
+    fun getToken(@PathVariable id: Long): ResponseEntity<TokenResponse> {
         val result = tokenService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(TokenResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -37,27 +39,27 @@ class TokenController(private val tokenService: TokenService) {
 
 
     @GetMapping("/search/user")
-    fun getTokenByUser(@RequestParam user: Long): ResponseEntity<List<Token>> {
+    fun getTokenByUser(@RequestParam user: Long): ResponseEntity<List<TokenResponse>> {
         val result = tokenService.findByUser(user)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TokenResponse.from(it) } )
     }
 
     @GetMapping("/search/token")
-    fun getTokenByToken(@RequestParam token: String): ResponseEntity<List<Token>> {
+    fun getTokenByToken(@RequestParam token: String): ResponseEntity<List<TokenResponse>> {
         val result = tokenService.findByToken(token)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TokenResponse.from(it) } )
     }
 
     @GetMapping("/search/status")
-    fun getTokenByStatus(@RequestParam status: Status): ResponseEntity<List<Token>> {
+    fun getTokenByStatus(@RequestParam status: Status): ResponseEntity<List<TokenResponse>> {
         val result = tokenService.findByStatus(status)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TokenResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getTokenByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Token>> {
+    fun getTokenByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<TokenResponse>> {
         val result = tokenService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TokenResponse.from(it) } )
     }
 
 
@@ -68,20 +70,20 @@ class TokenController(private val tokenService: TokenService) {
     }
 
     @PostMapping
-    fun createToken(@RequestBody request: TokenCreateRequest): ResponseEntity<Token> {
+    fun createToken(@RequestBody request: TokenCreateRequest): ResponseEntity<TokenResponse> {
         return try {
             val result = tokenService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(TokenResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createTokens(@RequestBody requests: List<TokenCreateRequest>): ResponseEntity<List<Token>> {
+    fun createTokens(@RequestBody requests: List<TokenCreateRequest>): ResponseEntity<List<TokenResponse>> {
         return try {
             val result = tokenService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { TokenResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -91,11 +93,11 @@ class TokenController(private val tokenService: TokenService) {
     fun updateToken(
         @PathVariable id: Long,
         @RequestBody request: TokenUpdateRequest
-    ): ResponseEntity<Token> {
+    ): ResponseEntity<TokenResponse> {
         val updatedRequest = request.copy(id = id)
         val result = tokenService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(TokenResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

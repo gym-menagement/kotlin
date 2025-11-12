@@ -31,3 +31,24 @@ data class RockergroupUpdateRequest(
     val name: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class RockergroupResponse(
+    val id: Long,
+    val gym: Long,
+    val name: String,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(rockergroup: Rockergroup): RockergroupResponse {
+            return RockergroupResponse(
+                id = rockergroup.id,
+                gym = rockergroup.gym,
+                name = rockergroup.name,
+                date = rockergroup.date,
+            )
+        }
+    }
+}

@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Term
 import com.gowoobro.gymspring.entity.TermCreateRequest
 import com.gowoobro.gymspring.entity.TermUpdateRequest
 import com.gowoobro.gymspring.service.TermService
+import com.gowoobro.gymspring.entity.TermResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class TermController(private val termService: TermService) {
     fun getTerms(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Term>> {
+    ): ResponseEntity<Page<TermResponse>> {
         val result = termService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { TermResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getTerm(@PathVariable id: Long): ResponseEntity<Term> {
+    fun getTerm(@PathVariable id: Long): ResponseEntity<TermResponse> {
         val result = termService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(TermResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,33 +38,33 @@ class TermController(private val termService: TermService) {
 
 
     @GetMapping("/search/gym")
-    fun getTermByGym(@RequestParam gym: Long): ResponseEntity<List<Term>> {
+    fun getTermByGym(@RequestParam gym: Long): ResponseEntity<List<TermResponse>> {
         val result = termService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TermResponse.from(it) } )
     }
 
     @GetMapping("/search/daytype")
-    fun getTermByDaytype(@RequestParam daytype: Long): ResponseEntity<List<Term>> {
+    fun getTermByDaytype(@RequestParam daytype: Long): ResponseEntity<List<TermResponse>> {
         val result = termService.findByDaytype(daytype)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TermResponse.from(it) } )
     }
 
     @GetMapping("/search/name")
-    fun getTermByName(@RequestParam name: String): ResponseEntity<List<Term>> {
+    fun getTermByName(@RequestParam name: String): ResponseEntity<List<TermResponse>> {
         val result = termService.findByName(name)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TermResponse.from(it) } )
     }
 
     @GetMapping("/search/term")
-    fun getTermByTerm(@RequestParam term: Int): ResponseEntity<List<Term>> {
+    fun getTermByTerm(@RequestParam term: Int): ResponseEntity<List<TermResponse>> {
         val result = termService.findByTerm(term)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TermResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getTermByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Term>> {
+    fun getTermByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<TermResponse>> {
         val result = termService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TermResponse.from(it) } )
     }
 
 
@@ -73,20 +75,20 @@ class TermController(private val termService: TermService) {
     }
 
     @PostMapping
-    fun createTerm(@RequestBody request: TermCreateRequest): ResponseEntity<Term> {
+    fun createTerm(@RequestBody request: TermCreateRequest): ResponseEntity<TermResponse> {
         return try {
             val result = termService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(TermResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createTerms(@RequestBody requests: List<TermCreateRequest>): ResponseEntity<List<Term>> {
+    fun createTerms(@RequestBody requests: List<TermCreateRequest>): ResponseEntity<List<TermResponse>> {
         return try {
             val result = termService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { TermResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -96,11 +98,11 @@ class TermController(private val termService: TermService) {
     fun updateTerm(
         @PathVariable id: Long,
         @RequestBody request: TermUpdateRequest
-    ): ResponseEntity<Term> {
+    ): ResponseEntity<TermResponse> {
         val updatedRequest = request.copy(id = id)
         val result = termService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(TermResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

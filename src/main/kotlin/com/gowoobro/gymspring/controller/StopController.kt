@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Stop
 import com.gowoobro.gymspring.entity.StopCreateRequest
 import com.gowoobro.gymspring.entity.StopUpdateRequest
 import com.gowoobro.gymspring.service.StopService
+import com.gowoobro.gymspring.entity.StopResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class StopController(private val stopService: StopService) {
     fun getStops(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Stop>> {
+    ): ResponseEntity<Page<StopResponse>> {
         val result = stopService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { StopResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getStop(@PathVariable id: Long): ResponseEntity<Stop> {
+    fun getStop(@PathVariable id: Long): ResponseEntity<StopResponse> {
         val result = stopService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(StopResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,33 +38,33 @@ class StopController(private val stopService: StopService) {
 
 
     @GetMapping("/search/usehelth")
-    fun getStopByUsehelth(@RequestParam usehelth: Long): ResponseEntity<List<Stop>> {
+    fun getStopByUsehelth(@RequestParam usehelth: Long): ResponseEntity<List<StopResponse>> {
         val result = stopService.findByUsehelth(usehelth)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { StopResponse.from(it) } )
     }
 
     @GetMapping("/search/startday")
-    fun getStopByStartday(@RequestParam startday: LocalDateTime): ResponseEntity<List<Stop>> {
+    fun getStopByStartday(@RequestParam startday: LocalDateTime): ResponseEntity<List<StopResponse>> {
         val result = stopService.findByStartday(startday)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { StopResponse.from(it) } )
     }
 
     @GetMapping("/search/endday")
-    fun getStopByEndday(@RequestParam endday: LocalDateTime): ResponseEntity<List<Stop>> {
+    fun getStopByEndday(@RequestParam endday: LocalDateTime): ResponseEntity<List<StopResponse>> {
         val result = stopService.findByEndday(endday)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { StopResponse.from(it) } )
     }
 
     @GetMapping("/search/count")
-    fun getStopByCount(@RequestParam count: Int): ResponseEntity<List<Stop>> {
+    fun getStopByCount(@RequestParam count: Int): ResponseEntity<List<StopResponse>> {
         val result = stopService.findByCount(count)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { StopResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getStopByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Stop>> {
+    fun getStopByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<StopResponse>> {
         val result = stopService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { StopResponse.from(it) } )
     }
 
 
@@ -73,20 +75,20 @@ class StopController(private val stopService: StopService) {
     }
 
     @PostMapping
-    fun createStop(@RequestBody request: StopCreateRequest): ResponseEntity<Stop> {
+    fun createStop(@RequestBody request: StopCreateRequest): ResponseEntity<StopResponse> {
         return try {
             val result = stopService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(StopResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createStops(@RequestBody requests: List<StopCreateRequest>): ResponseEntity<List<Stop>> {
+    fun createStops(@RequestBody requests: List<StopCreateRequest>): ResponseEntity<List<StopResponse>> {
         return try {
             val result = stopService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { StopResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -96,11 +98,11 @@ class StopController(private val stopService: StopService) {
     fun updateStop(
         @PathVariable id: Long,
         @RequestBody request: StopUpdateRequest
-    ): ResponseEntity<Stop> {
+    ): ResponseEntity<StopResponse> {
         val updatedRequest = request.copy(id = id)
         val result = stopService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(StopResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

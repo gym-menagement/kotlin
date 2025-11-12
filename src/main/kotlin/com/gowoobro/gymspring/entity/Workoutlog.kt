@@ -63,3 +63,40 @@ data class WorkoutlogUpdateRequest(
     val note: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class WorkoutlogResponse(
+    val id: Long,
+    val user: Long,
+    val attendance: Long,
+    val health: Long,
+    val exercisename: String,
+    val sets: Int,
+    val reps: Int,
+    val weight: BigDecimal,
+    val duration: Int,
+    val calories: Int,
+    val note: String,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(workoutlog: Workoutlog): WorkoutlogResponse {
+            return WorkoutlogResponse(
+                id = workoutlog.id,
+                user = workoutlog.user,
+                attendance = workoutlog.attendance,
+                health = workoutlog.health,
+                exercisename = workoutlog.exercisename,
+                sets = workoutlog.sets,
+                reps = workoutlog.reps,
+                weight = workoutlog.weight,
+                duration = workoutlog.duration,
+                calories = workoutlog.calories,
+                note = workoutlog.note,
+                date = workoutlog.date,
+            )
+        }
+    }
+}

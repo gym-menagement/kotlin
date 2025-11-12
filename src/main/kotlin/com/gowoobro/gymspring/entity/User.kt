@@ -92,3 +92,67 @@ data class UserUpdateRequest(
     val lastchangepasswddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class UserExtraInfo(
+    val level: String = "",
+    val use: String = "",
+    val type: String = "",
+    val role: String = "",
+    val sex: String = "",
+)
+
+
+data class UserResponse(
+    val id: Long,
+    val loginid: String,
+    val passwd: String,
+    val email: String,
+    val name: String,
+    val tel: String,
+    val address: String,
+    val image: String,
+    val sex: Sex,
+    val birth: LocalDateTime?,
+    val type: Type,
+    val connectid: String,
+    val level: Level,
+    val role: Role,
+    val use: Use,
+    val logindate: LocalDateTime?,
+    val lastchangepasswddate: LocalDateTime?,
+    val date: LocalDateTime?,
+
+    val extra: UserExtraInfo
+){
+    companion object {
+        fun from(user: User): UserResponse {
+            return UserResponse(
+                id = user.id,
+                loginid = user.loginid,
+                passwd = user.passwd,
+                email = user.email,
+                name = user.name,
+                tel = user.tel,
+                address = user.address,
+                image = user.image,
+                sex = user.sex,
+                birth = user.birth,
+                type = user.type,
+                connectid = user.connectid,
+                level = user.level,
+                role = user.role,
+                use = user.use,
+                logindate = user.logindate,
+                lastchangepasswddate = user.lastchangepasswddate,
+                date = user.date,
+                extra = UserExtraInfo(
+                    level = Level.getDisplayName(user.level),
+                    use = Use.getDisplayName(user.use),
+                    type = Type.getDisplayName(user.type),
+                    role = Role.getDisplayName(user.role),
+                    sex = Sex.getDisplayName(user.sex),
+                )
+            )
+        }
+    }
+}

@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Order
 import com.gowoobro.gymspring.entity.OrderCreateRequest
 import com.gowoobro.gymspring.entity.OrderUpdateRequest
 import com.gowoobro.gymspring.service.OrderService
+import com.gowoobro.gymspring.entity.OrderResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class OrderController(private val orderService: OrderService) {
     fun getOrders(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Order>> {
+    ): ResponseEntity<Page<OrderResponse>> {
         val result = orderService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { OrderResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getOrder(@PathVariable id: Long): ResponseEntity<Order> {
+    fun getOrder(@PathVariable id: Long): ResponseEntity<OrderResponse> {
         val result = orderService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(OrderResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,15 +38,15 @@ class OrderController(private val orderService: OrderService) {
 
 
     @GetMapping("/search/membership")
-    fun getOrderByMembership(@RequestParam membership: Long): ResponseEntity<List<Order>> {
+    fun getOrderByMembership(@RequestParam membership: Long): ResponseEntity<List<OrderResponse>> {
         val result = orderService.findByMembership(membership)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { OrderResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getOrderByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Order>> {
+    fun getOrderByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<OrderResponse>> {
         val result = orderService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { OrderResponse.from(it) } )
     }
 
 
@@ -55,20 +57,20 @@ class OrderController(private val orderService: OrderService) {
     }
 
     @PostMapping
-    fun createOrder(@RequestBody request: OrderCreateRequest): ResponseEntity<Order> {
+    fun createOrder(@RequestBody request: OrderCreateRequest): ResponseEntity<OrderResponse> {
         return try {
             val result = orderService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(OrderResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createOrders(@RequestBody requests: List<OrderCreateRequest>): ResponseEntity<List<Order>> {
+    fun createOrders(@RequestBody requests: List<OrderCreateRequest>): ResponseEntity<List<OrderResponse>> {
         return try {
             val result = orderService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { OrderResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -78,11 +80,11 @@ class OrderController(private val orderService: OrderService) {
     fun updateOrder(
         @PathVariable id: Long,
         @RequestBody request: OrderUpdateRequest
-    ): ResponseEntity<Order> {
+    ): ResponseEntity<OrderResponse> {
         val updatedRequest = request.copy(id = id)
         val result = orderService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(OrderResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

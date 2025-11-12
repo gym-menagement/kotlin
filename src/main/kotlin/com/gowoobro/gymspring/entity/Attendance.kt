@@ -78,3 +78,57 @@ data class AttendanceUpdateRequest(
     val createdby: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class AttendanceExtraInfo(
+    val type: String = "",
+    val method: String = "",
+    val status: String = "",
+)
+
+
+data class AttendanceResponse(
+    val id: Long,
+    val user: Long,
+    val membership: Long,
+    val gym: Long,
+    val type: Type,
+    val method: Method,
+    val checkintime: LocalDateTime?,
+    val checkouttime: LocalDateTime?,
+    val duration: Int,
+    val status: Status,
+    val note: String,
+    val ip: String,
+    val device: String,
+    val createdby: Long,
+    val date: LocalDateTime?,
+
+    val extra: AttendanceExtraInfo
+){
+    companion object {
+        fun from(attendance: Attendance): AttendanceResponse {
+            return AttendanceResponse(
+                id = attendance.id,
+                user = attendance.user,
+                membership = attendance.membership,
+                gym = attendance.gym,
+                type = attendance.type,
+                method = attendance.method,
+                checkintime = attendance.checkintime,
+                checkouttime = attendance.checkouttime,
+                duration = attendance.duration,
+                status = attendance.status,
+                note = attendance.note,
+                ip = attendance.ip,
+                device = attendance.device,
+                createdby = attendance.createdby,
+                date = attendance.date,
+                extra = AttendanceExtraInfo(
+                    type = Type.getDisplayName(attendance.type),
+                    method = Method.getDisplayName(attendance.method),
+                    status = Status.getDisplayName(attendance.status),
+                )
+            )
+        }
+    }
+}

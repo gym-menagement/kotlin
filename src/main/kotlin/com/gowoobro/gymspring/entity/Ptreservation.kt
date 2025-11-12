@@ -72,3 +72,51 @@ data class PtreservationUpdateRequest(
     val updateddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class PtreservationExtraInfo(
+    val status: String = "",
+)
+
+
+data class PtreservationResponse(
+    val id: Long,
+    val trainer: Long,
+    val member: Long,
+    val gym: Long,
+    val reservationdate: LocalDateTime?,
+    val starttime: String,
+    val endtime: String,
+    val duration: Int,
+    val status: Status,
+    val note: String,
+    val cancelreason: String,
+    val createddate: LocalDateTime?,
+    val updateddate: LocalDateTime?,
+    val date: LocalDateTime?,
+
+    val extra: PtreservationExtraInfo
+){
+    companion object {
+        fun from(ptreservation: Ptreservation): PtreservationResponse {
+            return PtreservationResponse(
+                id = ptreservation.id,
+                trainer = ptreservation.trainer,
+                member = ptreservation.member,
+                gym = ptreservation.gym,
+                reservationdate = ptreservation.reservationdate,
+                starttime = ptreservation.starttime,
+                endtime = ptreservation.endtime,
+                duration = ptreservation.duration,
+                status = ptreservation.status,
+                note = ptreservation.note,
+                cancelreason = ptreservation.cancelreason,
+                createddate = ptreservation.createddate,
+                updateddate = ptreservation.updateddate,
+                date = ptreservation.date,
+                extra = PtreservationExtraInfo(
+                    status = Status.getDisplayName(ptreservation.status),
+                )
+            )
+        }
+    }
+}

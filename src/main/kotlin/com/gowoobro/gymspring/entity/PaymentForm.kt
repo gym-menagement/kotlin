@@ -39,3 +39,28 @@ data class PaymentformUpdateRequest(
     val cost: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class PaymentformResponse(
+    val id: Long,
+    val gym: Long,
+    val payment: Long,
+    val type: Long,
+    val cost: Int,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(paymentform: Paymentform): PaymentformResponse {
+            return PaymentformResponse(
+                id = paymentform.id,
+                gym = paymentform.gym,
+                payment = paymentform.payment,
+                type = paymentform.type,
+                cost = paymentform.cost,
+                date = paymentform.date,
+            )
+        }
+    }
+}

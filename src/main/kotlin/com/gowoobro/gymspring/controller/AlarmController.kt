@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Alarm
 import com.gowoobro.gymspring.entity.AlarmCreateRequest
 import com.gowoobro.gymspring.entity.AlarmUpdateRequest
 import com.gowoobro.gymspring.service.AlarmService
+import com.gowoobro.gymspring.entity.AlarmResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -21,16 +22,17 @@ class AlarmController(private val alarmService: AlarmService) {
     fun getAlarms(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Alarm>> {
+    ): ResponseEntity<Page<AlarmResponse>> {
         val result = alarmService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { AlarmResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getAlarm(@PathVariable id: Long): ResponseEntity<Alarm> {
+    fun getAlarm(@PathVariable id: Long): ResponseEntity<AlarmResponse> {
         val result = alarmService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(AlarmResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -38,39 +40,39 @@ class AlarmController(private val alarmService: AlarmService) {
 
 
     @GetMapping("/search/title")
-    fun getAlarmByTitle(@RequestParam title: String): ResponseEntity<List<Alarm>> {
+    fun getAlarmByTitle(@RequestParam title: String): ResponseEntity<List<AlarmResponse>> {
         val result = alarmService.findByTitle(title)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AlarmResponse.from(it) } )
     }
 
     @GetMapping("/search/content")
-    fun getAlarmByContent(@RequestParam content: String): ResponseEntity<List<Alarm>> {
+    fun getAlarmByContent(@RequestParam content: String): ResponseEntity<List<AlarmResponse>> {
         val result = alarmService.findByContent(content)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AlarmResponse.from(it) } )
     }
 
     @GetMapping("/search/type")
-    fun getAlarmByType(@RequestParam type: Type): ResponseEntity<List<Alarm>> {
+    fun getAlarmByType(@RequestParam type: Type): ResponseEntity<List<AlarmResponse>> {
         val result = alarmService.findByType(type)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AlarmResponse.from(it) } )
     }
 
     @GetMapping("/search/status")
-    fun getAlarmByStatus(@RequestParam status: Status): ResponseEntity<List<Alarm>> {
+    fun getAlarmByStatus(@RequestParam status: Status): ResponseEntity<List<AlarmResponse>> {
         val result = alarmService.findByStatus(status)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AlarmResponse.from(it) } )
     }
 
     @GetMapping("/search/user")
-    fun getAlarmByUser(@RequestParam user: Long): ResponseEntity<List<Alarm>> {
+    fun getAlarmByUser(@RequestParam user: Long): ResponseEntity<List<AlarmResponse>> {
         val result = alarmService.findByUser(user)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AlarmResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getAlarmByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Alarm>> {
+    fun getAlarmByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<AlarmResponse>> {
         val result = alarmService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { AlarmResponse.from(it) } )
     }
 
 
@@ -81,20 +83,20 @@ class AlarmController(private val alarmService: AlarmService) {
     }
 
     @PostMapping
-    fun createAlarm(@RequestBody request: AlarmCreateRequest): ResponseEntity<Alarm> {
+    fun createAlarm(@RequestBody request: AlarmCreateRequest): ResponseEntity<AlarmResponse> {
         return try {
             val result = alarmService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(AlarmResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createAlarms(@RequestBody requests: List<AlarmCreateRequest>): ResponseEntity<List<Alarm>> {
+    fun createAlarms(@RequestBody requests: List<AlarmCreateRequest>): ResponseEntity<List<AlarmResponse>> {
         return try {
             val result = alarmService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { AlarmResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -104,11 +106,11 @@ class AlarmController(private val alarmService: AlarmService) {
     fun updateAlarm(
         @PathVariable id: Long,
         @RequestBody request: AlarmUpdateRequest
-    ): ResponseEntity<Alarm> {
+    ): ResponseEntity<AlarmResponse> {
         val updatedRequest = request.copy(id = id)
         val result = alarmService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(AlarmResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Trainermember
 import com.gowoobro.gymspring.entity.TrainermemberCreateRequest
 import com.gowoobro.gymspring.entity.TrainermemberUpdateRequest
 import com.gowoobro.gymspring.service.TrainermemberService
+import com.gowoobro.gymspring.entity.TrainermemberResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -20,16 +21,17 @@ class TrainermemberController(private val trainermemberService: TrainermemberSer
     fun getTrainermembers(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Trainermember>> {
+    ): ResponseEntity<Page<TrainermemberResponse>> {
         val result = trainermemberService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { TrainermemberResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getTrainermember(@PathVariable id: Long): ResponseEntity<Trainermember> {
+    fun getTrainermember(@PathVariable id: Long): ResponseEntity<TrainermemberResponse> {
         val result = trainermemberService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(TrainermemberResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -37,51 +39,51 @@ class TrainermemberController(private val trainermemberService: TrainermemberSer
 
 
     @GetMapping("/search/trainer")
-    fun getTrainermemberByTrainer(@RequestParam trainer: Long): ResponseEntity<List<Trainermember>> {
+    fun getTrainermemberByTrainer(@RequestParam trainer: Long): ResponseEntity<List<TrainermemberResponse>> {
         val result = trainermemberService.findByTrainer(trainer)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TrainermemberResponse.from(it) } )
     }
 
     @GetMapping("/search/member")
-    fun getTrainermemberByMember(@RequestParam member: Long): ResponseEntity<List<Trainermember>> {
+    fun getTrainermemberByMember(@RequestParam member: Long): ResponseEntity<List<TrainermemberResponse>> {
         val result = trainermemberService.findByMember(member)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TrainermemberResponse.from(it) } )
     }
 
     @GetMapping("/search/gym")
-    fun getTrainermemberByGym(@RequestParam gym: Long): ResponseEntity<List<Trainermember>> {
+    fun getTrainermemberByGym(@RequestParam gym: Long): ResponseEntity<List<TrainermemberResponse>> {
         val result = trainermemberService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TrainermemberResponse.from(it) } )
     }
 
     @GetMapping("/search/startdate")
-    fun getTrainermemberByStartdate(@RequestParam startdate: LocalDateTime): ResponseEntity<List<Trainermember>> {
+    fun getTrainermemberByStartdate(@RequestParam startdate: LocalDateTime): ResponseEntity<List<TrainermemberResponse>> {
         val result = trainermemberService.findByStartdate(startdate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TrainermemberResponse.from(it) } )
     }
 
     @GetMapping("/search/enddate")
-    fun getTrainermemberByEnddate(@RequestParam enddate: LocalDateTime): ResponseEntity<List<Trainermember>> {
+    fun getTrainermemberByEnddate(@RequestParam enddate: LocalDateTime): ResponseEntity<List<TrainermemberResponse>> {
         val result = trainermemberService.findByEnddate(enddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TrainermemberResponse.from(it) } )
     }
 
     @GetMapping("/search/status")
-    fun getTrainermemberByStatus(@RequestParam status: Status): ResponseEntity<List<Trainermember>> {
+    fun getTrainermemberByStatus(@RequestParam status: Status): ResponseEntity<List<TrainermemberResponse>> {
         val result = trainermemberService.findByStatus(status)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TrainermemberResponse.from(it) } )
     }
 
     @GetMapping("/search/note")
-    fun getTrainermemberByNote(@RequestParam note: String): ResponseEntity<List<Trainermember>> {
+    fun getTrainermemberByNote(@RequestParam note: String): ResponseEntity<List<TrainermemberResponse>> {
         val result = trainermemberService.findByNote(note)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TrainermemberResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getTrainermemberByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Trainermember>> {
+    fun getTrainermemberByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<TrainermemberResponse>> {
         val result = trainermemberService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { TrainermemberResponse.from(it) } )
     }
 
 
@@ -92,20 +94,20 @@ class TrainermemberController(private val trainermemberService: TrainermemberSer
     }
 
     @PostMapping
-    fun createTrainermember(@RequestBody request: TrainermemberCreateRequest): ResponseEntity<Trainermember> {
+    fun createTrainermember(@RequestBody request: TrainermemberCreateRequest): ResponseEntity<TrainermemberResponse> {
         return try {
             val result = trainermemberService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(TrainermemberResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createTrainermembers(@RequestBody requests: List<TrainermemberCreateRequest>): ResponseEntity<List<Trainermember>> {
+    fun createTrainermembers(@RequestBody requests: List<TrainermemberCreateRequest>): ResponseEntity<List<TrainermemberResponse>> {
         return try {
             val result = trainermemberService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { TrainermemberResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -115,11 +117,11 @@ class TrainermemberController(private val trainermemberService: TrainermemberSer
     fun updateTrainermember(
         @PathVariable id: Long,
         @RequestBody request: TrainermemberUpdateRequest
-    ): ResponseEntity<Trainermember> {
+    ): ResponseEntity<TrainermemberResponse> {
         val updatedRequest = request.copy(id = id)
         val result = trainermemberService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(TrainermemberResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

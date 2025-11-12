@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Role
 import com.gowoobro.gymspring.entity.RoleCreateRequest
 import com.gowoobro.gymspring.entity.RoleUpdateRequest
 import com.gowoobro.gymspring.service.RoleService
+import com.gowoobro.gymspring.entity.RoleResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class RoleController(private val roleService: RoleService) {
     fun getRoles(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Role>> {
+    ): ResponseEntity<Page<RoleResponse>> {
         val result = roleService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { RoleResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getRole(@PathVariable id: Long): ResponseEntity<Role> {
+    fun getRole(@PathVariable id: Long): ResponseEntity<RoleResponse> {
         val result = roleService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(RoleResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,27 +38,27 @@ class RoleController(private val roleService: RoleService) {
 
 
     @GetMapping("/search/gym")
-    fun getRoleByGym(@RequestParam gym: Long): ResponseEntity<List<Role>> {
+    fun getRoleByGym(@RequestParam gym: Long): ResponseEntity<List<RoleResponse>> {
         val result = roleService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { RoleResponse.from(it) } )
     }
 
     @GetMapping("/search/roleid")
-    fun getRoleByRoleid(@RequestParam roleid: Int): ResponseEntity<List<Role>> {
+    fun getRoleByRoleid(@RequestParam roleid: Int): ResponseEntity<List<RoleResponse>> {
         val result = roleService.findByRoleid(roleid)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { RoleResponse.from(it) } )
     }
 
     @GetMapping("/search/name")
-    fun getRoleByName(@RequestParam name: String): ResponseEntity<List<Role>> {
+    fun getRoleByName(@RequestParam name: String): ResponseEntity<List<RoleResponse>> {
         val result = roleService.findByName(name)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { RoleResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getRoleByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Role>> {
+    fun getRoleByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<RoleResponse>> {
         val result = roleService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { RoleResponse.from(it) } )
     }
 
 
@@ -67,20 +69,20 @@ class RoleController(private val roleService: RoleService) {
     }
 
     @PostMapping
-    fun createRole(@RequestBody request: RoleCreateRequest): ResponseEntity<Role> {
+    fun createRole(@RequestBody request: RoleCreateRequest): ResponseEntity<RoleResponse> {
         return try {
             val result = roleService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(RoleResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createRoles(@RequestBody requests: List<RoleCreateRequest>): ResponseEntity<List<Role>> {
+    fun createRoles(@RequestBody requests: List<RoleCreateRequest>): ResponseEntity<List<RoleResponse>> {
         return try {
             val result = roleService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { RoleResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -90,11 +92,11 @@ class RoleController(private val roleService: RoleService) {
     fun updateRole(
         @PathVariable id: Long,
         @RequestBody request: RoleUpdateRequest
-    ): ResponseEntity<Role> {
+    ): ResponseEntity<RoleResponse> {
         val updatedRequest = request.copy(id = id)
         val result = roleService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(RoleResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

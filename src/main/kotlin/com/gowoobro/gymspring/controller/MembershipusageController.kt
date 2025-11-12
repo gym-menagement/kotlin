@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Membershipusage
 import com.gowoobro.gymspring.entity.MembershipusageCreateRequest
 import com.gowoobro.gymspring.entity.MembershipusageUpdateRequest
 import com.gowoobro.gymspring.service.MembershipusageService
+import com.gowoobro.gymspring.entity.MembershipusageResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -21,16 +22,17 @@ class MembershipusageController(private val membershipusageService: Membershipus
     fun getMembershipusages(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Membershipusage>> {
+    ): ResponseEntity<Page<MembershipusageResponse>> {
         val result = membershipusageService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { MembershipusageResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getMembershipusage(@PathVariable id: Long): ResponseEntity<Membershipusage> {
+    fun getMembershipusage(@PathVariable id: Long): ResponseEntity<MembershipusageResponse> {
         val result = membershipusageService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(MembershipusageResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -38,93 +40,93 @@ class MembershipusageController(private val membershipusageService: Membershipus
 
 
     @GetMapping("/search/membership")
-    fun getMembershipusageByMembership(@RequestParam membership: Long): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByMembership(@RequestParam membership: Long): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByMembership(membership)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/user")
-    fun getMembershipusageByUser(@RequestParam user: Long): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByUser(@RequestParam user: Long): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByUser(user)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/type")
-    fun getMembershipusageByType(@RequestParam type: Type): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByType(@RequestParam type: Type): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByType(type)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/totaldays")
-    fun getMembershipusageByTotaldays(@RequestParam totaldays: Int): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByTotaldays(@RequestParam totaldays: Int): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByTotaldays(totaldays)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/useddays")
-    fun getMembershipusageByUseddays(@RequestParam useddays: Int): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByUseddays(@RequestParam useddays: Int): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByUseddays(useddays)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/remainingdays")
-    fun getMembershipusageByRemainingdays(@RequestParam remainingdays: Int): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByRemainingdays(@RequestParam remainingdays: Int): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByRemainingdays(remainingdays)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/totalcount")
-    fun getMembershipusageByTotalcount(@RequestParam totalcount: Int): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByTotalcount(@RequestParam totalcount: Int): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByTotalcount(totalcount)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/usedcount")
-    fun getMembershipusageByUsedcount(@RequestParam usedcount: Int): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByUsedcount(@RequestParam usedcount: Int): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByUsedcount(usedcount)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/remainingcount")
-    fun getMembershipusageByRemainingcount(@RequestParam remainingcount: Int): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByRemainingcount(@RequestParam remainingcount: Int): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByRemainingcount(remainingcount)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/startdate")
-    fun getMembershipusageByStartdate(@RequestParam startdate: LocalDateTime): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByStartdate(@RequestParam startdate: LocalDateTime): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByStartdate(startdate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/enddate")
-    fun getMembershipusageByEnddate(@RequestParam enddate: LocalDateTime): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByEnddate(@RequestParam enddate: LocalDateTime): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByEnddate(enddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/status")
-    fun getMembershipusageByStatus(@RequestParam status: Status): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByStatus(@RequestParam status: Status): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByStatus(status)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/pausedays")
-    fun getMembershipusageByPausedays(@RequestParam pausedays: Int): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByPausedays(@RequestParam pausedays: Int): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByPausedays(pausedays)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/lastuseddate")
-    fun getMembershipusageByLastuseddate(@RequestParam lastuseddate: LocalDateTime): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByLastuseddate(@RequestParam lastuseddate: LocalDateTime): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByLastuseddate(lastuseddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getMembershipusageByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Membershipusage>> {
+    fun getMembershipusageByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<MembershipusageResponse>> {
         val result = membershipusageService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
     }
 
 
@@ -135,20 +137,20 @@ class MembershipusageController(private val membershipusageService: Membershipus
     }
 
     @PostMapping
-    fun createMembershipusage(@RequestBody request: MembershipusageCreateRequest): ResponseEntity<Membershipusage> {
+    fun createMembershipusage(@RequestBody request: MembershipusageCreateRequest): ResponseEntity<MembershipusageResponse> {
         return try {
             val result = membershipusageService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(MembershipusageResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createMembershipusages(@RequestBody requests: List<MembershipusageCreateRequest>): ResponseEntity<List<Membershipusage>> {
+    fun createMembershipusages(@RequestBody requests: List<MembershipusageCreateRequest>): ResponseEntity<List<MembershipusageResponse>> {
         return try {
             val result = membershipusageService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { MembershipusageResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -158,11 +160,11 @@ class MembershipusageController(private val membershipusageService: Membershipus
     fun updateMembershipusage(
         @PathVariable id: Long,
         @RequestBody request: MembershipusageUpdateRequest
-    ): ResponseEntity<Membershipusage> {
+    ): ResponseEntity<MembershipusageResponse> {
         val updatedRequest = request.copy(id = id)
         val result = membershipusageService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(MembershipusageResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

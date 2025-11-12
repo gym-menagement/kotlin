@@ -35,3 +35,26 @@ data class RoleUpdateRequest(
     val name: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class RoleResponse(
+    val id: Long,
+    val gym: Long,
+    val roleid: Int,
+    val name: String,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(role: Role): RoleResponse {
+            return RoleResponse(
+                id = role.id,
+                gym = role.gym,
+                roleid = role.roleid,
+                name = role.name,
+                date = role.date,
+            )
+        }
+    }
+}

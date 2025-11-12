@@ -55,3 +55,36 @@ data class HealthUpdateRequest(
     val content: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class HealthResponse(
+    val id: Long,
+    val category: Long,
+    val term: Long,
+    val name: String,
+    val count: Int,
+    val cost: Int,
+    val discount: Long,
+    val costdiscount: Int,
+    val content: String,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(health: Health): HealthResponse {
+            return HealthResponse(
+                id = health.id,
+                category = health.category,
+                term = health.term,
+                name = health.name,
+                count = health.count,
+                cost = health.cost,
+                discount = health.discount,
+                costdiscount = health.costdiscount,
+                content = health.content,
+                date = health.date,
+            )
+        }
+    }
+}

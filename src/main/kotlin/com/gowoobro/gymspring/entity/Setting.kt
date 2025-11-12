@@ -56,3 +56,43 @@ data class SettingUpdateRequest(
     val order: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class SettingExtraInfo(
+    val type: String = "",
+)
+
+
+data class SettingResponse(
+    val id: Long,
+    val category: String,
+    val name: String,
+    val key: String,
+    val value: String,
+    val remark: String,
+    val type: Type,
+    val data: String,
+    val order: Int,
+    val date: LocalDateTime?,
+
+    val extra: SettingExtraInfo
+){
+    companion object {
+        fun from(setting: Setting): SettingResponse {
+            return SettingResponse(
+                id = setting.id,
+                category = setting.category,
+                name = setting.name,
+                key = setting.key,
+                value = setting.value,
+                remark = setting.remark,
+                type = setting.type,
+                data = setting.data,
+                order = setting.order,
+                date = setting.date,
+                extra = SettingExtraInfo(
+                    type = Type.getDisplayName(setting.type),
+                )
+            )
+        }
+    }
+}

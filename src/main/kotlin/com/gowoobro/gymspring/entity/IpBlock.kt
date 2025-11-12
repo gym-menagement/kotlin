@@ -46,3 +46,41 @@ data class IpblockUpdateRequest(
     val order: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class IpblockExtraInfo(
+    val type: String = "",
+    val policy: String = "",
+    val use: String = "",
+)
+
+
+data class IpblockResponse(
+    val id: Long,
+    val address: String,
+    val type: Type,
+    val policy: Policy,
+    val use: Use,
+    val order: Int,
+    val date: LocalDateTime?,
+
+    val extra: IpblockExtraInfo
+){
+    companion object {
+        fun from(ipblock: Ipblock): IpblockResponse {
+            return IpblockResponse(
+                id = ipblock.id,
+                address = ipblock.address,
+                type = ipblock.type,
+                policy = ipblock.policy,
+                use = ipblock.use,
+                order = ipblock.order,
+                date = ipblock.date,
+                extra = IpblockExtraInfo(
+                    type = Type.getDisplayName(ipblock.type),
+                    policy = Policy.getDisplayName(ipblock.policy),
+                    use = Use.getDisplayName(ipblock.use),
+                )
+            )
+        }
+    }
+}

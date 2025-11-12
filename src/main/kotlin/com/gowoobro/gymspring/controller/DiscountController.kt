@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Discount
 import com.gowoobro.gymspring.entity.DiscountCreateRequest
 import com.gowoobro.gymspring.entity.DiscountUpdateRequest
 import com.gowoobro.gymspring.service.DiscountService
+import com.gowoobro.gymspring.entity.DiscountResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class DiscountController(private val discountService: DiscountService) {
     fun getDiscounts(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Discount>> {
+    ): ResponseEntity<Page<DiscountResponse>> {
         val result = discountService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { DiscountResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getDiscount(@PathVariable id: Long): ResponseEntity<Discount> {
+    fun getDiscount(@PathVariable id: Long): ResponseEntity<DiscountResponse> {
         val result = discountService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(DiscountResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,21 +38,21 @@ class DiscountController(private val discountService: DiscountService) {
 
 
     @GetMapping("/search/name")
-    fun getDiscountByName(@RequestParam name: String): ResponseEntity<List<Discount>> {
+    fun getDiscountByName(@RequestParam name: String): ResponseEntity<List<DiscountResponse>> {
         val result = discountService.findByName(name)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { DiscountResponse.from(it) } )
     }
 
     @GetMapping("/search/discount")
-    fun getDiscountByDiscount(@RequestParam discount: Int): ResponseEntity<List<Discount>> {
+    fun getDiscountByDiscount(@RequestParam discount: Int): ResponseEntity<List<DiscountResponse>> {
         val result = discountService.findByDiscount(discount)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { DiscountResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getDiscountByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Discount>> {
+    fun getDiscountByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<DiscountResponse>> {
         val result = discountService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { DiscountResponse.from(it) } )
     }
 
 
@@ -61,20 +63,20 @@ class DiscountController(private val discountService: DiscountService) {
     }
 
     @PostMapping
-    fun createDiscount(@RequestBody request: DiscountCreateRequest): ResponseEntity<Discount> {
+    fun createDiscount(@RequestBody request: DiscountCreateRequest): ResponseEntity<DiscountResponse> {
         return try {
             val result = discountService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(DiscountResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createDiscounts(@RequestBody requests: List<DiscountCreateRequest>): ResponseEntity<List<Discount>> {
+    fun createDiscounts(@RequestBody requests: List<DiscountCreateRequest>): ResponseEntity<List<DiscountResponse>> {
         return try {
             val result = discountService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { DiscountResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -84,11 +86,11 @@ class DiscountController(private val discountService: DiscountService) {
     fun updateDiscount(
         @PathVariable id: Long,
         @RequestBody request: DiscountUpdateRequest
-    ): ResponseEntity<Discount> {
+    ): ResponseEntity<DiscountResponse> {
         val updatedRequest = request.copy(id = id)
         val result = discountService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(DiscountResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

@@ -61,3 +61,47 @@ data class AppversionUpdateRequest(
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class AppversionExtraInfo(
+    val forceupdate: String = "",
+    val status: String = "",
+)
+
+
+data class AppversionResponse(
+    val id: Long,
+    val platform: String,
+    val version: String,
+    val minversion: String,
+    val forceupdate: Forceupdate,
+    val updatemessage: String,
+    val downloadurl: String,
+    val status: Status,
+    val releasedate: LocalDateTime?,
+    val createddate: LocalDateTime?,
+    val date: LocalDateTime?,
+
+    val extra: AppversionExtraInfo
+){
+    companion object {
+        fun from(appversion: Appversion): AppversionResponse {
+            return AppversionResponse(
+                id = appversion.id,
+                platform = appversion.platform,
+                version = appversion.version,
+                minversion = appversion.minversion,
+                forceupdate = appversion.forceupdate,
+                updatemessage = appversion.updatemessage,
+                downloadurl = appversion.downloadurl,
+                status = appversion.status,
+                releasedate = appversion.releasedate,
+                createddate = appversion.createddate,
+                date = appversion.date,
+                extra = AppversionExtraInfo(
+                    forceupdate = Forceupdate.getDisplayName(appversion.forceupdate),
+                    status = Status.getDisplayName(appversion.status),
+                )
+            )
+        }
+    }
+}

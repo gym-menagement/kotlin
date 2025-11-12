@@ -55,3 +55,36 @@ data class UsehealthUpdateRequest(
     val endday: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class UsehealthResponse(
+    val id: Long,
+    val order: Long,
+    val health: Long,
+    val user: Long,
+    val rocker: Long,
+    val term: Long,
+    val discount: Long,
+    val startday: LocalDateTime?,
+    val endday: LocalDateTime?,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(usehealth: Usehealth): UsehealthResponse {
+            return UsehealthResponse(
+                id = usehealth.id,
+                order = usehealth.order,
+                health = usehealth.health,
+                user = usehealth.user,
+                rocker = usehealth.rocker,
+                term = usehealth.term,
+                discount = usehealth.discount,
+                startday = usehealth.startday,
+                endday = usehealth.endday,
+                date = usehealth.date,
+            )
+        }
+    }
+}

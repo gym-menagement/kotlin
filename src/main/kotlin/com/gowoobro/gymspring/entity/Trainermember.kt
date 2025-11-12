@@ -52,3 +52,41 @@ data class TrainermemberUpdateRequest(
     val note: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class TrainermemberExtraInfo(
+    val status: String = "",
+)
+
+
+data class TrainermemberResponse(
+    val id: Long,
+    val trainer: Long,
+    val member: Long,
+    val gym: Long,
+    val startdate: LocalDateTime?,
+    val enddate: LocalDateTime?,
+    val status: Status,
+    val note: String,
+    val date: LocalDateTime?,
+
+    val extra: TrainermemberExtraInfo
+){
+    companion object {
+        fun from(trainermember: Trainermember): TrainermemberResponse {
+            return TrainermemberResponse(
+                id = trainermember.id,
+                trainer = trainermember.trainer,
+                member = trainermember.member,
+                gym = trainermember.gym,
+                startdate = trainermember.startdate,
+                enddate = trainermember.enddate,
+                status = trainermember.status,
+                note = trainermember.note,
+                date = trainermember.date,
+                extra = TrainermemberExtraInfo(
+                    status = Status.getDisplayName(trainermember.status),
+                )
+            )
+        }
+    }
+}

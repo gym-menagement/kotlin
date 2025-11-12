@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Daytype
 import com.gowoobro.gymspring.entity.DaytypeCreateRequest
 import com.gowoobro.gymspring.entity.DaytypeUpdateRequest
 import com.gowoobro.gymspring.service.DaytypeService
+import com.gowoobro.gymspring.entity.DaytypeResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class DaytypeController(private val daytypeService: DaytypeService) {
     fun getDaytypes(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Daytype>> {
+    ): ResponseEntity<Page<DaytypeResponse>> {
         val result = daytypeService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { DaytypeResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getDaytype(@PathVariable id: Long): ResponseEntity<Daytype> {
+    fun getDaytype(@PathVariable id: Long): ResponseEntity<DaytypeResponse> {
         val result = daytypeService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(DaytypeResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,21 +38,21 @@ class DaytypeController(private val daytypeService: DaytypeService) {
 
 
     @GetMapping("/search/gym")
-    fun getDaytypeByGym(@RequestParam gym: Long): ResponseEntity<List<Daytype>> {
+    fun getDaytypeByGym(@RequestParam gym: Long): ResponseEntity<List<DaytypeResponse>> {
         val result = daytypeService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { DaytypeResponse.from(it) } )
     }
 
     @GetMapping("/search/name")
-    fun getDaytypeByName(@RequestParam name: String): ResponseEntity<List<Daytype>> {
+    fun getDaytypeByName(@RequestParam name: String): ResponseEntity<List<DaytypeResponse>> {
         val result = daytypeService.findByName(name)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { DaytypeResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getDaytypeByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Daytype>> {
+    fun getDaytypeByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<DaytypeResponse>> {
         val result = daytypeService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { DaytypeResponse.from(it) } )
     }
 
 
@@ -61,20 +63,20 @@ class DaytypeController(private val daytypeService: DaytypeService) {
     }
 
     @PostMapping
-    fun createDaytype(@RequestBody request: DaytypeCreateRequest): ResponseEntity<Daytype> {
+    fun createDaytype(@RequestBody request: DaytypeCreateRequest): ResponseEntity<DaytypeResponse> {
         return try {
             val result = daytypeService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(DaytypeResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createDaytypes(@RequestBody requests: List<DaytypeCreateRequest>): ResponseEntity<List<Daytype>> {
+    fun createDaytypes(@RequestBody requests: List<DaytypeCreateRequest>): ResponseEntity<List<DaytypeResponse>> {
         return try {
             val result = daytypeService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { DaytypeResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -84,11 +86,11 @@ class DaytypeController(private val daytypeService: DaytypeService) {
     fun updateDaytype(
         @PathVariable id: Long,
         @RequestBody request: DaytypeUpdateRequest
-    ): ResponseEntity<Daytype> {
+    ): ResponseEntity<DaytypeResponse> {
         val updatedRequest = request.copy(id = id)
         val result = daytypeService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(DaytypeResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

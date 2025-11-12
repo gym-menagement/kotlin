@@ -31,3 +31,24 @@ data class DaytypeUpdateRequest(
     val name: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class DaytypeResponse(
+    val id: Long,
+    val gym: Long,
+    val name: String,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(daytype: Daytype): DaytypeResponse {
+            return DaytypeResponse(
+                id = daytype.id,
+                gym = daytype.gym,
+                name = daytype.name,
+                date = daytype.date,
+            )
+        }
+    }
+}

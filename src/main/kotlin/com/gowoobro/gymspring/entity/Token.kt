@@ -36,3 +36,33 @@ data class TokenUpdateRequest(
     val status: Status = Status.ACTIVE,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class TokenExtraInfo(
+    val status: String = "",
+)
+
+
+data class TokenResponse(
+    val id: Long,
+    val user: Long,
+    val token: String,
+    val status: Status,
+    val date: LocalDateTime?,
+
+    val extra: TokenExtraInfo
+){
+    companion object {
+        fun from(token: Token): TokenResponse {
+            return TokenResponse(
+                id = token.id,
+                user = token.user,
+                token = token.token,
+                status = token.status,
+                date = token.date,
+                extra = TokenExtraInfo(
+                    status = Status.getDisplayName(token.status),
+                )
+            )
+        }
+    }
+}

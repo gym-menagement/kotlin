@@ -27,3 +27,22 @@ data class OrderUpdateRequest(
     val membership: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class OrderResponse(
+    val id: Long,
+    val membership: Long,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(order: Order): OrderResponse {
+            return OrderResponse(
+                id = order.id,
+                membership = order.membership,
+                date = order.date,
+            )
+        }
+    }
+}

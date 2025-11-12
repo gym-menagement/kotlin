@@ -35,3 +35,26 @@ data class LoginlogUpdateRequest(
     val user: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class LoginlogResponse(
+    val id: Long,
+    val ip: String,
+    val ipvalue: Long,
+    val user: Long,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(loginlog: Loginlog): LoginlogResponse {
+            return LoginlogResponse(
+                id = loginlog.id,
+                ip = loginlog.ip,
+                ipvalue = loginlog.ipvalue,
+                user = loginlog.user,
+                date = loginlog.date,
+            )
+        }
+    }
+}

@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Paymenttype
 import com.gowoobro.gymspring.entity.PaymenttypeCreateRequest
 import com.gowoobro.gymspring.entity.PaymenttypeUpdateRequest
 import com.gowoobro.gymspring.service.PaymenttypeService
+import com.gowoobro.gymspring.entity.PaymenttypeResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -19,16 +20,17 @@ class PaymenttypeController(private val paymenttypeService: PaymenttypeService) 
     fun getPaymenttypes(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Paymenttype>> {
+    ): ResponseEntity<Page<PaymenttypeResponse>> {
         val result = paymenttypeService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { PaymenttypeResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getPaymenttype(@PathVariable id: Long): ResponseEntity<Paymenttype> {
+    fun getPaymenttype(@PathVariable id: Long): ResponseEntity<PaymenttypeResponse> {
         val result = paymenttypeService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(PaymenttypeResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -36,21 +38,21 @@ class PaymenttypeController(private val paymenttypeService: PaymenttypeService) 
 
 
     @GetMapping("/search/gym")
-    fun getPaymenttypeByGym(@RequestParam gym: Long): ResponseEntity<List<Paymenttype>> {
+    fun getPaymenttypeByGym(@RequestParam gym: Long): ResponseEntity<List<PaymenttypeResponse>> {
         val result = paymenttypeService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PaymenttypeResponse.from(it) } )
     }
 
     @GetMapping("/search/name")
-    fun getPaymenttypeByName(@RequestParam name: String): ResponseEntity<List<Paymenttype>> {
+    fun getPaymenttypeByName(@RequestParam name: String): ResponseEntity<List<PaymenttypeResponse>> {
         val result = paymenttypeService.findByName(name)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PaymenttypeResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getPaymenttypeByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Paymenttype>> {
+    fun getPaymenttypeByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<PaymenttypeResponse>> {
         val result = paymenttypeService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PaymenttypeResponse.from(it) } )
     }
 
 
@@ -61,20 +63,20 @@ class PaymenttypeController(private val paymenttypeService: PaymenttypeService) 
     }
 
     @PostMapping
-    fun createPaymenttype(@RequestBody request: PaymenttypeCreateRequest): ResponseEntity<Paymenttype> {
+    fun createPaymenttype(@RequestBody request: PaymenttypeCreateRequest): ResponseEntity<PaymenttypeResponse> {
         return try {
             val result = paymenttypeService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(PaymenttypeResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createPaymenttypes(@RequestBody requests: List<PaymenttypeCreateRequest>): ResponseEntity<List<Paymenttype>> {
+    fun createPaymenttypes(@RequestBody requests: List<PaymenttypeCreateRequest>): ResponseEntity<List<PaymenttypeResponse>> {
         return try {
             val result = paymenttypeService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { PaymenttypeResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -84,11 +86,11 @@ class PaymenttypeController(private val paymenttypeService: PaymenttypeService) 
     fun updatePaymenttype(
         @PathVariable id: Long,
         @RequestBody request: PaymenttypeUpdateRequest
-    ): ResponseEntity<Paymenttype> {
+    ): ResponseEntity<PaymenttypeResponse> {
         val updatedRequest = request.copy(id = id)
         val result = paymenttypeService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(PaymenttypeResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

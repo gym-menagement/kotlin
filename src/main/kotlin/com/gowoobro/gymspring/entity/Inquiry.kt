@@ -65,3 +65,49 @@ data class InquiryUpdateRequest(
     val createddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class InquiryExtraInfo(
+    val type: String = "",
+    val status: String = "",
+)
+
+
+data class InquiryResponse(
+    val id: Long,
+    val user: Long,
+    val gym: Long,
+    val type: Type,
+    val title: String,
+    val content: String,
+    val status: Status,
+    val answer: String,
+    val answeredby: Long,
+    val answereddate: LocalDateTime?,
+    val createddate: LocalDateTime?,
+    val date: LocalDateTime?,
+
+    val extra: InquiryExtraInfo
+){
+    companion object {
+        fun from(inquiry: Inquiry): InquiryResponse {
+            return InquiryResponse(
+                id = inquiry.id,
+                user = inquiry.user,
+                gym = inquiry.gym,
+                type = inquiry.type,
+                title = inquiry.title,
+                content = inquiry.content,
+                status = inquiry.status,
+                answer = inquiry.answer,
+                answeredby = inquiry.answeredby,
+                answereddate = inquiry.answereddate,
+                createddate = inquiry.createddate,
+                date = inquiry.date,
+                extra = InquiryExtraInfo(
+                    type = Type.getDisplayName(inquiry.type),
+                    status = Status.getDisplayName(inquiry.status),
+                )
+            )
+        }
+    }
+}

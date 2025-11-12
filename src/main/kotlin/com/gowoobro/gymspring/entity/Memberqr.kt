@@ -56,3 +56,43 @@ data class MemberqrUpdateRequest(
     val usecount: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class MemberqrExtraInfo(
+    val isactive: String = "",
+)
+
+
+data class MemberqrResponse(
+    val id: Long,
+    val user: Long,
+    val code: String,
+    val imageurl: String,
+    val isactive: Isactive,
+    val expiredate: LocalDateTime?,
+    val generateddate: LocalDateTime?,
+    val lastuseddate: LocalDateTime?,
+    val usecount: Int,
+    val date: LocalDateTime?,
+
+    val extra: MemberqrExtraInfo
+){
+    companion object {
+        fun from(memberqr: Memberqr): MemberqrResponse {
+            return MemberqrResponse(
+                id = memberqr.id,
+                user = memberqr.user,
+                code = memberqr.code,
+                imageurl = memberqr.imageurl,
+                isactive = memberqr.isactive,
+                expiredate = memberqr.expiredate,
+                generateddate = memberqr.generateddate,
+                lastuseddate = memberqr.lastuseddate,
+                usecount = memberqr.usecount,
+                date = memberqr.date,
+                extra = MemberqrExtraInfo(
+                    isactive = Isactive.getDisplayName(memberqr.isactive),
+                )
+            )
+        }
+    }
+}

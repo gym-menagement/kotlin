@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Notice
 import com.gowoobro.gymspring.entity.NoticeCreateRequest
 import com.gowoobro.gymspring.entity.NoticeUpdateRequest
 import com.gowoobro.gymspring.service.NoticeService
+import com.gowoobro.gymspring.entity.NoticeResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -24,16 +25,17 @@ class NoticeController(private val noticeService: NoticeService) {
     fun getNotices(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Notice>> {
+    ): ResponseEntity<Page<NoticeResponse>> {
         val result = noticeService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { NoticeResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getNotice(@PathVariable id: Long): ResponseEntity<Notice> {
+    fun getNotice(@PathVariable id: Long): ResponseEntity<NoticeResponse> {
         val result = noticeService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(NoticeResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -41,93 +43,93 @@ class NoticeController(private val noticeService: NoticeService) {
 
 
     @GetMapping("/search/gym")
-    fun getNoticeByGym(@RequestParam gym: Long): ResponseEntity<List<Notice>> {
+    fun getNoticeByGym(@RequestParam gym: Long): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/title")
-    fun getNoticeByTitle(@RequestParam title: String): ResponseEntity<List<Notice>> {
+    fun getNoticeByTitle(@RequestParam title: String): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByTitle(title)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/content")
-    fun getNoticeByContent(@RequestParam content: String): ResponseEntity<List<Notice>> {
+    fun getNoticeByContent(@RequestParam content: String): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByContent(content)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/type")
-    fun getNoticeByType(@RequestParam type: Type): ResponseEntity<List<Notice>> {
+    fun getNoticeByType(@RequestParam type: Type): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByType(type)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/ispopup")
-    fun getNoticeByIspopup(@RequestParam ispopup: Ispopup): ResponseEntity<List<Notice>> {
+    fun getNoticeByIspopup(@RequestParam ispopup: Ispopup): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByIspopup(ispopup)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/ispush")
-    fun getNoticeByIspush(@RequestParam ispush: Ispush): ResponseEntity<List<Notice>> {
+    fun getNoticeByIspush(@RequestParam ispush: Ispush): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByIspush(ispush)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/target")
-    fun getNoticeByTarget(@RequestParam target: Target): ResponseEntity<List<Notice>> {
+    fun getNoticeByTarget(@RequestParam target: Target): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByTarget(target)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/viewcount")
-    fun getNoticeByViewcount(@RequestParam viewcount: Int): ResponseEntity<List<Notice>> {
+    fun getNoticeByViewcount(@RequestParam viewcount: Int): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByViewcount(viewcount)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/startdate")
-    fun getNoticeByStartdate(@RequestParam startdate: LocalDateTime): ResponseEntity<List<Notice>> {
+    fun getNoticeByStartdate(@RequestParam startdate: LocalDateTime): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByStartdate(startdate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/enddate")
-    fun getNoticeByEnddate(@RequestParam enddate: LocalDateTime): ResponseEntity<List<Notice>> {
+    fun getNoticeByEnddate(@RequestParam enddate: LocalDateTime): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByEnddate(enddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/status")
-    fun getNoticeByStatus(@RequestParam status: Status): ResponseEntity<List<Notice>> {
+    fun getNoticeByStatus(@RequestParam status: Status): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByStatus(status)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/createdby")
-    fun getNoticeByCreatedby(@RequestParam createdby: Long): ResponseEntity<List<Notice>> {
+    fun getNoticeByCreatedby(@RequestParam createdby: Long): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByCreatedby(createdby)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/createddate")
-    fun getNoticeByCreateddate(@RequestParam createddate: LocalDateTime): ResponseEntity<List<Notice>> {
+    fun getNoticeByCreateddate(@RequestParam createddate: LocalDateTime): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByCreateddate(createddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/updateddate")
-    fun getNoticeByUpdateddate(@RequestParam updateddate: LocalDateTime): ResponseEntity<List<Notice>> {
+    fun getNoticeByUpdateddate(@RequestParam updateddate: LocalDateTime): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByUpdateddate(updateddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getNoticeByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Notice>> {
+    fun getNoticeByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<NoticeResponse>> {
         val result = noticeService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
     }
 
 
@@ -138,20 +140,20 @@ class NoticeController(private val noticeService: NoticeService) {
     }
 
     @PostMapping
-    fun createNotice(@RequestBody request: NoticeCreateRequest): ResponseEntity<Notice> {
+    fun createNotice(@RequestBody request: NoticeCreateRequest): ResponseEntity<NoticeResponse> {
         return try {
             val result = noticeService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(NoticeResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createNotices(@RequestBody requests: List<NoticeCreateRequest>): ResponseEntity<List<Notice>> {
+    fun createNotices(@RequestBody requests: List<NoticeCreateRequest>): ResponseEntity<List<NoticeResponse>> {
         return try {
             val result = noticeService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { NoticeResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -161,11 +163,11 @@ class NoticeController(private val noticeService: NoticeService) {
     fun updateNotice(
         @PathVariable id: Long,
         @RequestBody request: NoticeUpdateRequest
-    ): ResponseEntity<Notice> {
+    ): ResponseEntity<NoticeResponse> {
         val updatedRequest = request.copy(id = id)
         val result = noticeService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(NoticeResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

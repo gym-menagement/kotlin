@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Pushtoken
 import com.gowoobro.gymspring.entity.PushtokenCreateRequest
 import com.gowoobro.gymspring.entity.PushtokenUpdateRequest
 import com.gowoobro.gymspring.service.PushtokenService
+import com.gowoobro.gymspring.entity.PushtokenResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -20,16 +21,17 @@ class PushtokenController(private val pushtokenService: PushtokenService) {
     fun getPushtokens(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Pushtoken>> {
+    ): ResponseEntity<Page<PushtokenResponse>> {
         val result = pushtokenService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { PushtokenResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getPushtoken(@PathVariable id: Long): ResponseEntity<Pushtoken> {
+    fun getPushtoken(@PathVariable id: Long): ResponseEntity<PushtokenResponse> {
         val result = pushtokenService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(PushtokenResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -37,57 +39,57 @@ class PushtokenController(private val pushtokenService: PushtokenService) {
 
 
     @GetMapping("/search/user")
-    fun getPushtokenByUser(@RequestParam user: Long): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByUser(@RequestParam user: Long): ResponseEntity<List<PushtokenResponse>> {
         val result = pushtokenService.findByUser(user)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
     }
 
     @GetMapping("/search/token")
-    fun getPushtokenByToken(@RequestParam token: String): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByToken(@RequestParam token: String): ResponseEntity<List<PushtokenResponse>> {
         val result = pushtokenService.findByToken(token)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
     }
 
     @GetMapping("/search/devicetype")
-    fun getPushtokenByDevicetype(@RequestParam devicetype: String): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByDevicetype(@RequestParam devicetype: String): ResponseEntity<List<PushtokenResponse>> {
         val result = pushtokenService.findByDevicetype(devicetype)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
     }
 
     @GetMapping("/search/deviceid")
-    fun getPushtokenByDeviceid(@RequestParam deviceid: String): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByDeviceid(@RequestParam deviceid: String): ResponseEntity<List<PushtokenResponse>> {
         val result = pushtokenService.findByDeviceid(deviceid)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
     }
 
     @GetMapping("/search/appversion")
-    fun getPushtokenByAppversion(@RequestParam appversion: String): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByAppversion(@RequestParam appversion: String): ResponseEntity<List<PushtokenResponse>> {
         val result = pushtokenService.findByAppversion(appversion)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
     }
 
     @GetMapping("/search/isactive")
-    fun getPushtokenByIsactive(@RequestParam isactive: Isactive): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByIsactive(@RequestParam isactive: Isactive): ResponseEntity<List<PushtokenResponse>> {
         val result = pushtokenService.findByIsactive(isactive)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
     }
 
     @GetMapping("/search/createddate")
-    fun getPushtokenByCreateddate(@RequestParam createddate: LocalDateTime): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByCreateddate(@RequestParam createddate: LocalDateTime): ResponseEntity<List<PushtokenResponse>> {
         val result = pushtokenService.findByCreateddate(createddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
     }
 
     @GetMapping("/search/updateddate")
-    fun getPushtokenByUpdateddate(@RequestParam updateddate: LocalDateTime): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByUpdateddate(@RequestParam updateddate: LocalDateTime): ResponseEntity<List<PushtokenResponse>> {
         val result = pushtokenService.findByUpdateddate(updateddate)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getPushtokenByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Pushtoken>> {
+    fun getPushtokenByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<PushtokenResponse>> {
         val result = pushtokenService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
     }
 
 
@@ -98,20 +100,20 @@ class PushtokenController(private val pushtokenService: PushtokenService) {
     }
 
     @PostMapping
-    fun createPushtoken(@RequestBody request: PushtokenCreateRequest): ResponseEntity<Pushtoken> {
+    fun createPushtoken(@RequestBody request: PushtokenCreateRequest): ResponseEntity<PushtokenResponse> {
         return try {
             val result = pushtokenService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(PushtokenResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createPushtokens(@RequestBody requests: List<PushtokenCreateRequest>): ResponseEntity<List<Pushtoken>> {
+    fun createPushtokens(@RequestBody requests: List<PushtokenCreateRequest>): ResponseEntity<List<PushtokenResponse>> {
         return try {
             val result = pushtokenService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { PushtokenResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -121,11 +123,11 @@ class PushtokenController(private val pushtokenService: PushtokenService) {
     fun updatePushtoken(
         @PathVariable id: Long,
         @RequestBody request: PushtokenUpdateRequest
-    ): ResponseEntity<Pushtoken> {
+    ): ResponseEntity<PushtokenResponse> {
         val updatedRequest = request.copy(id = id)
         val result = pushtokenService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(PushtokenResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

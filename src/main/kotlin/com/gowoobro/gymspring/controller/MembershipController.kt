@@ -4,6 +4,7 @@ import com.gowoobro.gymspring.entity.Membership
 import com.gowoobro.gymspring.entity.MembershipCreateRequest
 import com.gowoobro.gymspring.entity.MembershipUpdateRequest
 import com.gowoobro.gymspring.service.MembershipService
+import com.gowoobro.gymspring.entity.MembershipResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -20,16 +21,17 @@ class MembershipController(private val membershipService: MembershipService) {
     fun getMemberships(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<Membership>> {
+    ): ResponseEntity<Page<MembershipResponse>> {
         val result = membershipService.findAll(page, pageSize)
-        return ResponseEntity.ok(result)
+        val responsePage = result.map { MembershipResponse.from(it)}
+        return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
-    fun getMembership(@PathVariable id: Long): ResponseEntity<Membership> {
+    fun getMembership(@PathVariable id: Long): ResponseEntity<MembershipResponse> {
         val result = membershipService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(MembershipResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -37,57 +39,57 @@ class MembershipController(private val membershipService: MembershipService) {
 
 
     @GetMapping("/search/gym")
-    fun getMembershipByGym(@RequestParam gym: Long): ResponseEntity<List<Membership>> {
+    fun getMembershipByGym(@RequestParam gym: Long): ResponseEntity<List<MembershipResponse>> {
         val result = membershipService.findByGym(gym)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
     }
 
     @GetMapping("/search/user")
-    fun getMembershipByUser(@RequestParam user: Long): ResponseEntity<List<Membership>> {
+    fun getMembershipByUser(@RequestParam user: Long): ResponseEntity<List<MembershipResponse>> {
         val result = membershipService.findByUser(user)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
     }
 
     @GetMapping("/search/name")
-    fun getMembershipByName(@RequestParam name: String): ResponseEntity<List<Membership>> {
+    fun getMembershipByName(@RequestParam name: String): ResponseEntity<List<MembershipResponse>> {
         val result = membershipService.findByName(name)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
     }
 
     @GetMapping("/search/sex")
-    fun getMembershipBySex(@RequestParam sex: Sex): ResponseEntity<List<Membership>> {
+    fun getMembershipBySex(@RequestParam sex: Sex): ResponseEntity<List<MembershipResponse>> {
         val result = membershipService.findBySex(sex)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
     }
 
     @GetMapping("/search/birth")
-    fun getMembershipByBirth(@RequestParam birth: LocalDateTime): ResponseEntity<List<Membership>> {
+    fun getMembershipByBirth(@RequestParam birth: LocalDateTime): ResponseEntity<List<MembershipResponse>> {
         val result = membershipService.findByBirth(birth)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
     }
 
     @GetMapping("/search/phonenum")
-    fun getMembershipByPhonenum(@RequestParam phonenum: String): ResponseEntity<List<Membership>> {
+    fun getMembershipByPhonenum(@RequestParam phonenum: String): ResponseEntity<List<MembershipResponse>> {
         val result = membershipService.findByPhonenum(phonenum)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
     }
 
     @GetMapping("/search/address")
-    fun getMembershipByAddress(@RequestParam address: String): ResponseEntity<List<Membership>> {
+    fun getMembershipByAddress(@RequestParam address: String): ResponseEntity<List<MembershipResponse>> {
         val result = membershipService.findByAddress(address)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
     }
 
     @GetMapping("/search/image")
-    fun getMembershipByImage(@RequestParam image: String): ResponseEntity<List<Membership>> {
+    fun getMembershipByImage(@RequestParam image: String): ResponseEntity<List<MembershipResponse>> {
         val result = membershipService.findByImage(image)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
     }
 
     @GetMapping("/search/date")
-    fun getMembershipByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<Membership>> {
+    fun getMembershipByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<MembershipResponse>> {
         val result = membershipService.findByDate(date)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
     }
 
 
@@ -98,20 +100,20 @@ class MembershipController(private val membershipService: MembershipService) {
     }
 
     @PostMapping
-    fun createMembership(@RequestBody request: MembershipCreateRequest): ResponseEntity<Membership> {
+    fun createMembership(@RequestBody request: MembershipCreateRequest): ResponseEntity<MembershipResponse> {
         return try {
             val result = membershipService.create(request)
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(MembershipResponse.from(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/batch")
-    fun createMemberships(@RequestBody requests: List<MembershipCreateRequest>): ResponseEntity<List<Membership>> {
+    fun createMemberships(@RequestBody requests: List<MembershipCreateRequest>): ResponseEntity<List<MembershipResponse>> {
         return try {
             val result = membershipService.createBatch(requests)
-            ResponseEntity.ok(result)
+            return ResponseEntity.ok(result.map { MembershipResponse.from(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -121,11 +123,11 @@ class MembershipController(private val membershipService: MembershipService) {
     fun updateMembership(
         @PathVariable id: Long,
         @RequestBody request: MembershipUpdateRequest
-    ): ResponseEntity<Membership> {
+    ): ResponseEntity<MembershipResponse> {
         val updatedRequest = request.copy(id = id)
         val result = membershipService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(result)
+            ResponseEntity.ok(MembershipResponse.from(result))
         } else {
             ResponseEntity.notFound().build()
         }

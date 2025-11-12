@@ -27,3 +27,22 @@ data class GymUpdateRequest(
     val name: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class GymResponse(
+    val id: Long,
+    val name: String,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(gym: Gym): GymResponse {
+            return GymResponse(
+                id = gym.id,
+                name = gym.name,
+                date = gym.date,
+            )
+        }
+    }
+}

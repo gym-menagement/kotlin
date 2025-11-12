@@ -37,3 +37,35 @@ data class SystemlogUpdateRequest(
     val result: Result = Result.SUCCESS,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class SystemlogExtraInfo(
+    val type: String = "",
+    val result: String = "",
+)
+
+
+data class SystemlogResponse(
+    val id: Long,
+    val type: Type,
+    val content: String,
+    val result: Result,
+    val date: LocalDateTime?,
+
+    val extra: SystemlogExtraInfo
+){
+    companion object {
+        fun from(systemlog: Systemlog): SystemlogResponse {
+            return SystemlogResponse(
+                id = systemlog.id,
+                type = systemlog.type,
+                content = systemlog.content,
+                result = systemlog.result,
+                date = systemlog.date,
+                extra = SystemlogExtraInfo(
+                    type = Type.getDisplayName(systemlog.type),
+                    result = Result.getDisplayName(systemlog.result),
+                )
+            )
+        }
+    }
+}

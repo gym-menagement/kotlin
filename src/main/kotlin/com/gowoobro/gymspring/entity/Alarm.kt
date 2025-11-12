@@ -45,3 +45,39 @@ data class AlarmUpdateRequest(
     val user: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+data class AlarmExtraInfo(
+    val type: String = "",
+    val status: String = "",
+)
+
+
+data class AlarmResponse(
+    val id: Long,
+    val title: String,
+    val content: String,
+    val type: Type,
+    val status: Status,
+    val user: Long,
+    val date: LocalDateTime?,
+
+    val extra: AlarmExtraInfo
+){
+    companion object {
+        fun from(alarm: Alarm): AlarmResponse {
+            return AlarmResponse(
+                id = alarm.id,
+                title = alarm.title,
+                content = alarm.content,
+                type = alarm.type,
+                status = alarm.status,
+                user = alarm.user,
+                date = alarm.date,
+                extra = AlarmExtraInfo(
+                    type = Type.getDisplayName(alarm.type),
+                    status = Status.getDisplayName(alarm.status),
+                )
+            )
+        }
+    }
+}

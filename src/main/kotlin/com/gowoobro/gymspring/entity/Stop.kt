@@ -39,3 +39,28 @@ data class StopUpdateRequest(
     val count: Int = 0,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
+
+
+
+data class StopResponse(
+    val id: Long,
+    val usehelth: Long,
+    val startday: LocalDateTime?,
+    val endday: LocalDateTime?,
+    val count: Int,
+    val date: LocalDateTime?,
+
+){
+    companion object {
+        fun from(stop: Stop): StopResponse {
+            return StopResponse(
+                id = stop.id,
+                usehelth = stop.usehelth,
+                startday = stop.startday,
+                endday = stop.endday,
+                count = stop.count,
+                date = stop.date,
+            )
+        }
+    }
+}
