@@ -2,25 +2,22 @@ package com.gowoobro.gymspring.enums.ipblock
 
 
 enum class Type {
-    IPV4,  // IPv4
-    IPV6,  // IPv6
-    RANGE,  // 범위
+    ADMIN,  // 관리자 접근
+    NORMAL,  // 일반 접근
 ;
 
     companion object {
         fun getDisplayName(value: Type): String {
             return when (value) {
-                IPV4 -> "IPv4"
-                IPV6 -> "IPv6"
-                RANGE -> "범위"
+                ADMIN -> "관리자 접근"
+                NORMAL -> "일반 접근"
             }
         }
 
         fun fromString(value: String): Type? {
             return when (value) {
-                "IPv4" -> IPV4
-                "IPv6" -> IPV6
-                "범위" -> RANGE
+                "관리자 접근" -> ADMIN
+                "일반 접근" -> NORMAL
                 else -> null
             }
         }
@@ -29,25 +26,22 @@ enum class Type {
 
 
 enum class Policy {
-    ALLOW,  // 허용
+    GRANT,  // 허용
     DENY,  // 거부
-    BLOCK,  // 차단
 ;
 
     companion object {
         fun getDisplayName(value: Policy): String {
             return when (value) {
-                ALLOW -> "허용"
+                GRANT -> "허용"
                 DENY -> "거부"
-                BLOCK -> "차단"
             }
         }
 
         fun fromString(value: String): Policy? {
             return when (value) {
-                "허용" -> ALLOW
+                "허용" -> GRANT
                 "거부" -> DENY
-                "차단" -> BLOCK
                 else -> null
             }
         }

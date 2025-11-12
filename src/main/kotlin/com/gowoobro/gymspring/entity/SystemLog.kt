@@ -14,7 +14,7 @@ data class Systemlog(
     @Column(name = "sl_id")
     val id: Long = 0,
     @Column(name = "sl_type")
-    val type: Type = Type.SYSTEM,
+    val type: Type = Type.LOGIN,
     @Column(name = "sl_content")
     val content: String = "",
     @Column(name = "sl_result")
@@ -24,7 +24,7 @@ data class Systemlog(
 )
 
 data class SystemlogCreateRequest(
-    val type: Type = Type.SYSTEM,
+    val type: Type = Type.LOGIN,
     val content: String = "",
     val result: Result = Result.SUCCESS,
     val date: LocalDateTime? = LocalDateTime.now(),
@@ -32,7 +32,7 @@ data class SystemlogCreateRequest(
 
 data class SystemlogUpdateRequest(
     val id: Long = 0,
-    val type: Type = Type.SYSTEM,
+    val type: Type = Type.LOGIN,
     val content: String = "",
     val result: Result = Result.SUCCESS,
     val date: LocalDateTime? = LocalDateTime.now(),

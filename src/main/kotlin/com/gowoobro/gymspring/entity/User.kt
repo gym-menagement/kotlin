@@ -39,7 +39,7 @@ data class User(
     @Column(name = "u_connectid")
     val connectid: String = "",
     @Column(name = "u_level")
-    val level: Level = Level.LEVEL_1,
+    val level: Level = Level.NORMAL,
     @Column(name = "u_role")
     val role: Role = Role.MEMBER,
     @Column(name = "u_use")
@@ -64,7 +64,7 @@ data class UserCreateRequest(
     val birth: LocalDateTime? = LocalDateTime.now(),
     val type: Type = Type.NORMAL,
     val connectid: String = "",
-    val level: Level = Level.LEVEL_1,
+    val level: Level = Level.NORMAL,
     val role: Role = Role.MEMBER,
     val use: Use = Use.USE,
     val logindate: LocalDateTime? = LocalDateTime.now(),
@@ -85,7 +85,7 @@ data class UserUpdateRequest(
     val birth: LocalDateTime? = LocalDateTime.now(),
     val type: Type = Type.NORMAL,
     val connectid: String = "",
-    val level: Level = Level.LEVEL_1,
+    val level: Level = Level.NORMAL,
     val role: Role = Role.MEMBER,
     val use: Use = Use.USE,
     val logindate: LocalDateTime? = LocalDateTime.now(),

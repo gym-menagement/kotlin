@@ -2,31 +2,31 @@ package com.gowoobro.gymspring.enums.user
 
 
 enum class Level {
-    LEVEL_1,  // 일반회원
-    LEVEL_2,  // 트레이너
-    LEVEL_3,  // 헬스장관리자
-    LEVEL_4,  // 플랫폼관리자
-    LEVEL_9,  // 최고관리자
+    NORMAL,  // 일반회원
+    MANAGER,  // 트레이너/직원
+    ADMIN,  // 헬스장관리자
+    SUPERADMIN,  // 플랫폼관리자
+    ROOTADMIN,  // 최고관리자
 ;
 
     companion object {
         fun getDisplayName(value: Level): String {
             return when (value) {
-                LEVEL_1 -> "일반회원"
-                LEVEL_2 -> "트레이너"
-                LEVEL_3 -> "헬스장관리자"
-                LEVEL_4 -> "플랫폼관리자"
-                LEVEL_9 -> "최고관리자"
+                NORMAL -> "일반회원"
+                MANAGER -> "트레이너/직원"
+                ADMIN -> "헬스장관리자"
+                SUPERADMIN -> "플랫폼관리자"
+                ROOTADMIN -> "최고관리자"
             }
         }
 
         fun fromString(value: String): Level? {
             return when (value) {
-                "일반회원" -> LEVEL_1
-                "트레이너" -> LEVEL_2
-                "헬스장관리자" -> LEVEL_3
-                "플랫폼관리자" -> LEVEL_4
-                "최고관리자" -> LEVEL_9
+                "일반회원" -> NORMAL
+                "트레이너/직원" -> MANAGER
+                "헬스장관리자" -> ADMIN
+                "플랫폼관리자" -> SUPERADMIN
+                "최고관리자" -> ROOTADMIN
                 else -> null
             }
         }

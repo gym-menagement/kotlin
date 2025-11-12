@@ -419,19 +419,6 @@
           "column": "gym"
         }
       ],
-      "map": [
-        {
-          "name": "role",
-          "data": [
-            "",
-            "member:회원",
-            "trainer:트레이너",
-            "staff:직원",
-            "gym_admin:헬스장관리자",
-            "platform_admin:플랫폼관리자"
-          ]
-        }
-      ],
       "compare": [
         {
           "name": "name",
@@ -558,7 +545,13 @@
         },
         {
           "name": "status",
-          "data": ["", "in_use:사용중", "paused:일시정지", "expired:만료", "refunded:환불"]
+          "data": [
+            "",
+            "in_use:사용중",
+            "paused:일시정지",
+            "expired:만료",
+            "refunded:환불"
+          ]
         }
       ]
     },
@@ -589,7 +582,12 @@
         },
         {
           "name": "target",
-          "data": ["", "all:전체", "members_only:회원만", "specific_members:특정회원"]
+          "data": [
+            "",
+            "all:전체",
+            "members_only:회원만",
+            "specific_members:특정회원"
+          ]
         },
         {
           "name": "status",
@@ -659,7 +657,13 @@
       "map": [
         {
           "name": "status",
-          "data": ["", "reserved:예약", "completed:완료", "cancelled:취소", "no_show:노쇼"]
+          "data": [
+            "",
+            "reserved:예약",
+            "completed:완료",
+            "cancelled:취소",
+            "no_show:노쇼"
+          ]
         }
       ],
       "compare": [
@@ -715,7 +719,14 @@
       "map": [
         {
           "name": "type",
-          "data": ["", "general:일반", "membership:회원권", "refund:환불", "facility:시설", "other:기타"]
+          "data": [
+            "",
+            "general:일반",
+            "membership:회원권",
+            "refund:환불",
+            "facility:시설",
+            "other:기타"
+          ]
         },
         {
           "name": "status",

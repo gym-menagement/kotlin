@@ -287,7 +287,7 @@ DROP TABLE IF EXISTS `role_tb`;
 CREATE TABLE `role_tb` (
   `r_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '역할 ID',
   `r_gym` bigint(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
-  `r_role` int(11) NOT NULL DEFAULT 0 COMMENT '역할 타입 (MEMBER:회원, TRAINER:트레이너, STAFF:직원, GYM_ADMIN:헬스장관리자, PLATFORM_ADMIN:플랫폼관리자)',
+  `r_roleid` int(11) NOT NULL DEFAULT 0 COMMENT '역할 타입 (MEMBER:회원, TRAINER:트레이너, STAFF:직원, GYM_ADMIN:헬스장관리자, PLATFORM_ADMIN:플랫폼관리자)',
   `r_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '역할명',
   `r_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
   PRIMARY KEY (`r_id`)

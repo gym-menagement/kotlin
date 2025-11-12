@@ -2,28 +2,22 @@ package com.gowoobro.gymspring.enums.systemlog
 
 
 enum class Type {
-    SYSTEM,  // 시스템
-    USER,  // 사용자
-    ADMIN,  // 관리자
-    ERROR,  // 에러
+    LOGIN,  // 로그인
+    CRAWLING,  // 크롤링
 ;
 
     companion object {
         fun getDisplayName(value: Type): String {
             return when (value) {
-                SYSTEM -> "시스템"
-                USER -> "사용자"
-                ADMIN -> "관리자"
-                ERROR -> "에러"
+                LOGIN -> "로그인"
+                CRAWLING -> "크롤링"
             }
         }
 
         fun fromString(value: String): Type? {
             return when (value) {
-                "시스템" -> SYSTEM
-                "사용자" -> USER
-                "관리자" -> ADMIN
-                "에러" -> ERROR
+                "로그인" -> LOGIN
+                "크롤링" -> CRAWLING
                 else -> null
             }
         }

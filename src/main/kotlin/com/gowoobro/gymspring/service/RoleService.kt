@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.role.Role as RoleEnum
 
 
 @Service
@@ -37,8 +36,8 @@ class RoleService(private val roleRepository: RoleRepository) {
         return roleRepository.findByGym(gym)
     }
 
-    fun findByRole(role: RoleEnum): List<Role> {
-        return roleRepository.findByRole(role)
+    fun findByRoleid(roleid: Int): List<Role> {
+        return roleRepository.findByRoleid(roleid)
     }
 
     fun findByName(name: String): List<Role> {
@@ -53,7 +52,7 @@ class RoleService(private val roleRepository: RoleRepository) {
     fun create(request: RoleCreateRequest): Role {
         val entity = Role(
             gym = request.gym,
-            role = request.role,
+            roleid = request.roleid,
             name = request.name,
             date = request.date,
         )
@@ -64,7 +63,7 @@ class RoleService(private val roleRepository: RoleRepository) {
         val entities = requests.map { request ->
             Role(
                 gym = request.gym,
-                role = request.role,
+                roleid = request.roleid,
                 name = request.name,
                 date = request.date,
             )
@@ -79,7 +78,7 @@ class RoleService(private val roleRepository: RoleRepository) {
 
         val updated = existing.copy(
             gym = request.gym,
-            role = request.role,
+            roleid = request.roleid,
             name = request.name,
             date = request.date,
         )
