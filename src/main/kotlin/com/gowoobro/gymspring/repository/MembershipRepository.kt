@@ -15,23 +15,36 @@ import com.gowoobro.gymspring.enums.membership.Sex
 
 @Repository
 interface MembershipRepository : JpaRepository<Membership, Long> {
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user")
     override fun findAll(pageable: Pageable): Page<Membership>
 
-    fun findByGym(gym: Long): List<Membership>
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Membership>
 
-    fun findByUser(user: Long): List<Membership>
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Membership>
 
-    fun findByName(name: String): List<Membership>
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.userId = :user")
+    fun findByUserWithJoin(user: Long): List<Membership>
 
-    fun findBySex(sex: Sex): List<Membership>
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Membership>
 
-    fun findByBirth(birth: LocalDateTime): List<Membership>
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.sex = :sex")
+    fun findBySexWithJoin(sex: Sex): List<Membership>
 
-    fun findByPhonenum(phonenum: String): List<Membership>
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.birth = :birth")
+    fun findByBirthWithJoin(birth: LocalDateTime): List<Membership>
 
-    fun findByAddress(address: String): List<Membership>
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.phonenum = :phonenum")
+    fun findByPhonenumWithJoin(phonenum: String): List<Membership>
 
-    fun findByImage(image: String): List<Membership>
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.address = :address")
+    fun findByAddressWithJoin(address: String): List<Membership>
 
-    fun findByDate(date: LocalDateTime): List<Membership>
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.image = :image")
+    fun findByImageWithJoin(image: String): List<Membership>
+
+    @Query("SELECT m FROM Membership m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Membership>
 }

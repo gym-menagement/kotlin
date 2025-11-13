@@ -12,10 +12,21 @@ data class Membership(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "m_id")
     val id: Long = 0,
-    @Column(name = "m_gym")
-    val gym: Long = 0L,
-    @Column(name = "m_user")
-    val user: Long = 0L,
+
+    @Column(name = "m_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "m_gym")
+    val gym: Gym? = null,
+
+    @Column(name = "m_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "m_user")
+    val user: User? = null,
+
     @Column(name = "m_name")
     val name: String = "",
     @Column(name = "m_sex")
@@ -80,11 +91,14 @@ data class MembershipResponse(
     val extra: MembershipExtraInfo
 ){
     companion object {
-        fun from(membership: Membership, gymResponse: GymResponse? = null, userResponse: UserResponse? = null): MembershipResponse {
+        fun from(membership: Membership): MembershipResponse {
+            val gymResponse = membership.gym?.let { GymResponse.from(it) }
+            val userResponse = membership.user?.let { UserResponse.from(it) }
+
             return MembershipResponse(
                 id = membership.id,
-                gym = membership.gym,
-                user = membership.user,
+                gym = membership.gymId,
+                user = membership.userId,
                 name = membership.name,
                 sex = membership.sex.ordinal,
                 birth = membership.birth?.toString()?.replace("T", " ") ?: "",
@@ -94,15 +108,10 @@ data class MembershipResponse(
                 date = membership.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = MembershipExtraInfo(
-                    
-                        sex = Sex.getDisplayName(membership.sex),
-                        
-                
-                     gym = gymResponse,
-                
-                     user = userResponse,
+                    sex = Sex.getDisplayName(membership.sex),
+                    gym = gymResponse,
+                    user = userResponse,
                 )
-                
             )
         }
     }

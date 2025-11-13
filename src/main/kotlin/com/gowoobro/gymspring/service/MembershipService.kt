@@ -34,46 +34,46 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
 
 
     fun findByGym(gym: Long): List<Membership> {
-        return membershipRepository.findByGym(gym)
+        return membershipRepository.findByGymWithJoin(gym)
     }
 
     fun findByUser(user: Long): List<Membership> {
-        return membershipRepository.findByUser(user)
+        return membershipRepository.findByUserWithJoin(user)
     }
 
     fun findByName(name: String): List<Membership> {
-        return membershipRepository.findByName(name)
+        return membershipRepository.findByNameWithJoin(name)
     }
 
     fun findBySex(sex: Sex): List<Membership> {
-        return membershipRepository.findBySex(sex)
+        return membershipRepository.findBySexWithJoin(sex)
     }
 
     fun findByBirth(birth: LocalDateTime): List<Membership> {
-        return membershipRepository.findByBirth(birth)
+        return membershipRepository.findByBirthWithJoin(birth)
     }
 
     fun findByPhonenum(phonenum: String): List<Membership> {
-        return membershipRepository.findByPhonenum(phonenum)
+        return membershipRepository.findByPhonenumWithJoin(phonenum)
     }
 
     fun findByAddress(address: String): List<Membership> {
-        return membershipRepository.findByAddress(address)
+        return membershipRepository.findByAddressWithJoin(address)
     }
 
     fun findByImage(image: String): List<Membership> {
-        return membershipRepository.findByImage(image)
+        return membershipRepository.findByImageWithJoin(image)
     }
 
     fun findByDate(date: LocalDateTime): List<Membership> {
-        return membershipRepository.findByDate(date)
+        return membershipRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: MembershipCreateRequest): Membership {
         val entity = Membership(
-            gym = request.gym,
-            user = request.user,
+            gymId = request.gym,
+            userId = request.user,
             name = request.name,
             sex = request.sex,
             birth = request.birth,
@@ -88,8 +88,8 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
     fun createBatch(requests: List<MembershipCreateRequest>): List<Membership> {
         val entities = requests.map { request ->
             Membership(
-                gym = request.gym,
-                user = request.user,
+                gymId = request.gym,
+                userId = request.user,
                 name = request.name,
                 sex = request.sex,
                 birth = request.birth,
@@ -105,11 +105,9 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
     fun update(request: MembershipUpdateRequest): Membership? {
         val existing = membershipRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            gym = request.gym,
-            user = request.user,
+            gymId = request.gym,
+            userId = request.user,
             name = request.name,
             sex = request.sex,
             birth = request.birth,
