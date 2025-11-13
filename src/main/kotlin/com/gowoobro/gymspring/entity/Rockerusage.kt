@@ -71,6 +71,11 @@ data class RockerusageUpdateRequest(
 
 data class RockerusageExtraInfo(
     val status: String = "",
+
+    val rocker: RockerResponse? = null,
+    val memberuser: UserResponse? = null,
+    val membership: MembershipResponse? = null,
+    val assignedbyuser: UserResponse? = null,
 )
 
 
@@ -92,7 +97,7 @@ data class RockerusageResponse(
     val extra: RockerusageExtraInfo
 ){
     companion object {
-        fun from(rockerusage: Rockerusage): RockerusageResponse {
+        fun from(rockerusage: Rockerusage, rockerResponse: RockerResponse? = null, memberuserResponse: UserResponse? = null, membershipResponse: MembershipResponse? = null, assignedbyuserResponse: UserResponse? = null): RockerusageResponse {
             return RockerusageResponse(
                 id = rockerusage.id,
                 rocker = rockerusage.rocker,
@@ -107,9 +112,21 @@ data class RockerusageResponse(
                 assignedby = rockerusage.assignedby,
                 assigneddate = rockerusage.assigneddate?.toString()?.replace("T", " ") ?: "",
                 date = rockerusage.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = RockerusageExtraInfo(
-                    status = Status.getDisplayName(rockerusage.status),
+                    
+                        status = Status.getDisplayName(rockerusage.status),
+                        
+                
+                     rocker = rockerResponse,
+                
+                     memberuser = memberuserResponse,
+                
+                     membership = membershipResponse,
+                
+                     assignedbyuser = assignedbyuserResponse,
                 )
+                
             )
         }
     }

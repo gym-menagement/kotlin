@@ -40,6 +40,11 @@ data class TermUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class TermExtraInfo(
+
+    val gym: GymResponse? = null,
+    val daytype: DaytypeResponse? = null,
+)
 
 
 data class TermResponse(
@@ -50,9 +55,10 @@ data class TermResponse(
     val term: Int,
     val date: String?,
 
+    val extra: TermExtraInfo
 ){
     companion object {
-        fun from(term: Term): TermResponse {
+        fun from(term: Term, gymResponse: GymResponse? = null, daytypeResponse: DaytypeResponse? = null): TermResponse {
             return TermResponse(
                 id = term.id,
                 gym = term.gym,
@@ -60,6 +66,15 @@ data class TermResponse(
                 name = term.name,
                 term = term.term,
                 date = term.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = TermExtraInfo(
+                    
+                
+                     gym = gymResponse,
+                
+                     daytype = daytypeResponse,
+                )
+                
             )
         }
     }

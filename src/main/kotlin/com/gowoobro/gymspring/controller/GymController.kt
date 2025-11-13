@@ -14,7 +14,14 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/gym")
-class GymController(private val gymService: GymService) {
+class GymController(
+    private val gymService: GymService) {
+
+    private fun toResponse(gym: Gym):
+    GymResponse {
+        
+        return GymResponse.from(gym)
+    }
 
     @GetMapping
     fun getGyms(
@@ -22,7 +29,7 @@ class GymController(private val gymService: GymService) {
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<GymResponse>> {
         val result = gymService.findAll(page, pageSize)
-        val responsePage = result.map { GymResponse.from(it)}
+        val responsePage = result.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
@@ -30,7 +37,7 @@ class GymController(private val gymService: GymService) {
     fun getGym(@PathVariable id: Long): ResponseEntity<GymResponse> {
         val result = gymService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(GymResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -40,13 +47,13 @@ class GymController(private val gymService: GymService) {
     @GetMapping("/search/name")
     fun getGymByName(@RequestParam name: String): ResponseEntity<List<GymResponse>> {
         val result = gymService.findByName(name)
-        return ResponseEntity.ok(result.map { GymResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getGymByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<GymResponse>> {
         val result = gymService.findByDate(date)
-        return ResponseEntity.ok(result.map { GymResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
 
@@ -60,7 +67,7 @@ class GymController(private val gymService: GymService) {
     fun createGym(@RequestBody request: GymCreateRequest): ResponseEntity<GymResponse> {
         return try {
             val result = gymService.create(request)
-            ResponseEntity.ok(GymResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -70,7 +77,7 @@ class GymController(private val gymService: GymService) {
     fun createGyms(@RequestBody requests: List<GymCreateRequest>): ResponseEntity<List<GymResponse>> {
         return try {
             val result = gymService.createBatch(requests)
-            return ResponseEntity.ok(result.map { GymResponse.from(it) } )
+            return ResponseEntity.ok(result.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -84,7 +91,7 @@ class GymController(private val gymService: GymService) {
         val updatedRequest = request.copy(id = id)
         val result = gymService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(GymResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }

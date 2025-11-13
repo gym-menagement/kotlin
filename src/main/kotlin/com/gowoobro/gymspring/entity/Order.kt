@@ -28,6 +28,10 @@ data class OrderUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class OrderExtraInfo(
+
+    val membership: MembershipResponse? = null,
+)
 
 
 data class OrderResponse(
@@ -35,13 +39,21 @@ data class OrderResponse(
     val membership: Long,
     val date: String?,
 
+    val extra: OrderExtraInfo
 ){
     companion object {
-        fun from(order: Order): OrderResponse {
+        fun from(order: Order, membershipResponse: MembershipResponse? = null): OrderResponse {
             return OrderResponse(
                 id = order.id,
                 membership = order.membership,
                 date = order.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = OrderExtraInfo(
+                    
+                
+                     membership = membershipResponse,
+                )
+                
             )
         }
     }

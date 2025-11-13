@@ -56,6 +56,12 @@ data class HealthUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class HealthExtraInfo(
+
+    val healthcategory: HealthcategoryResponse? = null,
+    val term: TermResponse? = null,
+    val discount: DiscountResponse? = null,
+)
 
 
 data class HealthResponse(
@@ -70,9 +76,10 @@ data class HealthResponse(
     val content: String,
     val date: String?,
 
+    val extra: HealthExtraInfo
 ){
     companion object {
-        fun from(health: Health): HealthResponse {
+        fun from(health: Health, healthcategoryResponse: HealthcategoryResponse? = null, termResponse: TermResponse? = null, discountResponse: DiscountResponse? = null): HealthResponse {
             return HealthResponse(
                 id = health.id,
                 category = health.category,
@@ -84,6 +91,17 @@ data class HealthResponse(
                 costdiscount = health.costdiscount,
                 content = health.content,
                 date = health.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = HealthExtraInfo(
+                    
+                
+                     healthcategory = healthcategoryResponse,
+                
+                     term = termResponse,
+                
+                     discount = discountResponse,
+                )
+                
             )
         }
     }

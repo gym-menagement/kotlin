@@ -39,6 +39,8 @@ data class RockerUpdateRequest(
 
 data class RockerExtraInfo(
     val available: String = "",
+
+    val rockergroup: RockergroupResponse? = null,
 )
 
 
@@ -52,16 +54,22 @@ data class RockerResponse(
     val extra: RockerExtraInfo
 ){
     companion object {
-        fun from(rocker: Rocker): RockerResponse {
+        fun from(rocker: Rocker, rockergroupResponse: RockergroupResponse? = null): RockerResponse {
             return RockerResponse(
                 id = rocker.id,
                 group = rocker.group,
                 name = rocker.name,
                 available = rocker.available.ordinal,
                 date = rocker.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = RockerExtraInfo(
-                    available = Available.getDisplayName(rocker.available),
+                    
+                        available = Available.getDisplayName(rocker.available),
+                        
+                
+                     rockergroup = rockergroupResponse,
                 )
+                
             )
         }
     }

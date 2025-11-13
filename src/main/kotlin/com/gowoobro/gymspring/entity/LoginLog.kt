@@ -36,6 +36,10 @@ data class LoginlogUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class LoginlogExtraInfo(
+
+    val user: UserResponse? = null,
+)
 
 
 data class LoginlogResponse(
@@ -45,15 +49,23 @@ data class LoginlogResponse(
     val user: Long,
     val date: String?,
 
+    val extra: LoginlogExtraInfo
 ){
     companion object {
-        fun from(loginlog: Loginlog): LoginlogResponse {
+        fun from(loginlog: Loginlog, userResponse: UserResponse? = null): LoginlogResponse {
             return LoginlogResponse(
                 id = loginlog.id,
                 ip = loginlog.ip,
                 ipvalue = loginlog.ipvalue,
                 user = loginlog.user,
                 date = loginlog.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = LoginlogExtraInfo(
+                    
+                
+                     user = userResponse,
+                )
+                
             )
         }
     }

@@ -5,6 +5,8 @@ import com.gowoobro.gymspring.entity.MemberqrCreateRequest
 import com.gowoobro.gymspring.entity.MemberqrUpdateRequest
 import com.gowoobro.gymspring.service.MemberqrService
 import com.gowoobro.gymspring.entity.MemberqrResponse
+import com.gowoobro.gymspring.entity.UserResponse
+import com.gowoobro.gymspring.service.UserService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,7 +17,17 @@ import com.gowoobro.gymspring.enums.memberqr.Isactive
 
 @RestController
 @RequestMapping("/api/memberqr")
-class MemberqrController(private val memberqrService: MemberqrService) {
+class MemberqrController(
+    private val memberqrService: MemberqrService, private val userService: UserService) {
+
+    private fun toResponse(memberqr: Memberqr):
+    MemberqrResponse {
+        
+        val user = userService.findById(memberqr.user)
+        val userResponse = user?.let{ UserResponse.from(it) }
+        
+        return MemberqrResponse.from(memberqr, userResponse)
+    }
 
     @GetMapping
     fun getMemberqrs(
@@ -23,7 +35,7 @@ class MemberqrController(private val memberqrService: MemberqrService) {
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<MemberqrResponse>> {
         val result = memberqrService.findAll(page, pageSize)
-        val responsePage = result.map { MemberqrResponse.from(it)}
+        val responsePage = result.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
@@ -31,7 +43,7 @@ class MemberqrController(private val memberqrService: MemberqrService) {
     fun getMemberqr(@PathVariable id: Long): ResponseEntity<MemberqrResponse> {
         val result = memberqrService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(MemberqrResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -41,55 +53,55 @@ class MemberqrController(private val memberqrService: MemberqrService) {
     @GetMapping("/search/user")
     fun getMemberqrByUser(@RequestParam user: Long): ResponseEntity<List<MemberqrResponse>> {
         val result = memberqrService.findByUser(user)
-        return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/code")
     fun getMemberqrByCode(@RequestParam code: String): ResponseEntity<List<MemberqrResponse>> {
         val result = memberqrService.findByCode(code)
-        return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/imageurl")
     fun getMemberqrByImageurl(@RequestParam imageurl: String): ResponseEntity<List<MemberqrResponse>> {
         val result = memberqrService.findByImageurl(imageurl)
-        return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/isactive")
     fun getMemberqrByIsactive(@RequestParam isactive: Isactive): ResponseEntity<List<MemberqrResponse>> {
         val result = memberqrService.findByIsactive(isactive)
-        return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/expiredate")
     fun getMemberqrByExpiredate(@RequestParam expiredate: LocalDateTime): ResponseEntity<List<MemberqrResponse>> {
         val result = memberqrService.findByExpiredate(expiredate)
-        return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/generateddate")
     fun getMemberqrByGenerateddate(@RequestParam generateddate: LocalDateTime): ResponseEntity<List<MemberqrResponse>> {
         val result = memberqrService.findByGenerateddate(generateddate)
-        return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/lastuseddate")
     fun getMemberqrByLastuseddate(@RequestParam lastuseddate: LocalDateTime): ResponseEntity<List<MemberqrResponse>> {
         val result = memberqrService.findByLastuseddate(lastuseddate)
-        return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/usecount")
     fun getMemberqrByUsecount(@RequestParam usecount: Int): ResponseEntity<List<MemberqrResponse>> {
         val result = memberqrService.findByUsecount(usecount)
-        return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getMemberqrByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<MemberqrResponse>> {
         val result = memberqrService.findByDate(date)
-        return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
 
@@ -103,7 +115,7 @@ class MemberqrController(private val memberqrService: MemberqrService) {
     fun createMemberqr(@RequestBody request: MemberqrCreateRequest): ResponseEntity<MemberqrResponse> {
         return try {
             val result = memberqrService.create(request)
-            ResponseEntity.ok(MemberqrResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -113,7 +125,7 @@ class MemberqrController(private val memberqrService: MemberqrService) {
     fun createMemberqrs(@RequestBody requests: List<MemberqrCreateRequest>): ResponseEntity<List<MemberqrResponse>> {
         return try {
             val result = memberqrService.createBatch(requests)
-            return ResponseEntity.ok(result.map { MemberqrResponse.from(it) } )
+            return ResponseEntity.ok(result.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -127,7 +139,7 @@ class MemberqrController(private val memberqrService: MemberqrService) {
         val updatedRequest = request.copy(id = id)
         val result = memberqrService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(MemberqrResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }

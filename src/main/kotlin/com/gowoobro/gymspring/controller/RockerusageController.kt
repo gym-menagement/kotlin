@@ -5,6 +5,12 @@ import com.gowoobro.gymspring.entity.RockerusageCreateRequest
 import com.gowoobro.gymspring.entity.RockerusageUpdateRequest
 import com.gowoobro.gymspring.service.RockerusageService
 import com.gowoobro.gymspring.entity.RockerusageResponse
+import com.gowoobro.gymspring.entity.RockerResponse
+import com.gowoobro.gymspring.service.RockerService
+import com.gowoobro.gymspring.entity.UserResponse
+import com.gowoobro.gymspring.service.UserService
+import com.gowoobro.gymspring.entity.MembershipResponse
+import com.gowoobro.gymspring.service.MembershipService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,7 +21,26 @@ import com.gowoobro.gymspring.enums.rockerusage.Status
 
 @RestController
 @RequestMapping("/api/rockerusage")
-class RockerusageController(private val rockerusageService: RockerusageService) {
+class RockerusageController(
+    private val rockerusageService: RockerusageService, private val rockerService: RockerService, private val userService: UserService, private val membershipService: MembershipService) {
+
+    private fun toResponse(rockerusage: Rockerusage):
+    RockerusageResponse {
+        
+        val rocker = rockerService.findById(rockerusage.rocker)
+        val rockerResponse = rocker?.let{ RockerResponse.from(it) }
+        
+        val memberuser = userService.findById(rockerusage.user)
+        val memberuserResponse = memberuser?.let{ UserResponse.from(it) }
+        
+        val membership = membershipService.findById(rockerusage.membership)
+        val membershipResponse = membership?.let{ MembershipResponse.from(it) }
+        
+        val assignedbyuser = userService.findById(rockerusage.assignedby)
+        val assignedbyuserResponse = assignedbyuser?.let{ UserResponse.from(it) }
+        
+        return RockerusageResponse.from(rockerusage, rockerResponse, memberuserResponse, membershipResponse, assignedbyuserResponse)
+    }
 
     @GetMapping
     fun getRockerusages(
@@ -23,7 +48,7 @@ class RockerusageController(private val rockerusageService: RockerusageService) 
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<RockerusageResponse>> {
         val result = rockerusageService.findAll(page, pageSize)
-        val responsePage = result.map { RockerusageResponse.from(it)}
+        val responsePage = result.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
@@ -31,7 +56,7 @@ class RockerusageController(private val rockerusageService: RockerusageService) 
     fun getRockerusage(@PathVariable id: Long): ResponseEntity<RockerusageResponse> {
         val result = rockerusageService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(RockerusageResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -41,73 +66,73 @@ class RockerusageController(private val rockerusageService: RockerusageService) 
     @GetMapping("/search/rocker")
     fun getRockerusageByRocker(@RequestParam rocker: Long): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByRocker(rocker)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/user")
     fun getRockerusageByUser(@RequestParam user: Long): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByUser(user)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/membership")
     fun getRockerusageByMembership(@RequestParam membership: Long): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByMembership(membership)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/startdate")
     fun getRockerusageByStartdate(@RequestParam startdate: LocalDateTime): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByStartdate(startdate)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/enddate")
     fun getRockerusageByEnddate(@RequestParam enddate: LocalDateTime): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByEnddate(enddate)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/status")
     fun getRockerusageByStatus(@RequestParam status: Status): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByStatus(status)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/deposit")
     fun getRockerusageByDeposit(@RequestParam deposit: BigDecimal): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByDeposit(deposit)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/monthlyfee")
     fun getRockerusageByMonthlyfee(@RequestParam monthlyfee: BigDecimal): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByMonthlyfee(monthlyfee)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/note")
     fun getRockerusageByNote(@RequestParam note: String): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByNote(note)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/assignedby")
     fun getRockerusageByAssignedby(@RequestParam assignedby: Long): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByAssignedby(assignedby)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/assigneddate")
     fun getRockerusageByAssigneddate(@RequestParam assigneddate: LocalDateTime): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByAssigneddate(assigneddate)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getRockerusageByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<RockerusageResponse>> {
         val result = rockerusageService.findByDate(date)
-        return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
 
@@ -121,7 +146,7 @@ class RockerusageController(private val rockerusageService: RockerusageService) 
     fun createRockerusage(@RequestBody request: RockerusageCreateRequest): ResponseEntity<RockerusageResponse> {
         return try {
             val result = rockerusageService.create(request)
-            ResponseEntity.ok(RockerusageResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -131,7 +156,7 @@ class RockerusageController(private val rockerusageService: RockerusageService) 
     fun createRockerusages(@RequestBody requests: List<RockerusageCreateRequest>): ResponseEntity<List<RockerusageResponse>> {
         return try {
             val result = rockerusageService.createBatch(requests)
-            return ResponseEntity.ok(result.map { RockerusageResponse.from(it) } )
+            return ResponseEntity.ok(result.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -145,7 +170,7 @@ class RockerusageController(private val rockerusageService: RockerusageService) 
         val updatedRequest = request.copy(id = id)
         val result = rockerusageService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(RockerusageResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }

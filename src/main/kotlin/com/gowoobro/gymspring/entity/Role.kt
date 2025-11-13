@@ -36,6 +36,10 @@ data class RoleUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class RoleExtraInfo(
+
+    val gym: GymResponse? = null,
+)
 
 
 data class RoleResponse(
@@ -45,15 +49,23 @@ data class RoleResponse(
     val name: String,
     val date: String?,
 
+    val extra: RoleExtraInfo
 ){
     companion object {
-        fun from(role: Role): RoleResponse {
+        fun from(role: Role, gymResponse: GymResponse? = null): RoleResponse {
             return RoleResponse(
                 id = role.id,
                 gym = role.gym,
                 roleid = role.roleid,
                 name = role.name,
                 date = role.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = RoleExtraInfo(
+                    
+                
+                     gym = gymResponse,
+                )
+                
             )
         }
     }

@@ -59,6 +59,9 @@ data class MembershipUpdateRequest(
 
 data class MembershipExtraInfo(
     val sex: String = "",
+
+    val gym: GymResponse? = null,
+    val user: UserResponse? = null,
 )
 
 
@@ -77,7 +80,7 @@ data class MembershipResponse(
     val extra: MembershipExtraInfo
 ){
     companion object {
-        fun from(membership: Membership): MembershipResponse {
+        fun from(membership: Membership, gymResponse: GymResponse? = null, userResponse: UserResponse? = null): MembershipResponse {
             return MembershipResponse(
                 id = membership.id,
                 gym = membership.gym,
@@ -89,9 +92,17 @@ data class MembershipResponse(
                 address = membership.address,
                 image = membership.image,
                 date = membership.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = MembershipExtraInfo(
-                    sex = Sex.getDisplayName(membership.sex),
+                    
+                        sex = Sex.getDisplayName(membership.sex),
+                        
+                
+                     gym = gymResponse,
+                
+                     user = userResponse,
                 )
+                
             )
         }
     }

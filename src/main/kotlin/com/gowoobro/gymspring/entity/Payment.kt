@@ -40,6 +40,12 @@ data class PaymentUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class PaymentExtraInfo(
+
+    val gym: GymResponse? = null,
+    val order: OrderResponse? = null,
+    val membership: MembershipResponse? = null,
+)
 
 
 data class PaymentResponse(
@@ -50,9 +56,10 @@ data class PaymentResponse(
     val cost: Int,
     val date: String?,
 
+    val extra: PaymentExtraInfo
 ){
     companion object {
-        fun from(payment: Payment): PaymentResponse {
+        fun from(payment: Payment, gymResponse: GymResponse? = null, orderResponse: OrderResponse? = null, membershipResponse: MembershipResponse? = null): PaymentResponse {
             return PaymentResponse(
                 id = payment.id,
                 gym = payment.gym,
@@ -60,6 +67,17 @@ data class PaymentResponse(
                 membership = payment.membership,
                 cost = payment.cost,
                 date = payment.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = PaymentExtraInfo(
+                    
+                
+                     gym = gymResponse,
+                
+                     order = orderResponse,
+                
+                     membership = membershipResponse,
+                )
+                
             )
         }
     }

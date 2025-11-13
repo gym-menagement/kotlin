@@ -51,6 +51,7 @@ data class IpblockExtraInfo(
     val type: String = "",
     val policy: String = "",
     val use: String = "",
+
 )
 
 
@@ -75,11 +76,15 @@ data class IpblockResponse(
                 use = ipblock.use.ordinal,
                 order = ipblock.order,
                 date = ipblock.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = IpblockExtraInfo(
-                    type = Type.getDisplayName(ipblock.type),
-                    policy = Policy.getDisplayName(ipblock.policy),
-                    use = Use.getDisplayName(ipblock.use),
+                    
+                        type = Type.getDisplayName(ipblock.type),
+                        policy = Policy.getDisplayName(ipblock.policy),
+                        use = Use.getDisplayName(ipblock.use),
+                        
                 )
+                
             )
         }
     }

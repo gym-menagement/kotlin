@@ -16,7 +16,14 @@ import com.gowoobro.gymspring.enums.appversion.Status
 
 @RestController
 @RequestMapping("/api/appversion")
-class AppversionController(private val appversionService: AppversionService) {
+class AppversionController(
+    private val appversionService: AppversionService) {
+
+    private fun toResponse(appversion: Appversion):
+    AppversionResponse {
+        
+        return AppversionResponse.from(appversion)
+    }
 
     @GetMapping
     fun getAppversions(
@@ -24,7 +31,7 @@ class AppversionController(private val appversionService: AppversionService) {
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<AppversionResponse>> {
         val result = appversionService.findAll(page, pageSize)
-        val responsePage = result.map { AppversionResponse.from(it)}
+        val responsePage = result.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
@@ -32,7 +39,7 @@ class AppversionController(private val appversionService: AppversionService) {
     fun getAppversion(@PathVariable id: Long): ResponseEntity<AppversionResponse> {
         val result = appversionService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(AppversionResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -42,61 +49,61 @@ class AppversionController(private val appversionService: AppversionService) {
     @GetMapping("/search/platform")
     fun getAppversionByPlatform(@RequestParam platform: String): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByPlatform(platform)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/version")
     fun getAppversionByVersion(@RequestParam version: String): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByVersion(version)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/minversion")
     fun getAppversionByMinversion(@RequestParam minversion: String): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByMinversion(minversion)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/forceupdate")
     fun getAppversionByForceupdate(@RequestParam forceupdate: Forceupdate): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByForceupdate(forceupdate)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/updatemessage")
     fun getAppversionByUpdatemessage(@RequestParam updatemessage: String): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByUpdatemessage(updatemessage)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/downloadurl")
     fun getAppversionByDownloadurl(@RequestParam downloadurl: String): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByDownloadurl(downloadurl)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/status")
     fun getAppversionByStatus(@RequestParam status: Status): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByStatus(status)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/releasedate")
     fun getAppversionByReleasedate(@RequestParam releasedate: LocalDateTime): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByReleasedate(releasedate)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/createddate")
     fun getAppversionByCreateddate(@RequestParam createddate: LocalDateTime): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByCreateddate(createddate)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getAppversionByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<AppversionResponse>> {
         val result = appversionService.findByDate(date)
-        return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
 
@@ -110,7 +117,7 @@ class AppversionController(private val appversionService: AppversionService) {
     fun createAppversion(@RequestBody request: AppversionCreateRequest): ResponseEntity<AppversionResponse> {
         return try {
             val result = appversionService.create(request)
-            ResponseEntity.ok(AppversionResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -120,7 +127,7 @@ class AppversionController(private val appversionService: AppversionService) {
     fun createAppversions(@RequestBody requests: List<AppversionCreateRequest>): ResponseEntity<List<AppversionResponse>> {
         return try {
             val result = appversionService.createBatch(requests)
-            return ResponseEntity.ok(result.map { AppversionResponse.from(it) } )
+            return ResponseEntity.ok(result.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -134,7 +141,7 @@ class AppversionController(private val appversionService: AppversionService) {
         val updatedRequest = request.copy(id = id)
         val result = appversionService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(AppversionResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }

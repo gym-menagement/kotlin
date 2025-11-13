@@ -91,6 +91,9 @@ data class NoticeExtraInfo(
     val ispush: String = "",
     val target: String = "",
     val status: String = "",
+
+    val gym: GymResponse? = null,
+    val user: UserResponse? = null,
 )
 
 
@@ -115,7 +118,7 @@ data class NoticeResponse(
     val extra: NoticeExtraInfo
 ){
     companion object {
-        fun from(notice: Notice): NoticeResponse {
+        fun from(notice: Notice, gymResponse: GymResponse? = null, userResponse: UserResponse? = null): NoticeResponse {
             return NoticeResponse(
                 id = notice.id,
                 gym = notice.gym,
@@ -133,13 +136,21 @@ data class NoticeResponse(
                 createddate = notice.createddate?.toString()?.replace("T", " ") ?: "",
                 updateddate = notice.updateddate?.toString()?.replace("T", " ") ?: "",
                 date = notice.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = NoticeExtraInfo(
-                    type = Type.getDisplayName(notice.type),
-                    ispopup = Ispopup.getDisplayName(notice.ispopup),
-                    ispush = Ispush.getDisplayName(notice.ispush),
-                    target = Target.getDisplayName(notice.target),
-                    status = Status.getDisplayName(notice.status),
+                    
+                        type = Type.getDisplayName(notice.type),
+                        ispopup = Ispopup.getDisplayName(notice.ispopup),
+                        ispush = Ispush.getDisplayName(notice.ispush),
+                        target = Target.getDisplayName(notice.target),
+                        status = Status.getDisplayName(notice.status),
+                        
+                
+                     gym = gymResponse,
+                
+                     user = userResponse,
                 )
+                
             )
         }
     }

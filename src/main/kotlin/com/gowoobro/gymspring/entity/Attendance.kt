@@ -83,6 +83,10 @@ data class AttendanceExtraInfo(
     val type: String = "",
     val method: String = "",
     val status: String = "",
+
+    val user: UserResponse? = null,
+    val membership: MembershipResponse? = null,
+    val gym: GymResponse? = null,
 )
 
 
@@ -106,7 +110,7 @@ data class AttendanceResponse(
     val extra: AttendanceExtraInfo
 ){
     companion object {
-        fun from(attendance: Attendance): AttendanceResponse {
+        fun from(attendance: Attendance, userResponse: UserResponse? = null, membershipResponse: MembershipResponse? = null, gymResponse: GymResponse? = null): AttendanceResponse {
             return AttendanceResponse(
                 id = attendance.id,
                 user = attendance.user,
@@ -123,11 +127,21 @@ data class AttendanceResponse(
                 device = attendance.device,
                 createdby = attendance.createdby,
                 date = attendance.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = AttendanceExtraInfo(
-                    type = Type.getDisplayName(attendance.type),
-                    method = Method.getDisplayName(attendance.method),
-                    status = Status.getDisplayName(attendance.status),
+                    
+                        type = Type.getDisplayName(attendance.type),
+                        method = Method.getDisplayName(attendance.method),
+                        status = Status.getDisplayName(attendance.status),
+                        
+                
+                     user = userResponse,
+                
+                     membership = membershipResponse,
+                
+                     gym = gymResponse,
                 )
+                
             )
         }
     }

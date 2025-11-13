@@ -41,6 +41,7 @@ data class SystemlogUpdateRequest(
 data class SystemlogExtraInfo(
     val type: String = "",
     val result: String = "",
+
 )
 
 
@@ -61,10 +62,14 @@ data class SystemlogResponse(
                 content = systemlog.content,
                 result = systemlog.result.ordinal,
                 date = systemlog.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = SystemlogExtraInfo(
-                    type = Type.getDisplayName(systemlog.type),
-                    result = Result.getDisplayName(systemlog.result),
+                    
+                        type = Type.getDisplayName(systemlog.type),
+                        result = Result.getDisplayName(systemlog.result),
+                        
                 )
+                
             )
         }
     }

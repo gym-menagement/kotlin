@@ -35,6 +35,7 @@ data class GymResponse(
     val name: String,
     val date: String?,
 
+    val extra: Map<String, Any?> = emptyMap()
 ){
     companion object {
         fun from(gym: Gym): GymResponse {
@@ -42,6 +43,8 @@ data class GymResponse(
                 id = gym.id,
                 name = gym.name,
                 date = gym.date?.toString()?.replace("T", " ") ?: "",
+
+                extra =  emptyMap()
             )
         }
     }

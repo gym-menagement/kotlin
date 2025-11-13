@@ -75,6 +75,10 @@ data class PtreservationUpdateRequest(
 
 data class PtreservationExtraInfo(
     val status: String = "",
+
+    val traineruser: UserResponse? = null,
+    val memberuser: UserResponse? = null,
+    val gym: GymResponse? = null,
 )
 
 
@@ -97,7 +101,7 @@ data class PtreservationResponse(
     val extra: PtreservationExtraInfo
 ){
     companion object {
-        fun from(ptreservation: Ptreservation): PtreservationResponse {
+        fun from(ptreservation: Ptreservation, traineruserResponse: UserResponse? = null, memberuserResponse: UserResponse? = null, gymResponse: GymResponse? = null): PtreservationResponse {
             return PtreservationResponse(
                 id = ptreservation.id,
                 trainer = ptreservation.trainer,
@@ -113,9 +117,19 @@ data class PtreservationResponse(
                 createddate = ptreservation.createddate?.toString()?.replace("T", " ") ?: "",
                 updateddate = ptreservation.updateddate?.toString()?.replace("T", " ") ?: "",
                 date = ptreservation.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = PtreservationExtraInfo(
-                    status = Status.getDisplayName(ptreservation.status),
+                    
+                        status = Status.getDisplayName(ptreservation.status),
+                        
+                
+                     traineruser = traineruserResponse,
+                
+                     memberuser = memberuserResponse,
+                
+                     gym = gymResponse,
                 )
+                
             )
         }
     }

@@ -65,6 +65,7 @@ data class AppversionUpdateRequest(
 data class AppversionExtraInfo(
     val forceupdate: String = "",
     val status: String = "",
+
 )
 
 
@@ -97,10 +98,14 @@ data class AppversionResponse(
                 releasedate = appversion.releasedate?.toString()?.replace("T", " ") ?: "",
                 createddate = appversion.createddate?.toString()?.replace("T", " ") ?: "",
                 date = appversion.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = AppversionExtraInfo(
-                    forceupdate = Forceupdate.getDisplayName(appversion.forceupdate),
-                    status = Status.getDisplayName(appversion.status),
+                    
+                        forceupdate = Forceupdate.getDisplayName(appversion.forceupdate),
+                        status = Status.getDisplayName(appversion.status),
+                        
                 )
+                
             )
         }
     }

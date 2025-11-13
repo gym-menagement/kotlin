@@ -32,6 +32,10 @@ data class HealthcategoryUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class HealthcategoryExtraInfo(
+
+    val gym: GymResponse? = null,
+)
 
 
 data class HealthcategoryResponse(
@@ -40,14 +44,22 @@ data class HealthcategoryResponse(
     val name: String,
     val date: String?,
 
+    val extra: HealthcategoryExtraInfo
 ){
     companion object {
-        fun from(healthcategory: Healthcategory): HealthcategoryResponse {
+        fun from(healthcategory: Healthcategory, gymResponse: GymResponse? = null): HealthcategoryResponse {
             return HealthcategoryResponse(
                 id = healthcategory.id,
                 gym = healthcategory.gym,
                 name = healthcategory.name,
                 date = healthcategory.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = HealthcategoryExtraInfo(
+                    
+                
+                     gym = gymResponse,
+                )
+                
             )
         }
     }

@@ -64,6 +64,12 @@ data class WorkoutlogUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class WorkoutlogExtraInfo(
+
+    val user: UserResponse? = null,
+    val attendance: AttendanceResponse? = null,
+    val health: HealthResponse? = null,
+)
 
 
 data class WorkoutlogResponse(
@@ -80,9 +86,10 @@ data class WorkoutlogResponse(
     val note: String,
     val date: String?,
 
+    val extra: WorkoutlogExtraInfo
 ){
     companion object {
-        fun from(workoutlog: Workoutlog): WorkoutlogResponse {
+        fun from(workoutlog: Workoutlog, userResponse: UserResponse? = null, attendanceResponse: AttendanceResponse? = null, healthResponse: HealthResponse? = null): WorkoutlogResponse {
             return WorkoutlogResponse(
                 id = workoutlog.id,
                 user = workoutlog.user,
@@ -96,6 +103,17 @@ data class WorkoutlogResponse(
                 calories = workoutlog.calories,
                 note = workoutlog.note,
                 date = workoutlog.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = WorkoutlogExtraInfo(
+                    
+                
+                     user = userResponse,
+                
+                     attendance = attendanceResponse,
+                
+                     health = healthResponse,
+                )
+                
             )
         }
     }

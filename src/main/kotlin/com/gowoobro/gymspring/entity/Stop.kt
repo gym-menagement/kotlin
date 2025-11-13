@@ -40,6 +40,10 @@ data class StopUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class StopExtraInfo(
+
+    val usehealth: UsehealthResponse? = null,
+)
 
 
 data class StopResponse(
@@ -50,9 +54,10 @@ data class StopResponse(
     val count: Int,
     val date: String?,
 
+    val extra: StopExtraInfo
 ){
     companion object {
-        fun from(stop: Stop): StopResponse {
+        fun from(stop: Stop, usehealthResponse: UsehealthResponse? = null): StopResponse {
             return StopResponse(
                 id = stop.id,
                 usehelth = stop.usehelth,
@@ -60,6 +65,13 @@ data class StopResponse(
                 endday = stop.endday?.toString()?.replace("T", " ") ?: "",
                 count = stop.count,
                 date = stop.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = StopExtraInfo(
+                    
+                
+                     usehealth = usehealthResponse,
+                )
+                
             )
         }
     }

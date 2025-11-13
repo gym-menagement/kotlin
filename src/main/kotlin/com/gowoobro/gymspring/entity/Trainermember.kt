@@ -55,6 +55,10 @@ data class TrainermemberUpdateRequest(
 
 data class TrainermemberExtraInfo(
     val status: String = "",
+
+    val traineruser: UserResponse? = null,
+    val memberuser: UserResponse? = null,
+    val gym: GymResponse? = null,
 )
 
 
@@ -72,7 +76,7 @@ data class TrainermemberResponse(
     val extra: TrainermemberExtraInfo
 ){
     companion object {
-        fun from(trainermember: Trainermember): TrainermemberResponse {
+        fun from(trainermember: Trainermember, traineruserResponse: UserResponse? = null, memberuserResponse: UserResponse? = null, gymResponse: GymResponse? = null): TrainermemberResponse {
             return TrainermemberResponse(
                 id = trainermember.id,
                 trainer = trainermember.trainer,
@@ -83,9 +87,19 @@ data class TrainermemberResponse(
                 status = trainermember.status.ordinal,
                 note = trainermember.note,
                 date = trainermember.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = TrainermemberExtraInfo(
-                    status = Status.getDisplayName(trainermember.status),
+                    
+                        status = Status.getDisplayName(trainermember.status),
+                        
+                
+                     traineruser = traineruserResponse,
+                
+                     memberuser = memberuserResponse,
+                
+                     gym = gymResponse,
                 )
+                
             )
         }
     }

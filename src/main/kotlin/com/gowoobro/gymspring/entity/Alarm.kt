@@ -49,6 +49,8 @@ data class AlarmUpdateRequest(
 data class AlarmExtraInfo(
     val type: String = "",
     val status: String = "",
+
+    val user: UserResponse? = null,
 )
 
 
@@ -64,7 +66,7 @@ data class AlarmResponse(
     val extra: AlarmExtraInfo
 ){
     companion object {
-        fun from(alarm: Alarm): AlarmResponse {
+        fun from(alarm: Alarm, userResponse: UserResponse? = null): AlarmResponse {
             return AlarmResponse(
                 id = alarm.id,
                 title = alarm.title,
@@ -73,10 +75,16 @@ data class AlarmResponse(
                 status = alarm.status.ordinal,
                 user = alarm.user,
                 date = alarm.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = AlarmExtraInfo(
-                    type = Type.getDisplayName(alarm.type),
-                    status = Status.getDisplayName(alarm.status),
+                    
+                        type = Type.getDisplayName(alarm.type),
+                        status = Status.getDisplayName(alarm.status),
+                        
+                
+                     user = userResponse,
                 )
+                
             )
         }
     }

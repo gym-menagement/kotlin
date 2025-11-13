@@ -69,6 +69,10 @@ data class InquiryUpdateRequest(
 data class InquiryExtraInfo(
     val type: String = "",
     val status: String = "",
+
+    val inquireruser: UserResponse? = null,
+    val gym: GymResponse? = null,
+    val answeredbyuser: UserResponse? = null,
 )
 
 
@@ -89,7 +93,7 @@ data class InquiryResponse(
     val extra: InquiryExtraInfo
 ){
     companion object {
-        fun from(inquiry: Inquiry): InquiryResponse {
+        fun from(inquiry: Inquiry, inquireruserResponse: UserResponse? = null, gymResponse: GymResponse? = null, answeredbyuserResponse: UserResponse? = null): InquiryResponse {
             return InquiryResponse(
                 id = inquiry.id,
                 user = inquiry.user,
@@ -103,10 +107,20 @@ data class InquiryResponse(
                 answereddate = inquiry.answereddate?.toString()?.replace("T", " ") ?: "",
                 createddate = inquiry.createddate?.toString()?.replace("T", " ") ?: "",
                 date = inquiry.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = InquiryExtraInfo(
-                    type = Type.getDisplayName(inquiry.type),
-                    status = Status.getDisplayName(inquiry.status),
+                    
+                        type = Type.getDisplayName(inquiry.type),
+                        status = Status.getDisplayName(inquiry.status),
+                        
+                
+                     inquireruser = inquireruserResponse,
+                
+                     gym = gymResponse,
+                
+                     answeredbyuser = answeredbyuserResponse,
                 )
+                
             )
         }
     }

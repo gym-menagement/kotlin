@@ -5,6 +5,8 @@ import com.gowoobro.gymspring.entity.OrderCreateRequest
 import com.gowoobro.gymspring.entity.OrderUpdateRequest
 import com.gowoobro.gymspring.service.OrderService
 import com.gowoobro.gymspring.entity.OrderResponse
+import com.gowoobro.gymspring.entity.MembershipResponse
+import com.gowoobro.gymspring.service.MembershipService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -14,7 +16,17 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/order")
-class OrderController(private val orderService: OrderService) {
+class OrderController(
+    private val orderService: OrderService, private val membershipService: MembershipService) {
+
+    private fun toResponse(order: Order):
+    OrderResponse {
+        
+        val membership = membershipService.findById(order.membership)
+        val membershipResponse = membership?.let{ MembershipResponse.from(it) }
+        
+        return OrderResponse.from(order, membershipResponse)
+    }
 
     @GetMapping
     fun getOrders(
@@ -22,7 +34,7 @@ class OrderController(private val orderService: OrderService) {
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<OrderResponse>> {
         val result = orderService.findAll(page, pageSize)
-        val responsePage = result.map { OrderResponse.from(it)}
+        val responsePage = result.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
@@ -30,7 +42,7 @@ class OrderController(private val orderService: OrderService) {
     fun getOrder(@PathVariable id: Long): ResponseEntity<OrderResponse> {
         val result = orderService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(OrderResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -40,13 +52,13 @@ class OrderController(private val orderService: OrderService) {
     @GetMapping("/search/membership")
     fun getOrderByMembership(@RequestParam membership: Long): ResponseEntity<List<OrderResponse>> {
         val result = orderService.findByMembership(membership)
-        return ResponseEntity.ok(result.map { OrderResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getOrderByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<OrderResponse>> {
         val result = orderService.findByDate(date)
-        return ResponseEntity.ok(result.map { OrderResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
 
@@ -60,7 +72,7 @@ class OrderController(private val orderService: OrderService) {
     fun createOrder(@RequestBody request: OrderCreateRequest): ResponseEntity<OrderResponse> {
         return try {
             val result = orderService.create(request)
-            ResponseEntity.ok(OrderResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -70,7 +82,7 @@ class OrderController(private val orderService: OrderService) {
     fun createOrders(@RequestBody requests: List<OrderCreateRequest>): ResponseEntity<List<OrderResponse>> {
         return try {
             val result = orderService.createBatch(requests)
-            return ResponseEntity.ok(result.map { OrderResponse.from(it) } )
+            return ResponseEntity.ok(result.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -84,7 +96,7 @@ class OrderController(private val orderService: OrderService) {
         val updatedRequest = request.copy(id = id)
         val result = orderService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(OrderResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }

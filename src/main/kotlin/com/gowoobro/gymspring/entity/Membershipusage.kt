@@ -85,6 +85,9 @@ data class MembershipusageUpdateRequest(
 data class MembershipusageExtraInfo(
     val type: String = "",
     val status: String = "",
+
+    val membership: MembershipResponse? = null,
+    val user: UserResponse? = null,
 )
 
 
@@ -109,7 +112,7 @@ data class MembershipusageResponse(
     val extra: MembershipusageExtraInfo
 ){
     companion object {
-        fun from(membershipusage: Membershipusage): MembershipusageResponse {
+        fun from(membershipusage: Membershipusage, membershipResponse: MembershipResponse? = null, userResponse: UserResponse? = null): MembershipusageResponse {
             return MembershipusageResponse(
                 id = membershipusage.id,
                 membership = membershipusage.membership,
@@ -127,10 +130,18 @@ data class MembershipusageResponse(
                 pausedays = membershipusage.pausedays,
                 lastuseddate = membershipusage.lastuseddate?.toString()?.replace("T", " ") ?: "",
                 date = membershipusage.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = MembershipusageExtraInfo(
-                    type = Type.getDisplayName(membershipusage.type),
-                    status = Status.getDisplayName(membershipusage.status),
+                    
+                        type = Type.getDisplayName(membershipusage.type),
+                        status = Status.getDisplayName(membershipusage.status),
+                        
+                
+                     membership = membershipResponse,
+                
+                     user = userResponse,
                 )
+                
             )
         }
     }

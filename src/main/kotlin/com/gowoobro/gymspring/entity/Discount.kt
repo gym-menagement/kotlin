@@ -40,6 +40,7 @@ data class DiscountResponse(
     val discount: Int,
     val date: String?,
 
+    val extra: Map<String, Any?> = emptyMap()
 ){
     companion object {
         fun from(discount: Discount): DiscountResponse {
@@ -48,6 +49,8 @@ data class DiscountResponse(
                 name = discount.name,
                 discount = discount.discount,
                 date = discount.date?.toString()?.replace("T", " ") ?: "",
+
+                extra =  emptyMap()
             )
         }
     }

@@ -59,6 +59,8 @@ data class MemberqrUpdateRequest(
 
 data class MemberqrExtraInfo(
     val isactive: String = "",
+
+    val user: UserResponse? = null,
 )
 
 
@@ -77,7 +79,7 @@ data class MemberqrResponse(
     val extra: MemberqrExtraInfo
 ){
     companion object {
-        fun from(memberqr: Memberqr): MemberqrResponse {
+        fun from(memberqr: Memberqr, userResponse: UserResponse? = null): MemberqrResponse {
             return MemberqrResponse(
                 id = memberqr.id,
                 user = memberqr.user,
@@ -89,9 +91,15 @@ data class MemberqrResponse(
                 lastuseddate = memberqr.lastuseddate?.toString()?.replace("T", " ") ?: "",
                 usecount = memberqr.usecount,
                 date = memberqr.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = MemberqrExtraInfo(
-                    isactive = Isactive.getDisplayName(memberqr.isactive),
+                    
+                        isactive = Isactive.getDisplayName(memberqr.isactive),
+                        
+                
+                     user = userResponse,
                 )
+                
             )
         }
     }

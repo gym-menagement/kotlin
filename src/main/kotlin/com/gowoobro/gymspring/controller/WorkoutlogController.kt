@@ -5,6 +5,12 @@ import com.gowoobro.gymspring.entity.WorkoutlogCreateRequest
 import com.gowoobro.gymspring.entity.WorkoutlogUpdateRequest
 import com.gowoobro.gymspring.service.WorkoutlogService
 import com.gowoobro.gymspring.entity.WorkoutlogResponse
+import com.gowoobro.gymspring.entity.UserResponse
+import com.gowoobro.gymspring.service.UserService
+import com.gowoobro.gymspring.entity.AttendanceResponse
+import com.gowoobro.gymspring.service.AttendanceService
+import com.gowoobro.gymspring.entity.HealthResponse
+import com.gowoobro.gymspring.service.HealthService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -14,7 +20,23 @@ import java.math.BigDecimal
 
 @RestController
 @RequestMapping("/api/workoutlog")
-class WorkoutlogController(private val workoutlogService: WorkoutlogService) {
+class WorkoutlogController(
+    private val workoutlogService: WorkoutlogService, private val userService: UserService, private val attendanceService: AttendanceService, private val healthService: HealthService) {
+
+    private fun toResponse(workoutlog: Workoutlog):
+    WorkoutlogResponse {
+        
+        val user = userService.findById(workoutlog.user)
+        val userResponse = user?.let{ UserResponse.from(it) }
+        
+        val attendance = attendanceService.findById(workoutlog.attendance)
+        val attendanceResponse = attendance?.let{ AttendanceResponse.from(it) }
+        
+        val health = healthService.findById(workoutlog.health)
+        val healthResponse = health?.let{ HealthResponse.from(it) }
+        
+        return WorkoutlogResponse.from(workoutlog, userResponse, attendanceResponse, healthResponse)
+    }
 
     @GetMapping
     fun getWorkoutlogs(
@@ -22,7 +44,7 @@ class WorkoutlogController(private val workoutlogService: WorkoutlogService) {
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<WorkoutlogResponse>> {
         val result = workoutlogService.findAll(page, pageSize)
-        val responsePage = result.map { WorkoutlogResponse.from(it)}
+        val responsePage = result.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
@@ -30,7 +52,7 @@ class WorkoutlogController(private val workoutlogService: WorkoutlogService) {
     fun getWorkoutlog(@PathVariable id: Long): ResponseEntity<WorkoutlogResponse> {
         val result = workoutlogService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(WorkoutlogResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -40,67 +62,67 @@ class WorkoutlogController(private val workoutlogService: WorkoutlogService) {
     @GetMapping("/search/user")
     fun getWorkoutlogByUser(@RequestParam user: Long): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByUser(user)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/attendance")
     fun getWorkoutlogByAttendance(@RequestParam attendance: Long): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByAttendance(attendance)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/health")
     fun getWorkoutlogByHealth(@RequestParam health: Long): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByHealth(health)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/exercisename")
     fun getWorkoutlogByExercisename(@RequestParam exercisename: String): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByExercisename(exercisename)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/sets")
     fun getWorkoutlogBySets(@RequestParam sets: Int): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findBySets(sets)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/reps")
     fun getWorkoutlogByReps(@RequestParam reps: Int): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByReps(reps)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/weight")
     fun getWorkoutlogByWeight(@RequestParam weight: BigDecimal): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByWeight(weight)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/duration")
     fun getWorkoutlogByDuration(@RequestParam duration: Int): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByDuration(duration)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/calories")
     fun getWorkoutlogByCalories(@RequestParam calories: Int): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByCalories(calories)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/note")
     fun getWorkoutlogByNote(@RequestParam note: String): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByNote(note)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getWorkoutlogByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<WorkoutlogResponse>> {
         val result = workoutlogService.findByDate(date)
-        return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
 
@@ -114,7 +136,7 @@ class WorkoutlogController(private val workoutlogService: WorkoutlogService) {
     fun createWorkoutlog(@RequestBody request: WorkoutlogCreateRequest): ResponseEntity<WorkoutlogResponse> {
         return try {
             val result = workoutlogService.create(request)
-            ResponseEntity.ok(WorkoutlogResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -124,7 +146,7 @@ class WorkoutlogController(private val workoutlogService: WorkoutlogService) {
     fun createWorkoutlogs(@RequestBody requests: List<WorkoutlogCreateRequest>): ResponseEntity<List<WorkoutlogResponse>> {
         return try {
             val result = workoutlogService.createBatch(requests)
-            return ResponseEntity.ok(result.map { WorkoutlogResponse.from(it) } )
+            return ResponseEntity.ok(result.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -138,7 +160,7 @@ class WorkoutlogController(private val workoutlogService: WorkoutlogService) {
         val updatedRequest = request.copy(id = id)
         val result = workoutlogService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(WorkoutlogResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }

@@ -59,6 +59,7 @@ data class SettingUpdateRequest(
 
 data class SettingExtraInfo(
     val type: String = "",
+
 )
 
 
@@ -89,9 +90,13 @@ data class SettingResponse(
                 data = setting.data,
                 order = setting.order,
                 date = setting.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = SettingExtraInfo(
-                    type = Type.getDisplayName(setting.type),
+                    
+                        type = Type.getDisplayName(setting.type),
+                        
                 )
+                
             )
         }
     }

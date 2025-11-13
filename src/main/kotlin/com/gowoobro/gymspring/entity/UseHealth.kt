@@ -56,6 +56,15 @@ data class UsehealthUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class UsehealthExtraInfo(
+
+    val order: OrderResponse? = null,
+    val health: HealthResponse? = null,
+    val user: UserResponse? = null,
+    val rocker: RockerResponse? = null,
+    val term: TermResponse? = null,
+    val discount: DiscountResponse? = null,
+)
 
 
 data class UsehealthResponse(
@@ -70,9 +79,10 @@ data class UsehealthResponse(
     val endday: String?,
     val date: String?,
 
+    val extra: UsehealthExtraInfo
 ){
     companion object {
-        fun from(usehealth: Usehealth): UsehealthResponse {
+        fun from(usehealth: Usehealth, orderResponse: OrderResponse? = null, healthResponse: HealthResponse? = null, userResponse: UserResponse? = null, rockerResponse: RockerResponse? = null, termResponse: TermResponse? = null, discountResponse: DiscountResponse? = null): UsehealthResponse {
             return UsehealthResponse(
                 id = usehealth.id,
                 order = usehealth.order,
@@ -84,6 +94,23 @@ data class UsehealthResponse(
                 startday = usehealth.startday?.toString()?.replace("T", " ") ?: "",
                 endday = usehealth.endday?.toString()?.replace("T", " ") ?: "",
                 date = usehealth.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = UsehealthExtraInfo(
+                    
+                
+                     order = orderResponse,
+                
+                     health = healthResponse,
+                
+                     user = userResponse,
+                
+                     rocker = rockerResponse,
+                
+                     term = termResponse,
+                
+                     discount = discountResponse,
+                )
+                
             )
         }
     }

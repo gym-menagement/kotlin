@@ -14,7 +14,14 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/discount")
-class DiscountController(private val discountService: DiscountService) {
+class DiscountController(
+    private val discountService: DiscountService) {
+
+    private fun toResponse(discount: Discount):
+    DiscountResponse {
+        
+        return DiscountResponse.from(discount)
+    }
 
     @GetMapping
     fun getDiscounts(
@@ -22,7 +29,7 @@ class DiscountController(private val discountService: DiscountService) {
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<DiscountResponse>> {
         val result = discountService.findAll(page, pageSize)
-        val responsePage = result.map { DiscountResponse.from(it)}
+        val responsePage = result.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
@@ -30,7 +37,7 @@ class DiscountController(private val discountService: DiscountService) {
     fun getDiscount(@PathVariable id: Long): ResponseEntity<DiscountResponse> {
         val result = discountService.findById(id)
         return if (result != null) {
-            ResponseEntity.ok(DiscountResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -40,19 +47,19 @@ class DiscountController(private val discountService: DiscountService) {
     @GetMapping("/search/name")
     fun getDiscountByName(@RequestParam name: String): ResponseEntity<List<DiscountResponse>> {
         val result = discountService.findByName(name)
-        return ResponseEntity.ok(result.map { DiscountResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/discount")
     fun getDiscountByDiscount(@RequestParam discount: Int): ResponseEntity<List<DiscountResponse>> {
         val result = discountService.findByDiscount(discount)
-        return ResponseEntity.ok(result.map { DiscountResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getDiscountByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<DiscountResponse>> {
         val result = discountService.findByDate(date)
-        return ResponseEntity.ok(result.map { DiscountResponse.from(it) } )
+        return ResponseEntity.ok(result.map { toResponse(it) } )
     }
 
 
@@ -66,7 +73,7 @@ class DiscountController(private val discountService: DiscountService) {
     fun createDiscount(@RequestBody request: DiscountCreateRequest): ResponseEntity<DiscountResponse> {
         return try {
             val result = discountService.create(request)
-            ResponseEntity.ok(DiscountResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -76,7 +83,7 @@ class DiscountController(private val discountService: DiscountService) {
     fun createDiscounts(@RequestBody requests: List<DiscountCreateRequest>): ResponseEntity<List<DiscountResponse>> {
         return try {
             val result = discountService.createBatch(requests)
-            return ResponseEntity.ok(result.map { DiscountResponse.from(it) } )
+            return ResponseEntity.ok(result.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -90,7 +97,7 @@ class DiscountController(private val discountService: DiscountService) {
         val updatedRequest = request.copy(id = id)
         val result = discountService.update(updatedRequest)
         return if (result != null) {
-            ResponseEntity.ok(DiscountResponse.from(result))
+            ResponseEntity.ok(toResponse(result))
         } else {
             ResponseEntity.notFound().build()
         }

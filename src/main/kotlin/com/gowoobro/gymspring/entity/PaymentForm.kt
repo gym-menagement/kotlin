@@ -40,6 +40,12 @@ data class PaymentformUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class PaymentformExtraInfo(
+
+    val gym: GymResponse? = null,
+    val payment: PaymentResponse? = null,
+    val paymenttype: PaymenttypeResponse? = null,
+)
 
 
 data class PaymentformResponse(
@@ -50,9 +56,10 @@ data class PaymentformResponse(
     val cost: Int,
     val date: String?,
 
+    val extra: PaymentformExtraInfo
 ){
     companion object {
-        fun from(paymentform: Paymentform): PaymentformResponse {
+        fun from(paymentform: Paymentform, gymResponse: GymResponse? = null, paymentResponse: PaymentResponse? = null, paymenttypeResponse: PaymenttypeResponse? = null): PaymentformResponse {
             return PaymentformResponse(
                 id = paymentform.id,
                 gym = paymentform.gym,
@@ -60,6 +67,17 @@ data class PaymentformResponse(
                 type = paymentform.type,
                 cost = paymentform.cost,
                 date = paymentform.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = PaymentformExtraInfo(
+                    
+                
+                     gym = gymResponse,
+                
+                     payment = paymentResponse,
+                
+                     paymenttype = paymenttypeResponse,
+                )
+                
             )
         }
     }

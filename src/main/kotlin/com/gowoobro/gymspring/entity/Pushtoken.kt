@@ -59,6 +59,8 @@ data class PushtokenUpdateRequest(
 
 data class PushtokenExtraInfo(
     val isactive: String = "",
+
+    val user: UserResponse? = null,
 )
 
 
@@ -77,7 +79,7 @@ data class PushtokenResponse(
     val extra: PushtokenExtraInfo
 ){
     companion object {
-        fun from(pushtoken: Pushtoken): PushtokenResponse {
+        fun from(pushtoken: Pushtoken, userResponse: UserResponse? = null): PushtokenResponse {
             return PushtokenResponse(
                 id = pushtoken.id,
                 user = pushtoken.user,
@@ -89,9 +91,15 @@ data class PushtokenResponse(
                 createddate = pushtoken.createddate?.toString()?.replace("T", " ") ?: "",
                 updateddate = pushtoken.updateddate?.toString()?.replace("T", " ") ?: "",
                 date = pushtoken.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = PushtokenExtraInfo(
-                    isactive = Isactive.getDisplayName(pushtoken.isactive),
+                    
+                        isactive = Isactive.getDisplayName(pushtoken.isactive),
+                        
+                
+                     user = userResponse,
                 )
+                
             )
         }
     }

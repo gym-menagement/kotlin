@@ -39,6 +39,8 @@ data class TokenUpdateRequest(
 
 data class TokenExtraInfo(
     val status: String = "",
+
+    val user: UserResponse? = null,
 )
 
 
@@ -52,16 +54,22 @@ data class TokenResponse(
     val extra: TokenExtraInfo
 ){
     companion object {
-        fun from(token: Token): TokenResponse {
+        fun from(token: Token, userResponse: UserResponse? = null): TokenResponse {
             return TokenResponse(
                 id = token.id,
                 user = token.user,
                 token = token.token,
                 status = token.status.ordinal,
                 date = token.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = TokenExtraInfo(
-                    status = Status.getDisplayName(token.status),
+                    
+                        status = Status.getDisplayName(token.status),
+                        
+                
+                     user = userResponse,
                 )
+                
             )
         }
     }

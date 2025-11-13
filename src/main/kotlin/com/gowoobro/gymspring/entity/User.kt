@@ -99,6 +99,7 @@ data class UserExtraInfo(
     val type: String = "",
     val role: String = "",
     val sex: String = "",
+
 )
 
 
@@ -145,13 +146,17 @@ data class UserResponse(
                 logindate = user.logindate?.toString()?.replace("T", " ") ?: "",
                 lastchangepasswddate = user.lastchangepasswddate?.toString()?.replace("T", " ") ?: "",
                 date = user.date?.toString()?.replace("T", " ") ?: "",
+
                 extra = UserExtraInfo(
-                    level = Level.getDisplayName(user.level),
-                    use = Use.getDisplayName(user.use),
-                    type = Type.getDisplayName(user.type),
-                    role = Role.getDisplayName(user.role),
-                    sex = Sex.getDisplayName(user.sex),
+                    
+                        level = Level.getDisplayName(user.level),
+                        use = Use.getDisplayName(user.use),
+                        type = Type.getDisplayName(user.type),
+                        role = Role.getDisplayName(user.role),
+                        sex = Sex.getDisplayName(user.sex),
+                        
                 )
+                
             )
         }
     }

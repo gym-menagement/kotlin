@@ -32,6 +32,10 @@ data class PaymenttypeUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class PaymenttypeExtraInfo(
+
+    val gym: GymResponse? = null,
+)
 
 
 data class PaymenttypeResponse(
@@ -40,14 +44,22 @@ data class PaymenttypeResponse(
     val name: String,
     val date: String?,
 
+    val extra: PaymenttypeExtraInfo
 ){
     companion object {
-        fun from(paymenttype: Paymenttype): PaymenttypeResponse {
+        fun from(paymenttype: Paymenttype, gymResponse: GymResponse? = null): PaymenttypeResponse {
             return PaymenttypeResponse(
                 id = paymenttype.id,
                 gym = paymenttype.gym,
                 name = paymenttype.name,
                 date = paymenttype.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = PaymenttypeExtraInfo(
+                    
+                
+                     gym = gymResponse,
+                )
+                
             )
         }
     }

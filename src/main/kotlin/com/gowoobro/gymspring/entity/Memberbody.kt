@@ -88,6 +88,11 @@ data class MemberbodyUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class MemberbodyExtraInfo(
+
+    val memberuser: UserResponse? = null,
+    val measuredbyuser: UserResponse? = null,
+)
 
 
 data class MemberbodyResponse(
@@ -110,9 +115,10 @@ data class MemberbodyResponse(
     val measuredby: Long,
     val date: String?,
 
+    val extra: MemberbodyExtraInfo
 ){
     companion object {
-        fun from(memberbody: Memberbody): MemberbodyResponse {
+        fun from(memberbody: Memberbody, memberuserResponse: UserResponse? = null, measuredbyuserResponse: UserResponse? = null): MemberbodyResponse {
             return MemberbodyResponse(
                 id = memberbody.id,
                 user = memberbody.user,
@@ -132,6 +138,15 @@ data class MemberbodyResponse(
                 measureddate = memberbody.measureddate?.toString()?.replace("T", " ") ?: "",
                 measuredby = memberbody.measuredby,
                 date = memberbody.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = MemberbodyExtraInfo(
+                    
+                
+                     memberuser = memberuserResponse,
+                
+                     measuredbyuser = measuredbyuserResponse,
+                )
+                
             )
         }
     }
