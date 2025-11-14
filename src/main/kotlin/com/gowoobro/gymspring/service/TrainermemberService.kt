@@ -33,36 +33,36 @@ class TrainermemberService(private val trainermemberRepository: TrainermemberRep
     }
 
 
-    fun findByTrainer(trainer: Long): List<Trainermember> {
-        return trainermemberRepository.findByTrainerWithJoin(trainer)
+    fun findByTrainer(traineruser: Long): List<Trainermember> {
+        return trainermemberRepository.findBytrainerId(traineruser)
     }
 
-    fun findByMember(member: Long): List<Trainermember> {
-        return trainermemberRepository.findByMemberWithJoin(member)
+    fun findByMember(memberuser: Long): List<Trainermember> {
+        return trainermemberRepository.findBymemberId(memberuser)
     }
 
     fun findByGym(gym: Long): List<Trainermember> {
-        return trainermemberRepository.findByGymWithJoin(gym)
+        return trainermemberRepository.findBygymId(gym)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Trainermember> {
-        return trainermemberRepository.findByStartdateWithJoin(startdate)
+        return trainermemberRepository.findByStartdate(startdate)
     }
 
     fun findByEnddate(enddate: LocalDateTime): List<Trainermember> {
-        return trainermemberRepository.findByEnddateWithJoin(enddate)
+        return trainermemberRepository.findByEnddate(enddate)
     }
 
     fun findByStatus(status: Status): List<Trainermember> {
-        return trainermemberRepository.findByStatusWithJoin(status)
+        return trainermemberRepository.findByStatus(status)
     }
 
     fun findByNote(note: String): List<Trainermember> {
-        return trainermemberRepository.findByNoteWithJoin(note)
+        return trainermemberRepository.findByNote(note)
     }
 
     fun findByDate(date: LocalDateTime): List<Trainermember> {
-        return trainermemberRepository.findByDateWithJoin(date)
+        return trainermemberRepository.findByDate(date)
     }
 
 

@@ -34,51 +34,51 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
 
 
     fun findByRocker(rocker: Long): List<Rockerusage> {
-        return rockerusageRepository.findByRockerWithJoin(rocker)
+        return rockerusageRepository.findByrockerId(rocker)
     }
 
-    fun findByUser(user: Long): List<Rockerusage> {
-        return rockerusageRepository.findByUserWithJoin(user)
+    fun findByUser(memberuser: Long): List<Rockerusage> {
+        return rockerusageRepository.findByuserId(memberuser)
     }
 
     fun findByMembership(membership: Long): List<Rockerusage> {
-        return rockerusageRepository.findByMembershipWithJoin(membership)
+        return rockerusageRepository.findBymembershipId(membership)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Rockerusage> {
-        return rockerusageRepository.findByStartdateWithJoin(startdate)
+        return rockerusageRepository.findByStartdate(startdate)
     }
 
     fun findByEnddate(enddate: LocalDateTime): List<Rockerusage> {
-        return rockerusageRepository.findByEnddateWithJoin(enddate)
+        return rockerusageRepository.findByEnddate(enddate)
     }
 
     fun findByStatus(status: Status): List<Rockerusage> {
-        return rockerusageRepository.findByStatusWithJoin(status)
+        return rockerusageRepository.findByStatus(status)
     }
 
     fun findByDeposit(deposit: BigDecimal): List<Rockerusage> {
-        return rockerusageRepository.findByDepositWithJoin(deposit)
+        return rockerusageRepository.findByDeposit(deposit)
     }
 
     fun findByMonthlyfee(monthlyfee: BigDecimal): List<Rockerusage> {
-        return rockerusageRepository.findByMonthlyfeeWithJoin(monthlyfee)
+        return rockerusageRepository.findByMonthlyfee(monthlyfee)
     }
 
     fun findByNote(note: String): List<Rockerusage> {
-        return rockerusageRepository.findByNoteWithJoin(note)
+        return rockerusageRepository.findByNote(note)
     }
 
-    fun findByAssignedby(assignedby: Long): List<Rockerusage> {
-        return rockerusageRepository.findByAssignedbyWithJoin(assignedby)
+    fun findByAssignedby(assignedbyuser: Long): List<Rockerusage> {
+        return rockerusageRepository.findByassignedbyId(assignedbyuser)
     }
 
     fun findByAssigneddate(assigneddate: LocalDateTime): List<Rockerusage> {
-        return rockerusageRepository.findByAssigneddateWithJoin(assigneddate)
+        return rockerusageRepository.findByAssigneddate(assigneddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Rockerusage> {
-        return rockerusageRepository.findByDateWithJoin(date)
+        return rockerusageRepository.findByDate(date)
     }
 
 

@@ -5,6 +5,7 @@ import com.gowoobro.gymspring.entity.MemberbodyCreateRequest
 import com.gowoobro.gymspring.entity.MemberbodyUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -14,60 +15,60 @@ import java.math.BigDecimal
 
 @Repository
 interface MemberbodyRepository : JpaRepository<Memberbody, Long> {
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser")
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
     override fun findAll(pageable: Pageable): Page<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.id = :id")
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
     override fun findById(id: Long): java.util.Optional<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.userId = :memberuser")
-    fun findByUserWithJoin(memberuser: Long): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByuserId(memberuser: Long): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.height = :height")
-    fun findByHeightWithJoin(height: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByHeight(height: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.weight = :weight")
-    fun findByWeightWithJoin(weight: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByWeight(weight: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.bodyfat = :bodyfat")
-    fun findByBodyfatWithJoin(bodyfat: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByBodyfat(bodyfat: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.musclemass = :musclemass")
-    fun findByMusclemassWithJoin(musclemass: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByMusclemass(musclemass: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.bmi = :bmi")
-    fun findByBmiWithJoin(bmi: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByBmi(bmi: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.skeletalmuscle = :skeletalmuscle")
-    fun findBySkeletalmuscleWithJoin(skeletalmuscle: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findBySkeletalmuscle(skeletalmuscle: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.bodywater = :bodywater")
-    fun findByBodywaterWithJoin(bodywater: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByBodywater(bodywater: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.chest = :chest")
-    fun findByChestWithJoin(chest: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByChest(chest: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.waist = :waist")
-    fun findByWaistWithJoin(waist: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByWaist(waist: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.hip = :hip")
-    fun findByHipWithJoin(hip: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByHip(hip: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.arm = :arm")
-    fun findByArmWithJoin(arm: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByArm(arm: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.thigh = :thigh")
-    fun findByThighWithJoin(thigh: BigDecimal): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByThigh(thigh: BigDecimal): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.note = :note")
-    fun findByNoteWithJoin(note: String): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByNote(note: String): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.measureddate = :measureddate")
-    fun findByMeasureddateWithJoin(measureddate: LocalDateTime): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByMeasureddate(measureddate: LocalDateTime): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.measuredbyId = :measuredbyuser")
-    fun findByMeasuredbyWithJoin(measuredbyuser: Long): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findBymeasuredbyId(measuredbyuser: Long): List<Memberbody>
 
-    @Query("SELECT m FROM Memberbody m LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.measuredbyuser WHERE m.date = :date")
-    fun findByDateWithJoin(date: LocalDateTime): List<Memberbody>
+    @EntityGraph(attributePaths = ["memberuser", "measuredbyuser"])
+    fun findByDate(date: LocalDateTime): List<Memberbody>
 }

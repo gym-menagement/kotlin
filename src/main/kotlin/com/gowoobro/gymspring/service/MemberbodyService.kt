@@ -32,72 +32,72 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
     }
 
 
-    fun findByUser(user: Long): List<Memberbody> {
-        return memberbodyRepository.findByUserWithJoin(user)
+    fun findByUser(memberuser: Long): List<Memberbody> {
+        return memberbodyRepository.findByuserId(memberuser)
     }
 
     fun findByHeight(height: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByHeightWithJoin(height)
+        return memberbodyRepository.findByHeight(height)
     }
 
     fun findByWeight(weight: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByWeightWithJoin(weight)
+        return memberbodyRepository.findByWeight(weight)
     }
 
     fun findByBodyfat(bodyfat: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByBodyfatWithJoin(bodyfat)
+        return memberbodyRepository.findByBodyfat(bodyfat)
     }
 
     fun findByMusclemass(musclemass: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByMusclemassWithJoin(musclemass)
+        return memberbodyRepository.findByMusclemass(musclemass)
     }
 
     fun findByBmi(bmi: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByBmiWithJoin(bmi)
+        return memberbodyRepository.findByBmi(bmi)
     }
 
     fun findBySkeletalmuscle(skeletalmuscle: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findBySkeletalmuscleWithJoin(skeletalmuscle)
+        return memberbodyRepository.findBySkeletalmuscle(skeletalmuscle)
     }
 
     fun findByBodywater(bodywater: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByBodywaterWithJoin(bodywater)
+        return memberbodyRepository.findByBodywater(bodywater)
     }
 
     fun findByChest(chest: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByChestWithJoin(chest)
+        return memberbodyRepository.findByChest(chest)
     }
 
     fun findByWaist(waist: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByWaistWithJoin(waist)
+        return memberbodyRepository.findByWaist(waist)
     }
 
     fun findByHip(hip: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByHipWithJoin(hip)
+        return memberbodyRepository.findByHip(hip)
     }
 
     fun findByArm(arm: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByArmWithJoin(arm)
+        return memberbodyRepository.findByArm(arm)
     }
 
     fun findByThigh(thigh: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByThighWithJoin(thigh)
+        return memberbodyRepository.findByThigh(thigh)
     }
 
     fun findByNote(note: String): List<Memberbody> {
-        return memberbodyRepository.findByNoteWithJoin(note)
+        return memberbodyRepository.findByNote(note)
     }
 
     fun findByMeasureddate(measureddate: LocalDateTime): List<Memberbody> {
-        return memberbodyRepository.findByMeasureddateWithJoin(measureddate)
+        return memberbodyRepository.findByMeasureddate(measureddate)
     }
 
-    fun findByMeasuredby(measuredby: Long): List<Memberbody> {
-        return memberbodyRepository.findByMeasuredbyWithJoin(measuredby)
+    fun findByMeasuredby(measuredbyuser: Long): List<Memberbody> {
+        return memberbodyRepository.findBymeasuredbyId(measuredbyuser)
     }
 
     fun findByDate(date: LocalDateTime): List<Memberbody> {
-        return memberbodyRepository.findByDateWithJoin(date)
+        return memberbodyRepository.findByDate(date)
     }
 
 

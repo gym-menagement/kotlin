@@ -34,39 +34,39 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
 
 
     fun findByUser(user: Long): List<Pushtoken> {
-        return pushtokenRepository.findByUserWithJoin(user)
+        return pushtokenRepository.findByuserId(user)
     }
 
     fun findByToken(token: String): List<Pushtoken> {
-        return pushtokenRepository.findByTokenWithJoin(token)
+        return pushtokenRepository.findByToken(token)
     }
 
     fun findByDevicetype(devicetype: String): List<Pushtoken> {
-        return pushtokenRepository.findByDevicetypeWithJoin(devicetype)
+        return pushtokenRepository.findByDevicetype(devicetype)
     }
 
     fun findByDeviceid(deviceid: String): List<Pushtoken> {
-        return pushtokenRepository.findByDeviceidWithJoin(deviceid)
+        return pushtokenRepository.findByDeviceid(deviceid)
     }
 
     fun findByAppversion(appversion: String): List<Pushtoken> {
-        return pushtokenRepository.findByAppversionWithJoin(appversion)
+        return pushtokenRepository.findByAppversion(appversion)
     }
 
     fun findByIsactive(isactive: Isactive): List<Pushtoken> {
-        return pushtokenRepository.findByIsactiveWithJoin(isactive)
+        return pushtokenRepository.findByIsactive(isactive)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Pushtoken> {
-        return pushtokenRepository.findByCreateddateWithJoin(createddate)
+        return pushtokenRepository.findByCreateddate(createddate)
     }
 
     fun findByUpdateddate(updateddate: LocalDateTime): List<Pushtoken> {
-        return pushtokenRepository.findByUpdateddateWithJoin(updateddate)
+        return pushtokenRepository.findByUpdateddate(updateddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Pushtoken> {
-        return pushtokenRepository.findByDateWithJoin(date)
+        return pushtokenRepository.findByDate(date)
     }
 
 

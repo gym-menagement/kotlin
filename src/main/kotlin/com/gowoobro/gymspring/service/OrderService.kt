@@ -33,11 +33,11 @@ class OrderService(private val orderRepository: OrderRepository) {
 
 
     fun findByMembership(membership: Long): List<Order> {
-        return orderRepository.findByMembershipWithJoin(membership)
+        return orderRepository.findBymembershipId(membership)
     }
 
     fun findByDate(date: LocalDateTime): List<Order> {
-        return orderRepository.findByDateWithJoin(date)
+        return orderRepository.findByDate(date)
     }
 
 

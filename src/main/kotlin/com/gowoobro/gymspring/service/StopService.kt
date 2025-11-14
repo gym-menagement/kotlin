@@ -32,24 +32,24 @@ class StopService(private val stopRepository: StopRepository) {
     }
 
 
-    fun findByUsehelth(usehelth: Long): List<Stop> {
-        return stopRepository.findByUsehelthWithJoin(usehelth)
+    fun findByUsehelth(usehealth: Long): List<Stop> {
+        return stopRepository.findByusehelthId(usehealth)
     }
 
     fun findByStartday(startday: LocalDateTime): List<Stop> {
-        return stopRepository.findByStartdayWithJoin(startday)
+        return stopRepository.findByStartday(startday)
     }
 
     fun findByEndday(endday: LocalDateTime): List<Stop> {
-        return stopRepository.findByEnddayWithJoin(endday)
+        return stopRepository.findByEndday(endday)
     }
 
     fun findByCount(count: Int): List<Stop> {
-        return stopRepository.findByCountWithJoin(count)
+        return stopRepository.findByCount(count)
     }
 
     fun findByDate(date: LocalDateTime): List<Stop> {
-        return stopRepository.findByDateWithJoin(date)
+        return stopRepository.findByDate(date)
     }
 
 

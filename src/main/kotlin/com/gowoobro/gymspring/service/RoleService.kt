@@ -33,19 +33,19 @@ class RoleService(private val roleRepository: RoleRepository) {
 
 
     fun findByGym(gym: Long): List<Role> {
-        return roleRepository.findByGymWithJoin(gym)
+        return roleRepository.findBygymId(gym)
     }
 
     fun findByRoleid(roleid: Int): List<Role> {
-        return roleRepository.findByRoleidWithJoin(roleid)
+        return roleRepository.findByRoleid(roleid)
     }
 
     fun findByName(name: String): List<Role> {
-        return roleRepository.findByNameWithJoin(name)
+        return roleRepository.findByName(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Role> {
-        return roleRepository.findByDateWithJoin(date)
+        return roleRepository.findByDate(date)
     }
 
 

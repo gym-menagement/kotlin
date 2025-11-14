@@ -5,6 +5,7 @@ import com.gowoobro.gymspring.entity.NoticeCreateRequest
 import com.gowoobro.gymspring.entity.NoticeUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -19,54 +20,54 @@ import com.gowoobro.gymspring.enums.notice.Status
 
 @Repository
 interface NoticeRepository : JpaRepository<Notice, Long> {
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user")
+    @EntityGraph(attributePaths = ["gym", "user"])
     override fun findAll(pageable: Pageable): Page<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.id = :id")
+    @EntityGraph(attributePaths = ["gym", "user"])
     override fun findById(id: Long): java.util.Optional<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.gymId = :gym")
-    fun findByGymWithJoin(gym: Long): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findBygymId(gym: Long): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.title = :title")
-    fun findByTitleWithJoin(title: String): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByTitle(title: String): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.content = :content")
-    fun findByContentWithJoin(content: String): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByContent(content: String): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.type = :type")
-    fun findByTypeWithJoin(type: Type): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByType(type: Type): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.ispopup = :ispopup")
-    fun findByIspopupWithJoin(ispopup: Ispopup): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByIspopup(ispopup: Ispopup): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.ispush = :ispush")
-    fun findByIspushWithJoin(ispush: Ispush): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByIspush(ispush: Ispush): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.target = :target")
-    fun findByTargetWithJoin(target: Target): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByTarget(target: Target): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.viewcount = :viewcount")
-    fun findByViewcountWithJoin(viewcount: Int): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByViewcount(viewcount: Int): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.startdate = :startdate")
-    fun findByStartdateWithJoin(startdate: LocalDateTime): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByStartdate(startdate: LocalDateTime): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.enddate = :enddate")
-    fun findByEnddateWithJoin(enddate: LocalDateTime): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByEnddate(enddate: LocalDateTime): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.status = :status")
-    fun findByStatusWithJoin(status: Status): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByStatus(status: Status): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.createdbyId = :user")
-    fun findByCreatedbyWithJoin(user: Long): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findBycreatedbyId(user: Long): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.createddate = :createddate")
-    fun findByCreateddateWithJoin(createddate: LocalDateTime): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByCreateddate(createddate: LocalDateTime): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.updateddate = :updateddate")
-    fun findByUpdateddateWithJoin(updateddate: LocalDateTime): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByUpdateddate(updateddate: LocalDateTime): List<Notice>
 
-    @Query("SELECT m FROM Notice m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.user WHERE m.date = :date")
-    fun findByDateWithJoin(date: LocalDateTime): List<Notice>
+    @EntityGraph(attributePaths = ["gym", "user"])
+    fun findByDate(date: LocalDateTime): List<Notice>
 }

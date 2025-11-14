@@ -33,15 +33,15 @@ class HealthcategoryService(private val healthcategoryRepository: Healthcategory
 
 
     fun findByGym(gym: Long): List<Healthcategory> {
-        return healthcategoryRepository.findByGymWithJoin(gym)
+        return healthcategoryRepository.findBygymId(gym)
     }
 
     fun findByName(name: String): List<Healthcategory> {
-        return healthcategoryRepository.findByNameWithJoin(name)
+        return healthcategoryRepository.findByName(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Healthcategory> {
-        return healthcategoryRepository.findByDateWithJoin(date)
+        return healthcategoryRepository.findByDate(date)
     }
 
 

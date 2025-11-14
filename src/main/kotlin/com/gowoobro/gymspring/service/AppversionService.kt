@@ -35,43 +35,43 @@ class AppversionService(private val appversionRepository: AppversionRepository) 
 
 
     fun findByPlatform(platform: String): List<Appversion> {
-        return appversionRepository.findByPlatformWithJoin(platform)
+        return appversionRepository.findByPlatform(platform)
     }
 
     fun findByVersion(version: String): List<Appversion> {
-        return appversionRepository.findByVersionWithJoin(version)
+        return appversionRepository.findByVersion(version)
     }
 
     fun findByMinversion(minversion: String): List<Appversion> {
-        return appversionRepository.findByMinversionWithJoin(minversion)
+        return appversionRepository.findByMinversion(minversion)
     }
 
     fun findByForceupdate(forceupdate: Forceupdate): List<Appversion> {
-        return appversionRepository.findByForceupdateWithJoin(forceupdate)
+        return appversionRepository.findByForceupdate(forceupdate)
     }
 
     fun findByUpdatemessage(updatemessage: String): List<Appversion> {
-        return appversionRepository.findByUpdatemessageWithJoin(updatemessage)
+        return appversionRepository.findByUpdatemessage(updatemessage)
     }
 
     fun findByDownloadurl(downloadurl: String): List<Appversion> {
-        return appversionRepository.findByDownloadurlWithJoin(downloadurl)
+        return appversionRepository.findByDownloadurl(downloadurl)
     }
 
     fun findByStatus(status: Status): List<Appversion> {
-        return appversionRepository.findByStatusWithJoin(status)
+        return appversionRepository.findByStatus(status)
     }
 
     fun findByReleasedate(releasedate: LocalDateTime): List<Appversion> {
-        return appversionRepository.findByReleasedateWithJoin(releasedate)
+        return appversionRepository.findByReleasedate(releasedate)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Appversion> {
-        return appversionRepository.findByCreateddateWithJoin(createddate)
+        return appversionRepository.findByCreateddate(createddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Appversion> {
-        return appversionRepository.findByDateWithJoin(date)
+        return appversionRepository.findByDate(date)
     }
 
 

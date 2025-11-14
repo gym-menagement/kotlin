@@ -32,40 +32,40 @@ class HealthService(private val healthRepository: HealthRepository) {
     }
 
 
-    fun findByCategory(category: Long): List<Health> {
-        return healthRepository.findByCategoryWithJoin(category)
+    fun findByCategory(healthcategory: Long): List<Health> {
+        return healthRepository.findBycategoryId(healthcategory)
     }
 
     fun findByTerm(term: Long): List<Health> {
-        return healthRepository.findByTermWithJoin(term)
+        return healthRepository.findBytermId(term)
     }
 
     fun findByName(name: String): List<Health> {
-        return healthRepository.findByNameWithJoin(name)
+        return healthRepository.findByName(name)
     }
 
     fun findByCount(count: Int): List<Health> {
-        return healthRepository.findByCountWithJoin(count)
+        return healthRepository.findByCount(count)
     }
 
     fun findByCost(cost: Int): List<Health> {
-        return healthRepository.findByCostWithJoin(cost)
+        return healthRepository.findByCost(cost)
     }
 
     fun findByDiscount(discount: Long): List<Health> {
-        return healthRepository.findByDiscountWithJoin(discount)
+        return healthRepository.findBydiscountId(discount)
     }
 
     fun findByCostdiscount(costdiscount: Int): List<Health> {
-        return healthRepository.findByCostdiscountWithJoin(costdiscount)
+        return healthRepository.findByCostdiscount(costdiscount)
     }
 
     fun findByContent(content: String): List<Health> {
-        return healthRepository.findByContentWithJoin(content)
+        return healthRepository.findByContent(content)
     }
 
     fun findByDate(date: LocalDateTime): List<Health> {
-        return healthRepository.findByDateWithJoin(date)
+        return healthRepository.findByDate(date)
     }
 
 

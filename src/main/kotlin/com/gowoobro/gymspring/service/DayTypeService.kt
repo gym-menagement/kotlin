@@ -33,15 +33,15 @@ class DaytypeService(private val daytypeRepository: DaytypeRepository) {
 
 
     fun findByGym(gym: Long): List<Daytype> {
-        return daytypeRepository.findByGymWithJoin(gym)
+        return daytypeRepository.findBygymId(gym)
     }
 
     fun findByName(name: String): List<Daytype> {
-        return daytypeRepository.findByNameWithJoin(name)
+        return daytypeRepository.findByName(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Daytype> {
-        return daytypeRepository.findByDateWithJoin(date)
+        return daytypeRepository.findByDate(date)
     }
 
 

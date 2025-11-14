@@ -5,6 +5,7 @@ import com.gowoobro.gymspring.entity.PtreservationCreateRequest
 import com.gowoobro.gymspring.entity.PtreservationUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -15,48 +16,48 @@ import com.gowoobro.gymspring.enums.ptreservation.Status
 
 @Repository
 interface PtreservationRepository : JpaRepository<Ptreservation, Long> {
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym")
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
     override fun findAll(pageable: Pageable): Page<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.id = :id")
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
     override fun findById(id: Long): java.util.Optional<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.trainerId = :traineruser")
-    fun findByTrainerWithJoin(traineruser: Long): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findBytrainerId(traineruser: Long): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.memberId = :memberuser")
-    fun findByMemberWithJoin(memberuser: Long): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findBymemberId(memberuser: Long): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.gymId = :gym")
-    fun findByGymWithJoin(gym: Long): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findBygymId(gym: Long): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.reservationdate = :reservationdate")
-    fun findByReservationdateWithJoin(reservationdate: LocalDateTime): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByReservationdate(reservationdate: LocalDateTime): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.starttime = :starttime")
-    fun findByStarttimeWithJoin(starttime: String): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByStarttime(starttime: String): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.endtime = :endtime")
-    fun findByEndtimeWithJoin(endtime: String): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByEndtime(endtime: String): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.duration = :duration")
-    fun findByDurationWithJoin(duration: Int): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByDuration(duration: Int): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.status = :status")
-    fun findByStatusWithJoin(status: Status): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByStatus(status: Status): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.note = :note")
-    fun findByNoteWithJoin(note: String): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByNote(note: String): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.cancelreason = :cancelreason")
-    fun findByCancelreasonWithJoin(cancelreason: String): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByCancelreason(cancelreason: String): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.createddate = :createddate")
-    fun findByCreateddateWithJoin(createddate: LocalDateTime): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByCreateddate(createddate: LocalDateTime): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.updateddate = :updateddate")
-    fun findByUpdateddateWithJoin(updateddate: LocalDateTime): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByUpdateddate(updateddate: LocalDateTime): List<Ptreservation>
 
-    @Query("SELECT m FROM Ptreservation m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.date = :date")
-    fun findByDateWithJoin(date: LocalDateTime): List<Ptreservation>
+    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    fun findByDate(date: LocalDateTime): List<Ptreservation>
 }

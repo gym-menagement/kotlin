@@ -34,19 +34,19 @@ class TokenService(private val tokenRepository: TokenRepository) {
 
 
     fun findByUser(user: Long): List<Token> {
-        return tokenRepository.findByUserWithJoin(user)
+        return tokenRepository.findByuserId(user)
     }
 
     fun findByToken(token: String): List<Token> {
-        return tokenRepository.findByTokenWithJoin(token)
+        return tokenRepository.findByToken(token)
     }
 
     fun findByStatus(status: Status): List<Token> {
-        return tokenRepository.findByStatusWithJoin(status)
+        return tokenRepository.findByStatus(status)
     }
 
     fun findByDate(date: LocalDateTime): List<Token> {
-        return tokenRepository.findByDateWithJoin(date)
+        return tokenRepository.findByDate(date)
     }
 
 

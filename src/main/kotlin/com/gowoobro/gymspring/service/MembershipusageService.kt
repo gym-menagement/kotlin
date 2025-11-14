@@ -35,63 +35,63 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
 
 
     fun findByMembership(membership: Long): List<Membershipusage> {
-        return membershipusageRepository.findByMembershipWithJoin(membership)
+        return membershipusageRepository.findBymembershipId(membership)
     }
 
     fun findByUser(user: Long): List<Membershipusage> {
-        return membershipusageRepository.findByUserWithJoin(user)
+        return membershipusageRepository.findByuserId(user)
     }
 
     fun findByType(type: Type): List<Membershipusage> {
-        return membershipusageRepository.findByTypeWithJoin(type)
+        return membershipusageRepository.findByType(type)
     }
 
     fun findByTotaldays(totaldays: Int): List<Membershipusage> {
-        return membershipusageRepository.findByTotaldaysWithJoin(totaldays)
+        return membershipusageRepository.findByTotaldays(totaldays)
     }
 
     fun findByUseddays(useddays: Int): List<Membershipusage> {
-        return membershipusageRepository.findByUseddaysWithJoin(useddays)
+        return membershipusageRepository.findByUseddays(useddays)
     }
 
     fun findByRemainingdays(remainingdays: Int): List<Membershipusage> {
-        return membershipusageRepository.findByRemainingdaysWithJoin(remainingdays)
+        return membershipusageRepository.findByRemainingdays(remainingdays)
     }
 
     fun findByTotalcount(totalcount: Int): List<Membershipusage> {
-        return membershipusageRepository.findByTotalcountWithJoin(totalcount)
+        return membershipusageRepository.findByTotalcount(totalcount)
     }
 
     fun findByUsedcount(usedcount: Int): List<Membershipusage> {
-        return membershipusageRepository.findByUsedcountWithJoin(usedcount)
+        return membershipusageRepository.findByUsedcount(usedcount)
     }
 
     fun findByRemainingcount(remainingcount: Int): List<Membershipusage> {
-        return membershipusageRepository.findByRemainingcountWithJoin(remainingcount)
+        return membershipusageRepository.findByRemainingcount(remainingcount)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Membershipusage> {
-        return membershipusageRepository.findByStartdateWithJoin(startdate)
+        return membershipusageRepository.findByStartdate(startdate)
     }
 
     fun findByEnddate(enddate: LocalDateTime): List<Membershipusage> {
-        return membershipusageRepository.findByEnddateWithJoin(enddate)
+        return membershipusageRepository.findByEnddate(enddate)
     }
 
     fun findByStatus(status: Status): List<Membershipusage> {
-        return membershipusageRepository.findByStatusWithJoin(status)
+        return membershipusageRepository.findByStatus(status)
     }
 
     fun findByPausedays(pausedays: Int): List<Membershipusage> {
-        return membershipusageRepository.findByPausedaysWithJoin(pausedays)
+        return membershipusageRepository.findByPausedays(pausedays)
     }
 
     fun findByLastuseddate(lastuseddate: LocalDateTime): List<Membershipusage> {
-        return membershipusageRepository.findByLastuseddateWithJoin(lastuseddate)
+        return membershipusageRepository.findByLastuseddate(lastuseddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Membershipusage> {
-        return membershipusageRepository.findByDateWithJoin(date)
+        return membershipusageRepository.findByDate(date)
     }
 
 

@@ -36,59 +36,59 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
 
 
     fun findByUser(user: Long): List<Attendance> {
-        return attendanceRepository.findByUserWithJoin(user)
+        return attendanceRepository.findByuserId(user)
     }
 
     fun findByMembership(membership: Long): List<Attendance> {
-        return attendanceRepository.findByMembershipWithJoin(membership)
+        return attendanceRepository.findBymembershipId(membership)
     }
 
     fun findByGym(gym: Long): List<Attendance> {
-        return attendanceRepository.findByGymWithJoin(gym)
+        return attendanceRepository.findBygymId(gym)
     }
 
     fun findByType(type: Type): List<Attendance> {
-        return attendanceRepository.findByTypeWithJoin(type)
+        return attendanceRepository.findByType(type)
     }
 
     fun findByMethod(method: Method): List<Attendance> {
-        return attendanceRepository.findByMethodWithJoin(method)
+        return attendanceRepository.findByMethod(method)
     }
 
     fun findByCheckintime(checkintime: LocalDateTime): List<Attendance> {
-        return attendanceRepository.findByCheckintimeWithJoin(checkintime)
+        return attendanceRepository.findByCheckintime(checkintime)
     }
 
     fun findByCheckouttime(checkouttime: LocalDateTime): List<Attendance> {
-        return attendanceRepository.findByCheckouttimeWithJoin(checkouttime)
+        return attendanceRepository.findByCheckouttime(checkouttime)
     }
 
     fun findByDuration(duration: Int): List<Attendance> {
-        return attendanceRepository.findByDurationWithJoin(duration)
+        return attendanceRepository.findByDuration(duration)
     }
 
     fun findByStatus(status: Status): List<Attendance> {
-        return attendanceRepository.findByStatusWithJoin(status)
+        return attendanceRepository.findByStatus(status)
     }
 
     fun findByNote(note: String): List<Attendance> {
-        return attendanceRepository.findByNoteWithJoin(note)
+        return attendanceRepository.findByNote(note)
     }
 
     fun findByIp(ip: String): List<Attendance> {
-        return attendanceRepository.findByIpWithJoin(ip)
+        return attendanceRepository.findByIp(ip)
     }
 
     fun findByDevice(device: String): List<Attendance> {
-        return attendanceRepository.findByDeviceWithJoin(device)
+        return attendanceRepository.findByDevice(device)
     }
 
     fun findByCreatedby(createdby: Long): List<Attendance> {
-        return attendanceRepository.findByCreatedbyWithJoin(createdby)
+        return attendanceRepository.findByCreatedby(createdby)
     }
 
     fun findByDate(date: LocalDateTime): List<Attendance> {
-        return attendanceRepository.findByDateWithJoin(date)
+        return attendanceRepository.findByDate(date)
     }
 
 

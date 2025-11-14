@@ -33,15 +33,15 @@ class PaymenttypeService(private val paymenttypeRepository: PaymenttypeRepositor
 
 
     fun findByGym(gym: Long): List<Paymenttype> {
-        return paymenttypeRepository.findByGymWithJoin(gym)
+        return paymenttypeRepository.findBygymId(gym)
     }
 
     fun findByName(name: String): List<Paymenttype> {
-        return paymenttypeRepository.findByNameWithJoin(name)
+        return paymenttypeRepository.findByName(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Paymenttype> {
-        return paymenttypeRepository.findByDateWithJoin(date)
+        return paymenttypeRepository.findByDate(date)
     }
 
 

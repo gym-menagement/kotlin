@@ -33,39 +33,39 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
 
 
     fun findByOrder(order: Long): List<Usehealth> {
-        return usehealthRepository.findByOrderWithJoin(order)
+        return usehealthRepository.findByorderId(order)
     }
 
     fun findByHealth(health: Long): List<Usehealth> {
-        return usehealthRepository.findByHealthWithJoin(health)
+        return usehealthRepository.findByhealthId(health)
     }
 
     fun findByUser(user: Long): List<Usehealth> {
-        return usehealthRepository.findByUserWithJoin(user)
+        return usehealthRepository.findByuserId(user)
     }
 
     fun findByRocker(rocker: Long): List<Usehealth> {
-        return usehealthRepository.findByRockerWithJoin(rocker)
+        return usehealthRepository.findByrockerId(rocker)
     }
 
     fun findByTerm(term: Long): List<Usehealth> {
-        return usehealthRepository.findByTermWithJoin(term)
+        return usehealthRepository.findBytermId(term)
     }
 
     fun findByDiscount(discount: Long): List<Usehealth> {
-        return usehealthRepository.findByDiscountWithJoin(discount)
+        return usehealthRepository.findBydiscountId(discount)
     }
 
     fun findByStartday(startday: LocalDateTime): List<Usehealth> {
-        return usehealthRepository.findByStartdayWithJoin(startday)
+        return usehealthRepository.findByStartday(startday)
     }
 
     fun findByEndday(endday: LocalDateTime): List<Usehealth> {
-        return usehealthRepository.findByEnddayWithJoin(endday)
+        return usehealthRepository.findByEndday(endday)
     }
 
     fun findByDate(date: LocalDateTime): List<Usehealth> {
-        return usehealthRepository.findByDateWithJoin(date)
+        return usehealthRepository.findByDate(date)
     }
 
 

@@ -34,39 +34,39 @@ class SettingService(private val settingRepository: SettingRepository) {
 
 
     fun findByCategory(category: String): List<Setting> {
-        return settingRepository.findByCategoryWithJoin(category)
+        return settingRepository.findByCategory(category)
     }
 
     fun findByName(name: String): List<Setting> {
-        return settingRepository.findByNameWithJoin(name)
+        return settingRepository.findByName(name)
     }
 
     fun findByKey(key: String): List<Setting> {
-        return settingRepository.findByKeyWithJoin(key)
+        return settingRepository.findByKey(key)
     }
 
     fun findByValue(value: String): List<Setting> {
-        return settingRepository.findByValueWithJoin(value)
+        return settingRepository.findByValue(value)
     }
 
     fun findByRemark(remark: String): List<Setting> {
-        return settingRepository.findByRemarkWithJoin(remark)
+        return settingRepository.findByRemark(remark)
     }
 
     fun findByType(type: Type): List<Setting> {
-        return settingRepository.findByTypeWithJoin(type)
+        return settingRepository.findByType(type)
     }
 
     fun findByData(data: String): List<Setting> {
-        return settingRepository.findByDataWithJoin(data)
+        return settingRepository.findByData(data)
     }
 
     fun findByOrder(order: Int): List<Setting> {
-        return settingRepository.findByOrderWithJoin(order)
+        return settingRepository.findByOrder(order)
     }
 
     fun findByDate(date: LocalDateTime): List<Setting> {
-        return settingRepository.findByDateWithJoin(date)
+        return settingRepository.findByDate(date)
     }
 
 

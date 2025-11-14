@@ -5,6 +5,7 @@ import com.gowoobro.gymspring.entity.TokenCreateRequest
 import com.gowoobro.gymspring.entity.TokenUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -15,21 +16,21 @@ import com.gowoobro.gymspring.enums.token.Status
 
 @Repository
 interface TokenRepository : JpaRepository<Token, Long> {
-    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user")
+    @EntityGraph(attributePaths = ["user"])
     override fun findAll(pageable: Pageable): Page<Token>
 
-    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.id = :id")
+    @EntityGraph(attributePaths = ["user"])
     override fun findById(id: Long): java.util.Optional<Token>
 
-    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.userId = :user")
-    fun findByUserWithJoin(user: Long): List<Token>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByuserId(user: Long): List<Token>
 
-    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.token = :token")
-    fun findByTokenWithJoin(token: String): List<Token>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByToken(token: String): List<Token>
 
-    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.status = :status")
-    fun findByStatusWithJoin(status: Status): List<Token>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByStatus(status: Status): List<Token>
 
-    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.date = :date")
-    fun findByDateWithJoin(date: LocalDateTime): List<Token>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByDate(date: LocalDateTime): List<Token>
 }

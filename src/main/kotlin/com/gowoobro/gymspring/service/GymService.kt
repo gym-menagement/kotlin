@@ -33,11 +33,11 @@ class GymService(private val gymRepository: GymRepository) {
 
 
     fun findByName(name: String): List<Gym> {
-        return gymRepository.findByNameWithJoin(name)
+        return gymRepository.findByName(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Gym> {
-        return gymRepository.findByDateWithJoin(date)
+        return gymRepository.findByDate(date)
     }
 
 

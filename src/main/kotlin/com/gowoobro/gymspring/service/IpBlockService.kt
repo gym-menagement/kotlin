@@ -36,27 +36,27 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
 
 
     fun findByAddress(address: String): List<Ipblock> {
-        return ipblockRepository.findByAddressWithJoin(address)
+        return ipblockRepository.findByAddress(address)
     }
 
     fun findByType(type: Type): List<Ipblock> {
-        return ipblockRepository.findByTypeWithJoin(type)
+        return ipblockRepository.findByType(type)
     }
 
     fun findByPolicy(policy: Policy): List<Ipblock> {
-        return ipblockRepository.findByPolicyWithJoin(policy)
+        return ipblockRepository.findByPolicy(policy)
     }
 
     fun findByUse(use: Use): List<Ipblock> {
-        return ipblockRepository.findByUseWithJoin(use)
+        return ipblockRepository.findByUse(use)
     }
 
     fun findByOrder(order: Int): List<Ipblock> {
-        return ipblockRepository.findByOrderWithJoin(order)
+        return ipblockRepository.findByOrder(order)
     }
 
     fun findByDate(date: LocalDateTime): List<Ipblock> {
-        return ipblockRepository.findByDateWithJoin(date)
+        return ipblockRepository.findByDate(date)
     }
 
 

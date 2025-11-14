@@ -34,48 +34,48 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
     }
 
 
-    fun findByUser(user: Long): List<Inquiry> {
-        return inquiryRepository.findByUserWithJoin(user)
+    fun findByUser(inquireruser: Long): List<Inquiry> {
+        return inquiryRepository.findByuserId(inquireruser)
     }
 
     fun findByGym(gym: Long): List<Inquiry> {
-        return inquiryRepository.findByGymWithJoin(gym)
+        return inquiryRepository.findBygymId(gym)
     }
 
     fun findByType(type: Type): List<Inquiry> {
-        return inquiryRepository.findByTypeWithJoin(type)
+        return inquiryRepository.findByType(type)
     }
 
     fun findByTitle(title: String): List<Inquiry> {
-        return inquiryRepository.findByTitleWithJoin(title)
+        return inquiryRepository.findByTitle(title)
     }
 
     fun findByContent(content: String): List<Inquiry> {
-        return inquiryRepository.findByContentWithJoin(content)
+        return inquiryRepository.findByContent(content)
     }
 
     fun findByStatus(status: Status): List<Inquiry> {
-        return inquiryRepository.findByStatusWithJoin(status)
+        return inquiryRepository.findByStatus(status)
     }
 
     fun findByAnswer(answer: String): List<Inquiry> {
-        return inquiryRepository.findByAnswerWithJoin(answer)
+        return inquiryRepository.findByAnswer(answer)
     }
 
-    fun findByAnsweredby(answeredby: Long): List<Inquiry> {
-        return inquiryRepository.findByAnsweredbyWithJoin(answeredby)
+    fun findByAnsweredby(answeredbyuser: Long): List<Inquiry> {
+        return inquiryRepository.findByansweredbyId(answeredbyuser)
     }
 
     fun findByAnswereddate(answereddate: LocalDateTime): List<Inquiry> {
-        return inquiryRepository.findByAnswereddateWithJoin(answereddate)
+        return inquiryRepository.findByAnswereddate(answereddate)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Inquiry> {
-        return inquiryRepository.findByCreateddateWithJoin(createddate)
+        return inquiryRepository.findByCreateddate(createddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Inquiry> {
-        return inquiryRepository.findByDateWithJoin(date)
+        return inquiryRepository.findByDate(date)
     }
 
 

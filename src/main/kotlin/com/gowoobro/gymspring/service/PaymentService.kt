@@ -33,23 +33,23 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
 
 
     fun findByGym(gym: Long): List<Payment> {
-        return paymentRepository.findByGymWithJoin(gym)
+        return paymentRepository.findBygymId(gym)
     }
 
     fun findByOrder(order: Long): List<Payment> {
-        return paymentRepository.findByOrderWithJoin(order)
+        return paymentRepository.findByorderId(order)
     }
 
     fun findByMembership(membership: Long): List<Payment> {
-        return paymentRepository.findByMembershipWithJoin(membership)
+        return paymentRepository.findBymembershipId(membership)
     }
 
     fun findByCost(cost: Int): List<Payment> {
-        return paymentRepository.findByCostWithJoin(cost)
+        return paymentRepository.findByCost(cost)
     }
 
     fun findByDate(date: LocalDateTime): List<Payment> {
-        return paymentRepository.findByDateWithJoin(date)
+        return paymentRepository.findByDate(date)
     }
 
 

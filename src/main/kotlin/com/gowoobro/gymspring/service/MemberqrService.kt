@@ -34,39 +34,39 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
 
 
     fun findByUser(user: Long): List<Memberqr> {
-        return memberqrRepository.findByUserWithJoin(user)
+        return memberqrRepository.findByuserId(user)
     }
 
     fun findByCode(code: String): List<Memberqr> {
-        return memberqrRepository.findByCodeWithJoin(code)
+        return memberqrRepository.findByCode(code)
     }
 
     fun findByImageurl(imageurl: String): List<Memberqr> {
-        return memberqrRepository.findByImageurlWithJoin(imageurl)
+        return memberqrRepository.findByImageurl(imageurl)
     }
 
     fun findByIsactive(isactive: Isactive): List<Memberqr> {
-        return memberqrRepository.findByIsactiveWithJoin(isactive)
+        return memberqrRepository.findByIsactive(isactive)
     }
 
     fun findByExpiredate(expiredate: LocalDateTime): List<Memberqr> {
-        return memberqrRepository.findByExpiredateWithJoin(expiredate)
+        return memberqrRepository.findByExpiredate(expiredate)
     }
 
     fun findByGenerateddate(generateddate: LocalDateTime): List<Memberqr> {
-        return memberqrRepository.findByGenerateddateWithJoin(generateddate)
+        return memberqrRepository.findByGenerateddate(generateddate)
     }
 
     fun findByLastuseddate(lastuseddate: LocalDateTime): List<Memberqr> {
-        return memberqrRepository.findByLastuseddateWithJoin(lastuseddate)
+        return memberqrRepository.findByLastuseddate(lastuseddate)
     }
 
     fun findByUsecount(usecount: Int): List<Memberqr> {
-        return memberqrRepository.findByUsecountWithJoin(usecount)
+        return memberqrRepository.findByUsecount(usecount)
     }
 
     fun findByDate(date: LocalDateTime): List<Memberqr> {
-        return memberqrRepository.findByDateWithJoin(date)
+        return memberqrRepository.findByDate(date)
     }
 
 

@@ -35,27 +35,27 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
 
 
     fun findByTitle(title: String): List<Alarm> {
-        return alarmRepository.findByTitleWithJoin(title)
+        return alarmRepository.findByTitle(title)
     }
 
     fun findByContent(content: String): List<Alarm> {
-        return alarmRepository.findByContentWithJoin(content)
+        return alarmRepository.findByContent(content)
     }
 
     fun findByType(type: Type): List<Alarm> {
-        return alarmRepository.findByTypeWithJoin(type)
+        return alarmRepository.findByType(type)
     }
 
     fun findByStatus(status: Status): List<Alarm> {
-        return alarmRepository.findByStatusWithJoin(status)
+        return alarmRepository.findByStatus(status)
     }
 
     fun findByUser(user: Long): List<Alarm> {
-        return alarmRepository.findByUserWithJoin(user)
+        return alarmRepository.findByuserId(user)
     }
 
     fun findByDate(date: LocalDateTime): List<Alarm> {
-        return alarmRepository.findByDateWithJoin(date)
+        return alarmRepository.findByDate(date)
     }
 
 

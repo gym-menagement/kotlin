@@ -33,23 +33,23 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
 
 
     fun findByGym(gym: Long): List<Paymentform> {
-        return paymentformRepository.findByGymWithJoin(gym)
+        return paymentformRepository.findBygymId(gym)
     }
 
     fun findByPayment(payment: Long): List<Paymentform> {
-        return paymentformRepository.findByPaymentWithJoin(payment)
+        return paymentformRepository.findBypaymentId(payment)
     }
 
-    fun findByType(type: Long): List<Paymentform> {
-        return paymentformRepository.findByTypeWithJoin(type)
+    fun findByType(paymenttype: Long): List<Paymentform> {
+        return paymentformRepository.findBytypeId(paymenttype)
     }
 
     fun findByCost(cost: Int): List<Paymentform> {
-        return paymentformRepository.findByCostWithJoin(cost)
+        return paymentformRepository.findByCost(cost)
     }
 
     fun findByDate(date: LocalDateTime): List<Paymentform> {
-        return paymentformRepository.findByDateWithJoin(date)
+        return paymentformRepository.findByDate(date)
     }
 
 

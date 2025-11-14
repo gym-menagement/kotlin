@@ -34,39 +34,39 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
 
 
     fun findByGym(gym: Long): List<Membership> {
-        return membershipRepository.findByGymWithJoin(gym)
+        return membershipRepository.findBygymId(gym)
     }
 
     fun findByUser(user: Long): List<Membership> {
-        return membershipRepository.findByUserWithJoin(user)
+        return membershipRepository.findByuserId(user)
     }
 
     fun findByName(name: String): List<Membership> {
-        return membershipRepository.findByNameWithJoin(name)
+        return membershipRepository.findByName(name)
     }
 
     fun findBySex(sex: Sex): List<Membership> {
-        return membershipRepository.findBySexWithJoin(sex)
+        return membershipRepository.findBySex(sex)
     }
 
     fun findByBirth(birth: LocalDateTime): List<Membership> {
-        return membershipRepository.findByBirthWithJoin(birth)
+        return membershipRepository.findByBirth(birth)
     }
 
     fun findByPhonenum(phonenum: String): List<Membership> {
-        return membershipRepository.findByPhonenumWithJoin(phonenum)
+        return membershipRepository.findByPhonenum(phonenum)
     }
 
     fun findByAddress(address: String): List<Membership> {
-        return membershipRepository.findByAddressWithJoin(address)
+        return membershipRepository.findByAddress(address)
     }
 
     fun findByImage(image: String): List<Membership> {
-        return membershipRepository.findByImageWithJoin(image)
+        return membershipRepository.findByImage(image)
     }
 
     fun findByDate(date: LocalDateTime): List<Membership> {
-        return membershipRepository.findByDateWithJoin(date)
+        return membershipRepository.findByDate(date)
     }
 
 

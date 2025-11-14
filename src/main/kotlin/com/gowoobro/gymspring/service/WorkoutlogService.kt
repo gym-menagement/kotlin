@@ -33,47 +33,47 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
 
 
     fun findByUser(user: Long): List<Workoutlog> {
-        return workoutlogRepository.findByUserWithJoin(user)
+        return workoutlogRepository.findByuserId(user)
     }
 
     fun findByAttendance(attendance: Long): List<Workoutlog> {
-        return workoutlogRepository.findByAttendanceWithJoin(attendance)
+        return workoutlogRepository.findByattendanceId(attendance)
     }
 
     fun findByHealth(health: Long): List<Workoutlog> {
-        return workoutlogRepository.findByHealthWithJoin(health)
+        return workoutlogRepository.findByhealthId(health)
     }
 
     fun findByExercisename(exercisename: String): List<Workoutlog> {
-        return workoutlogRepository.findByExercisenameWithJoin(exercisename)
+        return workoutlogRepository.findByExercisename(exercisename)
     }
 
     fun findBySets(sets: Int): List<Workoutlog> {
-        return workoutlogRepository.findBySetsWithJoin(sets)
+        return workoutlogRepository.findBySets(sets)
     }
 
     fun findByReps(reps: Int): List<Workoutlog> {
-        return workoutlogRepository.findByRepsWithJoin(reps)
+        return workoutlogRepository.findByReps(reps)
     }
 
     fun findByWeight(weight: BigDecimal): List<Workoutlog> {
-        return workoutlogRepository.findByWeightWithJoin(weight)
+        return workoutlogRepository.findByWeight(weight)
     }
 
     fun findByDuration(duration: Int): List<Workoutlog> {
-        return workoutlogRepository.findByDurationWithJoin(duration)
+        return workoutlogRepository.findByDuration(duration)
     }
 
     fun findByCalories(calories: Int): List<Workoutlog> {
-        return workoutlogRepository.findByCaloriesWithJoin(calories)
+        return workoutlogRepository.findByCalories(calories)
     }
 
     fun findByNote(note: String): List<Workoutlog> {
-        return workoutlogRepository.findByNoteWithJoin(note)
+        return workoutlogRepository.findByNote(note)
     }
 
     fun findByDate(date: LocalDateTime): List<Workoutlog> {
-        return workoutlogRepository.findByDateWithJoin(date)
+        return workoutlogRepository.findByDate(date)
     }
 
 

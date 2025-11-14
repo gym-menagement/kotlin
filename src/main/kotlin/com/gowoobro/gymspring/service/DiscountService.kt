@@ -33,15 +33,15 @@ class DiscountService(private val discountRepository: DiscountRepository) {
 
 
     fun findByName(name: String): List<Discount> {
-        return discountRepository.findByNameWithJoin(name)
+        return discountRepository.findByName(name)
     }
 
     fun findByDiscount(discount: Int): List<Discount> {
-        return discountRepository.findByDiscountWithJoin(discount)
+        return discountRepository.findByDiscount(discount)
     }
 
     fun findByDate(date: LocalDateTime): List<Discount> {
-        return discountRepository.findByDateWithJoin(date)
+        return discountRepository.findByDate(date)
     }
 
 

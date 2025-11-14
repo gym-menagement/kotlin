@@ -33,56 +33,56 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
     }
 
 
-    fun findByTrainer(trainer: Long): List<Ptreservation> {
-        return ptreservationRepository.findByTrainerWithJoin(trainer)
+    fun findByTrainer(traineruser: Long): List<Ptreservation> {
+        return ptreservationRepository.findBytrainerId(traineruser)
     }
 
-    fun findByMember(member: Long): List<Ptreservation> {
-        return ptreservationRepository.findByMemberWithJoin(member)
+    fun findByMember(memberuser: Long): List<Ptreservation> {
+        return ptreservationRepository.findBymemberId(memberuser)
     }
 
     fun findByGym(gym: Long): List<Ptreservation> {
-        return ptreservationRepository.findByGymWithJoin(gym)
+        return ptreservationRepository.findBygymId(gym)
     }
 
     fun findByReservationdate(reservationdate: LocalDateTime): List<Ptreservation> {
-        return ptreservationRepository.findByReservationdateWithJoin(reservationdate)
+        return ptreservationRepository.findByReservationdate(reservationdate)
     }
 
     fun findByStarttime(starttime: String): List<Ptreservation> {
-        return ptreservationRepository.findByStarttimeWithJoin(starttime)
+        return ptreservationRepository.findByStarttime(starttime)
     }
 
     fun findByEndtime(endtime: String): List<Ptreservation> {
-        return ptreservationRepository.findByEndtimeWithJoin(endtime)
+        return ptreservationRepository.findByEndtime(endtime)
     }
 
     fun findByDuration(duration: Int): List<Ptreservation> {
-        return ptreservationRepository.findByDurationWithJoin(duration)
+        return ptreservationRepository.findByDuration(duration)
     }
 
     fun findByStatus(status: Status): List<Ptreservation> {
-        return ptreservationRepository.findByStatusWithJoin(status)
+        return ptreservationRepository.findByStatus(status)
     }
 
     fun findByNote(note: String): List<Ptreservation> {
-        return ptreservationRepository.findByNoteWithJoin(note)
+        return ptreservationRepository.findByNote(note)
     }
 
     fun findByCancelreason(cancelreason: String): List<Ptreservation> {
-        return ptreservationRepository.findByCancelreasonWithJoin(cancelreason)
+        return ptreservationRepository.findByCancelreason(cancelreason)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Ptreservation> {
-        return ptreservationRepository.findByCreateddateWithJoin(createddate)
+        return ptreservationRepository.findByCreateddate(createddate)
     }
 
     fun findByUpdateddate(updateddate: LocalDateTime): List<Ptreservation> {
-        return ptreservationRepository.findByUpdateddateWithJoin(updateddate)
+        return ptreservationRepository.findByUpdateddate(updateddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Ptreservation> {
-        return ptreservationRepository.findByDateWithJoin(date)
+        return ptreservationRepository.findByDate(date)
     }
 
 

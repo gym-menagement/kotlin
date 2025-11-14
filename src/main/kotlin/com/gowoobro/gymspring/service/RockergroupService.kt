@@ -33,15 +33,15 @@ class RockergroupService(private val rockergroupRepository: RockergroupRepositor
 
 
     fun findByGym(gym: Long): List<Rockergroup> {
-        return rockergroupRepository.findByGymWithJoin(gym)
+        return rockergroupRepository.findBygymId(gym)
     }
 
     fun findByName(name: String): List<Rockergroup> {
-        return rockergroupRepository.findByNameWithJoin(name)
+        return rockergroupRepository.findByName(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Rockergroup> {
-        return rockergroupRepository.findByDateWithJoin(date)
+        return rockergroupRepository.findByDate(date)
     }
 
 

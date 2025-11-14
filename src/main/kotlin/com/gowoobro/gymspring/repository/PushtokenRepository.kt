@@ -5,6 +5,7 @@ import com.gowoobro.gymspring.entity.PushtokenCreateRequest
 import com.gowoobro.gymspring.entity.PushtokenUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -15,36 +16,36 @@ import com.gowoobro.gymspring.enums.pushtoken.Isactive
 
 @Repository
 interface PushtokenRepository : JpaRepository<Pushtoken, Long> {
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user")
+    @EntityGraph(attributePaths = ["user"])
     override fun findAll(pageable: Pageable): Page<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.id = :id")
+    @EntityGraph(attributePaths = ["user"])
     override fun findById(id: Long): java.util.Optional<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.userId = :user")
-    fun findByUserWithJoin(user: Long): List<Pushtoken>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByuserId(user: Long): List<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.token = :token")
-    fun findByTokenWithJoin(token: String): List<Pushtoken>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByToken(token: String): List<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.devicetype = :devicetype")
-    fun findByDevicetypeWithJoin(devicetype: String): List<Pushtoken>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByDevicetype(devicetype: String): List<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.deviceid = :deviceid")
-    fun findByDeviceidWithJoin(deviceid: String): List<Pushtoken>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByDeviceid(deviceid: String): List<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.appversion = :appversion")
-    fun findByAppversionWithJoin(appversion: String): List<Pushtoken>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByAppversion(appversion: String): List<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.isactive = :isactive")
-    fun findByIsactiveWithJoin(isactive: Isactive): List<Pushtoken>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByIsactive(isactive: Isactive): List<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.createddate = :createddate")
-    fun findByCreateddateWithJoin(createddate: LocalDateTime): List<Pushtoken>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByCreateddate(createddate: LocalDateTime): List<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.updateddate = :updateddate")
-    fun findByUpdateddateWithJoin(updateddate: LocalDateTime): List<Pushtoken>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByUpdateddate(updateddate: LocalDateTime): List<Pushtoken>
 
-    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.date = :date")
-    fun findByDateWithJoin(date: LocalDateTime): List<Pushtoken>
+    @EntityGraph(attributePaths = ["user"])
+    fun findByDate(date: LocalDateTime): List<Pushtoken>
 }

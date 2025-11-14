@@ -38,63 +38,63 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
 
 
     fun findByGym(gym: Long): List<Notice> {
-        return noticeRepository.findByGymWithJoin(gym)
+        return noticeRepository.findBygymId(gym)
     }
 
     fun findByTitle(title: String): List<Notice> {
-        return noticeRepository.findByTitleWithJoin(title)
+        return noticeRepository.findByTitle(title)
     }
 
     fun findByContent(content: String): List<Notice> {
-        return noticeRepository.findByContentWithJoin(content)
+        return noticeRepository.findByContent(content)
     }
 
     fun findByType(type: Type): List<Notice> {
-        return noticeRepository.findByTypeWithJoin(type)
+        return noticeRepository.findByType(type)
     }
 
     fun findByIspopup(ispopup: Ispopup): List<Notice> {
-        return noticeRepository.findByIspopupWithJoin(ispopup)
+        return noticeRepository.findByIspopup(ispopup)
     }
 
     fun findByIspush(ispush: Ispush): List<Notice> {
-        return noticeRepository.findByIspushWithJoin(ispush)
+        return noticeRepository.findByIspush(ispush)
     }
 
     fun findByTarget(target: Target): List<Notice> {
-        return noticeRepository.findByTargetWithJoin(target)
+        return noticeRepository.findByTarget(target)
     }
 
     fun findByViewcount(viewcount: Int): List<Notice> {
-        return noticeRepository.findByViewcountWithJoin(viewcount)
+        return noticeRepository.findByViewcount(viewcount)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Notice> {
-        return noticeRepository.findByStartdateWithJoin(startdate)
+        return noticeRepository.findByStartdate(startdate)
     }
 
     fun findByEnddate(enddate: LocalDateTime): List<Notice> {
-        return noticeRepository.findByEnddateWithJoin(enddate)
+        return noticeRepository.findByEnddate(enddate)
     }
 
     fun findByStatus(status: Status): List<Notice> {
-        return noticeRepository.findByStatusWithJoin(status)
+        return noticeRepository.findByStatus(status)
     }
 
-    fun findByCreatedby(createdby: Long): List<Notice> {
-        return noticeRepository.findByCreatedbyWithJoin(createdby)
+    fun findByCreatedby(user: Long): List<Notice> {
+        return noticeRepository.findBycreatedbyId(user)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Notice> {
-        return noticeRepository.findByCreateddateWithJoin(createddate)
+        return noticeRepository.findByCreateddate(createddate)
     }
 
     fun findByUpdateddate(updateddate: LocalDateTime): List<Notice> {
-        return noticeRepository.findByUpdateddateWithJoin(updateddate)
+        return noticeRepository.findByUpdateddate(updateddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Notice> {
-        return noticeRepository.findByDateWithJoin(date)
+        return noticeRepository.findByDate(date)
     }
 
 

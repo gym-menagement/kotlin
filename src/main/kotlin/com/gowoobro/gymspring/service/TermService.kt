@@ -33,23 +33,23 @@ class TermService(private val termRepository: TermRepository) {
 
 
     fun findByGym(gym: Long): List<Term> {
-        return termRepository.findByGymWithJoin(gym)
+        return termRepository.findBygymId(gym)
     }
 
     fun findByDaytype(daytype: Long): List<Term> {
-        return termRepository.findByDaytypeWithJoin(daytype)
+        return termRepository.findBydaytypeId(daytype)
     }
 
     fun findByName(name: String): List<Term> {
-        return termRepository.findByNameWithJoin(name)
+        return termRepository.findByName(name)
     }
 
     fun findByTerm(term: Int): List<Term> {
-        return termRepository.findByTermWithJoin(term)
+        return termRepository.findByTerm(term)
     }
 
     fun findByDate(date: LocalDateTime): List<Term> {
-        return termRepository.findByDateWithJoin(date)
+        return termRepository.findByDate(date)
     }
 
 
