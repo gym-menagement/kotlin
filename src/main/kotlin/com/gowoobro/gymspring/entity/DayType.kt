@@ -11,8 +11,12 @@ data class Daytype(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dt_id")
     val id: Long = 0,
-    @Column(name = "dt_gym")
-    val gym: Long = 0L,
+
+    @Column(name = "dt_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dt_gym")
+    val gym: Gym? = null,
     @Column(name = "dt_name")
     val name: String = "",
     @Column(name = "dt_date")
@@ -47,18 +51,16 @@ data class DaytypeResponse(
     val extra: DaytypeExtraInfo
 ){
     companion object {
-        fun from(daytype: Daytype, gymResponse: GymResponse? = null): DaytypeResponse {
+        fun from(daytype: Daytype): DaytypeResponse {
+            val gymResponse = daytype.gym?.let { GymResponse.from(it) }
             return DaytypeResponse(
                 id = daytype.id,
-                gym = daytype.gym,
+                gym = daytype.gymId,
                 name = daytype.name,
                 date = daytype.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = DaytypeExtraInfo(
-                    
-                
-                     gym = gymResponse,
-                )
+                    gym = gymResponse,)
                 
             )
         }

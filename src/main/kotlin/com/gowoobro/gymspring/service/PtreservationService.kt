@@ -34,63 +34,63 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
 
 
     fun findByTrainer(trainer: Long): List<Ptreservation> {
-        return ptreservationRepository.findByTrainer(trainer)
+        return ptreservationRepository.findByTrainerWithJoin(trainer)
     }
 
     fun findByMember(member: Long): List<Ptreservation> {
-        return ptreservationRepository.findByMember(member)
+        return ptreservationRepository.findByMemberWithJoin(member)
     }
 
     fun findByGym(gym: Long): List<Ptreservation> {
-        return ptreservationRepository.findByGym(gym)
+        return ptreservationRepository.findByGymWithJoin(gym)
     }
 
     fun findByReservationdate(reservationdate: LocalDateTime): List<Ptreservation> {
-        return ptreservationRepository.findByReservationdate(reservationdate)
+        return ptreservationRepository.findByReservationdateWithJoin(reservationdate)
     }
 
     fun findByStarttime(starttime: String): List<Ptreservation> {
-        return ptreservationRepository.findByStarttime(starttime)
+        return ptreservationRepository.findByStarttimeWithJoin(starttime)
     }
 
     fun findByEndtime(endtime: String): List<Ptreservation> {
-        return ptreservationRepository.findByEndtime(endtime)
+        return ptreservationRepository.findByEndtimeWithJoin(endtime)
     }
 
     fun findByDuration(duration: Int): List<Ptreservation> {
-        return ptreservationRepository.findByDuration(duration)
+        return ptreservationRepository.findByDurationWithJoin(duration)
     }
 
     fun findByStatus(status: Status): List<Ptreservation> {
-        return ptreservationRepository.findByStatus(status)
+        return ptreservationRepository.findByStatusWithJoin(status)
     }
 
     fun findByNote(note: String): List<Ptreservation> {
-        return ptreservationRepository.findByNote(note)
+        return ptreservationRepository.findByNoteWithJoin(note)
     }
 
     fun findByCancelreason(cancelreason: String): List<Ptreservation> {
-        return ptreservationRepository.findByCancelreason(cancelreason)
+        return ptreservationRepository.findByCancelreasonWithJoin(cancelreason)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Ptreservation> {
-        return ptreservationRepository.findByCreateddate(createddate)
+        return ptreservationRepository.findByCreateddateWithJoin(createddate)
     }
 
     fun findByUpdateddate(updateddate: LocalDateTime): List<Ptreservation> {
-        return ptreservationRepository.findByUpdateddate(updateddate)
+        return ptreservationRepository.findByUpdateddateWithJoin(updateddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Ptreservation> {
-        return ptreservationRepository.findByDate(date)
+        return ptreservationRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: PtreservationCreateRequest): Ptreservation {
         val entity = Ptreservation(
-            trainer = request.trainer,
-            member = request.member,
-            gym = request.gym,
+            trainerId = request.trainer,
+            memberId = request.member,
+            gymId = request.gym,
             reservationdate = request.reservationdate,
             starttime = request.starttime,
             endtime = request.endtime,
@@ -108,9 +108,9 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
     fun createBatch(requests: List<PtreservationCreateRequest>): List<Ptreservation> {
         val entities = requests.map { request ->
             Ptreservation(
-                trainer = request.trainer,
-                member = request.member,
-                gym = request.gym,
+                trainerId = request.trainer,
+                memberId = request.member,
+                gymId = request.gym,
                 reservationdate = request.reservationdate,
                 starttime = request.starttime,
                 endtime = request.endtime,
@@ -129,12 +129,10 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
     fun update(request: PtreservationUpdateRequest): Ptreservation? {
         val existing = ptreservationRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            trainer = request.trainer,
-            member = request.member,
-            gym = request.gym,
+            trainerId = request.trainer,
+            memberId = request.member,
+            gymId = request.gym,
             reservationdate = request.reservationdate,
             starttime = request.starttime,
             endtime = request.endtime,

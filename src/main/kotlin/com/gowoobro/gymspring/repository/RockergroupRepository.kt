@@ -14,11 +14,18 @@ import java.time.LocalDateTime
 
 @Repository
 interface RockergroupRepository : JpaRepository<Rockergroup, Long> {
+    @Query("SELECT m FROM Rockergroup m LEFT JOIN FETCH m.gym")
     override fun findAll(pageable: Pageable): Page<Rockergroup>
 
-    fun findByGym(gym: Long): List<Rockergroup>
+    @Query("SELECT m FROM Rockergroup m LEFT JOIN FETCH m.gym WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Rockergroup>
 
-    fun findByName(name: String): List<Rockergroup>
+    @Query("SELECT m FROM Rockergroup m LEFT JOIN FETCH m.gym WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Rockergroup>
 
-    fun findByDate(date: LocalDateTime): List<Rockergroup>
+    @Query("SELECT m FROM Rockergroup m LEFT JOIN FETCH m.gym WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Rockergroup>
+
+    @Query("SELECT m FROM Rockergroup m LEFT JOIN FETCH m.gym WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Rockergroup>
 }

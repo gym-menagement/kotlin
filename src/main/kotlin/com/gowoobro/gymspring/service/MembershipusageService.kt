@@ -35,70 +35,70 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
 
 
     fun findByMembership(membership: Long): List<Membershipusage> {
-        return membershipusageRepository.findByMembership(membership)
+        return membershipusageRepository.findByMembershipWithJoin(membership)
     }
 
     fun findByUser(user: Long): List<Membershipusage> {
-        return membershipusageRepository.findByUser(user)
+        return membershipusageRepository.findByUserWithJoin(user)
     }
 
     fun findByType(type: Type): List<Membershipusage> {
-        return membershipusageRepository.findByType(type)
+        return membershipusageRepository.findByTypeWithJoin(type)
     }
 
     fun findByTotaldays(totaldays: Int): List<Membershipusage> {
-        return membershipusageRepository.findByTotaldays(totaldays)
+        return membershipusageRepository.findByTotaldaysWithJoin(totaldays)
     }
 
     fun findByUseddays(useddays: Int): List<Membershipusage> {
-        return membershipusageRepository.findByUseddays(useddays)
+        return membershipusageRepository.findByUseddaysWithJoin(useddays)
     }
 
     fun findByRemainingdays(remainingdays: Int): List<Membershipusage> {
-        return membershipusageRepository.findByRemainingdays(remainingdays)
+        return membershipusageRepository.findByRemainingdaysWithJoin(remainingdays)
     }
 
     fun findByTotalcount(totalcount: Int): List<Membershipusage> {
-        return membershipusageRepository.findByTotalcount(totalcount)
+        return membershipusageRepository.findByTotalcountWithJoin(totalcount)
     }
 
     fun findByUsedcount(usedcount: Int): List<Membershipusage> {
-        return membershipusageRepository.findByUsedcount(usedcount)
+        return membershipusageRepository.findByUsedcountWithJoin(usedcount)
     }
 
     fun findByRemainingcount(remainingcount: Int): List<Membershipusage> {
-        return membershipusageRepository.findByRemainingcount(remainingcount)
+        return membershipusageRepository.findByRemainingcountWithJoin(remainingcount)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Membershipusage> {
-        return membershipusageRepository.findByStartdate(startdate)
+        return membershipusageRepository.findByStartdateWithJoin(startdate)
     }
 
     fun findByEnddate(enddate: LocalDateTime): List<Membershipusage> {
-        return membershipusageRepository.findByEnddate(enddate)
+        return membershipusageRepository.findByEnddateWithJoin(enddate)
     }
 
     fun findByStatus(status: Status): List<Membershipusage> {
-        return membershipusageRepository.findByStatus(status)
+        return membershipusageRepository.findByStatusWithJoin(status)
     }
 
     fun findByPausedays(pausedays: Int): List<Membershipusage> {
-        return membershipusageRepository.findByPausedays(pausedays)
+        return membershipusageRepository.findByPausedaysWithJoin(pausedays)
     }
 
     fun findByLastuseddate(lastuseddate: LocalDateTime): List<Membershipusage> {
-        return membershipusageRepository.findByLastuseddate(lastuseddate)
+        return membershipusageRepository.findByLastuseddateWithJoin(lastuseddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Membershipusage> {
-        return membershipusageRepository.findByDate(date)
+        return membershipusageRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: MembershipusageCreateRequest): Membershipusage {
         val entity = Membershipusage(
-            membership = request.membership,
-            user = request.user,
+            membershipId = request.membership,
+            userId = request.user,
             type = request.type,
             totaldays = request.totaldays,
             useddays = request.useddays,
@@ -119,8 +119,8 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
     fun createBatch(requests: List<MembershipusageCreateRequest>): List<Membershipusage> {
         val entities = requests.map { request ->
             Membershipusage(
-                membership = request.membership,
-                user = request.user,
+                membershipId = request.membership,
+                userId = request.user,
                 type = request.type,
                 totaldays = request.totaldays,
                 useddays = request.useddays,
@@ -142,11 +142,9 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
     fun update(request: MembershipusageUpdateRequest): Membershipusage? {
         val existing = membershipusageRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            membership = request.membership,
-            user = request.user,
+            membershipId = request.membership,
+            userId = request.user,
             type = request.type,
             totaldays = request.totaldays,
             useddays = request.useddays,

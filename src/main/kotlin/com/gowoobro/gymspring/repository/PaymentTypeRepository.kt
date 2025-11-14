@@ -14,11 +14,18 @@ import java.time.LocalDateTime
 
 @Repository
 interface PaymenttypeRepository : JpaRepository<Paymenttype, Long> {
+    @Query("SELECT m FROM Paymenttype m LEFT JOIN FETCH m.gym")
     override fun findAll(pageable: Pageable): Page<Paymenttype>
 
-    fun findByGym(gym: Long): List<Paymenttype>
+    @Query("SELECT m FROM Paymenttype m LEFT JOIN FETCH m.gym WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Paymenttype>
 
-    fun findByName(name: String): List<Paymenttype>
+    @Query("SELECT m FROM Paymenttype m LEFT JOIN FETCH m.gym WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Paymenttype>
 
-    fun findByDate(date: LocalDateTime): List<Paymenttype>
+    @Query("SELECT m FROM Paymenttype m LEFT JOIN FETCH m.gym WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Paymenttype>
+
+    @Query("SELECT m FROM Paymenttype m LEFT JOIN FETCH m.gym WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Paymenttype>
 }

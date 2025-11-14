@@ -15,23 +15,36 @@ import com.gowoobro.gymspring.enums.memberqr.Isactive
 
 @Repository
 interface MemberqrRepository : JpaRepository<Memberqr, Long> {
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user")
     override fun findAll(pageable: Pageable): Page<Memberqr>
 
-    fun findByUser(user: Long): List<Memberqr>
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Memberqr>
 
-    fun findByCode(code: String): List<Memberqr>
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.userId = :user")
+    fun findByUserWithJoin(user: Long): List<Memberqr>
 
-    fun findByImageurl(imageurl: String): List<Memberqr>
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.code = :code")
+    fun findByCodeWithJoin(code: String): List<Memberqr>
 
-    fun findByIsactive(isactive: Isactive): List<Memberqr>
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.imageurl = :imageurl")
+    fun findByImageurlWithJoin(imageurl: String): List<Memberqr>
 
-    fun findByExpiredate(expiredate: LocalDateTime): List<Memberqr>
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.isactive = :isactive")
+    fun findByIsactiveWithJoin(isactive: Isactive): List<Memberqr>
 
-    fun findByGenerateddate(generateddate: LocalDateTime): List<Memberqr>
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.expiredate = :expiredate")
+    fun findByExpiredateWithJoin(expiredate: LocalDateTime): List<Memberqr>
 
-    fun findByLastuseddate(lastuseddate: LocalDateTime): List<Memberqr>
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.generateddate = :generateddate")
+    fun findByGenerateddateWithJoin(generateddate: LocalDateTime): List<Memberqr>
 
-    fun findByUsecount(usecount: Int): List<Memberqr>
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.lastuseddate = :lastuseddate")
+    fun findByLastuseddateWithJoin(lastuseddate: LocalDateTime): List<Memberqr>
 
-    fun findByDate(date: LocalDateTime): List<Memberqr>
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.usecount = :usecount")
+    fun findByUsecountWithJoin(usecount: Int): List<Memberqr>
+
+    @Query("SELECT m FROM Memberqr m LEFT JOIN FETCH m.user WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Memberqr>
 }

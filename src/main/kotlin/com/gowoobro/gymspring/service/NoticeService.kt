@@ -38,69 +38,69 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
 
 
     fun findByGym(gym: Long): List<Notice> {
-        return noticeRepository.findByGym(gym)
+        return noticeRepository.findByGymWithJoin(gym)
     }
 
     fun findByTitle(title: String): List<Notice> {
-        return noticeRepository.findByTitle(title)
+        return noticeRepository.findByTitleWithJoin(title)
     }
 
     fun findByContent(content: String): List<Notice> {
-        return noticeRepository.findByContent(content)
+        return noticeRepository.findByContentWithJoin(content)
     }
 
     fun findByType(type: Type): List<Notice> {
-        return noticeRepository.findByType(type)
+        return noticeRepository.findByTypeWithJoin(type)
     }
 
     fun findByIspopup(ispopup: Ispopup): List<Notice> {
-        return noticeRepository.findByIspopup(ispopup)
+        return noticeRepository.findByIspopupWithJoin(ispopup)
     }
 
     fun findByIspush(ispush: Ispush): List<Notice> {
-        return noticeRepository.findByIspush(ispush)
+        return noticeRepository.findByIspushWithJoin(ispush)
     }
 
     fun findByTarget(target: Target): List<Notice> {
-        return noticeRepository.findByTarget(target)
+        return noticeRepository.findByTargetWithJoin(target)
     }
 
     fun findByViewcount(viewcount: Int): List<Notice> {
-        return noticeRepository.findByViewcount(viewcount)
+        return noticeRepository.findByViewcountWithJoin(viewcount)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Notice> {
-        return noticeRepository.findByStartdate(startdate)
+        return noticeRepository.findByStartdateWithJoin(startdate)
     }
 
     fun findByEnddate(enddate: LocalDateTime): List<Notice> {
-        return noticeRepository.findByEnddate(enddate)
+        return noticeRepository.findByEnddateWithJoin(enddate)
     }
 
     fun findByStatus(status: Status): List<Notice> {
-        return noticeRepository.findByStatus(status)
+        return noticeRepository.findByStatusWithJoin(status)
     }
 
     fun findByCreatedby(createdby: Long): List<Notice> {
-        return noticeRepository.findByCreatedby(createdby)
+        return noticeRepository.findByCreatedbyWithJoin(createdby)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Notice> {
-        return noticeRepository.findByCreateddate(createddate)
+        return noticeRepository.findByCreateddateWithJoin(createddate)
     }
 
     fun findByUpdateddate(updateddate: LocalDateTime): List<Notice> {
-        return noticeRepository.findByUpdateddate(updateddate)
+        return noticeRepository.findByUpdateddateWithJoin(updateddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Notice> {
-        return noticeRepository.findByDate(date)
+        return noticeRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: NoticeCreateRequest): Notice {
         val entity = Notice(
-            gym = request.gym,
+            gymId = request.gym,
             title = request.title,
             content = request.content,
             type = request.type,
@@ -111,7 +111,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
-            createdby = request.createdby,
+            createdbyId = request.createdby,
             createddate = request.createddate,
             updateddate = request.updateddate,
             date = request.date,
@@ -122,7 +122,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
     fun createBatch(requests: List<NoticeCreateRequest>): List<Notice> {
         val entities = requests.map { request ->
             Notice(
-                gym = request.gym,
+                gymId = request.gym,
                 title = request.title,
                 content = request.content,
                 type = request.type,
@@ -133,7 +133,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
                 startdate = request.startdate,
                 enddate = request.enddate,
                 status = request.status,
-                createdby = request.createdby,
+                createdbyId = request.createdby,
                 createddate = request.createddate,
                 updateddate = request.updateddate,
                 date = request.date,
@@ -145,10 +145,8 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
     fun update(request: NoticeUpdateRequest): Notice? {
         val existing = noticeRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            gym = request.gym,
+            gymId = request.gym,
             title = request.title,
             content = request.content,
             type = request.type,
@@ -159,7 +157,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
-            createdby = request.createdby,
+            createdbyId = request.createdby,
             createddate = request.createddate,
             updateddate = request.updateddate,
             date = request.date,

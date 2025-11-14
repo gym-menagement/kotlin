@@ -33,31 +33,31 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
 
 
     fun findByGym(gym: Long): List<Paymentform> {
-        return paymentformRepository.findByGym(gym)
+        return paymentformRepository.findByGymWithJoin(gym)
     }
 
     fun findByPayment(payment: Long): List<Paymentform> {
-        return paymentformRepository.findByPayment(payment)
+        return paymentformRepository.findByPaymentWithJoin(payment)
     }
 
     fun findByType(type: Long): List<Paymentform> {
-        return paymentformRepository.findByType(type)
+        return paymentformRepository.findByTypeWithJoin(type)
     }
 
     fun findByCost(cost: Int): List<Paymentform> {
-        return paymentformRepository.findByCost(cost)
+        return paymentformRepository.findByCostWithJoin(cost)
     }
 
     fun findByDate(date: LocalDateTime): List<Paymentform> {
-        return paymentformRepository.findByDate(date)
+        return paymentformRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: PaymentformCreateRequest): Paymentform {
         val entity = Paymentform(
-            gym = request.gym,
-            payment = request.payment,
-            type = request.type,
+            gymId = request.gym,
+            paymentId = request.payment,
+            typeId = request.type,
             cost = request.cost,
             date = request.date,
         )
@@ -67,9 +67,9 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
     fun createBatch(requests: List<PaymentformCreateRequest>): List<Paymentform> {
         val entities = requests.map { request ->
             Paymentform(
-                gym = request.gym,
-                payment = request.payment,
-                type = request.type,
+                gymId = request.gym,
+                paymentId = request.payment,
+                typeId = request.type,
                 cost = request.cost,
                 date = request.date,
             )
@@ -80,12 +80,10 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
     fun update(request: PaymentformUpdateRequest): Paymentform? {
         val existing = paymentformRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            gym = request.gym,
-            payment = request.payment,
-            type = request.type,
+            gymId = request.gym,
+            paymentId = request.payment,
+            typeId = request.type,
             cost = request.cost,
             date = request.date,
         )

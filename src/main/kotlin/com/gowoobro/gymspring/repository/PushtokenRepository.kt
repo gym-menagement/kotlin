@@ -15,23 +15,36 @@ import com.gowoobro.gymspring.enums.pushtoken.Isactive
 
 @Repository
 interface PushtokenRepository : JpaRepository<Pushtoken, Long> {
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user")
     override fun findAll(pageable: Pageable): Page<Pushtoken>
 
-    fun findByUser(user: Long): List<Pushtoken>
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Pushtoken>
 
-    fun findByToken(token: String): List<Pushtoken>
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.userId = :user")
+    fun findByUserWithJoin(user: Long): List<Pushtoken>
 
-    fun findByDevicetype(devicetype: String): List<Pushtoken>
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.token = :token")
+    fun findByTokenWithJoin(token: String): List<Pushtoken>
 
-    fun findByDeviceid(deviceid: String): List<Pushtoken>
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.devicetype = :devicetype")
+    fun findByDevicetypeWithJoin(devicetype: String): List<Pushtoken>
 
-    fun findByAppversion(appversion: String): List<Pushtoken>
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.deviceid = :deviceid")
+    fun findByDeviceidWithJoin(deviceid: String): List<Pushtoken>
 
-    fun findByIsactive(isactive: Isactive): List<Pushtoken>
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.appversion = :appversion")
+    fun findByAppversionWithJoin(appversion: String): List<Pushtoken>
 
-    fun findByCreateddate(createddate: LocalDateTime): List<Pushtoken>
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.isactive = :isactive")
+    fun findByIsactiveWithJoin(isactive: Isactive): List<Pushtoken>
 
-    fun findByUpdateddate(updateddate: LocalDateTime): List<Pushtoken>
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.createddate = :createddate")
+    fun findByCreateddateWithJoin(createddate: LocalDateTime): List<Pushtoken>
 
-    fun findByDate(date: LocalDateTime): List<Pushtoken>
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.updateddate = :updateddate")
+    fun findByUpdateddateWithJoin(updateddate: LocalDateTime): List<Pushtoken>
+
+    @Query("SELECT m FROM Pushtoken m LEFT JOIN FETCH m.user WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Pushtoken>
 }

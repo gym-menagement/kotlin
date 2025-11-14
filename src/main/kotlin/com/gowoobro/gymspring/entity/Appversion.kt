@@ -100,11 +100,8 @@ data class AppversionResponse(
                 date = appversion.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = AppversionExtraInfo(
-                    
-                        forceupdate = Forceupdate.getDisplayName(appversion.forceupdate),
-                        status = Status.getDisplayName(appversion.status),
-                        
-                )
+                    forceupdate = Forceupdate.getDisplayName(appversion.forceupdate),status = Status.getDisplayName(appversion.status),
+                    )
                 
             )
         }

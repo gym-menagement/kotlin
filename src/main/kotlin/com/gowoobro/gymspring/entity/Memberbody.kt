@@ -11,8 +11,12 @@ data class Memberbody(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mb_id")
     val id: Long = 0,
-    @Column(name = "mb_user")
-    val user: Long = 0L,
+
+    @Column(name = "mb_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mb_user")
+    val memberuser: User? = null,
     @Column(name = "mb_height")
     val height: BigDecimal = BigDecimal.ZERO,
     @Column(name = "mb_weight")
@@ -41,8 +45,12 @@ data class Memberbody(
     val note: String = "",
     @Column(name = "mb_measureddate")
     val measureddate: LocalDateTime? = LocalDateTime.now(),
-    @Column(name = "mb_measuredby")
-    val measuredby: Long = 0L,
+
+    @Column(name = "mb_measuredby", insertable = false, updatable = false)
+    val measuredbyId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mb_measuredby")
+    val measuredbyuser: User? = null,
     @Column(name = "mb_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 )
@@ -118,10 +126,12 @@ data class MemberbodyResponse(
     val extra: MemberbodyExtraInfo
 ){
     companion object {
-        fun from(memberbody: Memberbody, memberuserResponse: UserResponse? = null, measuredbyuserResponse: UserResponse? = null): MemberbodyResponse {
+        fun from(memberbody: Memberbody): MemberbodyResponse {
+            val memberuserResponse = memberbody.memberuser?.let { UserResponse.from(it) }
+            val measuredbyuserResponse = memberbody.measuredbyuser?.let { UserResponse.from(it) }
             return MemberbodyResponse(
                 id = memberbody.id,
-                user = memberbody.user,
+                user = memberbody.userId,
                 height = memberbody.height,
                 weight = memberbody.weight,
                 bodyfat = memberbody.bodyfat,
@@ -136,16 +146,11 @@ data class MemberbodyResponse(
                 thigh = memberbody.thigh,
                 note = memberbody.note,
                 measureddate = memberbody.measureddate?.toString()?.replace("T", " ") ?: "",
-                measuredby = memberbody.measuredby,
+                measuredby = memberbody.measuredbyId,
                 date = memberbody.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = MemberbodyExtraInfo(
-                    
-                
-                     memberuser = memberuserResponse,
-                
-                     measuredbyuser = measuredbyuserResponse,
-                )
+                    memberuser = memberuserResponse,measuredbyuser = measuredbyuserResponse,)
                 
             )
         }

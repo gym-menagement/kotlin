@@ -33,25 +33,25 @@ class RoleService(private val roleRepository: RoleRepository) {
 
 
     fun findByGym(gym: Long): List<Role> {
-        return roleRepository.findByGym(gym)
+        return roleRepository.findByGymWithJoin(gym)
     }
 
     fun findByRoleid(roleid: Int): List<Role> {
-        return roleRepository.findByRoleid(roleid)
+        return roleRepository.findByRoleidWithJoin(roleid)
     }
 
     fun findByName(name: String): List<Role> {
-        return roleRepository.findByName(name)
+        return roleRepository.findByNameWithJoin(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Role> {
-        return roleRepository.findByDate(date)
+        return roleRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: RoleCreateRequest): Role {
         val entity = Role(
-            gym = request.gym,
+            gymId = request.gym,
             roleid = request.roleid,
             name = request.name,
             date = request.date,
@@ -62,7 +62,7 @@ class RoleService(private val roleRepository: RoleRepository) {
     fun createBatch(requests: List<RoleCreateRequest>): List<Role> {
         val entities = requests.map { request ->
             Role(
-                gym = request.gym,
+                gymId = request.gym,
                 roleid = request.roleid,
                 name = request.name,
                 date = request.date,
@@ -74,10 +74,8 @@ class RoleService(private val roleRepository: RoleRepository) {
     fun update(request: RoleUpdateRequest): Role? {
         val existing = roleRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            gym = request.gym,
+            gymId = request.gym,
             roleid = request.roleid,
             name = request.name,
             date = request.date,

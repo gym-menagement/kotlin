@@ -33,15 +33,15 @@ class DiscountService(private val discountRepository: DiscountRepository) {
 
 
     fun findByName(name: String): List<Discount> {
-        return discountRepository.findByName(name)
+        return discountRepository.findByNameWithJoin(name)
     }
 
     fun findByDiscount(discount: Int): List<Discount> {
-        return discountRepository.findByDiscount(discount)
+        return discountRepository.findByDiscountWithJoin(discount)
     }
 
     fun findByDate(date: LocalDateTime): List<Discount> {
-        return discountRepository.findByDate(date)
+        return discountRepository.findByDateWithJoin(date)
     }
 
 
@@ -67,8 +67,6 @@ class DiscountService(private val discountRepository: DiscountRepository) {
 
     fun update(request: DiscountUpdateRequest): Discount? {
         val existing = discountRepository.findById(request.id).orElse(null) ?: return null
-
-        
 
         val updated = existing.copy(
             name = request.name,

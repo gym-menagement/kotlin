@@ -5,11 +5,11 @@ import com.gowoobro.gymspring.entity.GymCreateRequest
 import com.gowoobro.gymspring.entity.GymUpdateRequest
 import com.gowoobro.gymspring.service.GymService
 import com.gowoobro.gymspring.entity.GymResponse
+
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
-
 
 
 @RestController
@@ -17,9 +17,7 @@ import java.time.LocalDateTime
 class GymController(
     private val gymService: GymService) {
 
-    private fun toResponse(gym: Gym):
-    GymResponse {
-        
+    private fun toResponse(gym: Gym): GymResponse {
         return GymResponse.from(gym)
     }
 
@@ -28,16 +26,16 @@ class GymController(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<GymResponse>> {
-        val result = gymService.findAll(page, pageSize)
-        val responsePage = result.map { toResponse(it)}
+        val res = gymService.findAll(page, pageSize)
+        val responsePage = res.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
     fun getGym(@PathVariable id: Long): ResponseEntity<GymResponse> {
-        val result = gymService.findById(id)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = gymService.findById(id)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -46,14 +44,14 @@ class GymController(
 
     @GetMapping("/search/name")
     fun getGymByName(@RequestParam name: String): ResponseEntity<List<GymResponse>> {
-        val result = gymService.findByName(name)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = gymService.findByName(name)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getGymByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<GymResponse>> {
-        val result = gymService.findByDate(date)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = gymService.findByDate(date)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
 
@@ -66,8 +64,8 @@ class GymController(
     @PostMapping
     fun createGym(@RequestBody request: GymCreateRequest): ResponseEntity<GymResponse> {
         return try {
-            val result = gymService.create(request)
-            ResponseEntity.ok(toResponse(result))
+            val res = gymService.create(request)
+            ResponseEntity.ok(toResponse(res))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -76,8 +74,8 @@ class GymController(
     @PostMapping("/batch")
     fun createGyms(@RequestBody requests: List<GymCreateRequest>): ResponseEntity<List<GymResponse>> {
         return try {
-            val result = gymService.createBatch(requests)
-            return ResponseEntity.ok(result.map { toResponse(it) } )
+            val res = gymService.createBatch(requests)
+            return ResponseEntity.ok(res.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -89,9 +87,9 @@ class GymController(
         @RequestBody request: GymUpdateRequest
     ): ResponseEntity<GymResponse> {
         val updatedRequest = request.copy(id = id)
-        val result = gymService.update(updatedRequest)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = gymService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }

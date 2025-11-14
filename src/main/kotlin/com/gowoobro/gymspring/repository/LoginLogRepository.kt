@@ -14,13 +14,21 @@ import java.time.LocalDateTime
 
 @Repository
 interface LoginlogRepository : JpaRepository<Loginlog, Long> {
+    @Query("SELECT m FROM Loginlog m LEFT JOIN FETCH m.user")
     override fun findAll(pageable: Pageable): Page<Loginlog>
 
-    fun findByIp(ip: String): List<Loginlog>
+    @Query("SELECT m FROM Loginlog m LEFT JOIN FETCH m.user WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Loginlog>
 
-    fun findByIpvalue(ipvalue: Long): List<Loginlog>
+    @Query("SELECT m FROM Loginlog m LEFT JOIN FETCH m.user WHERE m.ip = :ip")
+    fun findByIpWithJoin(ip: String): List<Loginlog>
 
-    fun findByUser(user: Long): List<Loginlog>
+    @Query("SELECT m FROM Loginlog m LEFT JOIN FETCH m.user WHERE m.ipvalue = :ipvalue")
+    fun findByIpvalueWithJoin(ipvalue: Long): List<Loginlog>
 
-    fun findByDate(date: LocalDateTime): List<Loginlog>
+    @Query("SELECT m FROM Loginlog m LEFT JOIN FETCH m.user WHERE m.userId = :user")
+    fun findByUserWithJoin(user: Long): List<Loginlog>
+
+    @Query("SELECT m FROM Loginlog m LEFT JOIN FETCH m.user WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Loginlog>
 }

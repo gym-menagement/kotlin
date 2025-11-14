@@ -14,11 +14,18 @@ import java.time.LocalDateTime
 
 @Repository
 interface HealthcategoryRepository : JpaRepository<Healthcategory, Long> {
+    @Query("SELECT m FROM Healthcategory m LEFT JOIN FETCH m.gym")
     override fun findAll(pageable: Pageable): Page<Healthcategory>
 
-    fun findByGym(gym: Long): List<Healthcategory>
+    @Query("SELECT m FROM Healthcategory m LEFT JOIN FETCH m.gym WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Healthcategory>
 
-    fun findByName(name: String): List<Healthcategory>
+    @Query("SELECT m FROM Healthcategory m LEFT JOIN FETCH m.gym WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Healthcategory>
 
-    fun findByDate(date: LocalDateTime): List<Healthcategory>
+    @Query("SELECT m FROM Healthcategory m LEFT JOIN FETCH m.gym WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Healthcategory>
+
+    @Query("SELECT m FROM Healthcategory m LEFT JOIN FETCH m.gym WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Healthcategory>
 }

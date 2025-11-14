@@ -11,12 +11,24 @@ data class Workoutlog(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wl_id")
     val id: Long = 0,
-    @Column(name = "wl_user")
-    val user: Long = 0L,
-    @Column(name = "wl_attendance")
-    val attendance: Long = 0L,
-    @Column(name = "wl_health")
-    val health: Long = 0L,
+
+    @Column(name = "wl_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wl_user")
+    val user: User? = null,
+
+    @Column(name = "wl_attendance", insertable = false, updatable = false)
+    val attendanceId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wl_attendance")
+    val attendance: Attendance? = null,
+
+    @Column(name = "wl_health", insertable = false, updatable = false)
+    val healthId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wl_health")
+    val health: Health? = null,
     @Column(name = "wl_exercisename")
     val exercisename: String = "",
     @Column(name = "wl_sets")
@@ -89,12 +101,15 @@ data class WorkoutlogResponse(
     val extra: WorkoutlogExtraInfo
 ){
     companion object {
-        fun from(workoutlog: Workoutlog, userResponse: UserResponse? = null, attendanceResponse: AttendanceResponse? = null, healthResponse: HealthResponse? = null): WorkoutlogResponse {
+        fun from(workoutlog: Workoutlog): WorkoutlogResponse {
+            val userResponse = workoutlog.user?.let { UserResponse.from(it) }
+            val attendanceResponse = workoutlog.attendance?.let { AttendanceResponse.from(it) }
+            val healthResponse = workoutlog.health?.let { HealthResponse.from(it) }
             return WorkoutlogResponse(
                 id = workoutlog.id,
-                user = workoutlog.user,
-                attendance = workoutlog.attendance,
-                health = workoutlog.health,
+                user = workoutlog.userId,
+                attendance = workoutlog.attendanceId,
+                health = workoutlog.healthId,
                 exercisename = workoutlog.exercisename,
                 sets = workoutlog.sets,
                 reps = workoutlog.reps,
@@ -105,14 +120,7 @@ data class WorkoutlogResponse(
                 date = workoutlog.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = WorkoutlogExtraInfo(
-                    
-                
-                     user = userResponse,
-                
-                     attendance = attendanceResponse,
-                
-                     health = healthResponse,
-                )
+                    user = userResponse,attendance = attendanceResponse,health = healthResponse,)
                 
             )
         }

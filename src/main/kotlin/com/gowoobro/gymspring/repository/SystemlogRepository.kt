@@ -16,13 +16,21 @@ import com.gowoobro.gymspring.enums.systemlog.Result
 
 @Repository
 interface SystemlogRepository : JpaRepository<Systemlog, Long> {
+    @Query("SELECT m FROM Systemlog m")
     override fun findAll(pageable: Pageable): Page<Systemlog>
 
-    fun findByType(type: Type): List<Systemlog>
+    @Query("SELECT m FROM Systemlog m WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Systemlog>
 
-    fun findByContent(content: String): List<Systemlog>
+    @Query("SELECT m FROM Systemlog m WHERE m.type = :type")
+    fun findByTypeWithJoin(type: Type): List<Systemlog>
 
-    fun findByResult(result: Result): List<Systemlog>
+    @Query("SELECT m FROM Systemlog m WHERE m.content = :content")
+    fun findByContentWithJoin(content: String): List<Systemlog>
 
-    fun findByDate(date: LocalDateTime): List<Systemlog>
+    @Query("SELECT m FROM Systemlog m WHERE m.result = :result")
+    fun findByResultWithJoin(result: Result): List<Systemlog>
+
+    @Query("SELECT m FROM Systemlog m WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Systemlog>
 }

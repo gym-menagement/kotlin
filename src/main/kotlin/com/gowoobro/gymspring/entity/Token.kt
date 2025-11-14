@@ -12,8 +12,12 @@ data class Token(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "to_id")
     val id: Long = 0,
-    @Column(name = "to_user")
-    val user: Long = 0L,
+
+    @Column(name = "to_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "to_user")
+    val user: User? = null,
     @Column(name = "to_token")
     val token: String = "",
     @Column(name = "to_status")
@@ -54,21 +58,18 @@ data class TokenResponse(
     val extra: TokenExtraInfo
 ){
     companion object {
-        fun from(token: Token, userResponse: UserResponse? = null): TokenResponse {
+        fun from(token: Token): TokenResponse {
+            val userResponse = token.user?.let { UserResponse.from(it) }
             return TokenResponse(
                 id = token.id,
-                user = token.user,
+                user = token.userId,
                 token = token.token,
                 status = token.status.ordinal,
                 date = token.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = TokenExtraInfo(
-                    
-                        status = Status.getDisplayName(token.status),
-                        
-                
-                     user = userResponse,
-                )
+                    status = Status.getDisplayName(token.status),
+                    user = userResponse,)
                 
             )
         }

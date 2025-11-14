@@ -35,27 +35,27 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
 
 
     fun findByTitle(title: String): List<Alarm> {
-        return alarmRepository.findByTitle(title)
+        return alarmRepository.findByTitleWithJoin(title)
     }
 
     fun findByContent(content: String): List<Alarm> {
-        return alarmRepository.findByContent(content)
+        return alarmRepository.findByContentWithJoin(content)
     }
 
     fun findByType(type: Type): List<Alarm> {
-        return alarmRepository.findByType(type)
+        return alarmRepository.findByTypeWithJoin(type)
     }
 
     fun findByStatus(status: Status): List<Alarm> {
-        return alarmRepository.findByStatus(status)
+        return alarmRepository.findByStatusWithJoin(status)
     }
 
     fun findByUser(user: Long): List<Alarm> {
-        return alarmRepository.findByUser(user)
+        return alarmRepository.findByUserWithJoin(user)
     }
 
     fun findByDate(date: LocalDateTime): List<Alarm> {
-        return alarmRepository.findByDate(date)
+        return alarmRepository.findByDateWithJoin(date)
     }
 
 
@@ -65,7 +65,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
             content = request.content,
             type = request.type,
             status = request.status,
-            user = request.user,
+            userId = request.user,
             date = request.date,
         )
         return alarmRepository.save(entity)
@@ -78,7 +78,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
                 content = request.content,
                 type = request.type,
                 status = request.status,
-                user = request.user,
+                userId = request.user,
                 date = request.date,
             )
         }
@@ -88,14 +88,12 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
     fun update(request: AlarmUpdateRequest): Alarm? {
         val existing = alarmRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
             title = request.title,
             content = request.content,
             type = request.type,
             status = request.status,
-            user = request.user,
+            userId = request.user,
             date = request.date,
         )
         return alarmRepository.save(updated)

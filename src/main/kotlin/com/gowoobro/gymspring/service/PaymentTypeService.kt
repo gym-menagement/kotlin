@@ -33,21 +33,21 @@ class PaymenttypeService(private val paymenttypeRepository: PaymenttypeRepositor
 
 
     fun findByGym(gym: Long): List<Paymenttype> {
-        return paymenttypeRepository.findByGym(gym)
+        return paymenttypeRepository.findByGymWithJoin(gym)
     }
 
     fun findByName(name: String): List<Paymenttype> {
-        return paymenttypeRepository.findByName(name)
+        return paymenttypeRepository.findByNameWithJoin(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Paymenttype> {
-        return paymenttypeRepository.findByDate(date)
+        return paymenttypeRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: PaymenttypeCreateRequest): Paymenttype {
         val entity = Paymenttype(
-            gym = request.gym,
+            gymId = request.gym,
             name = request.name,
             date = request.date,
         )
@@ -57,7 +57,7 @@ class PaymenttypeService(private val paymenttypeRepository: PaymenttypeRepositor
     fun createBatch(requests: List<PaymenttypeCreateRequest>): List<Paymenttype> {
         val entities = requests.map { request ->
             Paymenttype(
-                gym = request.gym,
+                gymId = request.gym,
                 name = request.name,
                 date = request.date,
             )
@@ -68,10 +68,8 @@ class PaymenttypeService(private val paymenttypeRepository: PaymenttypeRepositor
     fun update(request: PaymenttypeUpdateRequest): Paymenttype? {
         val existing = paymenttypeRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            gym = request.gym,
+            gymId = request.gym,
             name = request.name,
             date = request.date,
         )

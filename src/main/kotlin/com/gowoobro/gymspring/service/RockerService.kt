@@ -34,25 +34,25 @@ class RockerService(private val rockerRepository: RockerRepository) {
 
 
     fun findByGroup(group: Long): List<Rocker> {
-        return rockerRepository.findByGroup(group)
+        return rockerRepository.findByGroupWithJoin(group)
     }
 
     fun findByName(name: String): List<Rocker> {
-        return rockerRepository.findByName(name)
+        return rockerRepository.findByNameWithJoin(name)
     }
 
     fun findByAvailable(available: Available): List<Rocker> {
-        return rockerRepository.findByAvailable(available)
+        return rockerRepository.findByAvailableWithJoin(available)
     }
 
     fun findByDate(date: LocalDateTime): List<Rocker> {
-        return rockerRepository.findByDate(date)
+        return rockerRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: RockerCreateRequest): Rocker {
         val entity = Rocker(
-            group = request.group,
+            groupId = request.group,
             name = request.name,
             available = request.available,
             date = request.date,
@@ -63,7 +63,7 @@ class RockerService(private val rockerRepository: RockerRepository) {
     fun createBatch(requests: List<RockerCreateRequest>): List<Rocker> {
         val entities = requests.map { request ->
             Rocker(
-                group = request.group,
+                groupId = request.group,
                 name = request.name,
                 available = request.available,
                 date = request.date,
@@ -75,10 +75,8 @@ class RockerService(private val rockerRepository: RockerRepository) {
     fun update(request: RockerUpdateRequest): Rocker? {
         val existing = rockerRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            group = request.group,
+            groupId = request.group,
             name = request.name,
             available = request.available,
             date = request.date,

@@ -33,50 +33,50 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
 
 
     fun findByOrder(order: Long): List<Usehealth> {
-        return usehealthRepository.findByOrder(order)
+        return usehealthRepository.findByOrderWithJoin(order)
     }
 
     fun findByHealth(health: Long): List<Usehealth> {
-        return usehealthRepository.findByHealth(health)
+        return usehealthRepository.findByHealthWithJoin(health)
     }
 
     fun findByUser(user: Long): List<Usehealth> {
-        return usehealthRepository.findByUser(user)
+        return usehealthRepository.findByUserWithJoin(user)
     }
 
     fun findByRocker(rocker: Long): List<Usehealth> {
-        return usehealthRepository.findByRocker(rocker)
+        return usehealthRepository.findByRockerWithJoin(rocker)
     }
 
     fun findByTerm(term: Long): List<Usehealth> {
-        return usehealthRepository.findByTerm(term)
+        return usehealthRepository.findByTermWithJoin(term)
     }
 
     fun findByDiscount(discount: Long): List<Usehealth> {
-        return usehealthRepository.findByDiscount(discount)
+        return usehealthRepository.findByDiscountWithJoin(discount)
     }
 
     fun findByStartday(startday: LocalDateTime): List<Usehealth> {
-        return usehealthRepository.findByStartday(startday)
+        return usehealthRepository.findByStartdayWithJoin(startday)
     }
 
     fun findByEndday(endday: LocalDateTime): List<Usehealth> {
-        return usehealthRepository.findByEndday(endday)
+        return usehealthRepository.findByEnddayWithJoin(endday)
     }
 
     fun findByDate(date: LocalDateTime): List<Usehealth> {
-        return usehealthRepository.findByDate(date)
+        return usehealthRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: UsehealthCreateRequest): Usehealth {
         val entity = Usehealth(
-            order = request.order,
-            health = request.health,
-            user = request.user,
-            rocker = request.rocker,
-            term = request.term,
-            discount = request.discount,
+            orderId = request.order,
+            healthId = request.health,
+            userId = request.user,
+            rockerId = request.rocker,
+            termId = request.term,
+            discountId = request.discount,
             startday = request.startday,
             endday = request.endday,
             date = request.date,
@@ -87,12 +87,12 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
     fun createBatch(requests: List<UsehealthCreateRequest>): List<Usehealth> {
         val entities = requests.map { request ->
             Usehealth(
-                order = request.order,
-                health = request.health,
-                user = request.user,
-                rocker = request.rocker,
-                term = request.term,
-                discount = request.discount,
+                orderId = request.order,
+                healthId = request.health,
+                userId = request.user,
+                rockerId = request.rocker,
+                termId = request.term,
+                discountId = request.discount,
                 startday = request.startday,
                 endday = request.endday,
                 date = request.date,
@@ -104,15 +104,13 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
     fun update(request: UsehealthUpdateRequest): Usehealth? {
         val existing = usehealthRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            order = request.order,
-            health = request.health,
-            user = request.user,
-            rocker = request.rocker,
-            term = request.term,
-            discount = request.discount,
+            orderId = request.order,
+            healthId = request.health,
+            userId = request.user,
+            rockerId = request.rocker,
+            termId = request.term,
+            discountId = request.discount,
             startday = request.startday,
             endday = request.endday,
             date = request.date,

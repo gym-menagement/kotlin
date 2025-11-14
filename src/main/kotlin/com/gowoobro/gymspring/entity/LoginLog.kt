@@ -15,8 +15,12 @@ data class Loginlog(
     val ip: String = "",
     @Column(name = "ll_ipvalue")
     val ipvalue: Long = 0L,
-    @Column(name = "ll_user")
-    val user: Long = 0L,
+
+    @Column(name = "ll_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ll_user")
+    val user: User? = null,
     @Column(name = "ll_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 )
@@ -52,19 +56,17 @@ data class LoginlogResponse(
     val extra: LoginlogExtraInfo
 ){
     companion object {
-        fun from(loginlog: Loginlog, userResponse: UserResponse? = null): LoginlogResponse {
+        fun from(loginlog: Loginlog): LoginlogResponse {
+            val userResponse = loginlog.user?.let { UserResponse.from(it) }
             return LoginlogResponse(
                 id = loginlog.id,
                 ip = loginlog.ip,
                 ipvalue = loginlog.ipvalue,
-                user = loginlog.user,
+                user = loginlog.userId,
                 date = loginlog.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = LoginlogExtraInfo(
-                    
-                
-                     user = userResponse,
-                )
+                    user = userResponse,)
                 
             )
         }

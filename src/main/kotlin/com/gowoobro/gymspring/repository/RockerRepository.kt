@@ -15,13 +15,21 @@ import com.gowoobro.gymspring.enums.rocker.Available
 
 @Repository
 interface RockerRepository : JpaRepository<Rocker, Long> {
+    @Query("SELECT m FROM Rocker m LEFT JOIN FETCH m.rockergroup")
     override fun findAll(pageable: Pageable): Page<Rocker>
 
-    fun findByGroup(group: Long): List<Rocker>
+    @Query("SELECT m FROM Rocker m LEFT JOIN FETCH m.rockergroup WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Rocker>
 
-    fun findByName(name: String): List<Rocker>
+    @Query("SELECT m FROM Rocker m LEFT JOIN FETCH m.rockergroup WHERE m.groupId = :rockergroup")
+    fun findByGroupWithJoin(rockergroup: Long): List<Rocker>
 
-    fun findByAvailable(available: Available): List<Rocker>
+    @Query("SELECT m FROM Rocker m LEFT JOIN FETCH m.rockergroup WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Rocker>
 
-    fun findByDate(date: LocalDateTime): List<Rocker>
+    @Query("SELECT m FROM Rocker m LEFT JOIN FETCH m.rockergroup WHERE m.available = :available")
+    fun findByAvailableWithJoin(available: Available): List<Rocker>
+
+    @Query("SELECT m FROM Rocker m LEFT JOIN FETCH m.rockergroup WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Rocker>
 }

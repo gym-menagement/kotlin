@@ -14,13 +14,21 @@ import java.time.LocalDateTime
 
 @Repository
 interface RoleRepository : JpaRepository<Role, Long> {
+    @Query("SELECT m FROM Role m LEFT JOIN FETCH m.gym")
     override fun findAll(pageable: Pageable): Page<Role>
 
-    fun findByGym(gym: Long): List<Role>
+    @Query("SELECT m FROM Role m LEFT JOIN FETCH m.gym WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Role>
 
-    fun findByRoleid(roleid: Int): List<Role>
+    @Query("SELECT m FROM Role m LEFT JOIN FETCH m.gym WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Role>
 
-    fun findByName(name: String): List<Role>
+    @Query("SELECT m FROM Role m LEFT JOIN FETCH m.gym WHERE m.roleid = :roleid")
+    fun findByRoleidWithJoin(roleid: Int): List<Role>
 
-    fun findByDate(date: LocalDateTime): List<Role>
+    @Query("SELECT m FROM Role m LEFT JOIN FETCH m.gym WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Role>
+
+    @Query("SELECT m FROM Role m LEFT JOIN FETCH m.gym WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Role>
 }

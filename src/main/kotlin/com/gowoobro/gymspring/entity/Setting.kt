@@ -92,10 +92,8 @@ data class SettingResponse(
                 date = setting.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = SettingExtraInfo(
-                    
-                        type = Type.getDisplayName(setting.type),
-                        
-                )
+                    type = Type.getDisplayName(setting.type),
+                    )
                 
             )
         }

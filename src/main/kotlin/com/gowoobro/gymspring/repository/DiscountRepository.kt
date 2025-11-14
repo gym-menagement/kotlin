@@ -14,11 +14,18 @@ import java.time.LocalDateTime
 
 @Repository
 interface DiscountRepository : JpaRepository<Discount, Long> {
+    @Query("SELECT m FROM Discount m")
     override fun findAll(pageable: Pageable): Page<Discount>
 
-    fun findByName(name: String): List<Discount>
+    @Query("SELECT m FROM Discount m WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Discount>
 
-    fun findByDiscount(discount: Int): List<Discount>
+    @Query("SELECT m FROM Discount m WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Discount>
 
-    fun findByDate(date: LocalDateTime): List<Discount>
+    @Query("SELECT m FROM Discount m WHERE m.discount = :discount")
+    fun findByDiscountWithJoin(discount: Int): List<Discount>
+
+    @Query("SELECT m FROM Discount m WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Discount>
 }

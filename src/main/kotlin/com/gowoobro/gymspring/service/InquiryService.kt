@@ -35,60 +35,60 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
 
 
     fun findByUser(user: Long): List<Inquiry> {
-        return inquiryRepository.findByUser(user)
+        return inquiryRepository.findByUserWithJoin(user)
     }
 
     fun findByGym(gym: Long): List<Inquiry> {
-        return inquiryRepository.findByGym(gym)
+        return inquiryRepository.findByGymWithJoin(gym)
     }
 
     fun findByType(type: Type): List<Inquiry> {
-        return inquiryRepository.findByType(type)
+        return inquiryRepository.findByTypeWithJoin(type)
     }
 
     fun findByTitle(title: String): List<Inquiry> {
-        return inquiryRepository.findByTitle(title)
+        return inquiryRepository.findByTitleWithJoin(title)
     }
 
     fun findByContent(content: String): List<Inquiry> {
-        return inquiryRepository.findByContent(content)
+        return inquiryRepository.findByContentWithJoin(content)
     }
 
     fun findByStatus(status: Status): List<Inquiry> {
-        return inquiryRepository.findByStatus(status)
+        return inquiryRepository.findByStatusWithJoin(status)
     }
 
     fun findByAnswer(answer: String): List<Inquiry> {
-        return inquiryRepository.findByAnswer(answer)
+        return inquiryRepository.findByAnswerWithJoin(answer)
     }
 
     fun findByAnsweredby(answeredby: Long): List<Inquiry> {
-        return inquiryRepository.findByAnsweredby(answeredby)
+        return inquiryRepository.findByAnsweredbyWithJoin(answeredby)
     }
 
     fun findByAnswereddate(answereddate: LocalDateTime): List<Inquiry> {
-        return inquiryRepository.findByAnswereddate(answereddate)
+        return inquiryRepository.findByAnswereddateWithJoin(answereddate)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Inquiry> {
-        return inquiryRepository.findByCreateddate(createddate)
+        return inquiryRepository.findByCreateddateWithJoin(createddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Inquiry> {
-        return inquiryRepository.findByDate(date)
+        return inquiryRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: InquiryCreateRequest): Inquiry {
         val entity = Inquiry(
-            user = request.user,
-            gym = request.gym,
+            userId = request.user,
+            gymId = request.gym,
             type = request.type,
             title = request.title,
             content = request.content,
             status = request.status,
             answer = request.answer,
-            answeredby = request.answeredby,
+            answeredbyId = request.answeredby,
             answereddate = request.answereddate,
             createddate = request.createddate,
             date = request.date,
@@ -99,14 +99,14 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
     fun createBatch(requests: List<InquiryCreateRequest>): List<Inquiry> {
         val entities = requests.map { request ->
             Inquiry(
-                user = request.user,
-                gym = request.gym,
+                userId = request.user,
+                gymId = request.gym,
                 type = request.type,
                 title = request.title,
                 content = request.content,
                 status = request.status,
                 answer = request.answer,
-                answeredby = request.answeredby,
+                answeredbyId = request.answeredby,
                 answereddate = request.answereddate,
                 createddate = request.createddate,
                 date = request.date,
@@ -118,17 +118,15 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
     fun update(request: InquiryUpdateRequest): Inquiry? {
         val existing = inquiryRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            user = request.user,
-            gym = request.gym,
+            userId = request.user,
+            gymId = request.gym,
             type = request.type,
             title = request.title,
             content = request.content,
             status = request.status,
             answer = request.answer,
-            answeredby = request.answeredby,
+            answeredbyId = request.answeredby,
             answereddate = request.answereddate,
             createddate = request.createddate,
             date = request.date,

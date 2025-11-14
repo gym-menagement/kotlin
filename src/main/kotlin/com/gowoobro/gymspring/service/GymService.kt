@@ -33,11 +33,11 @@ class GymService(private val gymRepository: GymRepository) {
 
 
     fun findByName(name: String): List<Gym> {
-        return gymRepository.findByName(name)
+        return gymRepository.findByNameWithJoin(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Gym> {
-        return gymRepository.findByDate(date)
+        return gymRepository.findByDateWithJoin(date)
     }
 
 
@@ -61,8 +61,6 @@ class GymService(private val gymRepository: GymRepository) {
 
     fun update(request: GymUpdateRequest): Gym? {
         val existing = gymRepository.findById(request.id).orElse(null) ?: return null
-
-        
 
         val updated = existing.copy(
             name = request.name,

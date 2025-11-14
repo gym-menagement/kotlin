@@ -11,8 +11,12 @@ data class Paymenttype(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pt_id")
     val id: Long = 0,
-    @Column(name = "pt_gym")
-    val gym: Long = 0L,
+
+    @Column(name = "pt_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pt_gym")
+    val gym: Gym? = null,
     @Column(name = "pt_name")
     val name: String = "",
     @Column(name = "pt_date")
@@ -47,18 +51,16 @@ data class PaymenttypeResponse(
     val extra: PaymenttypeExtraInfo
 ){
     companion object {
-        fun from(paymenttype: Paymenttype, gymResponse: GymResponse? = null): PaymenttypeResponse {
+        fun from(paymenttype: Paymenttype): PaymenttypeResponse {
+            val gymResponse = paymenttype.gym?.let { GymResponse.from(it) }
             return PaymenttypeResponse(
                 id = paymenttype.id,
-                gym = paymenttype.gym,
+                gym = paymenttype.gymId,
                 name = paymenttype.name,
                 date = paymenttype.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = PaymenttypeExtraInfo(
-                    
-                
-                     gym = gymResponse,
-                )
+                    gym = gymResponse,)
                 
             )
         }

@@ -14,27 +14,42 @@ import java.math.BigDecimal
 
 @Repository
 interface WorkoutlogRepository : JpaRepository<Workoutlog, Long> {
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health")
     override fun findAll(pageable: Pageable): Page<Workoutlog>
 
-    fun findByUser(user: Long): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Workoutlog>
 
-    fun findByAttendance(attendance: Long): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.userId = :user")
+    fun findByUserWithJoin(user: Long): List<Workoutlog>
 
-    fun findByHealth(health: Long): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.attendanceId = :attendance")
+    fun findByAttendanceWithJoin(attendance: Long): List<Workoutlog>
 
-    fun findByExercisename(exercisename: String): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.healthId = :health")
+    fun findByHealthWithJoin(health: Long): List<Workoutlog>
 
-    fun findBySets(sets: Int): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.exercisename = :exercisename")
+    fun findByExercisenameWithJoin(exercisename: String): List<Workoutlog>
 
-    fun findByReps(reps: Int): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.sets = :sets")
+    fun findBySetsWithJoin(sets: Int): List<Workoutlog>
 
-    fun findByWeight(weight: BigDecimal): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.reps = :reps")
+    fun findByRepsWithJoin(reps: Int): List<Workoutlog>
 
-    fun findByDuration(duration: Int): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.weight = :weight")
+    fun findByWeightWithJoin(weight: BigDecimal): List<Workoutlog>
 
-    fun findByCalories(calories: Int): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.duration = :duration")
+    fun findByDurationWithJoin(duration: Int): List<Workoutlog>
 
-    fun findByNote(note: String): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.calories = :calories")
+    fun findByCaloriesWithJoin(calories: Int): List<Workoutlog>
 
-    fun findByDate(date: LocalDateTime): List<Workoutlog>
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.note = :note")
+    fun findByNoteWithJoin(note: String): List<Workoutlog>
+
+    @Query("SELECT m FROM Workoutlog m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.attendance LEFT JOIN FETCH m.health WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Workoutlog>
 }

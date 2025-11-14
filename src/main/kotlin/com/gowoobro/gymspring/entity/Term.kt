@@ -11,10 +11,18 @@ data class Term(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "t_id")
     val id: Long = 0,
-    @Column(name = "t_gym")
-    val gym: Long = 0L,
-    @Column(name = "t_daytype")
-    val daytype: Long = 0L,
+
+    @Column(name = "t_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "t_gym")
+    val gym: Gym? = null,
+
+    @Column(name = "t_daytype", insertable = false, updatable = false)
+    val daytypeId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "t_daytype")
+    val daytype: Daytype? = null,
     @Column(name = "t_name")
     val name: String = "",
     @Column(name = "t_term")
@@ -58,22 +66,19 @@ data class TermResponse(
     val extra: TermExtraInfo
 ){
     companion object {
-        fun from(term: Term, gymResponse: GymResponse? = null, daytypeResponse: DaytypeResponse? = null): TermResponse {
+        fun from(term: Term): TermResponse {
+            val gymResponse = term.gym?.let { GymResponse.from(it) }
+            val daytypeResponse = term.daytype?.let { DaytypeResponse.from(it) }
             return TermResponse(
                 id = term.id,
-                gym = term.gym,
-                daytype = term.daytype,
+                gym = term.gymId,
+                daytype = term.daytypeId,
                 name = term.name,
                 term = term.term,
                 date = term.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = TermExtraInfo(
-                    
-                
-                     gym = gymResponse,
-                
-                     daytype = daytypeResponse,
-                )
+                    gym = gymResponse,daytype = daytypeResponse,)
                 
             )
         }

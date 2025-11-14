@@ -12,8 +12,12 @@ data class Memberqr(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mq_id")
     val id: Long = 0,
-    @Column(name = "mq_user")
-    val user: Long = 0L,
+
+    @Column(name = "mq_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mq_user")
+    val user: User? = null,
     @Column(name = "mq_code")
     val code: String = "",
     @Column(name = "mq_imageurl")
@@ -79,10 +83,11 @@ data class MemberqrResponse(
     val extra: MemberqrExtraInfo
 ){
     companion object {
-        fun from(memberqr: Memberqr, userResponse: UserResponse? = null): MemberqrResponse {
+        fun from(memberqr: Memberqr): MemberqrResponse {
+            val userResponse = memberqr.user?.let { UserResponse.from(it) }
             return MemberqrResponse(
                 id = memberqr.id,
-                user = memberqr.user,
+                user = memberqr.userId,
                 code = memberqr.code,
                 imageurl = memberqr.imageurl,
                 isactive = memberqr.isactive.ordinal,
@@ -93,12 +98,8 @@ data class MemberqrResponse(
                 date = memberqr.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = MemberqrExtraInfo(
-                    
-                        isactive = Isactive.getDisplayName(memberqr.isactive),
-                        
-                
-                     user = userResponse,
-                )
+                    isactive = Isactive.getDisplayName(memberqr.isactive),
+                    user = userResponse,)
                 
             )
         }

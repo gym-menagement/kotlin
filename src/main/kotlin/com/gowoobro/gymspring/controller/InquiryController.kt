@@ -5,37 +5,22 @@ import com.gowoobro.gymspring.entity.InquiryCreateRequest
 import com.gowoobro.gymspring.entity.InquiryUpdateRequest
 import com.gowoobro.gymspring.service.InquiryService
 import com.gowoobro.gymspring.entity.InquiryResponse
-import com.gowoobro.gymspring.entity.UserResponse
-import com.gowoobro.gymspring.service.UserService
-import com.gowoobro.gymspring.entity.GymResponse
-import com.gowoobro.gymspring.service.GymService
+import com.gowoobro.gymspring.enums.inquiry.Type
+import com.gowoobro.gymspring.enums.inquiry.Status
+
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.inquiry.Type
-import com.gowoobro.gymspring.enums.inquiry.Status
-
 
 @RestController
 @RequestMapping("/api/inquiry")
 class InquiryController(
-    private val inquiryService: InquiryService, private val userService: UserService, private val gymService: GymService) {
+    private val inquiryService: InquiryService) {
 
-    private fun toResponse(inquiry: Inquiry):
-    InquiryResponse {
-        
-        val inquireruser = userService.findById(inquiry.user)
-        val inquireruserResponse = inquireruser?.let{ UserResponse.from(it) }
-        
-        val gym = gymService.findById(inquiry.gym)
-        val gymResponse = gym?.let{ GymResponse.from(it) }
-        
-        val answeredbyuser = userService.findById(inquiry.answeredby)
-        val answeredbyuserResponse = answeredbyuser?.let{ UserResponse.from(it) }
-        
-        return InquiryResponse.from(inquiry, inquireruserResponse, gymResponse, answeredbyuserResponse)
+    private fun toResponse(inquiry: Inquiry): InquiryResponse {
+        return InquiryResponse.from(inquiry)
     }
 
     @GetMapping
@@ -43,16 +28,16 @@ class InquiryController(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<InquiryResponse>> {
-        val result = inquiryService.findAll(page, pageSize)
-        val responsePage = result.map { toResponse(it)}
+        val res = inquiryService.findAll(page, pageSize)
+        val responsePage = res.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
     fun getInquiry(@PathVariable id: Long): ResponseEntity<InquiryResponse> {
-        val result = inquiryService.findById(id)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = inquiryService.findById(id)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -61,68 +46,68 @@ class InquiryController(
 
     @GetMapping("/search/user")
     fun getInquiryByUser(@RequestParam user: Long): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByUser(user)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByUser(user)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/gym")
     fun getInquiryByGym(@RequestParam gym: Long): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByGym(gym)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/type")
     fun getInquiryByType(@RequestParam type: Type): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByType(type)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByType(type)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/title")
     fun getInquiryByTitle(@RequestParam title: String): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByTitle(title)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByTitle(title)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/content")
     fun getInquiryByContent(@RequestParam content: String): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByContent(content)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByContent(content)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/status")
     fun getInquiryByStatus(@RequestParam status: Status): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByStatus(status)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByStatus(status)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/answer")
     fun getInquiryByAnswer(@RequestParam answer: String): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByAnswer(answer)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByAnswer(answer)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/answeredby")
     fun getInquiryByAnsweredby(@RequestParam answeredby: Long): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByAnsweredby(answeredby)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByAnsweredby(answeredby)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/answereddate")
     fun getInquiryByAnswereddate(@RequestParam answereddate: LocalDateTime): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByAnswereddate(answereddate)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByAnswereddate(answereddate)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/createddate")
     fun getInquiryByCreateddate(@RequestParam createddate: LocalDateTime): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByCreateddate(createddate)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByCreateddate(createddate)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getInquiryByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<InquiryResponse>> {
-        val result = inquiryService.findByDate(date)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = inquiryService.findByDate(date)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
 
@@ -135,8 +120,8 @@ class InquiryController(
     @PostMapping
     fun createInquiry(@RequestBody request: InquiryCreateRequest): ResponseEntity<InquiryResponse> {
         return try {
-            val result = inquiryService.create(request)
-            ResponseEntity.ok(toResponse(result))
+            val res = inquiryService.create(request)
+            ResponseEntity.ok(toResponse(res))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -145,8 +130,8 @@ class InquiryController(
     @PostMapping("/batch")
     fun createInquirys(@RequestBody requests: List<InquiryCreateRequest>): ResponseEntity<List<InquiryResponse>> {
         return try {
-            val result = inquiryService.createBatch(requests)
-            return ResponseEntity.ok(result.map { toResponse(it) } )
+            val res = inquiryService.createBatch(requests)
+            return ResponseEntity.ok(res.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -158,9 +143,9 @@ class InquiryController(
         @RequestBody request: InquiryUpdateRequest
     ): ResponseEntity<InquiryResponse> {
         val updatedRequest = request.copy(id = id)
-        val result = inquiryService.update(updatedRequest)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = inquiryService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }

@@ -34,45 +34,45 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
 
 
     fun findByUser(user: Long): List<Memberqr> {
-        return memberqrRepository.findByUser(user)
+        return memberqrRepository.findByUserWithJoin(user)
     }
 
     fun findByCode(code: String): List<Memberqr> {
-        return memberqrRepository.findByCode(code)
+        return memberqrRepository.findByCodeWithJoin(code)
     }
 
     fun findByImageurl(imageurl: String): List<Memberqr> {
-        return memberqrRepository.findByImageurl(imageurl)
+        return memberqrRepository.findByImageurlWithJoin(imageurl)
     }
 
     fun findByIsactive(isactive: Isactive): List<Memberqr> {
-        return memberqrRepository.findByIsactive(isactive)
+        return memberqrRepository.findByIsactiveWithJoin(isactive)
     }
 
     fun findByExpiredate(expiredate: LocalDateTime): List<Memberqr> {
-        return memberqrRepository.findByExpiredate(expiredate)
+        return memberqrRepository.findByExpiredateWithJoin(expiredate)
     }
 
     fun findByGenerateddate(generateddate: LocalDateTime): List<Memberqr> {
-        return memberqrRepository.findByGenerateddate(generateddate)
+        return memberqrRepository.findByGenerateddateWithJoin(generateddate)
     }
 
     fun findByLastuseddate(lastuseddate: LocalDateTime): List<Memberqr> {
-        return memberqrRepository.findByLastuseddate(lastuseddate)
+        return memberqrRepository.findByLastuseddateWithJoin(lastuseddate)
     }
 
     fun findByUsecount(usecount: Int): List<Memberqr> {
-        return memberqrRepository.findByUsecount(usecount)
+        return memberqrRepository.findByUsecountWithJoin(usecount)
     }
 
     fun findByDate(date: LocalDateTime): List<Memberqr> {
-        return memberqrRepository.findByDate(date)
+        return memberqrRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: MemberqrCreateRequest): Memberqr {
         val entity = Memberqr(
-            user = request.user,
+            userId = request.user,
             code = request.code,
             imageurl = request.imageurl,
             isactive = request.isactive,
@@ -88,7 +88,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
     fun createBatch(requests: List<MemberqrCreateRequest>): List<Memberqr> {
         val entities = requests.map { request ->
             Memberqr(
-                user = request.user,
+                userId = request.user,
                 code = request.code,
                 imageurl = request.imageurl,
                 isactive = request.isactive,
@@ -105,10 +105,8 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
     fun update(request: MemberqrUpdateRequest): Memberqr? {
         val existing = memberqrRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            user = request.user,
+            userId = request.user,
             code = request.code,
             imageurl = request.imageurl,
             isactive = request.isactive,

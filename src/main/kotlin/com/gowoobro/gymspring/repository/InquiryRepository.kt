@@ -16,27 +16,42 @@ import com.gowoobro.gymspring.enums.inquiry.Status
 
 @Repository
 interface InquiryRepository : JpaRepository<Inquiry, Long> {
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser")
     override fun findAll(pageable: Pageable): Page<Inquiry>
 
-    fun findByUser(user: Long): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Inquiry>
 
-    fun findByGym(gym: Long): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.userId = :inquireruser")
+    fun findByUserWithJoin(inquireruser: Long): List<Inquiry>
 
-    fun findByType(type: Type): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Inquiry>
 
-    fun findByTitle(title: String): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.type = :type")
+    fun findByTypeWithJoin(type: Type): List<Inquiry>
 
-    fun findByContent(content: String): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.title = :title")
+    fun findByTitleWithJoin(title: String): List<Inquiry>
 
-    fun findByStatus(status: Status): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.content = :content")
+    fun findByContentWithJoin(content: String): List<Inquiry>
 
-    fun findByAnswer(answer: String): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.status = :status")
+    fun findByStatusWithJoin(status: Status): List<Inquiry>
 
-    fun findByAnsweredby(answeredby: Long): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.answer = :answer")
+    fun findByAnswerWithJoin(answer: String): List<Inquiry>
 
-    fun findByAnswereddate(answereddate: LocalDateTime): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.answeredbyId = :answeredbyuser")
+    fun findByAnsweredbyWithJoin(answeredbyuser: Long): List<Inquiry>
 
-    fun findByCreateddate(createddate: LocalDateTime): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.answereddate = :answereddate")
+    fun findByAnswereddateWithJoin(answereddate: LocalDateTime): List<Inquiry>
 
-    fun findByDate(date: LocalDateTime): List<Inquiry>
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.createddate = :createddate")
+    fun findByCreateddateWithJoin(createddate: LocalDateTime): List<Inquiry>
+
+    @Query("SELECT m FROM Inquiry m LEFT JOIN FETCH m.inquireruser LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.answeredbyuser WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Inquiry>
 }

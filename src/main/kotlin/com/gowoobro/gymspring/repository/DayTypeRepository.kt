@@ -14,11 +14,18 @@ import java.time.LocalDateTime
 
 @Repository
 interface DaytypeRepository : JpaRepository<Daytype, Long> {
+    @Query("SELECT m FROM Daytype m LEFT JOIN FETCH m.gym")
     override fun findAll(pageable: Pageable): Page<Daytype>
 
-    fun findByGym(gym: Long): List<Daytype>
+    @Query("SELECT m FROM Daytype m LEFT JOIN FETCH m.gym WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Daytype>
 
-    fun findByName(name: String): List<Daytype>
+    @Query("SELECT m FROM Daytype m LEFT JOIN FETCH m.gym WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Daytype>
 
-    fun findByDate(date: LocalDateTime): List<Daytype>
+    @Query("SELECT m FROM Daytype m LEFT JOIN FETCH m.gym WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Daytype>
+
+    @Query("SELECT m FROM Daytype m LEFT JOIN FETCH m.gym WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Daytype>
 }

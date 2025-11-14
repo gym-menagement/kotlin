@@ -33,21 +33,21 @@ class RockergroupService(private val rockergroupRepository: RockergroupRepositor
 
 
     fun findByGym(gym: Long): List<Rockergroup> {
-        return rockergroupRepository.findByGym(gym)
+        return rockergroupRepository.findByGymWithJoin(gym)
     }
 
     fun findByName(name: String): List<Rockergroup> {
-        return rockergroupRepository.findByName(name)
+        return rockergroupRepository.findByNameWithJoin(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Rockergroup> {
-        return rockergroupRepository.findByDate(date)
+        return rockergroupRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: RockergroupCreateRequest): Rockergroup {
         val entity = Rockergroup(
-            gym = request.gym,
+            gymId = request.gym,
             name = request.name,
             date = request.date,
         )
@@ -57,7 +57,7 @@ class RockergroupService(private val rockergroupRepository: RockergroupRepositor
     fun createBatch(requests: List<RockergroupCreateRequest>): List<Rockergroup> {
         val entities = requests.map { request ->
             Rockergroup(
-                gym = request.gym,
+                gymId = request.gym,
                 name = request.name,
                 date = request.date,
             )
@@ -68,10 +68,8 @@ class RockergroupService(private val rockergroupRepository: RockergroupRepositor
     fun update(request: RockergroupUpdateRequest): Rockergroup? {
         val existing = rockergroupRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            gym = request.gym,
+            gymId = request.gym,
             name = request.name,
             date = request.date,
         )

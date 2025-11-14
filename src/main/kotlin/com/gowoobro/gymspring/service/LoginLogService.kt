@@ -33,19 +33,19 @@ class LoginlogService(private val loginlogRepository: LoginlogRepository) {
 
 
     fun findByIp(ip: String): List<Loginlog> {
-        return loginlogRepository.findByIp(ip)
+        return loginlogRepository.findByIpWithJoin(ip)
     }
 
     fun findByIpvalue(ipvalue: Long): List<Loginlog> {
-        return loginlogRepository.findByIpvalue(ipvalue)
+        return loginlogRepository.findByIpvalueWithJoin(ipvalue)
     }
 
     fun findByUser(user: Long): List<Loginlog> {
-        return loginlogRepository.findByUser(user)
+        return loginlogRepository.findByUserWithJoin(user)
     }
 
     fun findByDate(date: LocalDateTime): List<Loginlog> {
-        return loginlogRepository.findByDate(date)
+        return loginlogRepository.findByDateWithJoin(date)
     }
 
 
@@ -53,7 +53,7 @@ class LoginlogService(private val loginlogRepository: LoginlogRepository) {
         val entity = Loginlog(
             ip = request.ip,
             ipvalue = request.ipvalue,
-            user = request.user,
+            userId = request.user,
             date = request.date,
         )
         return loginlogRepository.save(entity)
@@ -64,7 +64,7 @@ class LoginlogService(private val loginlogRepository: LoginlogRepository) {
             Loginlog(
                 ip = request.ip,
                 ipvalue = request.ipvalue,
-                user = request.user,
+                userId = request.user,
                 date = request.date,
             )
         }
@@ -74,12 +74,10 @@ class LoginlogService(private val loginlogRepository: LoginlogRepository) {
     fun update(request: LoginlogUpdateRequest): Loginlog? {
         val existing = loginlogRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
             ip = request.ip,
             ipvalue = request.ipvalue,
-            user = request.user,
+            userId = request.user,
             date = request.date,
         )
         return loginlogRepository.save(updated)

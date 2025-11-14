@@ -16,17 +16,27 @@ import com.gowoobro.gymspring.enums.alarm.Status
 
 @Repository
 interface AlarmRepository : JpaRepository<Alarm, Long> {
+    @Query("SELECT m FROM Alarm m LEFT JOIN FETCH m.user")
     override fun findAll(pageable: Pageable): Page<Alarm>
 
-    fun findByTitle(title: String): List<Alarm>
+    @Query("SELECT m FROM Alarm m LEFT JOIN FETCH m.user WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Alarm>
 
-    fun findByContent(content: String): List<Alarm>
+    @Query("SELECT m FROM Alarm m LEFT JOIN FETCH m.user WHERE m.title = :title")
+    fun findByTitleWithJoin(title: String): List<Alarm>
 
-    fun findByType(type: Type): List<Alarm>
+    @Query("SELECT m FROM Alarm m LEFT JOIN FETCH m.user WHERE m.content = :content")
+    fun findByContentWithJoin(content: String): List<Alarm>
 
-    fun findByStatus(status: Status): List<Alarm>
+    @Query("SELECT m FROM Alarm m LEFT JOIN FETCH m.user WHERE m.type = :type")
+    fun findByTypeWithJoin(type: Type): List<Alarm>
 
-    fun findByUser(user: Long): List<Alarm>
+    @Query("SELECT m FROM Alarm m LEFT JOIN FETCH m.user WHERE m.status = :status")
+    fun findByStatusWithJoin(status: Status): List<Alarm>
 
-    fun findByDate(date: LocalDateTime): List<Alarm>
+    @Query("SELECT m FROM Alarm m LEFT JOIN FETCH m.user WHERE m.userId = :user")
+    fun findByUserWithJoin(user: Long): List<Alarm>
+
+    @Query("SELECT m FROM Alarm m LEFT JOIN FETCH m.user WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Alarm>
 }

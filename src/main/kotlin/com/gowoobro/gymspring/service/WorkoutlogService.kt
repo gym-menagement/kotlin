@@ -33,55 +33,55 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
 
 
     fun findByUser(user: Long): List<Workoutlog> {
-        return workoutlogRepository.findByUser(user)
+        return workoutlogRepository.findByUserWithJoin(user)
     }
 
     fun findByAttendance(attendance: Long): List<Workoutlog> {
-        return workoutlogRepository.findByAttendance(attendance)
+        return workoutlogRepository.findByAttendanceWithJoin(attendance)
     }
 
     fun findByHealth(health: Long): List<Workoutlog> {
-        return workoutlogRepository.findByHealth(health)
+        return workoutlogRepository.findByHealthWithJoin(health)
     }
 
     fun findByExercisename(exercisename: String): List<Workoutlog> {
-        return workoutlogRepository.findByExercisename(exercisename)
+        return workoutlogRepository.findByExercisenameWithJoin(exercisename)
     }
 
     fun findBySets(sets: Int): List<Workoutlog> {
-        return workoutlogRepository.findBySets(sets)
+        return workoutlogRepository.findBySetsWithJoin(sets)
     }
 
     fun findByReps(reps: Int): List<Workoutlog> {
-        return workoutlogRepository.findByReps(reps)
+        return workoutlogRepository.findByRepsWithJoin(reps)
     }
 
     fun findByWeight(weight: BigDecimal): List<Workoutlog> {
-        return workoutlogRepository.findByWeight(weight)
+        return workoutlogRepository.findByWeightWithJoin(weight)
     }
 
     fun findByDuration(duration: Int): List<Workoutlog> {
-        return workoutlogRepository.findByDuration(duration)
+        return workoutlogRepository.findByDurationWithJoin(duration)
     }
 
     fun findByCalories(calories: Int): List<Workoutlog> {
-        return workoutlogRepository.findByCalories(calories)
+        return workoutlogRepository.findByCaloriesWithJoin(calories)
     }
 
     fun findByNote(note: String): List<Workoutlog> {
-        return workoutlogRepository.findByNote(note)
+        return workoutlogRepository.findByNoteWithJoin(note)
     }
 
     fun findByDate(date: LocalDateTime): List<Workoutlog> {
-        return workoutlogRepository.findByDate(date)
+        return workoutlogRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: WorkoutlogCreateRequest): Workoutlog {
         val entity = Workoutlog(
-            user = request.user,
-            attendance = request.attendance,
-            health = request.health,
+            userId = request.user,
+            attendanceId = request.attendance,
+            healthId = request.health,
             exercisename = request.exercisename,
             sets = request.sets,
             reps = request.reps,
@@ -97,9 +97,9 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
     fun createBatch(requests: List<WorkoutlogCreateRequest>): List<Workoutlog> {
         val entities = requests.map { request ->
             Workoutlog(
-                user = request.user,
-                attendance = request.attendance,
-                health = request.health,
+                userId = request.user,
+                attendanceId = request.attendance,
+                healthId = request.health,
                 exercisename = request.exercisename,
                 sets = request.sets,
                 reps = request.reps,
@@ -116,12 +116,10 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
     fun update(request: WorkoutlogUpdateRequest): Workoutlog? {
         val existing = workoutlogRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            user = request.user,
-            attendance = request.attendance,
-            health = request.health,
+            userId = request.user,
+            attendanceId = request.attendance,
+            healthId = request.health,
             exercisename = request.exercisename,
             sets = request.sets,
             reps = request.reps,

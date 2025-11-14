@@ -38,71 +38,71 @@ class UserService(private val userRepository: UserRepository, private val passwo
 
 
     fun findByLoginid(loginid: String): List<User> {
-        return userRepository.findByLoginid(loginid)
+        return userRepository.findByLoginidWithJoin(loginid)
     }
 
     fun findByPasswd(passwd: String): List<User> {
-        return userRepository.findByPasswd(passwd)
+        return userRepository.findByPasswdWithJoin(passwd)
     }
 
     fun findByEmail(email: String): List<User> {
-        return userRepository.findByEmail(email)
+        return userRepository.findByEmailWithJoin(email)
     }
 
     fun findByName(name: String): List<User> {
-        return userRepository.findByName(name)
+        return userRepository.findByNameWithJoin(name)
     }
 
     fun findByTel(tel: String): List<User> {
-        return userRepository.findByTel(tel)
+        return userRepository.findByTelWithJoin(tel)
     }
 
     fun findByAddress(address: String): List<User> {
-        return userRepository.findByAddress(address)
+        return userRepository.findByAddressWithJoin(address)
     }
 
     fun findByImage(image: String): List<User> {
-        return userRepository.findByImage(image)
+        return userRepository.findByImageWithJoin(image)
     }
 
     fun findBySex(sex: Sex): List<User> {
-        return userRepository.findBySex(sex)
+        return userRepository.findBySexWithJoin(sex)
     }
 
     fun findByBirth(birth: LocalDateTime): List<User> {
-        return userRepository.findByBirth(birth)
+        return userRepository.findByBirthWithJoin(birth)
     }
 
     fun findByType(type: Type): List<User> {
-        return userRepository.findByType(type)
+        return userRepository.findByTypeWithJoin(type)
     }
 
     fun findByConnectid(connectid: String): List<User> {
-        return userRepository.findByConnectid(connectid)
+        return userRepository.findByConnectidWithJoin(connectid)
     }
 
     fun findByLevel(level: Level): List<User> {
-        return userRepository.findByLevel(level)
+        return userRepository.findByLevelWithJoin(level)
     }
 
     fun findByRole(role: Role): List<User> {
-        return userRepository.findByRole(role)
+        return userRepository.findByRoleWithJoin(role)
     }
 
     fun findByUse(use: Use): List<User> {
-        return userRepository.findByUse(use)
+        return userRepository.findByUseWithJoin(use)
     }
 
     fun findByLogindate(logindate: LocalDateTime): List<User> {
-        return userRepository.findByLogindate(logindate)
+        return userRepository.findByLogindateWithJoin(logindate)
     }
 
     fun findByLastchangepasswddate(lastchangepasswddate: LocalDateTime): List<User> {
-        return userRepository.findByLastchangepasswddate(lastchangepasswddate)
+        return userRepository.findByLastchangepasswddateWithJoin(lastchangepasswddate)
     }
 
     fun findByDate(date: LocalDateTime): List<User> {
-        return userRepository.findByDate(date)
+        return userRepository.findByDateWithJoin(date)
     }
 
 
@@ -156,8 +156,6 @@ class UserService(private val userRepository: UserRepository, private val passwo
 
     fun update(request: UserUpdateRequest): User? {
         val existing = userRepository.findById(request.id).orElse(null) ?: return null
-
-        
         val encodedPassword = if (request.passwd != existing.passwd && !request.passwd.startsWith("\$2a\$")) {
             passwordEncoder.encode(request.passwd)
         } else {
@@ -167,7 +165,7 @@ class UserService(private val userRepository: UserRepository, private val passwo
 
         val updated = existing.copy(
             loginid = request.loginid,
-            passwd = passwordEncoder.encode(request.passwd),
+            passwd = encodedPassword,
             email = request.email,
             name = request.name,
             tel = request.tel,

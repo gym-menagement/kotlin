@@ -33,31 +33,31 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
 
 
     fun findByGym(gym: Long): List<Payment> {
-        return paymentRepository.findByGym(gym)
+        return paymentRepository.findByGymWithJoin(gym)
     }
 
     fun findByOrder(order: Long): List<Payment> {
-        return paymentRepository.findByOrder(order)
+        return paymentRepository.findByOrderWithJoin(order)
     }
 
     fun findByMembership(membership: Long): List<Payment> {
-        return paymentRepository.findByMembership(membership)
+        return paymentRepository.findByMembershipWithJoin(membership)
     }
 
     fun findByCost(cost: Int): List<Payment> {
-        return paymentRepository.findByCost(cost)
+        return paymentRepository.findByCostWithJoin(cost)
     }
 
     fun findByDate(date: LocalDateTime): List<Payment> {
-        return paymentRepository.findByDate(date)
+        return paymentRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: PaymentCreateRequest): Payment {
         val entity = Payment(
-            gym = request.gym,
-            order = request.order,
-            membership = request.membership,
+            gymId = request.gym,
+            orderId = request.order,
+            membershipId = request.membership,
             cost = request.cost,
             date = request.date,
         )
@@ -67,9 +67,9 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
     fun createBatch(requests: List<PaymentCreateRequest>): List<Payment> {
         val entities = requests.map { request ->
             Payment(
-                gym = request.gym,
-                order = request.order,
-                membership = request.membership,
+                gymId = request.gym,
+                orderId = request.order,
+                membershipId = request.membership,
                 cost = request.cost,
                 date = request.date,
             )
@@ -80,12 +80,10 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
     fun update(request: PaymentUpdateRequest): Payment? {
         val existing = paymentRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            gym = request.gym,
-            order = request.order,
-            membership = request.membership,
+            gymId = request.gym,
+            orderId = request.order,
+            membershipId = request.membership,
             cost = request.cost,
             date = request.date,
         )

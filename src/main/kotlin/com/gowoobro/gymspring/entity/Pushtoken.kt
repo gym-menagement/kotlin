@@ -12,8 +12,12 @@ data class Pushtoken(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pt_id")
     val id: Long = 0,
-    @Column(name = "pt_user")
-    val user: Long = 0L,
+
+    @Column(name = "pt_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pt_user")
+    val user: User? = null,
     @Column(name = "pt_token")
     val token: String = "",
     @Column(name = "pt_devicetype")
@@ -79,10 +83,11 @@ data class PushtokenResponse(
     val extra: PushtokenExtraInfo
 ){
     companion object {
-        fun from(pushtoken: Pushtoken, userResponse: UserResponse? = null): PushtokenResponse {
+        fun from(pushtoken: Pushtoken): PushtokenResponse {
+            val userResponse = pushtoken.user?.let { UserResponse.from(it) }
             return PushtokenResponse(
                 id = pushtoken.id,
-                user = pushtoken.user,
+                user = pushtoken.userId,
                 token = pushtoken.token,
                 devicetype = pushtoken.devicetype,
                 deviceid = pushtoken.deviceid,
@@ -93,12 +98,8 @@ data class PushtokenResponse(
                 date = pushtoken.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = PushtokenExtraInfo(
-                    
-                        isactive = Isactive.getDisplayName(pushtoken.isactive),
-                        
-                
-                     user = userResponse,
-                )
+                    isactive = Isactive.getDisplayName(pushtoken.isactive),
+                    user = userResponse,)
                 
             )
         }

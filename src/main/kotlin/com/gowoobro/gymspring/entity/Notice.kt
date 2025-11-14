@@ -16,8 +16,12 @@ data class Notice(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nt_id")
     val id: Long = 0,
-    @Column(name = "nt_gym")
-    val gym: Long = 0L,
+
+    @Column(name = "nt_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nt_gym")
+    val gym: Gym? = null,
     @Column(name = "nt_title")
     val title: String = "",
     @Column(name = "nt_content")
@@ -38,8 +42,12 @@ data class Notice(
     val enddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "nt_status")
     val status: Status = Status.PRIVATE,
-    @Column(name = "nt_createdby")
-    val createdby: Long = 0L,
+
+    @Column(name = "nt_createdby", insertable = false, updatable = false)
+    val createdbyId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nt_createdby")
+    val user: User? = null,
     @Column(name = "nt_createddate")
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "nt_updateddate")
@@ -118,10 +126,12 @@ data class NoticeResponse(
     val extra: NoticeExtraInfo
 ){
     companion object {
-        fun from(notice: Notice, gymResponse: GymResponse? = null, userResponse: UserResponse? = null): NoticeResponse {
+        fun from(notice: Notice): NoticeResponse {
+            val gymResponse = notice.gym?.let { GymResponse.from(it) }
+            val userResponse = notice.user?.let { UserResponse.from(it) }
             return NoticeResponse(
                 id = notice.id,
-                gym = notice.gym,
+                gym = notice.gymId,
                 title = notice.title,
                 content = notice.content,
                 type = notice.type.ordinal,
@@ -132,24 +142,14 @@ data class NoticeResponse(
                 startdate = notice.startdate?.toString()?.replace("T", " ") ?: "",
                 enddate = notice.enddate?.toString()?.replace("T", " ") ?: "",
                 status = notice.status.ordinal,
-                createdby = notice.createdby,
+                createdby = notice.createdbyId,
                 createddate = notice.createddate?.toString()?.replace("T", " ") ?: "",
                 updateddate = notice.updateddate?.toString()?.replace("T", " ") ?: "",
                 date = notice.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = NoticeExtraInfo(
-                    
-                        type = Type.getDisplayName(notice.type),
-                        ispopup = Ispopup.getDisplayName(notice.ispopup),
-                        ispush = Ispush.getDisplayName(notice.ispush),
-                        target = Target.getDisplayName(notice.target),
-                        status = Status.getDisplayName(notice.status),
-                        
-                
-                     gym = gymResponse,
-                
-                     user = userResponse,
-                )
+                    type = Type.getDisplayName(notice.type),ispopup = Ispopup.getDisplayName(notice.ispopup),ispush = Ispush.getDisplayName(notice.ispush),target = Target.getDisplayName(notice.target),status = Status.getDisplayName(notice.status),
+                    gym = gymResponse,user = userResponse,)
                 
             )
         }

@@ -14,12 +14,24 @@ data class Attendance(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "at_id")
     val id: Long = 0,
-    @Column(name = "at_user")
-    val user: Long = 0L,
-    @Column(name = "at_membership")
-    val membership: Long = 0L,
-    @Column(name = "at_gym")
-    val gym: Long = 0L,
+
+    @Column(name = "at_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "at_user")
+    val user: User? = null,
+
+    @Column(name = "at_membership", insertable = false, updatable = false)
+    val membershipId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "at_membership")
+    val membership: Membership? = null,
+
+    @Column(name = "at_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "at_gym")
+    val gym: Gym? = null,
     @Column(name = "at_type")
     val type: Type = Type.ENTRY,
     @Column(name = "at_method")
@@ -110,12 +122,15 @@ data class AttendanceResponse(
     val extra: AttendanceExtraInfo
 ){
     companion object {
-        fun from(attendance: Attendance, userResponse: UserResponse? = null, membershipResponse: MembershipResponse? = null, gymResponse: GymResponse? = null): AttendanceResponse {
+        fun from(attendance: Attendance): AttendanceResponse {
+            val userResponse = attendance.user?.let { UserResponse.from(it) }
+            val membershipResponse = attendance.membership?.let { MembershipResponse.from(it) }
+            val gymResponse = attendance.gym?.let { GymResponse.from(it) }
             return AttendanceResponse(
                 id = attendance.id,
-                user = attendance.user,
-                membership = attendance.membership,
-                gym = attendance.gym,
+                user = attendance.userId,
+                membership = attendance.membershipId,
+                gym = attendance.gymId,
                 type = attendance.type.ordinal,
                 method = attendance.method.ordinal,
                 checkintime = attendance.checkintime?.toString()?.replace("T", " ") ?: "",
@@ -129,18 +144,8 @@ data class AttendanceResponse(
                 date = attendance.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = AttendanceExtraInfo(
-                    
-                        type = Type.getDisplayName(attendance.type),
-                        method = Method.getDisplayName(attendance.method),
-                        status = Status.getDisplayName(attendance.status),
-                        
-                
-                     user = userResponse,
-                
-                     membership = membershipResponse,
-                
-                     gym = gymResponse,
-                )
+                    type = Type.getDisplayName(attendance.type),method = Method.getDisplayName(attendance.method),status = Status.getDisplayName(attendance.status),
+                    user = userResponse,membership = membershipResponse,gym = gymResponse,)
                 
             )
         }

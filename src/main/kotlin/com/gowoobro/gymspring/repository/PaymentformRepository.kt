@@ -14,15 +14,24 @@ import java.time.LocalDateTime
 
 @Repository
 interface PaymentformRepository : JpaRepository<Paymentform, Long> {
+    @Query("SELECT m FROM Paymentform m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.payment LEFT JOIN FETCH m.paymenttype")
     override fun findAll(pageable: Pageable): Page<Paymentform>
 
-    fun findByGym(gym: Long): List<Paymentform>
+    @Query("SELECT m FROM Paymentform m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.payment LEFT JOIN FETCH m.paymenttype WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Paymentform>
 
-    fun findByPayment(payment: Long): List<Paymentform>
+    @Query("SELECT m FROM Paymentform m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.payment LEFT JOIN FETCH m.paymenttype WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Paymentform>
 
-    fun findByType(type: Long): List<Paymentform>
+    @Query("SELECT m FROM Paymentform m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.payment LEFT JOIN FETCH m.paymenttype WHERE m.paymentId = :payment")
+    fun findByPaymentWithJoin(payment: Long): List<Paymentform>
 
-    fun findByCost(cost: Int): List<Paymentform>
+    @Query("SELECT m FROM Paymentform m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.payment LEFT JOIN FETCH m.paymenttype WHERE m.typeId = :paymenttype")
+    fun findByTypeWithJoin(paymenttype: Long): List<Paymentform>
 
-    fun findByDate(date: LocalDateTime): List<Paymentform>
+    @Query("SELECT m FROM Paymentform m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.payment LEFT JOIN FETCH m.paymenttype WHERE m.cost = :cost")
+    fun findByCostWithJoin(cost: Int): List<Paymentform>
+
+    @Query("SELECT m FROM Paymentform m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.payment LEFT JOIN FETCH m.paymenttype WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Paymentform>
 }

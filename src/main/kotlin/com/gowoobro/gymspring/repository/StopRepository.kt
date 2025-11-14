@@ -14,15 +14,24 @@ import java.time.LocalDateTime
 
 @Repository
 interface StopRepository : JpaRepository<Stop, Long> {
+    @Query("SELECT m FROM Stop m LEFT JOIN FETCH m.usehealth")
     override fun findAll(pageable: Pageable): Page<Stop>
 
-    fun findByUsehelth(usehelth: Long): List<Stop>
+    @Query("SELECT m FROM Stop m LEFT JOIN FETCH m.usehealth WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Stop>
 
-    fun findByStartday(startday: LocalDateTime): List<Stop>
+    @Query("SELECT m FROM Stop m LEFT JOIN FETCH m.usehealth WHERE m.usehelthId = :usehealth")
+    fun findByUsehelthWithJoin(usehealth: Long): List<Stop>
 
-    fun findByEndday(endday: LocalDateTime): List<Stop>
+    @Query("SELECT m FROM Stop m LEFT JOIN FETCH m.usehealth WHERE m.startday = :startday")
+    fun findByStartdayWithJoin(startday: LocalDateTime): List<Stop>
 
-    fun findByCount(count: Int): List<Stop>
+    @Query("SELECT m FROM Stop m LEFT JOIN FETCH m.usehealth WHERE m.endday = :endday")
+    fun findByEnddayWithJoin(endday: LocalDateTime): List<Stop>
 
-    fun findByDate(date: LocalDateTime): List<Stop>
+    @Query("SELECT m FROM Stop m LEFT JOIN FETCH m.usehealth WHERE m.count = :count")
+    fun findByCountWithJoin(count: Int): List<Stop>
+
+    @Query("SELECT m FROM Stop m LEFT JOIN FETCH m.usehealth WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Stop>
 }

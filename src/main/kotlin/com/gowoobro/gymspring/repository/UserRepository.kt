@@ -19,39 +19,60 @@ import com.gowoobro.gymspring.enums.user.Sex
 
 @Repository
 interface UserRepository : JpaRepository<User, Long> {
+    @Query("SELECT m FROM User m")
     override fun findAll(pageable: Pageable): Page<User>
 
-    fun findByLoginid(loginid: String): List<User>
+    @Query("SELECT m FROM User m WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<User>
 
-    fun findByPasswd(passwd: String): List<User>
+    @Query("SELECT m FROM User m WHERE m.loginid = :loginid")
+    fun findByLoginidWithJoin(loginid: String): List<User>
 
-    fun findByEmail(email: String): List<User>
+    @Query("SELECT m FROM User m WHERE m.passwd = :passwd")
+    fun findByPasswdWithJoin(passwd: String): List<User>
 
-    fun findByName(name: String): List<User>
+    @Query("SELECT m FROM User m WHERE m.email = :email")
+    fun findByEmailWithJoin(email: String): List<User>
 
-    fun findByTel(tel: String): List<User>
+    @Query("SELECT m FROM User m WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<User>
 
-    fun findByAddress(address: String): List<User>
+    @Query("SELECT m FROM User m WHERE m.tel = :tel")
+    fun findByTelWithJoin(tel: String): List<User>
 
-    fun findByImage(image: String): List<User>
+    @Query("SELECT m FROM User m WHERE m.address = :address")
+    fun findByAddressWithJoin(address: String): List<User>
 
-    fun findBySex(sex: Sex): List<User>
+    @Query("SELECT m FROM User m WHERE m.image = :image")
+    fun findByImageWithJoin(image: String): List<User>
 
-    fun findByBirth(birth: LocalDateTime): List<User>
+    @Query("SELECT m FROM User m WHERE m.sex = :sex")
+    fun findBySexWithJoin(sex: Sex): List<User>
 
-    fun findByType(type: Type): List<User>
+    @Query("SELECT m FROM User m WHERE m.birth = :birth")
+    fun findByBirthWithJoin(birth: LocalDateTime): List<User>
 
-    fun findByConnectid(connectid: String): List<User>
+    @Query("SELECT m FROM User m WHERE m.type = :type")
+    fun findByTypeWithJoin(type: Type): List<User>
 
-    fun findByLevel(level: Level): List<User>
+    @Query("SELECT m FROM User m WHERE m.connectid = :connectid")
+    fun findByConnectidWithJoin(connectid: String): List<User>
 
-    fun findByRole(role: Role): List<User>
+    @Query("SELECT m FROM User m WHERE m.level = :level")
+    fun findByLevelWithJoin(level: Level): List<User>
 
-    fun findByUse(use: Use): List<User>
+    @Query("SELECT m FROM User m WHERE m.role = :role")
+    fun findByRoleWithJoin(role: Role): List<User>
 
-    fun findByLogindate(logindate: LocalDateTime): List<User>
+    @Query("SELECT m FROM User m WHERE m.use = :use")
+    fun findByUseWithJoin(use: Use): List<User>
 
-    fun findByLastchangepasswddate(lastchangepasswddate: LocalDateTime): List<User>
+    @Query("SELECT m FROM User m WHERE m.logindate = :logindate")
+    fun findByLogindateWithJoin(logindate: LocalDateTime): List<User>
 
-    fun findByDate(date: LocalDateTime): List<User>
+    @Query("SELECT m FROM User m WHERE m.lastchangepasswddate = :lastchangepasswddate")
+    fun findByLastchangepasswddateWithJoin(lastchangepasswddate: LocalDateTime): List<User>
+
+    @Query("SELECT m FROM User m WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<User>
 }

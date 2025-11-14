@@ -17,33 +17,51 @@ import com.gowoobro.gymspring.enums.attendance.Status
 
 @Repository
 interface AttendanceRepository : JpaRepository<Attendance, Long> {
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym")
     override fun findAll(pageable: Pageable): Page<Attendance>
 
-    fun findByUser(user: Long): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Attendance>
 
-    fun findByMembership(membership: Long): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.userId = :user")
+    fun findByUserWithJoin(user: Long): List<Attendance>
 
-    fun findByGym(gym: Long): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.membershipId = :membership")
+    fun findByMembershipWithJoin(membership: Long): List<Attendance>
 
-    fun findByType(type: Type): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Attendance>
 
-    fun findByMethod(method: Method): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.type = :type")
+    fun findByTypeWithJoin(type: Type): List<Attendance>
 
-    fun findByCheckintime(checkintime: LocalDateTime): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.method = :method")
+    fun findByMethodWithJoin(method: Method): List<Attendance>
 
-    fun findByCheckouttime(checkouttime: LocalDateTime): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.checkintime = :checkintime")
+    fun findByCheckintimeWithJoin(checkintime: LocalDateTime): List<Attendance>
 
-    fun findByDuration(duration: Int): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.checkouttime = :checkouttime")
+    fun findByCheckouttimeWithJoin(checkouttime: LocalDateTime): List<Attendance>
 
-    fun findByStatus(status: Status): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.duration = :duration")
+    fun findByDurationWithJoin(duration: Int): List<Attendance>
 
-    fun findByNote(note: String): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.status = :status")
+    fun findByStatusWithJoin(status: Status): List<Attendance>
 
-    fun findByIp(ip: String): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.note = :note")
+    fun findByNoteWithJoin(note: String): List<Attendance>
 
-    fun findByDevice(device: String): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.ip = :ip")
+    fun findByIpWithJoin(ip: String): List<Attendance>
 
-    fun findByCreatedby(createdby: Long): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.device = :device")
+    fun findByDeviceWithJoin(device: String): List<Attendance>
 
-    fun findByDate(date: LocalDateTime): List<Attendance>
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.createdby = :createdby")
+    fun findByCreatedbyWithJoin(createdby: Long): List<Attendance>
+
+    @Query("SELECT m FROM Attendance m LEFT JOIN FETCH m.user LEFT JOIN FETCH m.membership LEFT JOIN FETCH m.gym WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Attendance>
 }

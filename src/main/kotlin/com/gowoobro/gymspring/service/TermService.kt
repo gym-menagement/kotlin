@@ -33,30 +33,30 @@ class TermService(private val termRepository: TermRepository) {
 
 
     fun findByGym(gym: Long): List<Term> {
-        return termRepository.findByGym(gym)
+        return termRepository.findByGymWithJoin(gym)
     }
 
     fun findByDaytype(daytype: Long): List<Term> {
-        return termRepository.findByDaytype(daytype)
+        return termRepository.findByDaytypeWithJoin(daytype)
     }
 
     fun findByName(name: String): List<Term> {
-        return termRepository.findByName(name)
+        return termRepository.findByNameWithJoin(name)
     }
 
     fun findByTerm(term: Int): List<Term> {
-        return termRepository.findByTerm(term)
+        return termRepository.findByTermWithJoin(term)
     }
 
     fun findByDate(date: LocalDateTime): List<Term> {
-        return termRepository.findByDate(date)
+        return termRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: TermCreateRequest): Term {
         val entity = Term(
-            gym = request.gym,
-            daytype = request.daytype,
+            gymId = request.gym,
+            daytypeId = request.daytype,
             name = request.name,
             term = request.term,
             date = request.date,
@@ -67,8 +67,8 @@ class TermService(private val termRepository: TermRepository) {
     fun createBatch(requests: List<TermCreateRequest>): List<Term> {
         val entities = requests.map { request ->
             Term(
-                gym = request.gym,
-                daytype = request.daytype,
+                gymId = request.gym,
+                daytypeId = request.daytype,
                 name = request.name,
                 term = request.term,
                 date = request.date,
@@ -80,11 +80,9 @@ class TermService(private val termRepository: TermRepository) {
     fun update(request: TermUpdateRequest): Term? {
         val existing = termRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            gym = request.gym,
-            daytype = request.daytype,
+            gymId = request.gym,
+            daytypeId = request.daytype,
             name = request.name,
             term = request.term,
             date = request.date,

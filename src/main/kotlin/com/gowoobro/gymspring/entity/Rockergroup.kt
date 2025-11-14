@@ -11,8 +11,12 @@ data class Rockergroup(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rg_id")
     val id: Long = 0,
-    @Column(name = "rg_gym")
-    val gym: Long = 0L,
+
+    @Column(name = "rg_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rg_gym")
+    val gym: Gym? = null,
     @Column(name = "rg_name")
     val name: String = "",
     @Column(name = "rg_date")
@@ -47,18 +51,16 @@ data class RockergroupResponse(
     val extra: RockergroupExtraInfo
 ){
     companion object {
-        fun from(rockergroup: Rockergroup, gymResponse: GymResponse? = null): RockergroupResponse {
+        fun from(rockergroup: Rockergroup): RockergroupResponse {
+            val gymResponse = rockergroup.gym?.let { GymResponse.from(it) }
             return RockergroupResponse(
                 id = rockergroup.id,
-                gym = rockergroup.gym,
+                gym = rockergroup.gymId,
                 name = rockergroup.name,
                 date = rockergroup.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = RockergroupExtraInfo(
-                    
-                
-                     gym = gymResponse,
-                )
+                    gym = gymResponse,)
                 
             )
         }

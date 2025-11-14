@@ -13,14 +13,14 @@ class CustomUserDetailsService(
 ) : UserDetailsService {
     
     override fun loadUserByUsername(username: String): UserDetails {
-        val users = userRepository.findByLoginid(username)
+        val users = userRepository.findByLoginidWithJoin(username)
         val user = users.firstOrNull()
             ?: throw UsernameNotFoundException("User not found with username: $username")
 
         return org.springframework.security.core.userdetails.User.builder()
             .username(user.loginid)
             .password(user.passwd)
-            .authorities(listOf(SimpleGrantedAuthority("ROLE_${user.role.name}")))
+            .authorities(listOf(SimpleGrantedAuthority("ROLE_${user.role}")))
             .build()
     }
 }

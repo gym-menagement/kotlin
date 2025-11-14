@@ -5,27 +5,20 @@ import com.gowoobro.gymspring.entity.OrderCreateRequest
 import com.gowoobro.gymspring.entity.OrderUpdateRequest
 import com.gowoobro.gymspring.service.OrderService
 import com.gowoobro.gymspring.entity.OrderResponse
-import com.gowoobro.gymspring.entity.MembershipResponse
-import com.gowoobro.gymspring.service.MembershipService
+
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
 
-
 @RestController
 @RequestMapping("/api/order")
 class OrderController(
-    private val orderService: OrderService, private val membershipService: MembershipService) {
+    private val orderService: OrderService) {
 
-    private fun toResponse(order: Order):
-    OrderResponse {
-        
-        val membership = membershipService.findById(order.membership)
-        val membershipResponse = membership?.let{ MembershipResponse.from(it) }
-        
-        return OrderResponse.from(order, membershipResponse)
+    private fun toResponse(order: Order): OrderResponse {
+        return OrderResponse.from(order)
     }
 
     @GetMapping
@@ -33,16 +26,16 @@ class OrderController(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<OrderResponse>> {
-        val result = orderService.findAll(page, pageSize)
-        val responsePage = result.map { toResponse(it)}
+        val res = orderService.findAll(page, pageSize)
+        val responsePage = res.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
     fun getOrder(@PathVariable id: Long): ResponseEntity<OrderResponse> {
-        val result = orderService.findById(id)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = orderService.findById(id)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -51,14 +44,14 @@ class OrderController(
 
     @GetMapping("/search/membership")
     fun getOrderByMembership(@RequestParam membership: Long): ResponseEntity<List<OrderResponse>> {
-        val result = orderService.findByMembership(membership)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = orderService.findByMembership(membership)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getOrderByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<OrderResponse>> {
-        val result = orderService.findByDate(date)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = orderService.findByDate(date)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
 
@@ -71,8 +64,8 @@ class OrderController(
     @PostMapping
     fun createOrder(@RequestBody request: OrderCreateRequest): ResponseEntity<OrderResponse> {
         return try {
-            val result = orderService.create(request)
-            ResponseEntity.ok(toResponse(result))
+            val res = orderService.create(request)
+            ResponseEntity.ok(toResponse(res))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -81,8 +74,8 @@ class OrderController(
     @PostMapping("/batch")
     fun createOrders(@RequestBody requests: List<OrderCreateRequest>): ResponseEntity<List<OrderResponse>> {
         return try {
-            val result = orderService.createBatch(requests)
-            return ResponseEntity.ok(result.map { toResponse(it) } )
+            val res = orderService.createBatch(requests)
+            return ResponseEntity.ok(res.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -94,9 +87,9 @@ class OrderController(
         @RequestBody request: OrderUpdateRequest
     ): ResponseEntity<OrderResponse> {
         val updatedRequest = request.copy(id = id)
-        val result = orderService.update(updatedRequest)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = orderService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }

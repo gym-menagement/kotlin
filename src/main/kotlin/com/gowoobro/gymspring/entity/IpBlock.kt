@@ -78,12 +78,8 @@ data class IpblockResponse(
                 date = ipblock.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = IpblockExtraInfo(
-                    
-                        type = Type.getDisplayName(ipblock.type),
-                        policy = Policy.getDisplayName(ipblock.policy),
-                        use = Use.getDisplayName(ipblock.use),
-                        
-                )
+                    type = Type.getDisplayName(ipblock.type),policy = Policy.getDisplayName(ipblock.policy),use = Use.getDisplayName(ipblock.use),
+                    )
                 
             )
         }

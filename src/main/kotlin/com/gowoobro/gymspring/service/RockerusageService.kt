@@ -34,66 +34,66 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
 
 
     fun findByRocker(rocker: Long): List<Rockerusage> {
-        return rockerusageRepository.findByRocker(rocker)
+        return rockerusageRepository.findByRockerWithJoin(rocker)
     }
 
     fun findByUser(user: Long): List<Rockerusage> {
-        return rockerusageRepository.findByUser(user)
+        return rockerusageRepository.findByUserWithJoin(user)
     }
 
     fun findByMembership(membership: Long): List<Rockerusage> {
-        return rockerusageRepository.findByMembership(membership)
+        return rockerusageRepository.findByMembershipWithJoin(membership)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Rockerusage> {
-        return rockerusageRepository.findByStartdate(startdate)
+        return rockerusageRepository.findByStartdateWithJoin(startdate)
     }
 
     fun findByEnddate(enddate: LocalDateTime): List<Rockerusage> {
-        return rockerusageRepository.findByEnddate(enddate)
+        return rockerusageRepository.findByEnddateWithJoin(enddate)
     }
 
     fun findByStatus(status: Status): List<Rockerusage> {
-        return rockerusageRepository.findByStatus(status)
+        return rockerusageRepository.findByStatusWithJoin(status)
     }
 
     fun findByDeposit(deposit: BigDecimal): List<Rockerusage> {
-        return rockerusageRepository.findByDeposit(deposit)
+        return rockerusageRepository.findByDepositWithJoin(deposit)
     }
 
     fun findByMonthlyfee(monthlyfee: BigDecimal): List<Rockerusage> {
-        return rockerusageRepository.findByMonthlyfee(monthlyfee)
+        return rockerusageRepository.findByMonthlyfeeWithJoin(monthlyfee)
     }
 
     fun findByNote(note: String): List<Rockerusage> {
-        return rockerusageRepository.findByNote(note)
+        return rockerusageRepository.findByNoteWithJoin(note)
     }
 
     fun findByAssignedby(assignedby: Long): List<Rockerusage> {
-        return rockerusageRepository.findByAssignedby(assignedby)
+        return rockerusageRepository.findByAssignedbyWithJoin(assignedby)
     }
 
     fun findByAssigneddate(assigneddate: LocalDateTime): List<Rockerusage> {
-        return rockerusageRepository.findByAssigneddate(assigneddate)
+        return rockerusageRepository.findByAssigneddateWithJoin(assigneddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Rockerusage> {
-        return rockerusageRepository.findByDate(date)
+        return rockerusageRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: RockerusageCreateRequest): Rockerusage {
         val entity = Rockerusage(
-            rocker = request.rocker,
-            user = request.user,
-            membership = request.membership,
+            rockerId = request.rocker,
+            userId = request.user,
+            membershipId = request.membership,
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
             deposit = request.deposit,
             monthlyfee = request.monthlyfee,
             note = request.note,
-            assignedby = request.assignedby,
+            assignedbyId = request.assignedby,
             assigneddate = request.assigneddate,
             date = request.date,
         )
@@ -103,16 +103,16 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
     fun createBatch(requests: List<RockerusageCreateRequest>): List<Rockerusage> {
         val entities = requests.map { request ->
             Rockerusage(
-                rocker = request.rocker,
-                user = request.user,
-                membership = request.membership,
+                rockerId = request.rocker,
+                userId = request.user,
+                membershipId = request.membership,
                 startdate = request.startdate,
                 enddate = request.enddate,
                 status = request.status,
                 deposit = request.deposit,
                 monthlyfee = request.monthlyfee,
                 note = request.note,
-                assignedby = request.assignedby,
+                assignedbyId = request.assignedby,
                 assigneddate = request.assigneddate,
                 date = request.date,
             )
@@ -123,19 +123,17 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
     fun update(request: RockerusageUpdateRequest): Rockerusage? {
         val existing = rockerusageRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            rocker = request.rocker,
-            user = request.user,
-            membership = request.membership,
+            rockerId = request.rocker,
+            userId = request.user,
+            membershipId = request.membership,
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
             deposit = request.deposit,
             monthlyfee = request.monthlyfee,
             note = request.note,
-            assignedby = request.assignedby,
+            assignedbyId = request.assignedby,
             assigneddate = request.assigneddate,
             date = request.date,
         )

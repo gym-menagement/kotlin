@@ -11,12 +11,24 @@ data class Payment(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "p_id")
     val id: Long = 0,
-    @Column(name = "p_gym")
-    val gym: Long = 0L,
-    @Column(name = "p_order")
-    val order: Long = 0L,
-    @Column(name = "p_membership")
-    val membership: Long = 0L,
+
+    @Column(name = "p_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "p_gym")
+    val gym: Gym? = null,
+
+    @Column(name = "p_order", insertable = false, updatable = false)
+    val orderId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "p_order")
+    val order: Order? = null,
+
+    @Column(name = "p_membership", insertable = false, updatable = false)
+    val membershipId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "p_membership")
+    val membership: Membership? = null,
     @Column(name = "p_cost")
     val cost: Int = 0,
     @Column(name = "p_date")
@@ -59,24 +71,20 @@ data class PaymentResponse(
     val extra: PaymentExtraInfo
 ){
     companion object {
-        fun from(payment: Payment, gymResponse: GymResponse? = null, orderResponse: OrderResponse? = null, membershipResponse: MembershipResponse? = null): PaymentResponse {
+        fun from(payment: Payment): PaymentResponse {
+            val gymResponse = payment.gym?.let { GymResponse.from(it) }
+            val orderResponse = payment.order?.let { OrderResponse.from(it) }
+            val membershipResponse = payment.membership?.let { MembershipResponse.from(it) }
             return PaymentResponse(
                 id = payment.id,
-                gym = payment.gym,
-                order = payment.order,
-                membership = payment.membership,
+                gym = payment.gymId,
+                order = payment.orderId,
+                membership = payment.membershipId,
                 cost = payment.cost,
                 date = payment.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = PaymentExtraInfo(
-                    
-                
-                     gym = gymResponse,
-                
-                     order = orderResponse,
-                
-                     membership = membershipResponse,
-                )
+                    gym = gymResponse,order = orderResponse,membership = membershipResponse,)
                 
             )
         }

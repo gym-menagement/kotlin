@@ -5,40 +5,23 @@ import com.gowoobro.gymspring.entity.AttendanceCreateRequest
 import com.gowoobro.gymspring.entity.AttendanceUpdateRequest
 import com.gowoobro.gymspring.service.AttendanceService
 import com.gowoobro.gymspring.entity.AttendanceResponse
-import com.gowoobro.gymspring.entity.UserResponse
-import com.gowoobro.gymspring.service.UserService
-import com.gowoobro.gymspring.entity.MembershipResponse
-import com.gowoobro.gymspring.service.MembershipService
-import com.gowoobro.gymspring.entity.GymResponse
-import com.gowoobro.gymspring.service.GymService
+import com.gowoobro.gymspring.enums.attendance.Type
+import com.gowoobro.gymspring.enums.attendance.Method
+import com.gowoobro.gymspring.enums.attendance.Status
+
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.attendance.Type
-import com.gowoobro.gymspring.enums.attendance.Method
-import com.gowoobro.gymspring.enums.attendance.Status
-
 
 @RestController
 @RequestMapping("/api/attendance")
 class AttendanceController(
-    private val attendanceService: AttendanceService, private val userService: UserService, private val membershipService: MembershipService, private val gymService: GymService) {
+    private val attendanceService: AttendanceService) {
 
-    private fun toResponse(attendance: Attendance):
-    AttendanceResponse {
-        
-        val user = userService.findById(attendance.user)
-        val userResponse = user?.let{ UserResponse.from(it) }
-        
-        val membership = membershipService.findById(attendance.membership)
-        val membershipResponse = membership?.let{ MembershipResponse.from(it) }
-        
-        val gym = gymService.findById(attendance.gym)
-        val gymResponse = gym?.let{ GymResponse.from(it) }
-        
-        return AttendanceResponse.from(attendance, userResponse, membershipResponse, gymResponse)
+    private fun toResponse(attendance: Attendance): AttendanceResponse {
+        return AttendanceResponse.from(attendance)
     }
 
     @GetMapping
@@ -46,16 +29,16 @@ class AttendanceController(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<AttendanceResponse>> {
-        val result = attendanceService.findAll(page, pageSize)
-        val responsePage = result.map { toResponse(it)}
+        val res = attendanceService.findAll(page, pageSize)
+        val responsePage = res.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
     fun getAttendance(@PathVariable id: Long): ResponseEntity<AttendanceResponse> {
-        val result = attendanceService.findById(id)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = attendanceService.findById(id)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -64,86 +47,86 @@ class AttendanceController(
 
     @GetMapping("/search/user")
     fun getAttendanceByUser(@RequestParam user: Long): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByUser(user)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByUser(user)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/membership")
     fun getAttendanceByMembership(@RequestParam membership: Long): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByMembership(membership)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByMembership(membership)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/gym")
     fun getAttendanceByGym(@RequestParam gym: Long): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByGym(gym)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/type")
     fun getAttendanceByType(@RequestParam type: Type): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByType(type)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByType(type)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/method")
     fun getAttendanceByMethod(@RequestParam method: Method): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByMethod(method)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByMethod(method)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/checkintime")
     fun getAttendanceByCheckintime(@RequestParam checkintime: LocalDateTime): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByCheckintime(checkintime)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByCheckintime(checkintime)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/checkouttime")
     fun getAttendanceByCheckouttime(@RequestParam checkouttime: LocalDateTime): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByCheckouttime(checkouttime)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByCheckouttime(checkouttime)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/duration")
     fun getAttendanceByDuration(@RequestParam duration: Int): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByDuration(duration)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByDuration(duration)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/status")
     fun getAttendanceByStatus(@RequestParam status: Status): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByStatus(status)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByStatus(status)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/note")
     fun getAttendanceByNote(@RequestParam note: String): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByNote(note)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByNote(note)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/ip")
     fun getAttendanceByIp(@RequestParam ip: String): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByIp(ip)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByIp(ip)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/device")
     fun getAttendanceByDevice(@RequestParam device: String): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByDevice(device)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByDevice(device)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/createdby")
     fun getAttendanceByCreatedby(@RequestParam createdby: Long): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByCreatedby(createdby)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByCreatedby(createdby)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getAttendanceByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<AttendanceResponse>> {
-        val result = attendanceService.findByDate(date)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = attendanceService.findByDate(date)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
 
@@ -156,8 +139,8 @@ class AttendanceController(
     @PostMapping
     fun createAttendance(@RequestBody request: AttendanceCreateRequest): ResponseEntity<AttendanceResponse> {
         return try {
-            val result = attendanceService.create(request)
-            ResponseEntity.ok(toResponse(result))
+            val res = attendanceService.create(request)
+            ResponseEntity.ok(toResponse(res))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -166,8 +149,8 @@ class AttendanceController(
     @PostMapping("/batch")
     fun createAttendances(@RequestBody requests: List<AttendanceCreateRequest>): ResponseEntity<List<AttendanceResponse>> {
         return try {
-            val result = attendanceService.createBatch(requests)
-            return ResponseEntity.ok(result.map { toResponse(it) } )
+            val res = attendanceService.createBatch(requests)
+            return ResponseEntity.ok(res.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -179,9 +162,9 @@ class AttendanceController(
         @RequestBody request: AttendanceUpdateRequest
     ): ResponseEntity<AttendanceResponse> {
         val updatedRequest = request.copy(id = id)
-        val result = attendanceService.update(updatedRequest)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = attendanceService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }

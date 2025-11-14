@@ -33,21 +33,21 @@ class HealthcategoryService(private val healthcategoryRepository: Healthcategory
 
 
     fun findByGym(gym: Long): List<Healthcategory> {
-        return healthcategoryRepository.findByGym(gym)
+        return healthcategoryRepository.findByGymWithJoin(gym)
     }
 
     fun findByName(name: String): List<Healthcategory> {
-        return healthcategoryRepository.findByName(name)
+        return healthcategoryRepository.findByNameWithJoin(name)
     }
 
     fun findByDate(date: LocalDateTime): List<Healthcategory> {
-        return healthcategoryRepository.findByDate(date)
+        return healthcategoryRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: HealthcategoryCreateRequest): Healthcategory {
         val entity = Healthcategory(
-            gym = request.gym,
+            gymId = request.gym,
             name = request.name,
             date = request.date,
         )
@@ -57,7 +57,7 @@ class HealthcategoryService(private val healthcategoryRepository: Healthcategory
     fun createBatch(requests: List<HealthcategoryCreateRequest>): List<Healthcategory> {
         val entities = requests.map { request ->
             Healthcategory(
-                gym = request.gym,
+                gymId = request.gym,
                 name = request.name,
                 date = request.date,
             )
@@ -68,10 +68,8 @@ class HealthcategoryService(private val healthcategoryRepository: Healthcategory
     fun update(request: HealthcategoryUpdateRequest): Healthcategory? {
         val existing = healthcategoryRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            gym = request.gym,
+            gymId = request.gym,
             name = request.name,
             date = request.date,
         )

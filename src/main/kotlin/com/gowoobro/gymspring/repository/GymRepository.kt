@@ -14,9 +14,15 @@ import java.time.LocalDateTime
 
 @Repository
 interface GymRepository : JpaRepository<Gym, Long> {
+    @Query("SELECT m FROM Gym m")
     override fun findAll(pageable: Pageable): Page<Gym>
 
-    fun findByName(name: String): List<Gym>
+    @Query("SELECT m FROM Gym m WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Gym>
 
-    fun findByDate(date: LocalDateTime): List<Gym>
+    @Query("SELECT m FROM Gym m WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Gym>
+
+    @Query("SELECT m FROM Gym m WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Gym>
 }

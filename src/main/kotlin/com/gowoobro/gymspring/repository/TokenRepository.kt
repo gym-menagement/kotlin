@@ -15,13 +15,21 @@ import com.gowoobro.gymspring.enums.token.Status
 
 @Repository
 interface TokenRepository : JpaRepository<Token, Long> {
+    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user")
     override fun findAll(pageable: Pageable): Page<Token>
 
-    fun findByUser(user: Long): List<Token>
+    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Token>
 
-    fun findByToken(token: String): List<Token>
+    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.userId = :user")
+    fun findByUserWithJoin(user: Long): List<Token>
 
-    fun findByStatus(status: Status): List<Token>
+    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.token = :token")
+    fun findByTokenWithJoin(token: String): List<Token>
 
-    fun findByDate(date: LocalDateTime): List<Token>
+    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.status = :status")
+    fun findByStatusWithJoin(status: Status): List<Token>
+
+    @Query("SELECT m FROM Token m LEFT JOIN FETCH m.user WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Token>
 }

@@ -33,29 +33,29 @@ class StopService(private val stopRepository: StopRepository) {
 
 
     fun findByUsehelth(usehelth: Long): List<Stop> {
-        return stopRepository.findByUsehelth(usehelth)
+        return stopRepository.findByUsehelthWithJoin(usehelth)
     }
 
     fun findByStartday(startday: LocalDateTime): List<Stop> {
-        return stopRepository.findByStartday(startday)
+        return stopRepository.findByStartdayWithJoin(startday)
     }
 
     fun findByEndday(endday: LocalDateTime): List<Stop> {
-        return stopRepository.findByEndday(endday)
+        return stopRepository.findByEnddayWithJoin(endday)
     }
 
     fun findByCount(count: Int): List<Stop> {
-        return stopRepository.findByCount(count)
+        return stopRepository.findByCountWithJoin(count)
     }
 
     fun findByDate(date: LocalDateTime): List<Stop> {
-        return stopRepository.findByDate(date)
+        return stopRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: StopCreateRequest): Stop {
         val entity = Stop(
-            usehelth = request.usehelth,
+            usehelthId = request.usehelth,
             startday = request.startday,
             endday = request.endday,
             count = request.count,
@@ -67,7 +67,7 @@ class StopService(private val stopRepository: StopRepository) {
     fun createBatch(requests: List<StopCreateRequest>): List<Stop> {
         val entities = requests.map { request ->
             Stop(
-                usehelth = request.usehelth,
+                usehelthId = request.usehelth,
                 startday = request.startday,
                 endday = request.endday,
                 count = request.count,
@@ -80,10 +80,8 @@ class StopService(private val stopRepository: StopRepository) {
     fun update(request: StopUpdateRequest): Stop? {
         val existing = stopRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            usehelth = request.usehelth,
+            usehelthId = request.usehelth,
             startday = request.startday,
             endday = request.endday,
             count = request.count,

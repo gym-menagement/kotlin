@@ -33,77 +33,77 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
 
 
     fun findByUser(user: Long): List<Memberbody> {
-        return memberbodyRepository.findByUser(user)
+        return memberbodyRepository.findByUserWithJoin(user)
     }
 
     fun findByHeight(height: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByHeight(height)
+        return memberbodyRepository.findByHeightWithJoin(height)
     }
 
     fun findByWeight(weight: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByWeight(weight)
+        return memberbodyRepository.findByWeightWithJoin(weight)
     }
 
     fun findByBodyfat(bodyfat: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByBodyfat(bodyfat)
+        return memberbodyRepository.findByBodyfatWithJoin(bodyfat)
     }
 
     fun findByMusclemass(musclemass: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByMusclemass(musclemass)
+        return memberbodyRepository.findByMusclemassWithJoin(musclemass)
     }
 
     fun findByBmi(bmi: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByBmi(bmi)
+        return memberbodyRepository.findByBmiWithJoin(bmi)
     }
 
     fun findBySkeletalmuscle(skeletalmuscle: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findBySkeletalmuscle(skeletalmuscle)
+        return memberbodyRepository.findBySkeletalmuscleWithJoin(skeletalmuscle)
     }
 
     fun findByBodywater(bodywater: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByBodywater(bodywater)
+        return memberbodyRepository.findByBodywaterWithJoin(bodywater)
     }
 
     fun findByChest(chest: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByChest(chest)
+        return memberbodyRepository.findByChestWithJoin(chest)
     }
 
     fun findByWaist(waist: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByWaist(waist)
+        return memberbodyRepository.findByWaistWithJoin(waist)
     }
 
     fun findByHip(hip: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByHip(hip)
+        return memberbodyRepository.findByHipWithJoin(hip)
     }
 
     fun findByArm(arm: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByArm(arm)
+        return memberbodyRepository.findByArmWithJoin(arm)
     }
 
     fun findByThigh(thigh: BigDecimal): List<Memberbody> {
-        return memberbodyRepository.findByThigh(thigh)
+        return memberbodyRepository.findByThighWithJoin(thigh)
     }
 
     fun findByNote(note: String): List<Memberbody> {
-        return memberbodyRepository.findByNote(note)
+        return memberbodyRepository.findByNoteWithJoin(note)
     }
 
     fun findByMeasureddate(measureddate: LocalDateTime): List<Memberbody> {
-        return memberbodyRepository.findByMeasureddate(measureddate)
+        return memberbodyRepository.findByMeasureddateWithJoin(measureddate)
     }
 
     fun findByMeasuredby(measuredby: Long): List<Memberbody> {
-        return memberbodyRepository.findByMeasuredby(measuredby)
+        return memberbodyRepository.findByMeasuredbyWithJoin(measuredby)
     }
 
     fun findByDate(date: LocalDateTime): List<Memberbody> {
-        return memberbodyRepository.findByDate(date)
+        return memberbodyRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: MemberbodyCreateRequest): Memberbody {
         val entity = Memberbody(
-            user = request.user,
+            userId = request.user,
             height = request.height,
             weight = request.weight,
             bodyfat = request.bodyfat,
@@ -118,7 +118,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
             thigh = request.thigh,
             note = request.note,
             measureddate = request.measureddate,
-            measuredby = request.measuredby,
+            measuredbyId = request.measuredby,
             date = request.date,
         )
         return memberbodyRepository.save(entity)
@@ -127,7 +127,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
     fun createBatch(requests: List<MemberbodyCreateRequest>): List<Memberbody> {
         val entities = requests.map { request ->
             Memberbody(
-                user = request.user,
+                userId = request.user,
                 height = request.height,
                 weight = request.weight,
                 bodyfat = request.bodyfat,
@@ -142,7 +142,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
                 thigh = request.thigh,
                 note = request.note,
                 measureddate = request.measureddate,
-                measuredby = request.measuredby,
+                measuredbyId = request.measuredby,
                 date = request.date,
             )
         }
@@ -152,10 +152,8 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
     fun update(request: MemberbodyUpdateRequest): Memberbody? {
         val existing = memberbodyRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            user = request.user,
+            userId = request.user,
             height = request.height,
             weight = request.weight,
             bodyfat = request.bodyfat,
@@ -170,7 +168,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
             thigh = request.thigh,
             note = request.note,
             measureddate = request.measureddate,
-            measuredby = request.measuredby,
+            measuredbyId = request.measuredby,
             date = request.date,
         )
         return memberbodyRepository.save(updated)

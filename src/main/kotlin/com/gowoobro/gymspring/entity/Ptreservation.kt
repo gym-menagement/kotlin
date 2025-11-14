@@ -12,12 +12,24 @@ data class Ptreservation(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pr_id")
     val id: Long = 0,
-    @Column(name = "pr_trainer")
-    val trainer: Long = 0L,
-    @Column(name = "pr_member")
-    val member: Long = 0L,
-    @Column(name = "pr_gym")
-    val gym: Long = 0L,
+
+    @Column(name = "pr_trainer", insertable = false, updatable = false)
+    val trainerId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pr_trainer")
+    val traineruser: User? = null,
+
+    @Column(name = "pr_member", insertable = false, updatable = false)
+    val memberId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pr_member")
+    val memberuser: User? = null,
+
+    @Column(name = "pr_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pr_gym")
+    val gym: Gym? = null,
     @Column(name = "pr_reservationdate")
     val reservationdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "pr_starttime")
@@ -101,12 +113,15 @@ data class PtreservationResponse(
     val extra: PtreservationExtraInfo
 ){
     companion object {
-        fun from(ptreservation: Ptreservation, traineruserResponse: UserResponse? = null, memberuserResponse: UserResponse? = null, gymResponse: GymResponse? = null): PtreservationResponse {
+        fun from(ptreservation: Ptreservation): PtreservationResponse {
+            val traineruserResponse = ptreservation.traineruser?.let { UserResponse.from(it) }
+            val memberuserResponse = ptreservation.memberuser?.let { UserResponse.from(it) }
+            val gymResponse = ptreservation.gym?.let { GymResponse.from(it) }
             return PtreservationResponse(
                 id = ptreservation.id,
-                trainer = ptreservation.trainer,
-                member = ptreservation.member,
-                gym = ptreservation.gym,
+                trainer = ptreservation.trainerId,
+                member = ptreservation.memberId,
+                gym = ptreservation.gymId,
                 reservationdate = ptreservation.reservationdate?.toString()?.replace("T", " ") ?: "",
                 starttime = ptreservation.starttime,
                 endtime = ptreservation.endtime,
@@ -119,16 +134,8 @@ data class PtreservationResponse(
                 date = ptreservation.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = PtreservationExtraInfo(
-                    
-                        status = Status.getDisplayName(ptreservation.status),
-                        
-                
-                     traineruser = traineruserResponse,
-                
-                     memberuser = memberuserResponse,
-                
-                     gym = gymResponse,
-                )
+                    status = Status.getDisplayName(ptreservation.status),
+                    traineruser = traineruserResponse,memberuser = memberuserResponse,gym = gymResponse,)
                 
             )
         }

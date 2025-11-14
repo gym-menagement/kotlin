@@ -13,10 +13,18 @@ data class Membershipusage(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mu_id")
     val id: Long = 0,
-    @Column(name = "mu_membership")
-    val membership: Long = 0L,
-    @Column(name = "mu_user")
-    val user: Long = 0L,
+
+    @Column(name = "mu_membership", insertable = false, updatable = false)
+    val membershipId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mu_membership")
+    val membership: Membership? = null,
+
+    @Column(name = "mu_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mu_user")
+    val user: User? = null,
     @Column(name = "mu_type")
     val type: Type = Type.PERIOD_BASED,
     @Column(name = "mu_totaldays")
@@ -112,11 +120,13 @@ data class MembershipusageResponse(
     val extra: MembershipusageExtraInfo
 ){
     companion object {
-        fun from(membershipusage: Membershipusage, membershipResponse: MembershipResponse? = null, userResponse: UserResponse? = null): MembershipusageResponse {
+        fun from(membershipusage: Membershipusage): MembershipusageResponse {
+            val membershipResponse = membershipusage.membership?.let { MembershipResponse.from(it) }
+            val userResponse = membershipusage.user?.let { UserResponse.from(it) }
             return MembershipusageResponse(
                 id = membershipusage.id,
-                membership = membershipusage.membership,
-                user = membershipusage.user,
+                membership = membershipusage.membershipId,
+                user = membershipusage.userId,
                 type = membershipusage.type.ordinal,
                 totaldays = membershipusage.totaldays,
                 useddays = membershipusage.useddays,
@@ -132,15 +142,8 @@ data class MembershipusageResponse(
                 date = membershipusage.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = MembershipusageExtraInfo(
-                    
-                        type = Type.getDisplayName(membershipusage.type),
-                        status = Status.getDisplayName(membershipusage.status),
-                        
-                
-                     membership = membershipResponse,
-                
-                     user = userResponse,
-                )
+                    type = Type.getDisplayName(membershipusage.type),status = Status.getDisplayName(membershipusage.status),
+                    membership = membershipResponse,user = userResponse,)
                 
             )
         }

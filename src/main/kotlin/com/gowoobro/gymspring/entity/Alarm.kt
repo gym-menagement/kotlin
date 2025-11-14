@@ -21,8 +21,12 @@ data class Alarm(
     val type: Type = Type.NOTICE,
     @Column(name = "al_status")
     val status: Status = Status.SUCCESS,
-    @Column(name = "al_user")
-    val user: Long = 0L,
+
+    @Column(name = "al_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "al_user")
+    val user: User? = null,
     @Column(name = "al_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 )
@@ -66,24 +70,20 @@ data class AlarmResponse(
     val extra: AlarmExtraInfo
 ){
     companion object {
-        fun from(alarm: Alarm, userResponse: UserResponse? = null): AlarmResponse {
+        fun from(alarm: Alarm): AlarmResponse {
+            val userResponse = alarm.user?.let { UserResponse.from(it) }
             return AlarmResponse(
                 id = alarm.id,
                 title = alarm.title,
                 content = alarm.content,
                 type = alarm.type.ordinal,
                 status = alarm.status.ordinal,
-                user = alarm.user,
+                user = alarm.userId,
                 date = alarm.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = AlarmExtraInfo(
-                    
-                        type = Type.getDisplayName(alarm.type),
-                        status = Status.getDisplayName(alarm.status),
-                        
-                
-                     user = userResponse,
-                )
+                    type = Type.getDisplayName(alarm.type),status = Status.getDisplayName(alarm.status),
+                    user = userResponse,)
                 
             )
         }

@@ -11,8 +11,12 @@ data class Healthcategory(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hc_id")
     val id: Long = 0,
-    @Column(name = "hc_gym")
-    val gym: Long = 0L,
+
+    @Column(name = "hc_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hc_gym")
+    val gym: Gym? = null,
     @Column(name = "hc_name")
     val name: String = "",
     @Column(name = "hc_date")
@@ -47,18 +51,16 @@ data class HealthcategoryResponse(
     val extra: HealthcategoryExtraInfo
 ){
     companion object {
-        fun from(healthcategory: Healthcategory, gymResponse: GymResponse? = null): HealthcategoryResponse {
+        fun from(healthcategory: Healthcategory): HealthcategoryResponse {
+            val gymResponse = healthcategory.gym?.let { GymResponse.from(it) }
             return HealthcategoryResponse(
                 id = healthcategory.id,
-                gym = healthcategory.gym,
+                gym = healthcategory.gymId,
                 name = healthcategory.name,
                 date = healthcategory.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = HealthcategoryExtraInfo(
-                    
-                
-                     gym = gymResponse,
-                )
+                    gym = gymResponse,)
                 
             )
         }

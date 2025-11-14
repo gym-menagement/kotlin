@@ -11,8 +11,12 @@ data class Stop(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "s_id")
     val id: Long = 0,
-    @Column(name = "s_usehelth")
-    val usehelth: Long = 0L,
+
+    @Column(name = "s_usehelth", insertable = false, updatable = false)
+    val usehelthId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "s_usehelth")
+    val usehealth: Usehealth? = null,
     @Column(name = "s_startday")
     val startday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "s_endday")
@@ -57,20 +61,18 @@ data class StopResponse(
     val extra: StopExtraInfo
 ){
     companion object {
-        fun from(stop: Stop, usehealthResponse: UsehealthResponse? = null): StopResponse {
+        fun from(stop: Stop): StopResponse {
+            val usehealthResponse = stop.usehealth?.let { UsehealthResponse.from(it) }
             return StopResponse(
                 id = stop.id,
-                usehelth = stop.usehelth,
+                usehelth = stop.usehelthId,
                 startday = stop.startday?.toString()?.replace("T", " ") ?: "",
                 endday = stop.endday?.toString()?.replace("T", " ") ?: "",
                 count = stop.count,
                 date = stop.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = StopExtraInfo(
-                    
-                
-                     usehealth = usehealthResponse,
-                )
+                    usehealth = usehealthResponse,)
                 
             )
         }

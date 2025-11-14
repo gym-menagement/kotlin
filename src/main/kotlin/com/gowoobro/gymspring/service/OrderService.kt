@@ -33,17 +33,17 @@ class OrderService(private val orderRepository: OrderRepository) {
 
 
     fun findByMembership(membership: Long): List<Order> {
-        return orderRepository.findByMembership(membership)
+        return orderRepository.findByMembershipWithJoin(membership)
     }
 
     fun findByDate(date: LocalDateTime): List<Order> {
-        return orderRepository.findByDate(date)
+        return orderRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: OrderCreateRequest): Order {
         val entity = Order(
-            membership = request.membership,
+            membershipId = request.membership,
             date = request.date,
         )
         return orderRepository.save(entity)
@@ -52,7 +52,7 @@ class OrderService(private val orderRepository: OrderRepository) {
     fun createBatch(requests: List<OrderCreateRequest>): List<Order> {
         val entities = requests.map { request ->
             Order(
-                membership = request.membership,
+                membershipId = request.membership,
                 date = request.date,
             )
         }
@@ -62,10 +62,8 @@ class OrderService(private val orderRepository: OrderRepository) {
     fun update(request: OrderUpdateRequest): Order? {
         val existing = orderRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            membership = request.membership,
+            membershipId = request.membership,
             date = request.date,
         )
         return orderRepository.save(updated)

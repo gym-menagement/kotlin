@@ -34,25 +34,25 @@ class TokenService(private val tokenRepository: TokenRepository) {
 
 
     fun findByUser(user: Long): List<Token> {
-        return tokenRepository.findByUser(user)
+        return tokenRepository.findByUserWithJoin(user)
     }
 
     fun findByToken(token: String): List<Token> {
-        return tokenRepository.findByToken(token)
+        return tokenRepository.findByTokenWithJoin(token)
     }
 
     fun findByStatus(status: Status): List<Token> {
-        return tokenRepository.findByStatus(status)
+        return tokenRepository.findByStatusWithJoin(status)
     }
 
     fun findByDate(date: LocalDateTime): List<Token> {
-        return tokenRepository.findByDate(date)
+        return tokenRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: TokenCreateRequest): Token {
         val entity = Token(
-            user = request.user,
+            userId = request.user,
             token = request.token,
             status = request.status,
             date = request.date,
@@ -63,7 +63,7 @@ class TokenService(private val tokenRepository: TokenRepository) {
     fun createBatch(requests: List<TokenCreateRequest>): List<Token> {
         val entities = requests.map { request ->
             Token(
-                user = request.user,
+                userId = request.user,
                 token = request.token,
                 status = request.status,
                 date = request.date,
@@ -75,10 +75,8 @@ class TokenService(private val tokenRepository: TokenRepository) {
     fun update(request: TokenUpdateRequest): Token? {
         val existing = tokenRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            user = request.user,
+            userId = request.user,
             token = request.token,
             status = request.status,
             date = request.date,

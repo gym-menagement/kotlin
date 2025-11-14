@@ -148,14 +148,8 @@ data class UserResponse(
                 date = user.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = UserExtraInfo(
-                    
-                        level = Level.getDisplayName(user.level),
-                        use = Use.getDisplayName(user.use),
-                        type = Type.getDisplayName(user.type),
-                        role = Role.getDisplayName(user.role),
-                        sex = Sex.getDisplayName(user.sex),
-                        
-                )
+                    level = Level.getDisplayName(user.level),use = Use.getDisplayName(user.use),type = Type.getDisplayName(user.type),role = Role.getDisplayName(user.role),sex = Sex.getDisplayName(user.sex),
+                    )
                 
             )
         }

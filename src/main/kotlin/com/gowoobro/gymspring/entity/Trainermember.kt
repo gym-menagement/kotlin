@@ -12,12 +12,24 @@ data class Trainermember(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tm_id")
     val id: Long = 0,
-    @Column(name = "tm_trainer")
-    val trainer: Long = 0L,
-    @Column(name = "tm_member")
-    val member: Long = 0L,
-    @Column(name = "tm_gym")
-    val gym: Long = 0L,
+
+    @Column(name = "tm_trainer", insertable = false, updatable = false)
+    val trainerId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tm_trainer")
+    val traineruser: User? = null,
+
+    @Column(name = "tm_member", insertable = false, updatable = false)
+    val memberId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tm_member")
+    val memberuser: User? = null,
+
+    @Column(name = "tm_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tm_gym")
+    val gym: Gym? = null,
     @Column(name = "tm_startdate")
     val startdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "tm_enddate")
@@ -76,12 +88,15 @@ data class TrainermemberResponse(
     val extra: TrainermemberExtraInfo
 ){
     companion object {
-        fun from(trainermember: Trainermember, traineruserResponse: UserResponse? = null, memberuserResponse: UserResponse? = null, gymResponse: GymResponse? = null): TrainermemberResponse {
+        fun from(trainermember: Trainermember): TrainermemberResponse {
+            val traineruserResponse = trainermember.traineruser?.let { UserResponse.from(it) }
+            val memberuserResponse = trainermember.memberuser?.let { UserResponse.from(it) }
+            val gymResponse = trainermember.gym?.let { GymResponse.from(it) }
             return TrainermemberResponse(
                 id = trainermember.id,
-                trainer = trainermember.trainer,
-                member = trainermember.member,
-                gym = trainermember.gym,
+                trainer = trainermember.trainerId,
+                member = trainermember.memberId,
+                gym = trainermember.gymId,
                 startdate = trainermember.startdate?.toString()?.replace("T", " ") ?: "",
                 enddate = trainermember.enddate?.toString()?.replace("T", " ") ?: "",
                 status = trainermember.status.ordinal,
@@ -89,16 +104,8 @@ data class TrainermemberResponse(
                 date = trainermember.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = TrainermemberExtraInfo(
-                    
-                        status = Status.getDisplayName(trainermember.status),
-                        
-                
-                     traineruser = traineruserResponse,
-                
-                     memberuser = memberuserResponse,
-                
-                     gym = gymResponse,
-                )
+                    status = Status.getDisplayName(trainermember.status),
+                    traineruser = traineruserResponse,memberuser = memberuserResponse,gym = gymResponse,)
                 
             )
         }

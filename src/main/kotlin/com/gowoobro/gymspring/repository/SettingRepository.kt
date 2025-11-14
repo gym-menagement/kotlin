@@ -15,23 +15,36 @@ import com.gowoobro.gymspring.enums.setting.Type
 
 @Repository
 interface SettingRepository : JpaRepository<Setting, Long> {
+    @Query("SELECT m FROM Setting m")
     override fun findAll(pageable: Pageable): Page<Setting>
 
-    fun findByCategory(category: String): List<Setting>
+    @Query("SELECT m FROM Setting m WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Setting>
 
-    fun findByName(name: String): List<Setting>
+    @Query("SELECT m FROM Setting m WHERE m.category = :category")
+    fun findByCategoryWithJoin(category: String): List<Setting>
 
-    fun findByKey(key: String): List<Setting>
+    @Query("SELECT m FROM Setting m WHERE m.name = :name")
+    fun findByNameWithJoin(name: String): List<Setting>
 
-    fun findByValue(value: String): List<Setting>
+    @Query("SELECT m FROM Setting m WHERE m.key = :key")
+    fun findByKeyWithJoin(key: String): List<Setting>
 
-    fun findByRemark(remark: String): List<Setting>
+    @Query("SELECT m FROM Setting m WHERE m.value = :value")
+    fun findByValueWithJoin(value: String): List<Setting>
 
-    fun findByType(type: Type): List<Setting>
+    @Query("SELECT m FROM Setting m WHERE m.remark = :remark")
+    fun findByRemarkWithJoin(remark: String): List<Setting>
 
-    fun findByData(data: String): List<Setting>
+    @Query("SELECT m FROM Setting m WHERE m.type = :type")
+    fun findByTypeWithJoin(type: Type): List<Setting>
 
-    fun findByOrder(order: Int): List<Setting>
+    @Query("SELECT m FROM Setting m WHERE m.data = :data")
+    fun findByDataWithJoin(data: String): List<Setting>
 
-    fun findByDate(date: LocalDateTime): List<Setting>
+    @Query("SELECT m FROM Setting m WHERE m.order = :order")
+    fun findByOrderWithJoin(order: Int): List<Setting>
+
+    @Query("SELECT m FROM Setting m WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Setting>
 }

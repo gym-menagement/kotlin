@@ -35,19 +35,19 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
 
 
     fun findByType(type: Type): List<Systemlog> {
-        return systemlogRepository.findByType(type)
+        return systemlogRepository.findByTypeWithJoin(type)
     }
 
     fun findByContent(content: String): List<Systemlog> {
-        return systemlogRepository.findByContent(content)
+        return systemlogRepository.findByContentWithJoin(content)
     }
 
     fun findByResult(result: Result): List<Systemlog> {
-        return systemlogRepository.findByResult(result)
+        return systemlogRepository.findByResultWithJoin(result)
     }
 
     fun findByDate(date: LocalDateTime): List<Systemlog> {
-        return systemlogRepository.findByDate(date)
+        return systemlogRepository.findByDateWithJoin(date)
     }
 
 
@@ -75,8 +75,6 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
 
     fun update(request: SystemlogUpdateRequest): Systemlog? {
         val existing = systemlogRepository.findById(request.id).orElse(null) ?: return null
-
-        
 
         val updated = existing.copy(
             type = request.type,

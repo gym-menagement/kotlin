@@ -34,45 +34,45 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
 
 
     fun findByUser(user: Long): List<Pushtoken> {
-        return pushtokenRepository.findByUser(user)
+        return pushtokenRepository.findByUserWithJoin(user)
     }
 
     fun findByToken(token: String): List<Pushtoken> {
-        return pushtokenRepository.findByToken(token)
+        return pushtokenRepository.findByTokenWithJoin(token)
     }
 
     fun findByDevicetype(devicetype: String): List<Pushtoken> {
-        return pushtokenRepository.findByDevicetype(devicetype)
+        return pushtokenRepository.findByDevicetypeWithJoin(devicetype)
     }
 
     fun findByDeviceid(deviceid: String): List<Pushtoken> {
-        return pushtokenRepository.findByDeviceid(deviceid)
+        return pushtokenRepository.findByDeviceidWithJoin(deviceid)
     }
 
     fun findByAppversion(appversion: String): List<Pushtoken> {
-        return pushtokenRepository.findByAppversion(appversion)
+        return pushtokenRepository.findByAppversionWithJoin(appversion)
     }
 
     fun findByIsactive(isactive: Isactive): List<Pushtoken> {
-        return pushtokenRepository.findByIsactive(isactive)
+        return pushtokenRepository.findByIsactiveWithJoin(isactive)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Pushtoken> {
-        return pushtokenRepository.findByCreateddate(createddate)
+        return pushtokenRepository.findByCreateddateWithJoin(createddate)
     }
 
     fun findByUpdateddate(updateddate: LocalDateTime): List<Pushtoken> {
-        return pushtokenRepository.findByUpdateddate(updateddate)
+        return pushtokenRepository.findByUpdateddateWithJoin(updateddate)
     }
 
     fun findByDate(date: LocalDateTime): List<Pushtoken> {
-        return pushtokenRepository.findByDate(date)
+        return pushtokenRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: PushtokenCreateRequest): Pushtoken {
         val entity = Pushtoken(
-            user = request.user,
+            userId = request.user,
             token = request.token,
             devicetype = request.devicetype,
             deviceid = request.deviceid,
@@ -88,7 +88,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
     fun createBatch(requests: List<PushtokenCreateRequest>): List<Pushtoken> {
         val entities = requests.map { request ->
             Pushtoken(
-                user = request.user,
+                userId = request.user,
                 token = request.token,
                 devicetype = request.devicetype,
                 deviceid = request.deviceid,
@@ -105,10 +105,8 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
     fun update(request: PushtokenUpdateRequest): Pushtoken? {
         val existing = pushtokenRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            user = request.user,
+            userId = request.user,
             token = request.token,
             devicetype = request.devicetype,
             deviceid = request.deviceid,

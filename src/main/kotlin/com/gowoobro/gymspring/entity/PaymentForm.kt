@@ -11,12 +11,24 @@ data class Paymentform(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pf_id")
     val id: Long = 0,
-    @Column(name = "pf_gym")
-    val gym: Long = 0L,
-    @Column(name = "pf_payment")
-    val payment: Long = 0L,
-    @Column(name = "pf_type")
-    val type: Long = 0L,
+
+    @Column(name = "pf_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pf_gym")
+    val gym: Gym? = null,
+
+    @Column(name = "pf_payment", insertable = false, updatable = false)
+    val paymentId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pf_payment")
+    val payment: Payment? = null,
+
+    @Column(name = "pf_type", insertable = false, updatable = false)
+    val typeId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pf_type")
+    val paymenttype: Paymenttype? = null,
     @Column(name = "pf_cost")
     val cost: Int = 0,
     @Column(name = "pf_date")
@@ -59,24 +71,20 @@ data class PaymentformResponse(
     val extra: PaymentformExtraInfo
 ){
     companion object {
-        fun from(paymentform: Paymentform, gymResponse: GymResponse? = null, paymentResponse: PaymentResponse? = null, paymenttypeResponse: PaymenttypeResponse? = null): PaymentformResponse {
+        fun from(paymentform: Paymentform): PaymentformResponse {
+            val gymResponse = paymentform.gym?.let { GymResponse.from(it) }
+            val paymentResponse = paymentform.payment?.let { PaymentResponse.from(it) }
+            val paymenttypeResponse = paymentform.paymenttype?.let { PaymenttypeResponse.from(it) }
             return PaymentformResponse(
                 id = paymentform.id,
-                gym = paymentform.gym,
-                payment = paymentform.payment,
-                type = paymentform.type,
+                gym = paymentform.gymId,
+                payment = paymentform.paymentId,
+                type = paymentform.typeId,
                 cost = paymentform.cost,
                 date = paymentform.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = PaymentformExtraInfo(
-                    
-                
-                     gym = gymResponse,
-                
-                     payment = paymentResponse,
-                
-                     paymenttype = paymenttypeResponse,
-                )
+                    gym = gymResponse,payment = paymentResponse,paymenttype = paymenttypeResponse,)
                 
             )
         }

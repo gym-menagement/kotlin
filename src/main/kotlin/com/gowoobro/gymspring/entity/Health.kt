@@ -11,18 +11,30 @@ data class Health(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "h_id")
     val id: Long = 0,
-    @Column(name = "h_category")
-    val category: Long = 0L,
-    @Column(name = "h_term")
-    val term: Long = 0L,
+
+    @Column(name = "h_category", insertable = false, updatable = false)
+    val categoryId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "h_category")
+    val healthcategory: Healthcategory? = null,
+
+    @Column(name = "h_term", insertable = false, updatable = false)
+    val termId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "h_term")
+    val term: Term? = null,
     @Column(name = "h_name")
     val name: String = "",
     @Column(name = "h_count")
     val count: Int = 0,
     @Column(name = "h_cost")
     val cost: Int = 0,
-    @Column(name = "h_discount")
-    val discount: Long = 0L,
+
+    @Column(name = "h_discount", insertable = false, updatable = false)
+    val discountId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "h_discount")
+    val discount: Discount? = null,
     @Column(name = "h_costdiscount")
     val costdiscount: Int = 0,
     @Column(name = "h_content")
@@ -79,28 +91,24 @@ data class HealthResponse(
     val extra: HealthExtraInfo
 ){
     companion object {
-        fun from(health: Health, healthcategoryResponse: HealthcategoryResponse? = null, termResponse: TermResponse? = null, discountResponse: DiscountResponse? = null): HealthResponse {
+        fun from(health: Health): HealthResponse {
+            val healthcategoryResponse = health.healthcategory?.let { HealthcategoryResponse.from(it) }
+            val termResponse = health.term?.let { TermResponse.from(it) }
+            val discountResponse = health.discount?.let { DiscountResponse.from(it) }
             return HealthResponse(
                 id = health.id,
-                category = health.category,
-                term = health.term,
+                category = health.categoryId,
+                term = health.termId,
                 name = health.name,
                 count = health.count,
                 cost = health.cost,
-                discount = health.discount,
+                discount = health.discountId,
                 costdiscount = health.costdiscount,
                 content = health.content,
                 date = health.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = HealthExtraInfo(
-                    
-                
-                     healthcategory = healthcategoryResponse,
-                
-                     term = termResponse,
-                
-                     discount = discountResponse,
-                )
+                    healthcategory = healthcategoryResponse,term = termResponse,discount = discountResponse,)
                 
             )
         }

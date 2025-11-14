@@ -64,11 +64,8 @@ data class SystemlogResponse(
                 date = systemlog.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = SystemlogExtraInfo(
-                    
-                        type = Type.getDisplayName(systemlog.type),
-                        result = Result.getDisplayName(systemlog.result),
-                        
-                )
+                    type = Type.getDisplayName(systemlog.type),result = Result.getDisplayName(systemlog.result),
+                    )
                 
             )
         }

@@ -14,15 +14,24 @@ import java.time.LocalDateTime
 
 @Repository
 interface PaymentRepository : JpaRepository<Payment, Long> {
+    @Query("SELECT m FROM Payment m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.order LEFT JOIN FETCH m.membership")
     override fun findAll(pageable: Pageable): Page<Payment>
 
-    fun findByGym(gym: Long): List<Payment>
+    @Query("SELECT m FROM Payment m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.order LEFT JOIN FETCH m.membership WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Payment>
 
-    fun findByOrder(order: Long): List<Payment>
+    @Query("SELECT m FROM Payment m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.order LEFT JOIN FETCH m.membership WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Payment>
 
-    fun findByMembership(membership: Long): List<Payment>
+    @Query("SELECT m FROM Payment m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.order LEFT JOIN FETCH m.membership WHERE m.orderId = :order")
+    fun findByOrderWithJoin(order: Long): List<Payment>
 
-    fun findByCost(cost: Int): List<Payment>
+    @Query("SELECT m FROM Payment m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.order LEFT JOIN FETCH m.membership WHERE m.membershipId = :membership")
+    fun findByMembershipWithJoin(membership: Long): List<Payment>
 
-    fun findByDate(date: LocalDateTime): List<Payment>
+    @Query("SELECT m FROM Payment m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.order LEFT JOIN FETCH m.membership WHERE m.cost = :cost")
+    fun findByCostWithJoin(cost: Int): List<Payment>
+
+    @Query("SELECT m FROM Payment m LEFT JOIN FETCH m.gym LEFT JOIN FETCH m.order LEFT JOIN FETCH m.membership WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Payment>
 }

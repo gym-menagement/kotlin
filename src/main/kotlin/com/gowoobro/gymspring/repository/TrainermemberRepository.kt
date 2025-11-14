@@ -15,21 +15,33 @@ import com.gowoobro.gymspring.enums.trainermember.Status
 
 @Repository
 interface TrainermemberRepository : JpaRepository<Trainermember, Long> {
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym")
     override fun findAll(pageable: Pageable): Page<Trainermember>
 
-    fun findByTrainer(trainer: Long): List<Trainermember>
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.id = :id")
+    override fun findById(id: Long): java.util.Optional<Trainermember>
 
-    fun findByMember(member: Long): List<Trainermember>
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.trainerId = :traineruser")
+    fun findByTrainerWithJoin(traineruser: Long): List<Trainermember>
 
-    fun findByGym(gym: Long): List<Trainermember>
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.memberId = :memberuser")
+    fun findByMemberWithJoin(memberuser: Long): List<Trainermember>
 
-    fun findByStartdate(startdate: LocalDateTime): List<Trainermember>
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.gymId = :gym")
+    fun findByGymWithJoin(gym: Long): List<Trainermember>
 
-    fun findByEnddate(enddate: LocalDateTime): List<Trainermember>
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.startdate = :startdate")
+    fun findByStartdateWithJoin(startdate: LocalDateTime): List<Trainermember>
 
-    fun findByStatus(status: Status): List<Trainermember>
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.enddate = :enddate")
+    fun findByEnddateWithJoin(enddate: LocalDateTime): List<Trainermember>
 
-    fun findByNote(note: String): List<Trainermember>
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.status = :status")
+    fun findByStatusWithJoin(status: Status): List<Trainermember>
 
-    fun findByDate(date: LocalDateTime): List<Trainermember>
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.note = :note")
+    fun findByNoteWithJoin(note: String): List<Trainermember>
+
+    @Query("SELECT m FROM Trainermember m LEFT JOIN FETCH m.traineruser LEFT JOIN FETCH m.memberuser LEFT JOIN FETCH m.gym WHERE m.date = :date")
+    fun findByDateWithJoin(date: LocalDateTime): List<Trainermember>
 }

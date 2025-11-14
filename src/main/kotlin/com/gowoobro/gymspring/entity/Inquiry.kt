@@ -13,10 +13,18 @@ data class Inquiry(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "iq_id")
     val id: Long = 0,
-    @Column(name = "iq_user")
-    val user: Long = 0L,
-    @Column(name = "iq_gym")
-    val gym: Long = 0L,
+
+    @Column(name = "iq_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iq_user")
+    val inquireruser: User? = null,
+
+    @Column(name = "iq_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iq_gym")
+    val gym: Gym? = null,
     @Column(name = "iq_type")
     val type: Type = Type.GENERAL,
     @Column(name = "iq_title")
@@ -27,8 +35,12 @@ data class Inquiry(
     val status: Status = Status.WAITING,
     @Column(name = "iq_answer")
     val answer: String = "",
-    @Column(name = "iq_answeredby")
-    val answeredby: Long = 0L,
+
+    @Column(name = "iq_answeredby", insertable = false, updatable = false)
+    val answeredbyId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iq_answeredby")
+    val answeredbyuser: User? = null,
     @Column(name = "iq_answereddate")
     val answereddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "iq_createddate")
@@ -93,33 +105,27 @@ data class InquiryResponse(
     val extra: InquiryExtraInfo
 ){
     companion object {
-        fun from(inquiry: Inquiry, inquireruserResponse: UserResponse? = null, gymResponse: GymResponse? = null, answeredbyuserResponse: UserResponse? = null): InquiryResponse {
+        fun from(inquiry: Inquiry): InquiryResponse {
+            val inquireruserResponse = inquiry.inquireruser?.let { UserResponse.from(it) }
+            val gymResponse = inquiry.gym?.let { GymResponse.from(it) }
+            val answeredbyuserResponse = inquiry.answeredbyuser?.let { UserResponse.from(it) }
             return InquiryResponse(
                 id = inquiry.id,
-                user = inquiry.user,
-                gym = inquiry.gym,
+                user = inquiry.userId,
+                gym = inquiry.gymId,
                 type = inquiry.type.ordinal,
                 title = inquiry.title,
                 content = inquiry.content,
                 status = inquiry.status.ordinal,
                 answer = inquiry.answer,
-                answeredby = inquiry.answeredby,
+                answeredby = inquiry.answeredbyId,
                 answereddate = inquiry.answereddate?.toString()?.replace("T", " ") ?: "",
                 createddate = inquiry.createddate?.toString()?.replace("T", " ") ?: "",
                 date = inquiry.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = InquiryExtraInfo(
-                    
-                        type = Type.getDisplayName(inquiry.type),
-                        status = Status.getDisplayName(inquiry.status),
-                        
-                
-                     inquireruser = inquireruserResponse,
-                
-                     gym = gymResponse,
-                
-                     answeredbyuser = answeredbyuserResponse,
-                )
+                    type = Type.getDisplayName(inquiry.type),status = Status.getDisplayName(inquiry.status),
+                    inquireruser = inquireruserResponse,gym = gymResponse,answeredbyuser = answeredbyuserResponse,)
                 
             )
         }

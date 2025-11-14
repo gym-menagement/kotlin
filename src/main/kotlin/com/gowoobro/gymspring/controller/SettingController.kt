@@ -5,12 +5,12 @@ import com.gowoobro.gymspring.entity.SettingCreateRequest
 import com.gowoobro.gymspring.entity.SettingUpdateRequest
 import com.gowoobro.gymspring.service.SettingService
 import com.gowoobro.gymspring.entity.SettingResponse
+import com.gowoobro.gymspring.enums.setting.Type
+
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
-
-import com.gowoobro.gymspring.enums.setting.Type
 
 
 @RestController
@@ -18,9 +18,7 @@ import com.gowoobro.gymspring.enums.setting.Type
 class SettingController(
     private val settingService: SettingService) {
 
-    private fun toResponse(setting: Setting):
-    SettingResponse {
-        
+    private fun toResponse(setting: Setting): SettingResponse {
         return SettingResponse.from(setting)
     }
 
@@ -29,16 +27,16 @@ class SettingController(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int
     ): ResponseEntity<Page<SettingResponse>> {
-        val result = settingService.findAll(page, pageSize)
-        val responsePage = result.map { toResponse(it)}
+        val res = settingService.findAll(page, pageSize)
+        val responsePage = res.map { toResponse(it)}
         return ResponseEntity.ok(responsePage)
     }
 
     @GetMapping("/{id}")
     fun getSetting(@PathVariable id: Long): ResponseEntity<SettingResponse> {
-        val result = settingService.findById(id)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = settingService.findById(id)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }
@@ -47,56 +45,56 @@ class SettingController(
 
     @GetMapping("/search/category")
     fun getSettingByCategory(@RequestParam category: String): ResponseEntity<List<SettingResponse>> {
-        val result = settingService.findByCategory(category)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = settingService.findByCategory(category)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/name")
     fun getSettingByName(@RequestParam name: String): ResponseEntity<List<SettingResponse>> {
-        val result = settingService.findByName(name)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = settingService.findByName(name)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/key")
     fun getSettingByKey(@RequestParam key: String): ResponseEntity<List<SettingResponse>> {
-        val result = settingService.findByKey(key)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = settingService.findByKey(key)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/value")
     fun getSettingByValue(@RequestParam value: String): ResponseEntity<List<SettingResponse>> {
-        val result = settingService.findByValue(value)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = settingService.findByValue(value)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/remark")
     fun getSettingByRemark(@RequestParam remark: String): ResponseEntity<List<SettingResponse>> {
-        val result = settingService.findByRemark(remark)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = settingService.findByRemark(remark)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/type")
     fun getSettingByType(@RequestParam type: Type): ResponseEntity<List<SettingResponse>> {
-        val result = settingService.findByType(type)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = settingService.findByType(type)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/data")
     fun getSettingByData(@RequestParam data: String): ResponseEntity<List<SettingResponse>> {
-        val result = settingService.findByData(data)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = settingService.findByData(data)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/order")
     fun getSettingByOrder(@RequestParam order: Int): ResponseEntity<List<SettingResponse>> {
-        val result = settingService.findByOrder(order)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = settingService.findByOrder(order)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
     @GetMapping("/search/date")
     fun getSettingByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<SettingResponse>> {
-        val result = settingService.findByDate(date)
-        return ResponseEntity.ok(result.map { toResponse(it) } )
+        val res = settingService.findByDate(date)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
 
@@ -109,8 +107,8 @@ class SettingController(
     @PostMapping
     fun createSetting(@RequestBody request: SettingCreateRequest): ResponseEntity<SettingResponse> {
         return try {
-            val result = settingService.create(request)
-            ResponseEntity.ok(toResponse(result))
+            val res = settingService.create(request)
+            ResponseEntity.ok(toResponse(res))
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -119,8 +117,8 @@ class SettingController(
     @PostMapping("/batch")
     fun createSettings(@RequestBody requests: List<SettingCreateRequest>): ResponseEntity<List<SettingResponse>> {
         return try {
-            val result = settingService.createBatch(requests)
-            return ResponseEntity.ok(result.map { toResponse(it) } )
+            val res = settingService.createBatch(requests)
+            return ResponseEntity.ok(res.map { toResponse(it) } )
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
@@ -132,9 +130,9 @@ class SettingController(
         @RequestBody request: SettingUpdateRequest
     ): ResponseEntity<SettingResponse> {
         val updatedRequest = request.copy(id = id)
-        val result = settingService.update(updatedRequest)
-        return if (result != null) {
-            ResponseEntity.ok(toResponse(result))
+        val res = settingService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
         } else {
             ResponseEntity.notFound().build()
         }

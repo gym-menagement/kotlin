@@ -34,39 +34,39 @@ class SettingService(private val settingRepository: SettingRepository) {
 
 
     fun findByCategory(category: String): List<Setting> {
-        return settingRepository.findByCategory(category)
+        return settingRepository.findByCategoryWithJoin(category)
     }
 
     fun findByName(name: String): List<Setting> {
-        return settingRepository.findByName(name)
+        return settingRepository.findByNameWithJoin(name)
     }
 
     fun findByKey(key: String): List<Setting> {
-        return settingRepository.findByKey(key)
+        return settingRepository.findByKeyWithJoin(key)
     }
 
     fun findByValue(value: String): List<Setting> {
-        return settingRepository.findByValue(value)
+        return settingRepository.findByValueWithJoin(value)
     }
 
     fun findByRemark(remark: String): List<Setting> {
-        return settingRepository.findByRemark(remark)
+        return settingRepository.findByRemarkWithJoin(remark)
     }
 
     fun findByType(type: Type): List<Setting> {
-        return settingRepository.findByType(type)
+        return settingRepository.findByTypeWithJoin(type)
     }
 
     fun findByData(data: String): List<Setting> {
-        return settingRepository.findByData(data)
+        return settingRepository.findByDataWithJoin(data)
     }
 
     fun findByOrder(order: Int): List<Setting> {
-        return settingRepository.findByOrder(order)
+        return settingRepository.findByOrderWithJoin(order)
     }
 
     fun findByDate(date: LocalDateTime): List<Setting> {
-        return settingRepository.findByDate(date)
+        return settingRepository.findByDateWithJoin(date)
     }
 
 
@@ -104,8 +104,6 @@ class SettingService(private val settingRepository: SettingRepository) {
 
     fun update(request: SettingUpdateRequest): Setting? {
         val existing = settingRepository.findById(request.id).orElse(null) ?: return null
-
-        
 
         val updated = existing.copy(
             category = request.category,

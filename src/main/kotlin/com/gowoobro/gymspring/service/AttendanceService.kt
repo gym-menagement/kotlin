@@ -36,67 +36,67 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
 
 
     fun findByUser(user: Long): List<Attendance> {
-        return attendanceRepository.findByUser(user)
+        return attendanceRepository.findByUserWithJoin(user)
     }
 
     fun findByMembership(membership: Long): List<Attendance> {
-        return attendanceRepository.findByMembership(membership)
+        return attendanceRepository.findByMembershipWithJoin(membership)
     }
 
     fun findByGym(gym: Long): List<Attendance> {
-        return attendanceRepository.findByGym(gym)
+        return attendanceRepository.findByGymWithJoin(gym)
     }
 
     fun findByType(type: Type): List<Attendance> {
-        return attendanceRepository.findByType(type)
+        return attendanceRepository.findByTypeWithJoin(type)
     }
 
     fun findByMethod(method: Method): List<Attendance> {
-        return attendanceRepository.findByMethod(method)
+        return attendanceRepository.findByMethodWithJoin(method)
     }
 
     fun findByCheckintime(checkintime: LocalDateTime): List<Attendance> {
-        return attendanceRepository.findByCheckintime(checkintime)
+        return attendanceRepository.findByCheckintimeWithJoin(checkintime)
     }
 
     fun findByCheckouttime(checkouttime: LocalDateTime): List<Attendance> {
-        return attendanceRepository.findByCheckouttime(checkouttime)
+        return attendanceRepository.findByCheckouttimeWithJoin(checkouttime)
     }
 
     fun findByDuration(duration: Int): List<Attendance> {
-        return attendanceRepository.findByDuration(duration)
+        return attendanceRepository.findByDurationWithJoin(duration)
     }
 
     fun findByStatus(status: Status): List<Attendance> {
-        return attendanceRepository.findByStatus(status)
+        return attendanceRepository.findByStatusWithJoin(status)
     }
 
     fun findByNote(note: String): List<Attendance> {
-        return attendanceRepository.findByNote(note)
+        return attendanceRepository.findByNoteWithJoin(note)
     }
 
     fun findByIp(ip: String): List<Attendance> {
-        return attendanceRepository.findByIp(ip)
+        return attendanceRepository.findByIpWithJoin(ip)
     }
 
     fun findByDevice(device: String): List<Attendance> {
-        return attendanceRepository.findByDevice(device)
+        return attendanceRepository.findByDeviceWithJoin(device)
     }
 
     fun findByCreatedby(createdby: Long): List<Attendance> {
-        return attendanceRepository.findByCreatedby(createdby)
+        return attendanceRepository.findByCreatedbyWithJoin(createdby)
     }
 
     fun findByDate(date: LocalDateTime): List<Attendance> {
-        return attendanceRepository.findByDate(date)
+        return attendanceRepository.findByDateWithJoin(date)
     }
 
 
     fun create(request: AttendanceCreateRequest): Attendance {
         val entity = Attendance(
-            user = request.user,
-            membership = request.membership,
-            gym = request.gym,
+            userId = request.user,
+            membershipId = request.membership,
+            gymId = request.gym,
             type = request.type,
             method = request.method,
             checkintime = request.checkintime,
@@ -115,9 +115,9 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
     fun createBatch(requests: List<AttendanceCreateRequest>): List<Attendance> {
         val entities = requests.map { request ->
             Attendance(
-                user = request.user,
-                membership = request.membership,
-                gym = request.gym,
+                userId = request.user,
+                membershipId = request.membership,
+                gymId = request.gym,
                 type = request.type,
                 method = request.method,
                 checkintime = request.checkintime,
@@ -137,12 +137,10 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
     fun update(request: AttendanceUpdateRequest): Attendance? {
         val existing = attendanceRepository.findById(request.id).orElse(null) ?: return null
 
-        
-
         val updated = existing.copy(
-            user = request.user,
-            membership = request.membership,
-            gym = request.gym,
+            userId = request.user,
+            membershipId = request.membership,
+            gymId = request.gym,
             type = request.type,
             method = request.method,
             checkintime = request.checkintime,
