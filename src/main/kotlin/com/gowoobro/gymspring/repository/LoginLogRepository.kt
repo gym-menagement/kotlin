@@ -13,23 +13,36 @@ import java.time.LocalDateTime
 
 
 
+
 @Repository
 interface LoginlogRepository : JpaRepository<Loginlog, Long> {
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     override fun findAll(pageable: Pageable): Page<Loginlog>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     override fun findById(id: Long): java.util.Optional<Loginlog>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByIp(ip: String): List<Loginlog>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByIpvalue(ipvalue: Long): List<Loginlog>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByuserId(user: Long): List<Loginlog>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByDate(date: LocalDateTime): List<Loginlog>
 }

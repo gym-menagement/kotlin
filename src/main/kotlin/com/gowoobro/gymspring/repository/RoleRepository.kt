@@ -13,23 +13,36 @@ import java.time.LocalDateTime
 
 
 
+
 @Repository
 interface RoleRepository : JpaRepository<Role, Long> {
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findAll(pageable: Pageable): Page<Role>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findById(id: Long): java.util.Optional<Role>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findBygymId(gym: Long): List<Role>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByRoleid(roleid: Int): List<Role>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByName(name: String): List<Role>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByDate(date: LocalDateTime): List<Role>
 }

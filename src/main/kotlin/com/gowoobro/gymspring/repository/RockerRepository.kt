@@ -14,23 +14,42 @@ import java.time.LocalDateTime
 import com.gowoobro.gymspring.enums.rocker.Available
 
 
+
 @Repository
 interface RockerRepository : JpaRepository<Rocker, Long> {
-    @EntityGraph(attributePaths = ["rockergroup"])
+    @EntityGraph(attributePaths = [
+        "rockergroup",
+        "rockergroup.gym"
+    ])
     override fun findAll(pageable: Pageable): Page<Rocker>
 
-    @EntityGraph(attributePaths = ["rockergroup"])
+    @EntityGraph(attributePaths = [
+        "rockergroup",
+        "rockergroup.gym"
+    ])
     override fun findById(id: Long): java.util.Optional<Rocker>
 
-    @EntityGraph(attributePaths = ["rockergroup"])
+    @EntityGraph(attributePaths = [
+        "rockergroup",
+        "rockergroup.gym"
+    ])
     fun findBygroupId(rockergroup: Long): List<Rocker>
 
-    @EntityGraph(attributePaths = ["rockergroup"])
+    @EntityGraph(attributePaths = [
+        "rockergroup",
+        "rockergroup.gym"
+    ])
     fun findByName(name: String): List<Rocker>
 
-    @EntityGraph(attributePaths = ["rockergroup"])
+    @EntityGraph(attributePaths = [
+        "rockergroup",
+        "rockergroup.gym"
+    ])
     fun findByAvailable(available: Available): List<Rocker>
 
-    @EntityGraph(attributePaths = ["rockergroup"])
+    @EntityGraph(attributePaths = [
+        "rockergroup",
+        "rockergroup.gym"
+    ])
     fun findByDate(date: LocalDateTime): List<Rocker>
 }

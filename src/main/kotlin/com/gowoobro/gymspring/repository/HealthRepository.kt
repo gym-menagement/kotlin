@@ -13,6 +13,7 @@ import java.time.LocalDateTime
 
 
 
+
 @Repository
 interface HealthRepository : JpaRepository<Health, Long> {
     @EntityGraph(attributePaths = [

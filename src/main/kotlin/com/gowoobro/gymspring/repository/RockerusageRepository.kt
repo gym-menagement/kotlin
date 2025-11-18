@@ -14,47 +14,160 @@ import java.math.BigDecimal
 import com.gowoobro.gymspring.enums.rockerusage.Status
 
 
+
 @Repository
 interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     override fun findAll(pageable: Pageable): Page<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     override fun findById(id: Long): java.util.Optional<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByrockerId(rocker: Long): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByuserId(memberuser: Long): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findBymembershipId(membership: Long): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByStartdate(startdate: LocalDateTime): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByEnddate(enddate: LocalDateTime): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByStatus(status: Status): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByDeposit(deposit: BigDecimal): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByMonthlyfee(monthlyfee: BigDecimal): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByNote(note: String): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByassignedbyId(assignedbyuser: Long): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByAssigneddate(assigneddate: LocalDateTime): List<Rockerusage>
 
-    @EntityGraph(attributePaths = ["rocker", "memberuser", "membership", "assignedbyuser"])
+    @EntityGraph(attributePaths = [
+        "rocker",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
     fun findByDate(date: LocalDateTime): List<Rockerusage>
 }

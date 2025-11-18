@@ -14,50 +14,111 @@ import java.time.LocalDateTime
 import com.gowoobro.gymspring.enums.ptreservation.Status
 
 
+
 @Repository
 interface PtreservationRepository : JpaRepository<Ptreservation, Long> {
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     override fun findAll(pageable: Pageable): Page<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     override fun findById(id: Long): java.util.Optional<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findBytrainerId(traineruser: Long): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findBymemberId(memberuser: Long): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findBygymId(gym: Long): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByReservationdate(reservationdate: LocalDateTime): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByStarttime(starttime: String): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByEndtime(endtime: String): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByDuration(duration: Int): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByStatus(status: Status): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByNote(note: String): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByCancelreason(cancelreason: String): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByCreateddate(createddate: LocalDateTime): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByUpdateddate(updateddate: LocalDateTime): List<Ptreservation>
 
-    @EntityGraph(attributePaths = ["traineruser", "memberuser", "gym"])
+    @EntityGraph(attributePaths = [
+        "traineruser",
+        "memberuser",
+        "gym"
+    ])
     fun findByDate(date: LocalDateTime): List<Ptreservation>
 }

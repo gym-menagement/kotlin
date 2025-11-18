@@ -16,6 +16,7 @@ import com.gowoobro.gymspring.enums.ipblock.Policy
 import com.gowoobro.gymspring.enums.ipblock.Use
 
 
+
 @Repository
 interface IpblockRepository : JpaRepository<Ipblock, Long> {
     override fun findAll(pageable: Pageable): Page<Ipblock>

@@ -13,6 +13,7 @@ import java.time.LocalDateTime
 
 
 
+
 @Repository
 interface DiscountRepository : JpaRepository<Discount, Long> {
     override fun findAll(pageable: Pageable): Page<Discount>

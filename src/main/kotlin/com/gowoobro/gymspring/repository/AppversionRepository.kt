@@ -15,6 +15,7 @@ import com.gowoobro.gymspring.enums.appversion.Forceupdate
 import com.gowoobro.gymspring.enums.appversion.Status
 
 
+
 @Repository
 interface AppversionRepository : JpaRepository<Appversion, Long> {
     override fun findAll(pageable: Pageable): Page<Appversion>

@@ -13,20 +13,31 @@ import java.time.LocalDateTime
 
 
 
+
 @Repository
 interface HealthcategoryRepository : JpaRepository<Healthcategory, Long> {
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findAll(pageable: Pageable): Page<Healthcategory>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findById(id: Long): java.util.Optional<Healthcategory>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findBygymId(gym: Long): List<Healthcategory>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByName(name: String): List<Healthcategory>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByDate(date: LocalDateTime): List<Healthcategory>
 }

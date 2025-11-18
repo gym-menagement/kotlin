@@ -13,20 +13,31 @@ import java.time.LocalDateTime
 
 
 
+
 @Repository
 interface RockergroupRepository : JpaRepository<Rockergroup, Long> {
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findAll(pageable: Pageable): Page<Rockergroup>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findById(id: Long): java.util.Optional<Rockergroup>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findBygymId(gym: Long): List<Rockergroup>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByName(name: String): List<Rockergroup>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByDate(date: LocalDateTime): List<Rockergroup>
 }

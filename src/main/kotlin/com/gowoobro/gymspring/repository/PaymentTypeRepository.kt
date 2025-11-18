@@ -13,20 +13,31 @@ import java.time.LocalDateTime
 
 
 
+
 @Repository
 interface PaymenttypeRepository : JpaRepository<Paymenttype, Long> {
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findAll(pageable: Pageable): Page<Paymenttype>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findById(id: Long): java.util.Optional<Paymenttype>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findBygymId(gym: Long): List<Paymenttype>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByName(name: String): List<Paymenttype>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByDate(date: LocalDateTime): List<Paymenttype>
 }

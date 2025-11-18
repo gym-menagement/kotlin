@@ -14,38 +14,72 @@ import java.time.LocalDateTime
 import com.gowoobro.gymspring.enums.membership.Sex
 
 
+
 @Repository
 interface MembershipRepository : JpaRepository<Membership, Long> {
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     override fun findAll(pageable: Pageable): Page<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     override fun findById(id: Long): java.util.Optional<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     fun findBygymId(gym: Long): List<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     fun findByuserId(user: Long): List<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     fun findByName(name: String): List<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     fun findBySex(sex: Sex): List<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     fun findByBirth(birth: LocalDateTime): List<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     fun findByPhonenum(phonenum: String): List<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     fun findByAddress(address: String): List<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     fun findByImage(image: String): List<Membership>
 
-    @EntityGraph(attributePaths = ["gym", "user"])
+    @EntityGraph(attributePaths = [
+        "gym",
+        "user"
+    ])
     fun findByDate(date: LocalDateTime): List<Membership>
 }

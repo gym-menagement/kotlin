@@ -15,44 +15,97 @@ import com.gowoobro.gymspring.enums.inquiry.Type
 import com.gowoobro.gymspring.enums.inquiry.Status
 
 
+
 @Repository
 interface InquiryRepository : JpaRepository<Inquiry, Long> {
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     override fun findAll(pageable: Pageable): Page<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     override fun findById(id: Long): java.util.Optional<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByuserId(inquireruser: Long): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findBygymId(gym: Long): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByType(type: Type): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByTitle(title: String): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByContent(content: String): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByStatus(status: Status): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByAnswer(answer: String): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByansweredbyId(answeredbyuser: Long): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByAnswereddate(answereddate: LocalDateTime): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByCreateddate(createddate: LocalDateTime): List<Inquiry>
 
-    @EntityGraph(attributePaths = ["inquireruser", "gym", "answeredbyuser"])
+    @EntityGraph(attributePaths = [
+        "inquireruser",
+        "gym",
+        "answeredbyuser"
+    ])
     fun findByDate(date: LocalDateTime): List<Inquiry>
 }

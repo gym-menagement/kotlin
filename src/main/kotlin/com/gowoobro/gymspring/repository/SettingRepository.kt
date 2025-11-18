@@ -14,6 +14,7 @@ import java.time.LocalDateTime
 import com.gowoobro.gymspring.enums.setting.Type
 
 
+
 @Repository
 interface SettingRepository : JpaRepository<Setting, Long> {
     override fun findAll(pageable: Pageable): Page<Setting>

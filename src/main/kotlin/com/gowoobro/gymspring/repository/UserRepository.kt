@@ -18,6 +18,7 @@ import com.gowoobro.gymspring.enums.user.Role
 import com.gowoobro.gymspring.enums.user.Sex
 
 
+
 @Repository
 interface UserRepository : JpaRepository<User, Long> {
     override fun findAll(pageable: Pageable): Page<User>

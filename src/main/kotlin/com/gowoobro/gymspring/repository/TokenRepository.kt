@@ -14,23 +14,36 @@ import java.time.LocalDateTime
 import com.gowoobro.gymspring.enums.token.Status
 
 
+
 @Repository
 interface TokenRepository : JpaRepository<Token, Long> {
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     override fun findAll(pageable: Pageable): Page<Token>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     override fun findById(id: Long): java.util.Optional<Token>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByuserId(user: Long): List<Token>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByToken(token: String): List<Token>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByStatus(status: Status): List<Token>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByDate(date: LocalDateTime): List<Token>
 }

@@ -13,20 +13,31 @@ import java.time.LocalDateTime
 
 
 
+
 @Repository
 interface DaytypeRepository : JpaRepository<Daytype, Long> {
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findAll(pageable: Pageable): Page<Daytype>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     override fun findById(id: Long): java.util.Optional<Daytype>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findBygymId(gym: Long): List<Daytype>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByName(name: String): List<Daytype>
 
-    @EntityGraph(attributePaths = ["gym"])
+    @EntityGraph(attributePaths = [
+        "gym"
+    ])
     fun findByDate(date: LocalDateTime): List<Daytype>
 }

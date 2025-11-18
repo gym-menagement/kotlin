@@ -14,38 +14,61 @@ import java.time.LocalDateTime
 import com.gowoobro.gymspring.enums.pushtoken.Isactive
 
 
+
 @Repository
 interface PushtokenRepository : JpaRepository<Pushtoken, Long> {
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     override fun findAll(pageable: Pageable): Page<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     override fun findById(id: Long): java.util.Optional<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByuserId(user: Long): List<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByToken(token: String): List<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByDevicetype(devicetype: String): List<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByDeviceid(deviceid: String): List<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByAppversion(appversion: String): List<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByIsactive(isactive: Isactive): List<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByCreateddate(createddate: LocalDateTime): List<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByUpdateddate(updateddate: LocalDateTime): List<Pushtoken>
 
-    @EntityGraph(attributePaths = ["user"])
+    @EntityGraph(attributePaths = [
+        "user"
+    ])
     fun findByDate(date: LocalDateTime): List<Pushtoken>
 }

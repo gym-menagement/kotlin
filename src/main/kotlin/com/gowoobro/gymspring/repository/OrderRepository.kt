@@ -13,17 +13,34 @@ import java.time.LocalDateTime
 
 
 
+
 @Repository
 interface OrderRepository : JpaRepository<Order, Long> {
-    @EntityGraph(attributePaths = ["membership"])
+    @EntityGraph(attributePaths = [
+        "membership",
+        "membership.gym",
+        "membership.user"
+    ])
     override fun findAll(pageable: Pageable): Page<Order>
 
-    @EntityGraph(attributePaths = ["membership"])
+    @EntityGraph(attributePaths = [
+        "membership",
+        "membership.gym",
+        "membership.user"
+    ])
     override fun findById(id: Long): java.util.Optional<Order>
 
-    @EntityGraph(attributePaths = ["membership"])
+    @EntityGraph(attributePaths = [
+        "membership",
+        "membership.gym",
+        "membership.user"
+    ])
     fun findBymembershipId(membership: Long): List<Order>
 
-    @EntityGraph(attributePaths = ["membership"])
+    @EntityGraph(attributePaths = [
+        "membership",
+        "membership.gym",
+        "membership.user"
+    ])
     fun findByDate(date: LocalDateTime): List<Order>
 }
