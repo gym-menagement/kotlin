@@ -9,7 +9,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 data class LoginRequest(val loginid: String, val passwd: String)
-data class JwtResponse(val token: String, val type: String = "Bearer")
+data class JwtResponse(
+    val token: String,
+    val type: String = "Bearer",
+    val user: UserResponse
+)
 @RestController
 @RequestMapping("/api")
 class AuthController(
@@ -39,7 +43,8 @@ class AuthController(
                 if (passwordMatches) {
                     val jwt = jwtUtil.generateToken(user.loginid)
                     println("JWT generated successfully")
-                    ResponseEntity.ok(JwtResponse(jwt))
+                    val userResponse = UserResponse.from(user)
+                    ResponseEntity.ok(JwtResponse(jwt, "Bearer", userResponse))
                 } else {
                     ResponseEntity.status(401).body(null)
                 }
@@ -61,8 +66,16 @@ class AuthController(
                     loginRequest.passwd
                 )
             )
-            val jwt = jwtUtil.generateToken(loginRequest.loginid)
-            ResponseEntity.ok(JwtResponse(jwt))
+            val users = userService.findByLoginid(loginRequest.loginid)
+            val user = users.firstOrNull()
+
+            if (user != null) {
+                val jwt = jwtUtil.generateToken(loginRequest.loginid)
+                val userResponse = UserResponse.from(user)
+                ResponseEntity.ok(JwtResponse(jwt, "Bearer", userResponse))
+            } else {
+                ResponseEntity.status(404).body(null)
+            }
         } catch (e: Exception) {
             ResponseEntity.status(401).body(null)
         }
