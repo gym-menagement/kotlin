@@ -14,6 +14,12 @@ data class Membershipusage(
     @Column(name = "mu_id")
     val id: Long = 0,
 
+    @Column(name = "mu_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mu_gym")
+    val gym: Gym? = null,
+
     @Column(name = "mu_membership", insertable = false, updatable = false)
     val membershipId: Long = 0L,
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,6 +60,7 @@ data class Membershipusage(
 )
 
 data class MembershipusageCreateRequest(
+    val gym: Long = 0L,
     val membership: Long = 0L,
     val user: Long = 0L,
     val type: Type = Type.PERIOD_BASED,
@@ -73,6 +80,7 @@ data class MembershipusageCreateRequest(
 
 data class MembershipusageUpdateRequest(
     val id: Long = 0,
+    val gym: Long = 0L,
     val membership: Long = 0L,
     val user: Long = 0L,
     val type: Type = Type.PERIOD_BASED,
@@ -94,6 +102,7 @@ data class MembershipusageExtraInfo(
     val type: String = "",
     val status: String = "",
 
+    val gym: GymResponse? = null,
     val membership: MembershipResponse? = null,
     val user: UserResponse? = null,
 )
@@ -101,6 +110,7 @@ data class MembershipusageExtraInfo(
 
 data class MembershipusageResponse(
     val id: Long,
+    val gym: Long,
     val membership: Long,
     val user: Long,
     val type: Int,
@@ -121,10 +131,12 @@ data class MembershipusageResponse(
 ){
     companion object {
         fun from(membershipusage: Membershipusage): MembershipusageResponse {
+            val gymResponse = membershipusage.gym?.let { GymResponse.from(it) }
             val membershipResponse = membershipusage.membership?.let { MembershipResponse.from(it) }
             val userResponse = membershipusage.user?.let { UserResponse.from(it) }
             return MembershipusageResponse(
                 id = membershipusage.id,
+                gym = membershipusage.gymId,
                 membership = membershipusage.membershipId,
                 user = membershipusage.userId,
                 type = membershipusage.type.ordinal,
@@ -143,7 +155,7 @@ data class MembershipusageResponse(
 
                 extra = MembershipusageExtraInfo(
                     type = Type.getDisplayName(membershipusage.type),status = Status.getDisplayName(membershipusage.status),
-                    membership = membershipResponse,user = userResponse,)
+                    gym = gymResponse,membership = membershipResponse,user = userResponse,)
                 
             )
         }

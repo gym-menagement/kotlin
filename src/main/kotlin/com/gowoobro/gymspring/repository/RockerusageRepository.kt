@@ -18,7 +18,9 @@ import com.gowoobro.gymspring.enums.rockerusage.Status
 @Repository
 interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -29,7 +31,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     override fun findAll(pageable: Pageable): Page<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -40,7 +44,22 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     override fun findById(id: Long): java.util.Optional<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
+        "memberuser",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "assignedbyuser"
+    ])
+    fun findBygymId(gym: Long): List<Rockerusage>
+
+    @EntityGraph(attributePaths = [
+        "gym",
+        "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -51,7 +70,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByrockerId(rocker: Long): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -62,7 +83,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByuserId(memberuser: Long): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -73,7 +96,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findBymembershipId(membership: Long): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -84,7 +109,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByStartdate(startdate: LocalDateTime): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -95,7 +122,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByEnddate(enddate: LocalDateTime): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -106,7 +135,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByStatus(status: Status): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -117,7 +148,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByDeposit(deposit: BigDecimal): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -128,7 +161,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByMonthlyfee(monthlyfee: BigDecimal): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -139,7 +174,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByNote(note: String): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -150,7 +187,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByassignedbyId(assignedbyuser: Long): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",
@@ -161,7 +200,9 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
     fun findByAssigneddate(assigneddate: LocalDateTime): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
         "membership",

@@ -22,5 +22,11 @@ interface GymRepository : JpaRepository<Gym, Long> {
 
     fun findByName(name: String): List<Gym>
 
+    fun findByAddress(address: String): List<Gym>
+
+    fun findByTel(tel: String): List<Gym>
+
+    fun findByUser(user: Long): List<Gym>
+
     fun findByDate(date: LocalDateTime): List<Gym>
 }

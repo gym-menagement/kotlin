@@ -5,6 +5,7 @@ import com.gowoobro.gymspring.entity.RoleCreateRequest
 import com.gowoobro.gymspring.entity.RoleUpdateRequest
 import com.gowoobro.gymspring.service.RoleService
 import com.gowoobro.gymspring.entity.RoleResponse
+import com.gowoobro.gymspring.enums.role.Roleid
 
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
@@ -49,7 +50,7 @@ class RoleController(
     }
 
     @GetMapping("/search/roleid")
-    fun getRoleByRoleid(@RequestParam roleid: Int): ResponseEntity<List<RoleResponse>> {
+    fun getRoleByRoleid(@RequestParam roleid: Roleid): ResponseEntity<List<RoleResponse>> {
         val res = roleService.findByRoleid(roleid)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }

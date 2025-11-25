@@ -22,7 +22,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     override fun findAll(pageable: Pageable): Page<Health>
 
@@ -32,7 +34,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     override fun findById(id: Long): java.util.Optional<Health>
 
@@ -42,7 +46,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findBycategoryId(healthcategory: Long): List<Health>
 
@@ -52,7 +58,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findBytermId(term: Long): List<Health>
 
@@ -62,7 +70,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByName(name: String): List<Health>
 
@@ -72,7 +82,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByCount(count: Int): List<Health>
 
@@ -82,7 +94,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByCost(cost: Int): List<Health>
 
@@ -92,7 +106,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findBydiscountId(discount: Long): List<Health>
 
@@ -102,7 +118,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByCostdiscount(costdiscount: Int): List<Health>
 
@@ -112,7 +130,9 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByContent(content: String): List<Health>
 
@@ -122,7 +142,21 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
+    ])
+    fun findBygymId(gym: Long): List<Health>
+
+    @EntityGraph(attributePaths = [
+        "healthcategory",
+        "healthcategory.gym",
+        "term",
+        "term.gym",
+        "term.daytype",
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByDate(date: LocalDateTime): List<Health>
 }

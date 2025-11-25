@@ -19,6 +19,7 @@ import com.gowoobro.gymspring.enums.membershipusage.Status
 @Repository
 interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -27,6 +28,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     override fun findAll(pageable: Pageable): Page<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -35,6 +37,16 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     override fun findById(id: Long): java.util.Optional<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
+        "membership",
+        "membership.gym",
+        "membership.user",
+        "user"
+    ])
+    fun findBygymId(gym: Long): List<Membershipusage>
+
+    @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -43,6 +55,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findBymembershipId(membership: Long): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -51,6 +64,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByuserId(user: Long): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -59,6 +73,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByType(type: Type): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -67,6 +82,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByTotaldays(totaldays: Int): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -75,6 +91,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByUseddays(useddays: Int): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -83,6 +100,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByRemainingdays(remainingdays: Int): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -91,6 +109,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByTotalcount(totalcount: Int): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -99,6 +118,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByUsedcount(usedcount: Int): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -107,6 +127,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByRemainingcount(remainingcount: Int): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -115,6 +136,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByStartdate(startdate: LocalDateTime): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -123,6 +145,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByEnddate(enddate: LocalDateTime): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -131,6 +154,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByStatus(status: Status): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -139,6 +163,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByPausedays(pausedays: Int): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",
@@ -147,6 +172,7 @@ interface MembershipusageRepository : JpaRepository<Membershipusage, Long> {
     fun findByLastuseddate(lastuseddate: LocalDateTime): List<Membershipusage>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "membership",
         "membership.gym",
         "membership.user",

@@ -39,6 +39,12 @@ data class Health(
     val costdiscount: Int = 0,
     @Column(name = "h_content")
     val content: String = "",
+
+    @Column(name = "h_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "h_gym")
+    val gym: Gym? = null,
     @Column(name = "h_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 )
@@ -52,6 +58,7 @@ data class HealthCreateRequest(
     val discount: Long = 0L,
     val costdiscount: Int = 0,
     val content: String = "",
+    val gym: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
@@ -65,6 +72,7 @@ data class HealthUpdateRequest(
     val discount: Long = 0L,
     val costdiscount: Int = 0,
     val content: String = "",
+    val gym: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
@@ -73,6 +81,7 @@ data class HealthExtraInfo(
     val healthcategory: HealthcategoryResponse? = null,
     val term: TermResponse? = null,
     val discount: DiscountResponse? = null,
+    val gym: GymResponse? = null,
 )
 
 
@@ -86,6 +95,7 @@ data class HealthResponse(
     val discount: Long,
     val costdiscount: Int,
     val content: String,
+    val gym: Long,
     val date: String?,
 
     val extra: HealthExtraInfo
@@ -95,6 +105,7 @@ data class HealthResponse(
             val healthcategoryResponse = health.healthcategory?.let { HealthcategoryResponse.from(it) }
             val termResponse = health.term?.let { TermResponse.from(it) }
             val discountResponse = health.discount?.let { DiscountResponse.from(it) }
+            val gymResponse = health.gym?.let { GymResponse.from(it) }
             return HealthResponse(
                 id = health.id,
                 category = health.categoryId,
@@ -105,10 +116,11 @@ data class HealthResponse(
                 discount = health.discountId,
                 costdiscount = health.costdiscount,
                 content = health.content,
+                gym = health.gymId,
                 date = health.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = HealthExtraInfo(
-                    healthcategory = healthcategoryResponse,term = termResponse,discount = discountResponse,)
+                    healthcategory = healthcategoryResponse,term = termResponse,discount = discountResponse,gym = gymResponse,)
                 
             )
         }

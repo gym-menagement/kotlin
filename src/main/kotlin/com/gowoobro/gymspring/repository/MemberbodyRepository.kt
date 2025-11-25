@@ -17,114 +17,140 @@ import java.math.BigDecimal
 @Repository
 interface MemberbodyRepository : JpaRepository<Memberbody, Long> {
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     override fun findAll(pageable: Pageable): Page<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     override fun findById(id: Long): java.util.Optional<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
+        "memberuser",
+        "measuredbyuser"
+    ])
+    fun findBygymId(gym: Long): List<Memberbody>
+
+    @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByuserId(memberuser: Long): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByHeight(height: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByWeight(weight: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByBodyfat(bodyfat: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByMusclemass(musclemass: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByBmi(bmi: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findBySkeletalmuscle(skeletalmuscle: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByBodywater(bodywater: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByChest(chest: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByWaist(waist: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByHip(hip: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByArm(arm: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByThigh(thigh: BigDecimal): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByNote(note: String): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findByMeasureddate(measureddate: LocalDateTime): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])
     fun findBymeasuredbyId(measuredbyuser: Long): List<Memberbody>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "memberuser",
         "measuredbyuser"
     ])

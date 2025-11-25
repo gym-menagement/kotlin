@@ -44,6 +44,12 @@ class MembershipusageController(
     }
 
 
+    @GetMapping("/search/gym")
+    fun getMembershipusageByGym(@RequestParam gym: Long): ResponseEntity<List<MembershipusageResponse>> {
+        val res = membershipusageService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
     @GetMapping("/search/membership")
     fun getMembershipusageByMembership(@RequestParam membership: Long): ResponseEntity<List<MembershipusageResponse>> {
         val res = membershipusageService.findByMembership(membership)

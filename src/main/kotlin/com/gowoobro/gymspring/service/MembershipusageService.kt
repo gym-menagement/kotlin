@@ -34,6 +34,10 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
     }
 
 
+    fun findByGym(gym: Long): List<Membershipusage> {
+        return membershipusageRepository.findBygymId(gym)
+    }
+
     fun findByMembership(membership: Long): List<Membershipusage> {
         return membershipusageRepository.findBymembershipId(membership)
     }
@@ -97,6 +101,7 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
 
     fun create(request: MembershipusageCreateRequest): Membershipusage {
         val entity = Membershipusage(
+            gymId = request.gym,
             membershipId = request.membership,
             userId = request.user,
             type = request.type,
@@ -119,6 +124,7 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
     fun createBatch(requests: List<MembershipusageCreateRequest>): List<Membershipusage> {
         val entities = requests.map { request ->
             Membershipusage(
+                gymId = request.gym,
                 membershipId = request.membership,
                 userId = request.user,
                 type = request.type,
@@ -143,6 +149,7 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
         val existing = membershipusageRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
+            gymId = request.gym,
             membershipId = request.membership,
             userId = request.user,
             type = request.type,

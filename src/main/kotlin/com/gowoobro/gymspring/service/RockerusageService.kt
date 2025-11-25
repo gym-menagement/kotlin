@@ -33,6 +33,10 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
     }
 
 
+    fun findByGym(gym: Long): List<Rockerusage> {
+        return rockerusageRepository.findBygymId(gym)
+    }
+
     fun findByRocker(rocker: Long): List<Rockerusage> {
         return rockerusageRepository.findByrockerId(rocker)
     }
@@ -84,6 +88,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
 
     fun create(request: RockerusageCreateRequest): Rockerusage {
         val entity = Rockerusage(
+            gymId = request.gym,
             rockerId = request.rocker,
             userId = request.user,
             membershipId = request.membership,
@@ -103,6 +108,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
     fun createBatch(requests: List<RockerusageCreateRequest>): List<Rockerusage> {
         val entities = requests.map { request ->
             Rockerusage(
+                gymId = request.gym,
                 rockerId = request.rocker,
                 userId = request.user,
                 membershipId = request.membership,
@@ -124,6 +130,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
         val existing = rockerusageRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
+            gymId = request.gym,
             rockerId = request.rocker,
             userId = request.user,
             membershipId = request.membership,

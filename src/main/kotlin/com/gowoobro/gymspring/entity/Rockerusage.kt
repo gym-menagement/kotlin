@@ -13,6 +13,12 @@ data class Rockerusage(
     @Column(name = "ru_id")
     val id: Long = 0,
 
+    @Column(name = "ru_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ru_gym")
+    val gym: Gym? = null,
+
     @Column(name = "ru_rocker", insertable = false, updatable = false)
     val rockerId: Long = 0L,
     @ManyToOne(fetch = FetchType.LAZY)
@@ -55,6 +61,7 @@ data class Rockerusage(
 )
 
 data class RockerusageCreateRequest(
+    val gym: Long = 0L,
     val rocker: Long = 0L,
     val user: Long = 0L,
     val membership: Long = 0L,
@@ -71,6 +78,7 @@ data class RockerusageCreateRequest(
 
 data class RockerusageUpdateRequest(
     val id: Long = 0,
+    val gym: Long = 0L,
     val rocker: Long = 0L,
     val user: Long = 0L,
     val membership: Long = 0L,
@@ -88,6 +96,7 @@ data class RockerusageUpdateRequest(
 data class RockerusageExtraInfo(
     val status: String = "",
 
+    val gym: GymResponse? = null,
     val rocker: RockerResponse? = null,
     val memberuser: UserResponse? = null,
     val membership: MembershipResponse? = null,
@@ -97,6 +106,7 @@ data class RockerusageExtraInfo(
 
 data class RockerusageResponse(
     val id: Long,
+    val gym: Long,
     val rocker: Long,
     val user: Long,
     val membership: Long,
@@ -114,12 +124,14 @@ data class RockerusageResponse(
 ){
     companion object {
         fun from(rockerusage: Rockerusage): RockerusageResponse {
+            val gymResponse = rockerusage.gym?.let { GymResponse.from(it) }
             val rockerResponse = rockerusage.rocker?.let { RockerResponse.from(it) }
             val memberuserResponse = rockerusage.memberuser?.let { UserResponse.from(it) }
             val membershipResponse = rockerusage.membership?.let { MembershipResponse.from(it) }
             val assignedbyuserResponse = rockerusage.assignedbyuser?.let { UserResponse.from(it) }
             return RockerusageResponse(
                 id = rockerusage.id,
+                gym = rockerusage.gymId,
                 rocker = rockerusage.rockerId,
                 user = rockerusage.userId,
                 membership = rockerusage.membershipId,
@@ -135,7 +147,7 @@ data class RockerusageResponse(
 
                 extra = RockerusageExtraInfo(
                     status = Status.getDisplayName(rockerusage.status),
-                    rocker = rockerResponse,memberuser = memberuserResponse,membership = membershipResponse,assignedbyuser = assignedbyuserResponse,)
+                    gym = gymResponse,rocker = rockerResponse,memberuser = memberuserResponse,membership = membershipResponse,assignedbyuser = assignedbyuserResponse,)
                 
             )
         }

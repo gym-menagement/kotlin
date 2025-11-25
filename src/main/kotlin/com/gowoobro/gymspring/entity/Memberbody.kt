@@ -12,6 +12,12 @@ data class Memberbody(
     @Column(name = "mb_id")
     val id: Long = 0,
 
+    @Column(name = "mb_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mb_gym")
+    val gym: Gym? = null,
+
     @Column(name = "mb_user", insertable = false, updatable = false)
     val userId: Long = 0L,
     @ManyToOne(fetch = FetchType.LAZY)
@@ -56,6 +62,7 @@ data class Memberbody(
 )
 
 data class MemberbodyCreateRequest(
+    val gym: Long = 0L,
     val user: Long = 0L,
     val height: BigDecimal = BigDecimal.ZERO,
     val weight: BigDecimal = BigDecimal.ZERO,
@@ -77,6 +84,7 @@ data class MemberbodyCreateRequest(
 
 data class MemberbodyUpdateRequest(
     val id: Long = 0,
+    val gym: Long = 0L,
     val user: Long = 0L,
     val height: BigDecimal = BigDecimal.ZERO,
     val weight: BigDecimal = BigDecimal.ZERO,
@@ -98,6 +106,7 @@ data class MemberbodyUpdateRequest(
 
 data class MemberbodyExtraInfo(
 
+    val gym: GymResponse? = null,
     val memberuser: UserResponse? = null,
     val measuredbyuser: UserResponse? = null,
 )
@@ -105,6 +114,7 @@ data class MemberbodyExtraInfo(
 
 data class MemberbodyResponse(
     val id: Long,
+    val gym: Long,
     val user: Long,
     val height: BigDecimal,
     val weight: BigDecimal,
@@ -127,10 +137,12 @@ data class MemberbodyResponse(
 ){
     companion object {
         fun from(memberbody: Memberbody): MemberbodyResponse {
+            val gymResponse = memberbody.gym?.let { GymResponse.from(it) }
             val memberuserResponse = memberbody.memberuser?.let { UserResponse.from(it) }
             val measuredbyuserResponse = memberbody.measuredbyuser?.let { UserResponse.from(it) }
             return MemberbodyResponse(
                 id = memberbody.id,
+                gym = memberbody.gymId,
                 user = memberbody.userId,
                 height = memberbody.height,
                 weight = memberbody.weight,
@@ -150,7 +162,7 @@ data class MemberbodyResponse(
                 date = memberbody.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = MemberbodyExtraInfo(
-                    memberuser = memberuserResponse,measuredbyuser = measuredbyuserResponse,)
+                    gym = gymResponse,memberuser = memberuserResponse,measuredbyuser = measuredbyuserResponse,)
                 
             )
         }

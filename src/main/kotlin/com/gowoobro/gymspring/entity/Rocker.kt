@@ -13,6 +13,12 @@ data class Rocker(
     @Column(name = "r_id")
     val id: Long = 0,
 
+    @Column(name = "r_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "r_gym")
+    val gym: Gym? = null,
+
     @Column(name = "r_group", insertable = false, updatable = false)
     val groupId: Long = 0L,
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,6 +33,7 @@ data class Rocker(
 )
 
 data class RockerCreateRequest(
+    val gym: Long = 0L,
     val group: Long = 0L,
     val name: String = "",
     val available: Available = Available.IN_USE,
@@ -35,6 +42,7 @@ data class RockerCreateRequest(
 
 data class RockerUpdateRequest(
     val id: Long = 0,
+    val gym: Long = 0L,
     val group: Long = 0L,
     val name: String = "",
     val available: Available = Available.IN_USE,
@@ -44,12 +52,14 @@ data class RockerUpdateRequest(
 data class RockerExtraInfo(
     val available: String = "",
 
+    val gym: GymResponse? = null,
     val rockergroup: RockergroupResponse? = null,
 )
 
 
 data class RockerResponse(
     val id: Long,
+    val gym: Long,
     val group: Long,
     val name: String,
     val available: Int,
@@ -59,9 +69,11 @@ data class RockerResponse(
 ){
     companion object {
         fun from(rocker: Rocker): RockerResponse {
+            val gymResponse = rocker.gym?.let { GymResponse.from(it) }
             val rockergroupResponse = rocker.rockergroup?.let { RockergroupResponse.from(it) }
             return RockerResponse(
                 id = rocker.id,
+                gym = rocker.gymId,
                 group = rocker.groupId,
                 name = rocker.name,
                 available = rocker.available.ordinal,
@@ -69,7 +81,7 @@ data class RockerResponse(
 
                 extra = RockerExtraInfo(
                     available = Available.getDisplayName(rocker.available),
-                    rockergroup = rockergroupResponse,)
+                    gym = gymResponse,rockergroup = rockergroupResponse,)
                 
             )
         }

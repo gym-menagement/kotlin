@@ -36,6 +36,18 @@ class GymService(private val gymRepository: GymRepository) {
         return gymRepository.findByName(name)
     }
 
+    fun findByAddress(address: String): List<Gym> {
+        return gymRepository.findByAddress(address)
+    }
+
+    fun findByTel(tel: String): List<Gym> {
+        return gymRepository.findByTel(tel)
+    }
+
+    fun findByUser(user: Long): List<Gym> {
+        return gymRepository.findByUser(user)
+    }
+
     fun findByDate(date: LocalDateTime): List<Gym> {
         return gymRepository.findByDate(date)
     }
@@ -44,6 +56,9 @@ class GymService(private val gymRepository: GymRepository) {
     fun create(request: GymCreateRequest): Gym {
         val entity = Gym(
             name = request.name,
+            address = request.address,
+            tel = request.tel,
+            user = request.user,
             date = request.date,
         )
         return gymRepository.save(entity)
@@ -53,6 +68,9 @@ class GymService(private val gymRepository: GymRepository) {
         val entities = requests.map { request ->
             Gym(
                 name = request.name,
+                address = request.address,
+                tel = request.tel,
+                user = request.user,
                 date = request.date,
             )
         }
@@ -64,6 +82,9 @@ class GymService(private val gymRepository: GymRepository) {
 
         val updated = existing.copy(
             name = request.name,
+            address = request.address,
+            tel = request.tel,
+            user = request.user,
             date = request.date,
         )
         return gymRepository.save(updated)

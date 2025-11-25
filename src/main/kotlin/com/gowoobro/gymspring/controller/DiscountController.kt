@@ -42,6 +42,12 @@ class DiscountController(
     }
 
 
+    @GetMapping("/search/gym")
+    fun getDiscountByGym(@RequestParam gym: Long): ResponseEntity<List<DiscountResponse>> {
+        val res = discountService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
     @GetMapping("/search/name")
     fun getDiscountByName(@RequestParam name: String): ResponseEntity<List<DiscountResponse>> {
         val res = discountService.findByName(name)

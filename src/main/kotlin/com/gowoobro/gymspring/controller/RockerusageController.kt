@@ -43,6 +43,12 @@ class RockerusageController(
     }
 
 
+    @GetMapping("/search/gym")
+    fun getRockerusageByGym(@RequestParam gym: Long): ResponseEntity<List<RockerusageResponse>> {
+        val res = rockerusageService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
     @GetMapping("/search/rocker")
     fun getRockerusageByRocker(@RequestParam rocker: Long): ResponseEntity<List<RockerusageResponse>> {
         val res = rockerusageService.findByRocker(rocker)

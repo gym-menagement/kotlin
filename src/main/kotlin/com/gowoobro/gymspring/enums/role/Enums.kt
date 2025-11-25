@@ -1,7 +1,8 @@
 package com.gowoobro.gymspring.enums.role
 
 
-enum class Role {
+enum class Roleid {
+    NONE,
     MEMBER,  // 회원
     TRAINER,  // 트레이너
     STAFF,  // 직원
@@ -10,8 +11,9 @@ enum class Role {
 ;
 
     companion object {
-        fun getDisplayName(value: Role): String {
+        fun getDisplayName(value: Roleid): String {
             return when (value) {
+                NONE -> ""
                 MEMBER -> "회원"
                 TRAINER -> "트레이너"
                 STAFF -> "직원"
@@ -20,8 +22,9 @@ enum class Role {
             }
         }
 
-        fun fromString(value: String): Role? {
+        fun fromString(value: String): Roleid? {
             return when (value) {
+                "" -> NONE
                 "회원" -> MEMBER
                 "트레이너" -> TRAINER
                 "직원" -> STAFF

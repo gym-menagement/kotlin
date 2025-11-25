@@ -32,6 +32,10 @@ class DiscountService(private val discountRepository: DiscountRepository) {
     }
 
 
+    fun findByGym(gym: Long): List<Discount> {
+        return discountRepository.findBygymId(gym)
+    }
+
     fun findByName(name: String): List<Discount> {
         return discountRepository.findByName(name)
     }
@@ -47,6 +51,7 @@ class DiscountService(private val discountRepository: DiscountRepository) {
 
     fun create(request: DiscountCreateRequest): Discount {
         val entity = Discount(
+            gymId = request.gym,
             name = request.name,
             discount = request.discount,
             date = request.date,
@@ -57,6 +62,7 @@ class DiscountService(private val discountRepository: DiscountRepository) {
     fun createBatch(requests: List<DiscountCreateRequest>): List<Discount> {
         val entities = requests.map { request ->
             Discount(
+                gymId = request.gym,
                 name = request.name,
                 discount = request.discount,
                 date = request.date,
@@ -69,6 +75,7 @@ class DiscountService(private val discountRepository: DiscountRepository) {
         val existing = discountRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
+            gymId = request.gym,
             name = request.name,
             discount = request.discount,
             date = request.date,

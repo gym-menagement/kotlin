@@ -42,6 +42,12 @@ class WorkoutlogController(
     }
 
 
+    @GetMapping("/search/gym")
+    fun getWorkoutlogByGym(@RequestParam gym: Long): ResponseEntity<List<WorkoutlogResponse>> {
+        val res = workoutlogService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
     @GetMapping("/search/user")
     fun getWorkoutlogByUser(@RequestParam user: Long): ResponseEntity<List<WorkoutlogResponse>> {
         val res = workoutlogService.findByUser(user)

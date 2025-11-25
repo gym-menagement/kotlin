@@ -51,6 +51,12 @@ data class Usehealth(
     val startday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "uh_endday")
     val endday: LocalDateTime? = LocalDateTime.now(),
+
+    @Column(name = "uh_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uh_gym")
+    val gym: Gym? = null,
     @Column(name = "uh_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 )
@@ -64,6 +70,7 @@ data class UsehealthCreateRequest(
     val discount: Long = 0L,
     val startday: LocalDateTime? = LocalDateTime.now(),
     val endday: LocalDateTime? = LocalDateTime.now(),
+    val gym: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
@@ -77,6 +84,7 @@ data class UsehealthUpdateRequest(
     val discount: Long = 0L,
     val startday: LocalDateTime? = LocalDateTime.now(),
     val endday: LocalDateTime? = LocalDateTime.now(),
+    val gym: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
@@ -88,6 +96,7 @@ data class UsehealthExtraInfo(
     val rocker: RockerResponse? = null,
     val term: TermResponse? = null,
     val discount: DiscountResponse? = null,
+    val gym: GymResponse? = null,
 )
 
 
@@ -101,6 +110,7 @@ data class UsehealthResponse(
     val discount: Long,
     val startday: String?,
     val endday: String?,
+    val gym: Long,
     val date: String?,
 
     val extra: UsehealthExtraInfo
@@ -113,6 +123,7 @@ data class UsehealthResponse(
             val rockerResponse = usehealth.rocker?.let { RockerResponse.from(it) }
             val termResponse = usehealth.term?.let { TermResponse.from(it) }
             val discountResponse = usehealth.discount?.let { DiscountResponse.from(it) }
+            val gymResponse = usehealth.gym?.let { GymResponse.from(it) }
             return UsehealthResponse(
                 id = usehealth.id,
                 order = usehealth.orderId,
@@ -123,10 +134,11 @@ data class UsehealthResponse(
                 discount = usehealth.discountId,
                 startday = usehealth.startday?.toString()?.replace("T", " ") ?: "",
                 endday = usehealth.endday?.toString()?.replace("T", " ") ?: "",
+                gym = usehealth.gymId,
                 date = usehealth.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = UsehealthExtraInfo(
-                    order = orderResponse,health = healthResponse,user = userResponse,rocker = rockerResponse,term = termResponse,discount = discountResponse,)
+                    order = orderResponse,health = healthResponse,user = userResponse,rocker = rockerResponse,term = termResponse,discount = discountResponse,gym = gymResponse,)
                 
             )
         }

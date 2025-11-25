@@ -18,36 +18,49 @@ import com.gowoobro.gymspring.enums.rocker.Available
 @Repository
 interface RockerRepository : JpaRepository<Rocker, Long> {
     @EntityGraph(attributePaths = [
+        "gym",
         "rockergroup",
         "rockergroup.gym"
     ])
     override fun findAll(pageable: Pageable): Page<Rocker>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rockergroup",
         "rockergroup.gym"
     ])
     override fun findById(id: Long): java.util.Optional<Rocker>
 
     @EntityGraph(attributePaths = [
+        "gym",
+        "rockergroup",
+        "rockergroup.gym"
+    ])
+    fun findBygymId(gym: Long): List<Rocker>
+
+    @EntityGraph(attributePaths = [
+        "gym",
         "rockergroup",
         "rockergroup.gym"
     ])
     fun findBygroupId(rockergroup: Long): List<Rocker>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rockergroup",
         "rockergroup.gym"
     ])
     fun findByName(name: String): List<Rocker>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rockergroup",
         "rockergroup.gym"
     ])
     fun findByAvailable(available: Available): List<Rocker>
 
     @EntityGraph(attributePaths = [
+        "gym",
         "rockergroup",
         "rockergroup.gym"
     ])

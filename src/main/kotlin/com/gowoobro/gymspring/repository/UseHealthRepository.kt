@@ -23,13 +23,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     override fun findAll(pageable: Pageable): Page<Usehealth>
 
@@ -40,13 +44,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     override fun findById(id: Long): java.util.Optional<Usehealth>
 
@@ -57,13 +65,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByorderId(order: Long): List<Usehealth>
 
@@ -74,13 +86,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByhealthId(health: Long): List<Usehealth>
 
@@ -91,13 +107,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByuserId(user: Long): List<Usehealth>
 
@@ -108,13 +128,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByrockerId(rocker: Long): List<Usehealth>
 
@@ -125,13 +149,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findBytermId(term: Long): List<Usehealth>
 
@@ -142,13 +170,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findBydiscountId(discount: Long): List<Usehealth>
 
@@ -159,13 +191,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByStartday(startday: LocalDateTime): List<Usehealth>
 
@@ -176,13 +212,17 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByEndday(endday: LocalDateTime): List<Usehealth>
 
@@ -193,13 +233,38 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "health.healthcategory",
         "health.term",
         "health.discount",
+        "health.gym",
         "user",
         "rocker",
+        "rocker.gym",
         "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
-        "discount"
+        "discount",
+        "discount.gym",
+        "gym"
+    ])
+    fun findBygymId(gym: Long): List<Usehealth>
+
+    @EntityGraph(attributePaths = [
+        "order",
+        "order.membership",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym",
+        "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
+        "term",
+        "term.gym",
+        "term.daytype",
+        "discount",
+        "discount.gym",
+        "gym"
     ])
     fun findByDate(date: LocalDateTime): List<Usehealth>
 }

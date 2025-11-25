@@ -90,6 +90,12 @@ class HealthController(
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
+    @GetMapping("/search/gym")
+    fun getHealthByGym(@RequestParam gym: Long): ResponseEntity<List<HealthResponse>> {
+        val res = healthService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
     @GetMapping("/search/date")
     fun getHealthByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<HealthResponse>> {
         val res = healthService.findByDate(date)

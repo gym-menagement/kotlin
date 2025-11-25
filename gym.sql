@@ -59,10 +59,12 @@ DROP TABLE IF EXISTS `discount_tb`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `discount_tb` (
   `d_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '할인 ID',
+  `d_gym` bigint(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
   `d_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '할인명',
   `d_discount` int(11) NOT NULL DEFAULT 0 COMMENT '할인율(%)',
   `d_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
-  PRIMARY KEY (`d_id`)
+  PRIMARY KEY (`d_id`),
+  INDEX idx_gym (d_gym)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='할인 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -76,8 +78,12 @@ DROP TABLE IF EXISTS `gym_tb`;
 CREATE TABLE `gym_tb` (
   `g_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '헬스장 ID',
   `g_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '헬스장명',
+  `g_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '헬스장 주소',
+  `g_tel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '헬스장 전화번호',
+  `g_user` bigint(20) NOT NULL DEFAULT 0 COMMENT '소유자 ID (user_tb 참조)',
   `g_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
-  PRIMARY KEY (`g_id`)
+  PRIMARY KEY (`g_id`),
+  INDEX idx_user (g_user)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='헬스장 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -98,6 +104,7 @@ CREATE TABLE `health_tb` (
   `h_discount` bigint(20) NOT NULL DEFAULT 0 COMMENT '할인 ID (discount_tb 참조)',
   `h_costdiscount` int(11) NOT NULL DEFAULT 0 COMMENT '할인가',
   `h_content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '운동권 설명',
+  `h_gym` bigint(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
   `h_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
   PRIMARY KEY (`h_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='운동권 테이블';
@@ -253,11 +260,14 @@ DROP TABLE IF EXISTS `rocker_tb`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rocker_tb` (
   `r_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '락커 ID',
+  `r_gym` bigint(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
   `r_group` bigint(20) NOT NULL DEFAULT 0 COMMENT '락커 그룹 ID (rockergroup_tb 참조)',
   `r_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '락커 번호/이름',
   `r_available` int(11) NOT NULL DEFAULT 0 COMMENT '사용 가능 여부 (IN_USE:사용중, AVAILABLE:사용가능)',
   `r_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
-  PRIMARY KEY (`r_id`)
+  PRIMARY KEY (`r_id`),
+  INDEX idx_gym (r_gym),
+  INDEX idx_group (r_group)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='락커 테이블';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -403,6 +413,7 @@ CREATE TABLE `usehealth_tb` (
   `uh_discount` bigint(20) NOT NULL DEFAULT 0 COMMENT '할인 ID (discount_tb 참조)',
   `uh_startday` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '시작일',
   `uh_endday` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '종료일',
+  `uh_gym` bigint(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
   `uh_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
   PRIMARY KEY (`uh_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='운동권 사용 테이블';
@@ -503,6 +514,7 @@ CREATE TABLE IF NOT EXISTS memberqr_tb (
 -- 회원들의 운동 기록 (세트, 무게, 횟수 등)
 CREATE TABLE IF NOT EXISTS workoutlog_tb (
     wl_id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '운동기록 ID',
+    wl_gym BIGINT(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
     wl_user BIGINT(20) NOT NULL DEFAULT 0 COMMENT '회원 ID',
     wl_attendance BIGINT(20) NOT NULL DEFAULT 0 COMMENT '출석 ID (attendance_tb 참조)',
     wl_health BIGINT(20) NOT NULL DEFAULT 0 COMMENT '운동기구 ID (health_tb 참조)',
@@ -515,6 +527,7 @@ CREATE TABLE IF NOT EXISTS workoutlog_tb (
     wl_note TEXT NOT NULL COMMENT '메모',
     wl_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
     PRIMARY KEY (wl_id),
+    INDEX idx_gym (wl_gym),
     INDEX idx_user (wl_user),
     INDEX idx_attendance (wl_attendance),
     INDEX idx_date (wl_date)
@@ -524,6 +537,7 @@ CREATE TABLE IF NOT EXISTS workoutlog_tb (
 -- 회원권별 사용 내역 (남은 횟수, 기간 등 추적)
 CREATE TABLE IF NOT EXISTS membershipusage_tb (
     mu_id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '이용내역 ID',
+    mu_gym BIGINT(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
     mu_membership BIGINT(20) NOT NULL DEFAULT 0 COMMENT '회원권 ID',
     mu_user BIGINT(20) NOT NULL DEFAULT 0 COMMENT '회원 ID',
     mu_type INT(11) NOT NULL DEFAULT 0 COMMENT '회원권 타입 (PERIOD_BASED:기간제, COUNT_BASED:횟수제)',
@@ -540,6 +554,7 @@ CREATE TABLE IF NOT EXISTS membershipusage_tb (
     mu_lastuseddate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '마지막 사용일',
     mu_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
     PRIMARY KEY (mu_id),
+    INDEX idx_gym (mu_gym),
     INDEX idx_membership (mu_membership),
     INDEX idx_user (mu_user),
     INDEX idx_status (mu_status),
@@ -618,6 +633,7 @@ CREATE TABLE IF NOT EXISTS ptreservation_tb (
 -- 회원들의 신체 정보 변화 추적 (체중, 체지방률 등)
 CREATE TABLE IF NOT EXISTS memberbody_tb (
     mb_id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '신체정보 ID',
+    mb_gym BIGINT(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
     mb_user BIGINT(20) NOT NULL DEFAULT 0 COMMENT '회원 ID',
     mb_height DECIMAL(5,2) NOT NULL DEFAULT 0 COMMENT '키(cm)',
     mb_weight DECIMAL(5,2) NOT NULL DEFAULT 0 COMMENT '체중(kg)',
@@ -636,6 +652,7 @@ CREATE TABLE IF NOT EXISTS memberbody_tb (
     mb_measuredby BIGINT(20) NOT NULL DEFAULT 0 COMMENT '측정자 ID',
     mb_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
     PRIMARY KEY (mb_id),
+    INDEX idx_gym (mb_gym),
     INDEX idx_user (mb_user),
     INDEX idx_measureddate (mb_measureddate)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='회원 신체 정보 테이블';
@@ -666,6 +683,7 @@ CREATE TABLE IF NOT EXISTS inquiry_tb (
 -- 락커 배정 및 사용 내역
 CREATE TABLE IF NOT EXISTS rockerusage_tb (
     ru_id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '사용내역 ID',
+    ru_gym BIGINT(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
     ru_rocker BIGINT(20) NOT NULL DEFAULT 0 COMMENT '락커 ID',
     ru_user BIGINT(20) NOT NULL DEFAULT 0 COMMENT '회원 ID',
     ru_membership BIGINT(20) NOT NULL DEFAULT 0 COMMENT '회원권 ID',
@@ -679,6 +697,7 @@ CREATE TABLE IF NOT EXISTS rockerusage_tb (
     ru_assigneddate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '배정일',
     ru_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
     PRIMARY KEY (ru_id),
+    INDEX idx_gym (ru_gym),
     INDEX idx_rocker (ru_rocker),
     INDEX idx_user (ru_user),
     INDEX idx_status (ru_status),
@@ -722,6 +741,25 @@ CREATE TABLE IF NOT EXISTS appversion_tb (
     INDEX idx_platform (av_platform),
     INDEX idx_status (av_status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='앱 버전 관리 테이블';
+
+-- 13. 헬스장-트레이너 매칭 테이블 (gymtrainer_tb)
+-- 트레이너가 어느 헬스장에서 근무하는지 관리 (트레이너는 여러 헬스장에서 근무 가능)
+CREATE TABLE IF NOT EXISTS gymtrainer_tb (
+    gt_id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '헬스장-트레이너 매칭 ID',
+    gt_gym BIGINT(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
+    gt_trainer BIGINT(20) NOT NULL DEFAULT 0 COMMENT '트레이너 ID (user_tb 참조)',
+    gt_startdate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '근무 시작일',
+    gt_enddate DATETIME NULL COMMENT '근무 종료일 (NULL: 현재 근무 중)',
+    gt_status INT(11) NOT NULL DEFAULT 1 COMMENT '상태 (TERMINATED:종료, IN_PROGRESS:진행중)',
+    gt_position VARCHAR(100) NOT NULL DEFAULT '' COMMENT '직책 (헤드 트레이너, 일반 트레이너 등)',
+    gt_note TEXT NOT NULL COMMENT '비고',
+    gt_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
+    PRIMARY KEY (gt_id),
+    INDEX idx_gym (gt_gym),
+    INDEX idx_trainer (gt_trainer),
+    INDEX idx_status (gt_status),
+    INDEX idx_gym_trainer (gt_gym, gt_trainer)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='헬스장-트레이너 매칭 테이블';
 
 -- ============================================
 -- 샘플 데이터 삽입 (테스트용)

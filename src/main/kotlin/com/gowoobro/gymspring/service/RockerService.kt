@@ -33,6 +33,10 @@ class RockerService(private val rockerRepository: RockerRepository) {
     }
 
 
+    fun findByGym(gym: Long): List<Rocker> {
+        return rockerRepository.findBygymId(gym)
+    }
+
     fun findByGroup(rockergroup: Long): List<Rocker> {
         return rockerRepository.findBygroupId(rockergroup)
     }
@@ -52,6 +56,7 @@ class RockerService(private val rockerRepository: RockerRepository) {
 
     fun create(request: RockerCreateRequest): Rocker {
         val entity = Rocker(
+            gymId = request.gym,
             groupId = request.group,
             name = request.name,
             available = request.available,
@@ -63,6 +68,7 @@ class RockerService(private val rockerRepository: RockerRepository) {
     fun createBatch(requests: List<RockerCreateRequest>): List<Rocker> {
         val entities = requests.map { request ->
             Rocker(
+                gymId = request.gym,
                 groupId = request.group,
                 name = request.name,
                 available = request.available,
@@ -76,6 +82,7 @@ class RockerService(private val rockerRepository: RockerRepository) {
         val existing = rockerRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
+            gymId = request.gym,
             groupId = request.group,
             name = request.name,
             available = request.available,

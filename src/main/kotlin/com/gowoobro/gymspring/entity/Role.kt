@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.role.Roleid
 
 @Entity
 @Table(name = "role_tb")
@@ -18,7 +19,7 @@ data class Role(
     @JoinColumn(name = "r_gym")
     val gym: Gym? = null,
     @Column(name = "r_roleid")
-    val roleid: Int = 0,
+    val roleid: Roleid = Roleid.MEMBER,
     @Column(name = "r_name")
     val name: String = "",
     @Column(name = "r_date")
@@ -27,7 +28,7 @@ data class Role(
 
 data class RoleCreateRequest(
     val gym: Long = 0L,
-    val roleid: Int = 0,
+    val roleid: Roleid = Roleid.MEMBER,
     val name: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
@@ -35,12 +36,13 @@ data class RoleCreateRequest(
 data class RoleUpdateRequest(
     val id: Long = 0,
     val gym: Long = 0L,
-    val roleid: Int = 0,
+    val roleid: Roleid = Roleid.MEMBER,
     val name: String = "",
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class RoleExtraInfo(
+    val roleid: String = "",
 
     val gym: GymResponse? = null,
 )
@@ -61,11 +63,12 @@ data class RoleResponse(
             return RoleResponse(
                 id = role.id,
                 gym = role.gymId,
-                roleid = role.roleid,
+                roleid = role.roleid.ordinal,
                 name = role.name,
                 date = role.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = RoleExtraInfo(
+                    roleid = Roleid.getDisplayName(role.roleid),
                     gym = gymResponse,)
                 
             )

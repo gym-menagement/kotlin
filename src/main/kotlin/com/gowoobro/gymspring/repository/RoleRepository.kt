@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.role.Roleid
 
 
 
@@ -34,7 +35,7 @@ interface RoleRepository : JpaRepository<Role, Long> {
     @EntityGraph(attributePaths = [
         "gym"
     ])
-    fun findByRoleid(roleid: Int): List<Role>
+    fun findByRoleid(roleid: Roleid): List<Role>
 
     @EntityGraph(attributePaths = [
         "gym"

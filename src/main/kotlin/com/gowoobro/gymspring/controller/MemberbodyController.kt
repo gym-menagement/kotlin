@@ -42,6 +42,12 @@ class MemberbodyController(
     }
 
 
+    @GetMapping("/search/gym")
+    fun getMemberbodyByGym(@RequestParam gym: Long): ResponseEntity<List<MemberbodyResponse>> {
+        val res = memberbodyService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
     @GetMapping("/search/user")
     fun getMemberbodyByUser(@RequestParam user: Long): ResponseEntity<List<MemberbodyResponse>> {
         val res = memberbodyService.findByUser(user)

@@ -48,6 +48,24 @@ class GymController(
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
+    @GetMapping("/search/address")
+    fun getGymByAddress(@RequestParam address: String): ResponseEntity<List<GymResponse>> {
+        val res = gymService.findByAddress(address)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/tel")
+    fun getGymByTel(@RequestParam tel: String): ResponseEntity<List<GymResponse>> {
+        val res = gymService.findByTel(tel)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/user")
+    fun getGymByUser(@RequestParam user: Long): ResponseEntity<List<GymResponse>> {
+        val res = gymService.findByUser(user)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
     @GetMapping("/search/date")
     fun getGymByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<GymResponse>> {
         val res = gymService.findByDate(date)

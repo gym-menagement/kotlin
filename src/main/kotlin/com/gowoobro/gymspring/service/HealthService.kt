@@ -64,6 +64,10 @@ class HealthService(private val healthRepository: HealthRepository) {
         return healthRepository.findByContent(content)
     }
 
+    fun findByGym(gym: Long): List<Health> {
+        return healthRepository.findBygymId(gym)
+    }
+
     fun findByDate(date: LocalDateTime): List<Health> {
         return healthRepository.findByDate(date)
     }
@@ -79,6 +83,7 @@ class HealthService(private val healthRepository: HealthRepository) {
             discountId = request.discount,
             costdiscount = request.costdiscount,
             content = request.content,
+            gymId = request.gym,
             date = request.date,
         )
         return healthRepository.save(entity)
@@ -95,6 +100,7 @@ class HealthService(private val healthRepository: HealthRepository) {
                 discountId = request.discount,
                 costdiscount = request.costdiscount,
                 content = request.content,
+                gymId = request.gym,
                 date = request.date,
             )
         }
@@ -113,6 +119,7 @@ class HealthService(private val healthRepository: HealthRepository) {
             discountId = request.discount,
             costdiscount = request.costdiscount,
             content = request.content,
+            gymId = request.gym,
             date = request.date,
         )
         return healthRepository.save(updated)

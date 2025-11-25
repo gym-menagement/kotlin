@@ -32,6 +32,10 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
     }
 
 
+    fun findByGym(gym: Long): List<Memberbody> {
+        return memberbodyRepository.findBygymId(gym)
+    }
+
     fun findByUser(memberuser: Long): List<Memberbody> {
         return memberbodyRepository.findByuserId(memberuser)
     }
@@ -103,6 +107,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
 
     fun create(request: MemberbodyCreateRequest): Memberbody {
         val entity = Memberbody(
+            gymId = request.gym,
             userId = request.user,
             height = request.height,
             weight = request.weight,
@@ -127,6 +132,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
     fun createBatch(requests: List<MemberbodyCreateRequest>): List<Memberbody> {
         val entities = requests.map { request ->
             Memberbody(
+                gymId = request.gym,
                 userId = request.user,
                 height = request.height,
                 weight = request.weight,
@@ -153,6 +159,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
         val existing = memberbodyRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
+            gymId = request.gym,
             userId = request.user,
             height = request.height,
             weight = request.weight,

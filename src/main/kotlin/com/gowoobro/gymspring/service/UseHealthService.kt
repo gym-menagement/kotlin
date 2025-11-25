@@ -64,6 +64,10 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         return usehealthRepository.findByEndday(endday)
     }
 
+    fun findByGym(gym: Long): List<Usehealth> {
+        return usehealthRepository.findBygymId(gym)
+    }
+
     fun findByDate(date: LocalDateTime): List<Usehealth> {
         return usehealthRepository.findByDate(date)
     }
@@ -79,6 +83,7 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
             discountId = request.discount,
             startday = request.startday,
             endday = request.endday,
+            gymId = request.gym,
             date = request.date,
         )
         return usehealthRepository.save(entity)
@@ -95,6 +100,7 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
                 discountId = request.discount,
                 startday = request.startday,
                 endday = request.endday,
+                gymId = request.gym,
                 date = request.date,
             )
         }
@@ -113,6 +119,7 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
             discountId = request.discount,
             startday = request.startday,
             endday = request.endday,
+            gymId = request.gym,
             date = request.date,
         )
         return usehealthRepository.save(updated)

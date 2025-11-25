@@ -23,7 +23,8 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.user",
         "usehealth.rocker",
         "usehealth.term",
-        "usehealth.discount"
+        "usehealth.discount",
+        "usehealth.gym"
     ])
     override fun findAll(pageable: Pageable): Page<Stop>
 
@@ -34,7 +35,8 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.user",
         "usehealth.rocker",
         "usehealth.term",
-        "usehealth.discount"
+        "usehealth.discount",
+        "usehealth.gym"
     ])
     override fun findById(id: Long): java.util.Optional<Stop>
 
@@ -45,7 +47,8 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.user",
         "usehealth.rocker",
         "usehealth.term",
-        "usehealth.discount"
+        "usehealth.discount",
+        "usehealth.gym"
     ])
     fun findByusehelthId(usehealth: Long): List<Stop>
 
@@ -56,7 +59,8 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.user",
         "usehealth.rocker",
         "usehealth.term",
-        "usehealth.discount"
+        "usehealth.discount",
+        "usehealth.gym"
     ])
     fun findByStartday(startday: LocalDateTime): List<Stop>
 
@@ -67,7 +71,8 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.user",
         "usehealth.rocker",
         "usehealth.term",
-        "usehealth.discount"
+        "usehealth.discount",
+        "usehealth.gym"
     ])
     fun findByEndday(endday: LocalDateTime): List<Stop>
 
@@ -78,7 +83,8 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.user",
         "usehealth.rocker",
         "usehealth.term",
-        "usehealth.discount"
+        "usehealth.discount",
+        "usehealth.gym"
     ])
     fun findByCount(count: Int): List<Stop>
 
@@ -89,7 +95,8 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.user",
         "usehealth.rocker",
         "usehealth.term",
-        "usehealth.discount"
+        "usehealth.discount",
+        "usehealth.gym"
     ])
     fun findByDate(date: LocalDateTime): List<Stop>
 }

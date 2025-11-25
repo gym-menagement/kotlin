@@ -7,10 +7,11 @@
   "auth": "jwt",
   "authTimeout": "not",
   "adminLevel": "3",
-  "language": "go",
-  "goModelFilePath": "../gym/back/",
+  "language": "kotlin",
+  "goModelFilePath": "../gym/gymspring/",
   "dartModelFilePath": "../../gym/gym/lib/model/",
   "kotlinModelFilePath": "../../gym/android/app/src/main/kotlin/com/gowoobro/gymspring/",
+  "ReactModelFilePath": "../../gym/front/src/",
   "table": [
     {
       "name": "user",
@@ -182,6 +183,12 @@
     },
     {
       "name": "discount",
+      "join": [
+        {
+          "name": "gym",
+          "column": "gym"
+        }
+      ],
       "compare": [
         {
           "name": "name",
@@ -237,6 +244,10 @@
         {
           "name": "discount",
           "column": "discount"
+        },
+        {
+          "name": "gym",
+          "column": "gym"
         }
       ],
       "compare": [
@@ -356,6 +367,10 @@
       "name": "rocker",
       "join": [
         {
+          "name": "gym",
+          "column": "gym"
+        },
+        {
           "name": "rockergroup",
           "column": "group"
         }
@@ -399,6 +414,10 @@
         {
           "name": "discount",
           "column": "discount"
+        },
+        {
+          "name": "gym",
+          "column": "gym"
         }
       ]
     },
@@ -417,6 +436,19 @@
         {
           "name": "gym",
           "column": "gym"
+        }
+      ],
+      "map": [
+        {
+          "name": "roleid",
+          "data": [
+            "",
+            "member:회원",
+            "trainer:트레이너",
+            "staff:직원",
+            "gym_admin:헬스장관리자",
+            "platform_admin:플랫폼관리자"
+          ]
         }
       ],
       "compare": [
@@ -503,6 +535,10 @@
       "name": "workoutlog",
       "join": [
         {
+          "name": "gym",
+          "column": "gym"
+        },
+        {
           "name": "user",
           "column": "user"
         },
@@ -529,6 +565,10 @@
     {
       "name": "membershipusage",
       "join": [
+        {
+          "name": "gym",
+          "column": "gym"
+        },
         {
           "name": "membership",
           "column": "membership"
@@ -681,6 +721,10 @@
       "name": "memberbody",
       "join": [
         {
+          "name": "gym",
+          "column": "gym"
+        },
+        {
           "name": "user",
           "column": "user",
           "alias": "memberUser"
@@ -751,6 +795,10 @@
     {
       "name": "rockerusage",
       "join": [
+        {
+          "name": "gym",
+          "column": "gym"
+        },
         {
           "name": "rocker",
           "column": "rocker"
@@ -827,6 +875,36 @@
         },
         {
           "name": "version",
+          "type": "like"
+        }
+      ]
+    },
+    {
+      "name": "gymtrainer",
+      "join": [
+        {
+          "name": "gym",
+          "column": "gym"
+        },
+        {
+          "name": "user",
+          "column": "trainer",
+          "alias": "trainerUser"
+        }
+      ],
+      "map": [
+        {
+          "name": "status",
+          "data": ["", "terminated:종료", "in_progress:진행중"]
+        }
+      ],
+      "compare": [
+        {
+          "name": "position",
+          "type": "like"
+        },
+        {
+          "name": "note",
           "type": "like"
         }
       ]
