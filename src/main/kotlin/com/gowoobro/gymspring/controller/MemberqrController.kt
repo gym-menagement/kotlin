@@ -5,7 +5,6 @@ import com.gowoobro.gymspring.entity.MemberqrCreateRequest
 import com.gowoobro.gymspring.entity.MemberqrUpdateRequest
 import com.gowoobro.gymspring.service.MemberqrService
 import com.gowoobro.gymspring.entity.MemberqrResponse
-import com.gowoobro.gymspring.enums.memberqr.Isactive
 
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
@@ -62,7 +61,7 @@ class MemberqrController(
     }
 
     @GetMapping("/search/isactive")
-    fun getMemberqrByIsactive(@RequestParam isactive: Isactive): ResponseEntity<List<MemberqrResponse>> {
+    fun getMemberqrByIsactive(@RequestParam isactive: Int): ResponseEntity<List<MemberqrResponse>> {
         val res = memberqrService.findByIsactive(isactive)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }

@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.membershipusage.Type
-import com.gowoobro.gymspring.enums.membershipusage.Status
 
 
 @Service
@@ -35,18 +33,18 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
 
 
     fun findByGym(gym: Long): List<Membershipusage> {
-        return membershipusageRepository.findBygymId(gym)
+        return membershipusageRepository.findByGym(gym)
     }
 
     fun findByMembership(membership: Long): List<Membershipusage> {
-        return membershipusageRepository.findBymembershipId(membership)
+        return membershipusageRepository.findByMembership(membership)
     }
 
     fun findByUser(user: Long): List<Membershipusage> {
-        return membershipusageRepository.findByuserId(user)
+        return membershipusageRepository.findByUser(user)
     }
 
-    fun findByType(type: Type): List<Membershipusage> {
+    fun findByType(type: Int): List<Membershipusage> {
         return membershipusageRepository.findByType(type)
     }
 
@@ -82,7 +80,7 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
         return membershipusageRepository.findByEnddate(enddate)
     }
 
-    fun findByStatus(status: Status): List<Membershipusage> {
+    fun findByStatus(status: Int): List<Membershipusage> {
         return membershipusageRepository.findByStatus(status)
     }
 
@@ -101,9 +99,9 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
 
     fun create(request: MembershipusageCreateRequest): Membershipusage {
         val entity = Membershipusage(
-            gymId = request.gym,
-            membershipId = request.membership,
-            userId = request.user,
+            gym = request.gym,
+            membership = request.membership,
+            user = request.user,
             type = request.type,
             totaldays = request.totaldays,
             useddays = request.useddays,
@@ -124,9 +122,9 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
     fun createBatch(requests: List<MembershipusageCreateRequest>): List<Membershipusage> {
         val entities = requests.map { request ->
             Membershipusage(
-                gymId = request.gym,
-                membershipId = request.membership,
-                userId = request.user,
+                gym = request.gym,
+                membership = request.membership,
+                user = request.user,
                 type = request.type,
                 totaldays = request.totaldays,
                 useddays = request.useddays,
@@ -149,9 +147,9 @@ class MembershipusageService(private val membershipusageRepository: Membershipus
         val existing = membershipusageRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym,
-            membershipId = request.membership,
-            userId = request.user,
+            gym = request.gym,
+            membership = request.membership,
+            user = request.user,
             type = request.type,
             totaldays = request.totaldays,
             useddays = request.useddays,

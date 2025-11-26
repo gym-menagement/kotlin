@@ -61,9 +61,9 @@ class RockerusageController(
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
-    @GetMapping("/search/membership")
-    fun getRockerusageByMembership(@RequestParam membership: Long): ResponseEntity<List<RockerusageResponse>> {
-        val res = rockerusageService.findByMembership(membership)
+    @GetMapping("/search/usehealth")
+    fun getRockerusageByUsehealth(@RequestParam usehealth: Long): ResponseEntity<List<RockerusageResponse>> {
+        val res = rockerusageService.findByUsehealth(usehealth)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 

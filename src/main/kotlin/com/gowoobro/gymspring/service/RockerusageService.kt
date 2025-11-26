@@ -45,8 +45,8 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
         return rockerusageRepository.findByuserId(memberuser)
     }
 
-    fun findByMembership(membership: Long): List<Rockerusage> {
-        return rockerusageRepository.findBymembershipId(membership)
+    fun findByUsehealth(usehealth: Long): List<Rockerusage> {
+        return rockerusageRepository.findByusehealthId(usehealth)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Rockerusage> {
@@ -91,7 +91,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
             gymId = request.gym,
             rockerId = request.rocker,
             userId = request.user,
-            membershipId = request.membership,
+            usehealthId = request.usehealth,
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
@@ -111,7 +111,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
                 gymId = request.gym,
                 rockerId = request.rocker,
                 userId = request.user,
-                membershipId = request.membership,
+                usehealthId = request.usehealth,
                 startdate = request.startdate,
                 enddate = request.enddate,
                 status = request.status,
@@ -133,7 +133,7 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
             gymId = request.gym,
             rockerId = request.rocker,
             userId = request.user,
-            membershipId = request.membership,
+            usehealthId = request.usehealth,
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,

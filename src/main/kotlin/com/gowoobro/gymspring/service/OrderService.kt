@@ -32,8 +32,16 @@ class OrderService(private val orderRepository: OrderRepository) {
     }
 
 
-    fun findByMembership(membership: Long): List<Order> {
-        return orderRepository.findBymembershipId(membership)
+    fun findByUser(user: Long): List<Order> {
+        return orderRepository.findByuserId(user)
+    }
+
+    fun findByGym(gym: Long): List<Order> {
+        return orderRepository.findBygymId(gym)
+    }
+
+    fun findByHealth(health: Long): List<Order> {
+        return orderRepository.findByhealthId(health)
     }
 
     fun findByDate(date: LocalDateTime): List<Order> {
@@ -43,7 +51,9 @@ class OrderService(private val orderRepository: OrderRepository) {
 
     fun create(request: OrderCreateRequest): Order {
         val entity = Order(
-            membershipId = request.membership,
+            userId = request.user,
+            gymId = request.gym,
+            healthId = request.health,
             date = request.date,
         )
         return orderRepository.save(entity)
@@ -52,7 +62,9 @@ class OrderService(private val orderRepository: OrderRepository) {
     fun createBatch(requests: List<OrderCreateRequest>): List<Order> {
         val entities = requests.map { request ->
             Order(
-                membershipId = request.membership,
+                userId = request.user,
+                gymId = request.gym,
+                healthId = request.health,
                 date = request.date,
             )
         }
@@ -63,7 +75,9 @@ class OrderService(private val orderRepository: OrderRepository) {
         val existing = orderRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            membershipId = request.membership,
+            userId = request.user,
+            gymId = request.gym,
+            healthId = request.health,
             date = request.date,
         )
         return orderRepository.save(updated)

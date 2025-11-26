@@ -17,30 +17,68 @@ import java.time.LocalDateTime
 @Repository
 interface OrderRepository : JpaRepository<Order, Long> {
     @EntityGraph(attributePaths = [
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "user",
+        "gym",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym"
     ])
     override fun findAll(pageable: Pageable): Page<Order>
 
     @EntityGraph(attributePaths = [
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "user",
+        "gym",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym"
     ])
     override fun findById(id: Long): java.util.Optional<Order>
 
     @EntityGraph(attributePaths = [
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "user",
+        "gym",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym"
     ])
-    fun findBymembershipId(membership: Long): List<Order>
+    fun findByuserId(user: Long): List<Order>
 
     @EntityGraph(attributePaths = [
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "user",
+        "gym",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym"
+    ])
+    fun findBygymId(gym: Long): List<Order>
+
+    @EntityGraph(attributePaths = [
+        "user",
+        "gym",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym"
+    ])
+    fun findByhealthId(health: Long): List<Order>
+
+    @EntityGraph(attributePaths = [
+        "user",
+        "gym",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym"
     ])
     fun findByDate(date: LocalDateTime): List<Order>
 }

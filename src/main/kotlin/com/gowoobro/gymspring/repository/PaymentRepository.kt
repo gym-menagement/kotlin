@@ -19,70 +19,70 @@ interface PaymentRepository : JpaRepository<Payment, Long> {
     @EntityGraph(attributePaths = [
         "gym",
         "order",
-        "order.membership",
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "order.user",
+        "order.gym",
+        "order.health",
+        "user"
     ])
     override fun findAll(pageable: Pageable): Page<Payment>
 
     @EntityGraph(attributePaths = [
         "gym",
         "order",
-        "order.membership",
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "order.user",
+        "order.gym",
+        "order.health",
+        "user"
     ])
     override fun findById(id: Long): java.util.Optional<Payment>
 
     @EntityGraph(attributePaths = [
         "gym",
         "order",
-        "order.membership",
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "order.user",
+        "order.gym",
+        "order.health",
+        "user"
     ])
     fun findBygymId(gym: Long): List<Payment>
 
     @EntityGraph(attributePaths = [
         "gym",
         "order",
-        "order.membership",
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "order.user",
+        "order.gym",
+        "order.health",
+        "user"
     ])
     fun findByorderId(order: Long): List<Payment>
 
     @EntityGraph(attributePaths = [
         "gym",
         "order",
-        "order.membership",
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "order.user",
+        "order.gym",
+        "order.health",
+        "user"
     ])
-    fun findBymembershipId(membership: Long): List<Payment>
+    fun findByuserId(user: Long): List<Payment>
 
     @EntityGraph(attributePaths = [
         "gym",
         "order",
-        "order.membership",
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "order.user",
+        "order.gym",
+        "order.health",
+        "user"
     ])
     fun findByCost(cost: Int): List<Payment>
 
     @EntityGraph(attributePaths = [
         "gym",
         "order",
-        "order.membership",
-        "membership",
-        "membership.gym",
-        "membership.user"
+        "order.user",
+        "order.gym",
+        "order.health",
+        "user"
     ])
     fun findByDate(date: LocalDateTime): List<Payment>
 }

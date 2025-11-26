@@ -54,9 +54,9 @@ class PaymentController(
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
-    @GetMapping("/search/membership")
-    fun getPaymentByMembership(@RequestParam membership: Long): ResponseEntity<List<PaymentResponse>> {
-        val res = paymentService.findByMembership(membership)
+    @GetMapping("/search/user")
+    fun getPaymentByUser(@RequestParam user: Long): ResponseEntity<List<PaymentResponse>> {
+        val res = paymentService.findByUser(user)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 

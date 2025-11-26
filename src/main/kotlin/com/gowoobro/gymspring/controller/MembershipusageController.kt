@@ -5,8 +5,6 @@ import com.gowoobro.gymspring.entity.MembershipusageCreateRequest
 import com.gowoobro.gymspring.entity.MembershipusageUpdateRequest
 import com.gowoobro.gymspring.service.MembershipusageService
 import com.gowoobro.gymspring.entity.MembershipusageResponse
-import com.gowoobro.gymspring.enums.membershipusage.Type
-import com.gowoobro.gymspring.enums.membershipusage.Status
 
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
@@ -63,7 +61,7 @@ class MembershipusageController(
     }
 
     @GetMapping("/search/type")
-    fun getMembershipusageByType(@RequestParam type: Type): ResponseEntity<List<MembershipusageResponse>> {
+    fun getMembershipusageByType(@RequestParam type: Int): ResponseEntity<List<MembershipusageResponse>> {
         val res = membershipusageService.findByType(type)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
@@ -117,7 +115,7 @@ class MembershipusageController(
     }
 
     @GetMapping("/search/status")
-    fun getMembershipusageByStatus(@RequestParam status: Status): ResponseEntity<List<MembershipusageResponse>> {
+    fun getMembershipusageByStatus(@RequestParam status: Int): ResponseEntity<List<MembershipusageResponse>> {
         val res = membershipusageService.findByStatus(status)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }

@@ -7,7 +7,7 @@
   "auth": "jwt",
   "authTimeout": "not",
   "adminLevel": "3",
-  "language": "kotlin",
+  "language": "react",
   "goModelFilePath": "../gym/gymspring/",
   "dartModelFilePath": "../../gym/gym/lib/model/",
   "kotlinModelFilePath": "../../gym/android/app/src/main/kotlin/com/gowoobro/gymspring/",
@@ -294,8 +294,16 @@
       "name": "order",
       "join": [
         {
-          "name": "membership",
-          "column": "membership"
+          "name": "user",
+          "column": "user"
+        },
+        {
+          "name": "gym",
+          "column": "gym"
+        },
+        {
+          "name": "health",
+          "column": "health"
         }
       ]
     },
@@ -311,8 +319,8 @@
           "column": "order"
         },
         {
-          "name": "membership",
-          "column": "membership"
+          "name": "user",
+          "column": "user"
         }
       ]
     },
@@ -419,6 +427,18 @@
           "name": "gym",
           "column": "gym"
         }
+      ],
+      "map": [
+        {
+          "name": "status",
+          "data": [
+            "",
+            "terminated:종료",
+            "use:사용중",
+            "paused:일시정지",
+            "expired:만료"
+          ]
+        }
       ]
     },
     {
@@ -481,8 +501,8 @@
           "column": "user"
         },
         {
-          "name": "membership",
-          "column": "membership"
+          "name": "usehealth",
+          "column": "usehealth"
         },
         {
           "name": "gym",
@@ -511,7 +531,7 @@
       ]
     },
     {
-      "name": "memberqr",
+      "name": "qrcode",
       "join": [
         {
           "name": "user",
@@ -563,35 +583,35 @@
       ]
     },
     {
-      "name": "membershipusage",
+      "name": "usehealthusage",
       "join": [
         {
           "name": "gym",
           "column": "gym"
         },
         {
-          "name": "membership",
-          "column": "membership"
+          "name": "usehealth",
+          "column": "usehealth"
         },
         {
           "name": "user",
           "column": "user"
+        },
+        {
+          "name": "attendance",
+          "column": "attendance"
         }
       ],
       "map": [
         {
           "name": "type",
-          "data": ["", "period_based:기간제", "count_based:횟수제"]
-        },
+          "data": ["", "entry:입장", "pt:PT수업", "class:그룹수업"]
+        }
+      ],
+      "compare": [
         {
-          "name": "status",
-          "data": [
-            "",
-            "in_use:사용중",
-            "paused:일시정지",
-            "expired:만료",
-            "refunded:환불"
-          ]
+          "name": "note",
+          "type": "like"
         }
       ]
     },
@@ -809,8 +829,8 @@
           "alias": "memberUser"
         },
         {
-          "name": "membership",
-          "column": "membership"
+          "name": "usehealth",
+          "column": "usehealth"
         },
         {
           "name": "user",

@@ -21,11 +21,11 @@ data class Attendance(
     @JoinColumn(name = "at_user")
     val user: User? = null,
 
-    @Column(name = "at_membership", insertable = false, updatable = false)
-    val membershipId: Long = 0L,
+    @Column(name = "at_usehealth", insertable = false, updatable = false)
+    val usehealthId: Long = 0L,
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "at_membership")
-    val membership: Membership? = null,
+    @JoinColumn(name = "at_usehealth")
+    val usehealth: Usehealth? = null,
 
     @Column(name = "at_gym", insertable = false, updatable = false)
     val gymId: Long = 0L,
@@ -58,7 +58,7 @@ data class Attendance(
 
 data class AttendanceCreateRequest(
     val user: Long = 0L,
-    val membership: Long = 0L,
+    val usehealth: Long = 0L,
     val gym: Long = 0L,
     val type: Type = Type.ENTRY,
     val method: Method = Method.QR_CODE,
@@ -76,7 +76,7 @@ data class AttendanceCreateRequest(
 data class AttendanceUpdateRequest(
     val id: Long = 0,
     val user: Long = 0L,
-    val membership: Long = 0L,
+    val usehealth: Long = 0L,
     val gym: Long = 0L,
     val type: Type = Type.ENTRY,
     val method: Method = Method.QR_CODE,
@@ -97,7 +97,7 @@ data class AttendanceExtraInfo(
     val status: String = "",
 
     val user: UserResponse? = null,
-    val membership: MembershipResponse? = null,
+    val usehealth: UsehealthResponse? = null,
     val gym: GymResponse? = null,
 )
 
@@ -105,7 +105,7 @@ data class AttendanceExtraInfo(
 data class AttendanceResponse(
     val id: Long,
     val user: Long,
-    val membership: Long,
+    val usehealth: Long,
     val gym: Long,
     val type: Int,
     val method: Int,
@@ -124,12 +124,12 @@ data class AttendanceResponse(
     companion object {
         fun from(attendance: Attendance): AttendanceResponse {
             val userResponse = attendance.user?.let { UserResponse.from(it) }
-            val membershipResponse = attendance.membership?.let { MembershipResponse.from(it) }
+            val usehealthResponse = attendance.usehealth?.let { UsehealthResponse.from(it) }
             val gymResponse = attendance.gym?.let { GymResponse.from(it) }
             return AttendanceResponse(
                 id = attendance.id,
                 user = attendance.userId,
-                membership = attendance.membershipId,
+                usehealth = attendance.usehealthId,
                 gym = attendance.gymId,
                 type = attendance.type.ordinal,
                 method = attendance.method.ordinal,
@@ -145,7 +145,7 @@ data class AttendanceResponse(
 
                 extra = AttendanceExtraInfo(
                     type = Type.getDisplayName(attendance.type),method = Method.getDisplayName(attendance.method),status = Status.getDisplayName(attendance.status),
-                    user = userResponse,membership = membershipResponse,gym = gymResponse,)
+                    user = userResponse,usehealth = usehealthResponse,gym = gymResponse,)
                 
             )
         }

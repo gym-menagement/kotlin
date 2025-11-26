@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.usehealth.Status
 
 @Entity
 @Table(name = "usehealth_tb")
@@ -57,6 +58,18 @@ data class Usehealth(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uh_gym")
     val gym: Gym? = null,
+    @Column(name = "uh_status")
+    val status: Status = Status.TERMINATED,
+    @Column(name = "uh_totalcount")
+    val totalcount: Int = 0,
+    @Column(name = "uh_usedcount")
+    val usedcount: Int = 0,
+    @Column(name = "uh_remainingcount")
+    val remainingcount: Int = 0,
+    @Column(name = "uh_qrcode")
+    val qrcode: String = "",
+    @Column(name = "uh_lastuseddate")
+    val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "uh_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 )
@@ -71,6 +84,12 @@ data class UsehealthCreateRequest(
     val startday: LocalDateTime? = LocalDateTime.now(),
     val endday: LocalDateTime? = LocalDateTime.now(),
     val gym: Long = 0L,
+    val status: Status = Status.TERMINATED,
+    val totalcount: Int = 0,
+    val usedcount: Int = 0,
+    val remainingcount: Int = 0,
+    val qrcode: String = "",
+    val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
@@ -85,10 +104,17 @@ data class UsehealthUpdateRequest(
     val startday: LocalDateTime? = LocalDateTime.now(),
     val endday: LocalDateTime? = LocalDateTime.now(),
     val gym: Long = 0L,
+    val status: Status = Status.TERMINATED,
+    val totalcount: Int = 0,
+    val usedcount: Int = 0,
+    val remainingcount: Int = 0,
+    val qrcode: String = "",
+    val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class UsehealthExtraInfo(
+    val status: String = "",
 
     val order: OrderResponse? = null,
     val health: HealthResponse? = null,
@@ -111,6 +137,12 @@ data class UsehealthResponse(
     val startday: String?,
     val endday: String?,
     val gym: Long,
+    val status: Int,
+    val totalcount: Int,
+    val usedcount: Int,
+    val remainingcount: Int,
+    val qrcode: String,
+    val lastuseddate: String?,
     val date: String?,
 
     val extra: UsehealthExtraInfo
@@ -135,9 +167,16 @@ data class UsehealthResponse(
                 startday = usehealth.startday?.toString()?.replace("T", " ") ?: "",
                 endday = usehealth.endday?.toString()?.replace("T", " ") ?: "",
                 gym = usehealth.gymId,
+                status = usehealth.status.ordinal,
+                totalcount = usehealth.totalcount,
+                usedcount = usehealth.usedcount,
+                remainingcount = usehealth.remainingcount,
+                qrcode = usehealth.qrcode,
+                lastuseddate = usehealth.lastuseddate?.toString()?.replace("T", " ") ?: "",
                 date = usehealth.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = UsehealthExtraInfo(
+                    status = Status.getDisplayName(usehealth.status),
                     order = orderResponse,health = healthResponse,user = userResponse,rocker = rockerResponse,term = termResponse,discount = discountResponse,gym = gymResponse,)
                 
             )

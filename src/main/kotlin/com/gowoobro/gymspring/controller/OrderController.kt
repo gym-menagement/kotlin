@@ -42,9 +42,21 @@ class OrderController(
     }
 
 
-    @GetMapping("/search/membership")
-    fun getOrderByMembership(@RequestParam membership: Long): ResponseEntity<List<OrderResponse>> {
-        val res = orderService.findByMembership(membership)
+    @GetMapping("/search/user")
+    fun getOrderByUser(@RequestParam user: Long): ResponseEntity<List<OrderResponse>> {
+        val res = orderService.findByUser(user)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/gym")
+    fun getOrderByGym(@RequestParam gym: Long): ResponseEntity<List<OrderResponse>> {
+        val res = orderService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/health")
+    fun getOrderByHealth(@RequestParam health: Long): ResponseEntity<List<OrderResponse>> {
+        val res = orderService.findByHealth(health)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 

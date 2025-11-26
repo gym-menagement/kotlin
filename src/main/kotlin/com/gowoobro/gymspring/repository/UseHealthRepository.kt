@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.usehealth.Status
 
 
 
@@ -18,7 +19,9 @@ import java.time.LocalDateTime
 interface UsehealthRepository : JpaRepository<Usehealth, Long> {
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -39,7 +42,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -60,7 +65,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -81,7 +88,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -102,7 +111,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -123,7 +134,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -144,7 +157,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -165,7 +180,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -186,7 +203,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -207,7 +226,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -228,7 +249,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",
@@ -249,7 +272,147 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
 
     @EntityGraph(attributePaths = [
         "order",
-        "order.membership",
+        "order.user",
+        "order.gym",
+        "order.health",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym",
+        "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
+        "term",
+        "term.gym",
+        "term.daytype",
+        "discount",
+        "discount.gym",
+        "gym"
+    ])
+    fun findByStatus(status: Status): List<Usehealth>
+
+    @EntityGraph(attributePaths = [
+        "order",
+        "order.user",
+        "order.gym",
+        "order.health",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym",
+        "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
+        "term",
+        "term.gym",
+        "term.daytype",
+        "discount",
+        "discount.gym",
+        "gym"
+    ])
+    fun findByTotalcount(totalcount: Int): List<Usehealth>
+
+    @EntityGraph(attributePaths = [
+        "order",
+        "order.user",
+        "order.gym",
+        "order.health",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym",
+        "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
+        "term",
+        "term.gym",
+        "term.daytype",
+        "discount",
+        "discount.gym",
+        "gym"
+    ])
+    fun findByUsedcount(usedcount: Int): List<Usehealth>
+
+    @EntityGraph(attributePaths = [
+        "order",
+        "order.user",
+        "order.gym",
+        "order.health",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym",
+        "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
+        "term",
+        "term.gym",
+        "term.daytype",
+        "discount",
+        "discount.gym",
+        "gym"
+    ])
+    fun findByRemainingcount(remainingcount: Int): List<Usehealth>
+
+    @EntityGraph(attributePaths = [
+        "order",
+        "order.user",
+        "order.gym",
+        "order.health",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym",
+        "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
+        "term",
+        "term.gym",
+        "term.daytype",
+        "discount",
+        "discount.gym",
+        "gym"
+    ])
+    fun findByQrcode(qrcode: String): List<Usehealth>
+
+    @EntityGraph(attributePaths = [
+        "order",
+        "order.user",
+        "order.gym",
+        "order.health",
+        "health",
+        "health.healthcategory",
+        "health.term",
+        "health.discount",
+        "health.gym",
+        "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
+        "term",
+        "term.gym",
+        "term.daytype",
+        "discount",
+        "discount.gym",
+        "gym"
+    ])
+    fun findByLastuseddate(lastuseddate: LocalDateTime): List<Usehealth>
+
+    @EntityGraph(attributePaths = [
+        "order",
+        "order.user",
+        "order.gym",
+        "order.health",
         "health",
         "health.healthcategory",
         "health.term",

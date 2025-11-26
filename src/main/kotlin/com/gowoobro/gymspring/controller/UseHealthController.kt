@@ -5,6 +5,7 @@ import com.gowoobro.gymspring.entity.UsehealthCreateRequest
 import com.gowoobro.gymspring.entity.UsehealthUpdateRequest
 import com.gowoobro.gymspring.service.UsehealthService
 import com.gowoobro.gymspring.entity.UsehealthResponse
+import com.gowoobro.gymspring.enums.usehealth.Status
 
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
@@ -93,6 +94,42 @@ class UsehealthController(
     @GetMapping("/search/gym")
     fun getUsehealthByGym(@RequestParam gym: Long): ResponseEntity<List<UsehealthResponse>> {
         val res = usehealthService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/status")
+    fun getUsehealthByStatus(@RequestParam status: Status): ResponseEntity<List<UsehealthResponse>> {
+        val res = usehealthService.findByStatus(status)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/totalcount")
+    fun getUsehealthByTotalcount(@RequestParam totalcount: Int): ResponseEntity<List<UsehealthResponse>> {
+        val res = usehealthService.findByTotalcount(totalcount)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/usedcount")
+    fun getUsehealthByUsedcount(@RequestParam usedcount: Int): ResponseEntity<List<UsehealthResponse>> {
+        val res = usehealthService.findByUsedcount(usedcount)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/remainingcount")
+    fun getUsehealthByRemainingcount(@RequestParam remainingcount: Int): ResponseEntity<List<UsehealthResponse>> {
+        val res = usehealthService.findByRemainingcount(remainingcount)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/qrcode")
+    fun getUsehealthByQrcode(@RequestParam qrcode: String): ResponseEntity<List<UsehealthResponse>> {
+        val res = usehealthService.findByQrcode(qrcode)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/lastuseddate")
+    fun getUsehealthByLastuseddate(@RequestParam lastuseddate: LocalDateTime): ResponseEntity<List<UsehealthResponse>> {
+        val res = usehealthService.findByLastuseddate(lastuseddate)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 

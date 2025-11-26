@@ -1,8 +1,8 @@
 package com.gowoobro.gymspring.repository
 
-import com.gowoobro.gymspring.entity.Attendance
-import com.gowoobro.gymspring.entity.AttendanceCreateRequest
-import com.gowoobro.gymspring.entity.AttendanceUpdateRequest
+import com.gowoobro.gymspring.entity.Usehealthusage
+import com.gowoobro.gymspring.entity.UsehealthusageCreateRequest
+import com.gowoobro.gymspring.entity.UsehealthusageUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.EntityGraph
@@ -11,16 +11,14 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.attendance.Type
-import com.gowoobro.gymspring.enums.attendance.Method
-import com.gowoobro.gymspring.enums.attendance.Status
+import com.gowoobro.gymspring.enums.usehealthusage.Type
 
 
 
 @Repository
-interface AttendanceRepository : JpaRepository<Attendance, Long> {
+interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -29,12 +27,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    override fun findAll(pageable: Pageable): Page<Attendance>
+    override fun findAll(pageable: Pageable): Page<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -43,12 +45,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    override fun findById(id: Long): java.util.Optional<Attendance>
+    override fun findById(id: Long): java.util.Optional<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -57,12 +63,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByuserId(user: Long): List<Attendance>
+    fun findBygymId(gym: Long): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -71,12 +81,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByusehealthId(usehealth: Long): List<Attendance>
+    fun findByusehealthId(usehealth: Long): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -85,12 +99,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findBygymId(gym: Long): List<Attendance>
+    fun findByuserId(user: Long): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -99,12 +117,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByType(type: Type): List<Attendance>
+    fun findByattendanceId(attendance: Long): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -113,12 +135,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByMethod(method: Method): List<Attendance>
+    fun findByType(type: Type): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -127,12 +153,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByCheckintime(checkintime: LocalDateTime): List<Attendance>
+    fun findByUsedcount(usedcount: Int): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -141,12 +171,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByCheckouttime(checkouttime: LocalDateTime): List<Attendance>
+    fun findByRemainingcount(remainingcount: Int): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -155,12 +189,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByDuration(duration: Int): List<Attendance>
+    fun findByCheckintime(checkintime: LocalDateTime): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -169,12 +207,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByStatus(status: Status): List<Attendance>
+    fun findByCheckouttime(checkouttime: LocalDateTime): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -183,12 +225,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByNote(note: String): List<Attendance>
+    fun findByDuration(duration: Int): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -197,12 +243,16 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
+        "user",
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByIp(ip: String): List<Attendance>
+    fun findByNote(note: String): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
-        "user",
+        "gym",
         "usehealth",
         "usehealth.order",
         "usehealth.health",
@@ -211,35 +261,11 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
-        "gym"
-    ])
-    fun findByDevice(device: String): List<Attendance>
-
-    @EntityGraph(attributePaths = [
         "user",
-        "usehealth",
-        "usehealth.order",
-        "usehealth.health",
-        "usehealth.user",
-        "usehealth.rocker",
-        "usehealth.term",
-        "usehealth.discount",
-        "usehealth.gym",
-        "gym"
+        "attendance",
+        "attendance.user",
+        "attendance.usehealth",
+        "attendance.gym"
     ])
-    fun findByCreatedby(createdby: Long): List<Attendance>
-
-    @EntityGraph(attributePaths = [
-        "user",
-        "usehealth",
-        "usehealth.order",
-        "usehealth.health",
-        "usehealth.user",
-        "usehealth.rocker",
-        "usehealth.term",
-        "usehealth.discount",
-        "usehealth.gym",
-        "gym"
-    ])
-    fun findByDate(date: LocalDateTime): List<Attendance>
+    fun findByDate(date: LocalDateTime): List<Usehealthusage>
 }

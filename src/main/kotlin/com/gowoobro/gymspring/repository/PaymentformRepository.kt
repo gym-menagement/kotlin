@@ -21,7 +21,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "payment",
         "payment.gym",
         "payment.order",
-        "payment.membership",
+        "payment.user",
         "paymenttype",
         "paymenttype.gym"
     ])
@@ -32,7 +32,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "payment",
         "payment.gym",
         "payment.order",
-        "payment.membership",
+        "payment.user",
         "paymenttype",
         "paymenttype.gym"
     ])
@@ -43,7 +43,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "payment",
         "payment.gym",
         "payment.order",
-        "payment.membership",
+        "payment.user",
         "paymenttype",
         "paymenttype.gym"
     ])
@@ -54,7 +54,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "payment",
         "payment.gym",
         "payment.order",
-        "payment.membership",
+        "payment.user",
         "paymenttype",
         "paymenttype.gym"
     ])
@@ -65,7 +65,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "payment",
         "payment.gym",
         "payment.order",
-        "payment.membership",
+        "payment.user",
         "paymenttype",
         "paymenttype.gym"
     ])
@@ -76,7 +76,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "payment",
         "payment.gym",
         "payment.order",
-        "payment.membership",
+        "payment.user",
         "paymenttype",
         "paymenttype.gym"
     ])
@@ -87,7 +87,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "payment",
         "payment.gym",
         "payment.order",
-        "payment.membership",
+        "payment.user",
         "paymenttype",
         "paymenttype.gym"
     ])

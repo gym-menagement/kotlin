@@ -39,8 +39,8 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
         return attendanceRepository.findByuserId(user)
     }
 
-    fun findByMembership(membership: Long): List<Attendance> {
-        return attendanceRepository.findBymembershipId(membership)
+    fun findByUsehealth(usehealth: Long): List<Attendance> {
+        return attendanceRepository.findByusehealthId(usehealth)
     }
 
     fun findByGym(gym: Long): List<Attendance> {
@@ -95,7 +95,7 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
     fun create(request: AttendanceCreateRequest): Attendance {
         val entity = Attendance(
             userId = request.user,
-            membershipId = request.membership,
+            usehealthId = request.usehealth,
             gymId = request.gym,
             type = request.type,
             method = request.method,
@@ -116,7 +116,7 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
         val entities = requests.map { request ->
             Attendance(
                 userId = request.user,
-                membershipId = request.membership,
+                usehealthId = request.usehealth,
                 gymId = request.gym,
                 type = request.type,
                 method = request.method,
@@ -139,7 +139,7 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
 
         val updated = existing.copy(
             userId = request.user,
-            membershipId = request.membership,
+            usehealthId = request.usehealth,
             gymId = request.gym,
             type = request.type,
             method = request.method,

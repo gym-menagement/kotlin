@@ -40,8 +40,8 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
         return paymentRepository.findByorderId(order)
     }
 
-    fun findByMembership(membership: Long): List<Payment> {
-        return paymentRepository.findBymembershipId(membership)
+    fun findByUser(user: Long): List<Payment> {
+        return paymentRepository.findByuserId(user)
     }
 
     fun findByCost(cost: Int): List<Payment> {
@@ -57,7 +57,7 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
         val entity = Payment(
             gymId = request.gym,
             orderId = request.order,
-            membershipId = request.membership,
+            userId = request.user,
             cost = request.cost,
             date = request.date,
         )
@@ -69,7 +69,7 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
             Payment(
                 gymId = request.gym,
                 orderId = request.order,
-                membershipId = request.membership,
+                userId = request.user,
                 cost = request.cost,
                 date = request.date,
             )
@@ -83,7 +83,7 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
         val updated = existing.copy(
             gymId = request.gym,
             orderId = request.order,
-            membershipId = request.membership,
+            userId = request.user,
             cost = request.cost,
             date = request.date,
         )

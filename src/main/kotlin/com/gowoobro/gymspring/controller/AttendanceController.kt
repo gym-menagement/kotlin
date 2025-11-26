@@ -51,9 +51,9 @@ class AttendanceController(
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
-    @GetMapping("/search/membership")
-    fun getAttendanceByMembership(@RequestParam membership: Long): ResponseEntity<List<AttendanceResponse>> {
-        val res = attendanceService.findByMembership(membership)
+    @GetMapping("/search/usehealth")
+    fun getAttendanceByUsehealth(@RequestParam usehealth: Long): ResponseEntity<List<AttendanceResponse>> {
+        val res = attendanceService.findByUsehealth(usehealth)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 

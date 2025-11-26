@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.memberqr.Isactive
 
 
 @Service
@@ -34,7 +33,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
 
 
     fun findByUser(user: Long): List<Memberqr> {
-        return memberqrRepository.findByuserId(user)
+        return memberqrRepository.findByUser(user)
     }
 
     fun findByCode(code: String): List<Memberqr> {
@@ -45,7 +44,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
         return memberqrRepository.findByImageurl(imageurl)
     }
 
-    fun findByIsactive(isactive: Isactive): List<Memberqr> {
+    fun findByIsactive(isactive: Int): List<Memberqr> {
         return memberqrRepository.findByIsactive(isactive)
     }
 
@@ -72,7 +71,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
 
     fun create(request: MemberqrCreateRequest): Memberqr {
         val entity = Memberqr(
-            userId = request.user,
+            user = request.user,
             code = request.code,
             imageurl = request.imageurl,
             isactive = request.isactive,
@@ -88,7 +87,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
     fun createBatch(requests: List<MemberqrCreateRequest>): List<Memberqr> {
         val entities = requests.map { request ->
             Memberqr(
-                userId = request.user,
+                user = request.user,
                 code = request.code,
                 imageurl = request.imageurl,
                 isactive = request.isactive,
@@ -106,7 +105,7 @@ class MemberqrService(private val memberqrRepository: MemberqrRepository) {
         val existing = memberqrRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            userId = request.user,
+            user = request.user,
             code = request.code,
             imageurl = request.imageurl,
             isactive = request.isactive,

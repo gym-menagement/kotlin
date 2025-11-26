@@ -31,11 +31,11 @@ data class Rockerusage(
     @JoinColumn(name = "ru_user")
     val memberuser: User? = null,
 
-    @Column(name = "ru_membership", insertable = false, updatable = false)
-    val membershipId: Long = 0L,
+    @Column(name = "ru_usehealth", insertable = false, updatable = false)
+    val usehealthId: Long = 0L,
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ru_membership")
-    val membership: Membership? = null,
+    @JoinColumn(name = "ru_usehealth")
+    val usehealth: Usehealth? = null,
     @Column(name = "ru_startdate")
     val startdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "ru_enddate")
@@ -64,7 +64,7 @@ data class RockerusageCreateRequest(
     val gym: Long = 0L,
     val rocker: Long = 0L,
     val user: Long = 0L,
-    val membership: Long = 0L,
+    val usehealth: Long = 0L,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
     val status: Status = Status.TERMINATED,
@@ -81,7 +81,7 @@ data class RockerusageUpdateRequest(
     val gym: Long = 0L,
     val rocker: Long = 0L,
     val user: Long = 0L,
-    val membership: Long = 0L,
+    val usehealth: Long = 0L,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
     val status: Status = Status.TERMINATED,
@@ -99,7 +99,7 @@ data class RockerusageExtraInfo(
     val gym: GymResponse? = null,
     val rocker: RockerResponse? = null,
     val memberuser: UserResponse? = null,
-    val membership: MembershipResponse? = null,
+    val usehealth: UsehealthResponse? = null,
     val assignedbyuser: UserResponse? = null,
 )
 
@@ -109,7 +109,7 @@ data class RockerusageResponse(
     val gym: Long,
     val rocker: Long,
     val user: Long,
-    val membership: Long,
+    val usehealth: Long,
     val startdate: String?,
     val enddate: String?,
     val status: Int,
@@ -127,14 +127,14 @@ data class RockerusageResponse(
             val gymResponse = rockerusage.gym?.let { GymResponse.from(it) }
             val rockerResponse = rockerusage.rocker?.let { RockerResponse.from(it) }
             val memberuserResponse = rockerusage.memberuser?.let { UserResponse.from(it) }
-            val membershipResponse = rockerusage.membership?.let { MembershipResponse.from(it) }
+            val usehealthResponse = rockerusage.usehealth?.let { UsehealthResponse.from(it) }
             val assignedbyuserResponse = rockerusage.assignedbyuser?.let { UserResponse.from(it) }
             return RockerusageResponse(
                 id = rockerusage.id,
                 gym = rockerusage.gymId,
                 rocker = rockerusage.rockerId,
                 user = rockerusage.userId,
-                membership = rockerusage.membershipId,
+                usehealth = rockerusage.usehealthId,
                 startdate = rockerusage.startdate?.toString()?.replace("T", " ") ?: "",
                 enddate = rockerusage.enddate?.toString()?.replace("T", " ") ?: "",
                 status = rockerusage.status.ordinal,
@@ -147,7 +147,7 @@ data class RockerusageResponse(
 
                 extra = RockerusageExtraInfo(
                     status = Status.getDisplayName(rockerusage.status),
-                    gym = gymResponse,rocker = rockerResponse,memberuser = memberuserResponse,membership = membershipResponse,assignedbyuser = assignedbyuserResponse,)
+                    gym = gymResponse,rocker = rockerResponse,memberuser = memberuserResponse,usehealth = usehealthResponse,assignedbyuser = assignedbyuserResponse,)
                 
             )
         }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.usehealth.Status
 
 
 @Service
@@ -68,6 +69,30 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         return usehealthRepository.findBygymId(gym)
     }
 
+    fun findByStatus(status: Status): List<Usehealth> {
+        return usehealthRepository.findByStatus(status)
+    }
+
+    fun findByTotalcount(totalcount: Int): List<Usehealth> {
+        return usehealthRepository.findByTotalcount(totalcount)
+    }
+
+    fun findByUsedcount(usedcount: Int): List<Usehealth> {
+        return usehealthRepository.findByUsedcount(usedcount)
+    }
+
+    fun findByRemainingcount(remainingcount: Int): List<Usehealth> {
+        return usehealthRepository.findByRemainingcount(remainingcount)
+    }
+
+    fun findByQrcode(qrcode: String): List<Usehealth> {
+        return usehealthRepository.findByQrcode(qrcode)
+    }
+
+    fun findByLastuseddate(lastuseddate: LocalDateTime): List<Usehealth> {
+        return usehealthRepository.findByLastuseddate(lastuseddate)
+    }
+
     fun findByDate(date: LocalDateTime): List<Usehealth> {
         return usehealthRepository.findByDate(date)
     }
@@ -84,6 +109,12 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
             startday = request.startday,
             endday = request.endday,
             gymId = request.gym,
+            status = request.status,
+            totalcount = request.totalcount,
+            usedcount = request.usedcount,
+            remainingcount = request.remainingcount,
+            qrcode = request.qrcode,
+            lastuseddate = request.lastuseddate,
             date = request.date,
         )
         return usehealthRepository.save(entity)
@@ -101,6 +132,12 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
                 startday = request.startday,
                 endday = request.endday,
                 gymId = request.gym,
+                status = request.status,
+                totalcount = request.totalcount,
+                usedcount = request.usedcount,
+                remainingcount = request.remainingcount,
+                qrcode = request.qrcode,
+                lastuseddate = request.lastuseddate,
                 date = request.date,
             )
         }
@@ -120,6 +157,12 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
             startday = request.startday,
             endday = request.endday,
             gymId = request.gym,
+            status = request.status,
+            totalcount = request.totalcount,
+            usedcount = request.usedcount,
+            remainingcount = request.remainingcount,
+            qrcode = request.qrcode,
+            lastuseddate = request.lastuseddate,
             date = request.date,
         )
         return usehealthRepository.save(updated)

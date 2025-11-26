@@ -3,8 +3,6 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.membershipusage.Type
-import com.gowoobro.gymspring.enums.membershipusage.Status
 
 @Entity
 @Table(name = "membershipusage_tb")
@@ -13,26 +11,14 @@ data class Membershipusage(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mu_id")
     val id: Long = 0,
-
-    @Column(name = "mu_gym", insertable = false, updatable = false)
-    val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mu_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "mu_membership", insertable = false, updatable = false)
-    val membershipId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mu_membership")
-    val membership: Membership? = null,
-
-    @Column(name = "mu_user", insertable = false, updatable = false)
-    val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mu_user")
-    val user: User? = null,
+    @Column(name = "mu_gym")
+    val gym: Long = 0L,
+    @Column(name = "mu_membership")
+    val membership: Long = 0L,
+    @Column(name = "mu_user")
+    val user: Long = 0L,
     @Column(name = "mu_type")
-    val type: Type = Type.PERIOD_BASED,
+    val type: Int = 0,
     @Column(name = "mu_totaldays")
     val totaldays: Int = 0,
     @Column(name = "mu_useddays")
@@ -50,7 +36,7 @@ data class Membershipusage(
     @Column(name = "mu_enddate")
     val enddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "mu_status")
-    val status: Status = Status.IN_USE,
+    val status: Int = 0,
     @Column(name = "mu_pausedays")
     val pausedays: Int = 0,
     @Column(name = "mu_lastuseddate")
@@ -63,7 +49,7 @@ data class MembershipusageCreateRequest(
     val gym: Long = 0L,
     val membership: Long = 0L,
     val user: Long = 0L,
-    val type: Type = Type.PERIOD_BASED,
+    val type: Int = 0,
     val totaldays: Int = 0,
     val useddays: Int = 0,
     val remainingdays: Int = 0,
@@ -72,7 +58,7 @@ data class MembershipusageCreateRequest(
     val remainingcount: Int = 0,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Status = Status.IN_USE,
+    val status: Int = 0,
     val pausedays: Int = 0,
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
@@ -83,7 +69,7 @@ data class MembershipusageUpdateRequest(
     val gym: Long = 0L,
     val membership: Long = 0L,
     val user: Long = 0L,
-    val type: Type = Type.PERIOD_BASED,
+    val type: Int = 0,
     val totaldays: Int = 0,
     val useddays: Int = 0,
     val remainingdays: Int = 0,
@@ -92,20 +78,12 @@ data class MembershipusageUpdateRequest(
     val remainingcount: Int = 0,
     val startdate: LocalDateTime? = LocalDateTime.now(),
     val enddate: LocalDateTime? = LocalDateTime.now(),
-    val status: Status = Status.IN_USE,
+    val status: Int = 0,
     val pausedays: Int = 0,
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
-data class MembershipusageExtraInfo(
-    val type: String = "",
-    val status: String = "",
-
-    val gym: GymResponse? = null,
-    val membership: MembershipResponse? = null,
-    val user: UserResponse? = null,
-)
 
 
 data class MembershipusageResponse(
@@ -127,19 +105,16 @@ data class MembershipusageResponse(
     val lastuseddate: String?,
     val date: String?,
 
-    val extra: MembershipusageExtraInfo
+    val extra: Map<String, Any?> = emptyMap()
 ){
     companion object {
         fun from(membershipusage: Membershipusage): MembershipusageResponse {
-            val gymResponse = membershipusage.gym?.let { GymResponse.from(it) }
-            val membershipResponse = membershipusage.membership?.let { MembershipResponse.from(it) }
-            val userResponse = membershipusage.user?.let { UserResponse.from(it) }
             return MembershipusageResponse(
                 id = membershipusage.id,
-                gym = membershipusage.gymId,
-                membership = membershipusage.membershipId,
-                user = membershipusage.userId,
-                type = membershipusage.type.ordinal,
+                gym = membershipusage.gym,
+                membership = membershipusage.membership,
+                user = membershipusage.user,
+                type = membershipusage.type,
                 totaldays = membershipusage.totaldays,
                 useddays = membershipusage.useddays,
                 remainingdays = membershipusage.remainingdays,
@@ -148,15 +123,12 @@ data class MembershipusageResponse(
                 remainingcount = membershipusage.remainingcount,
                 startdate = membershipusage.startdate?.toString()?.replace("T", " ") ?: "",
                 enddate = membershipusage.enddate?.toString()?.replace("T", " ") ?: "",
-                status = membershipusage.status.ordinal,
+                status = membershipusage.status,
                 pausedays = membershipusage.pausedays,
                 lastuseddate = membershipusage.lastuseddate?.toString()?.replace("T", " ") ?: "",
                 date = membershipusage.date?.toString()?.replace("T", " ") ?: "",
 
-                extra = MembershipusageExtraInfo(
-                    type = Type.getDisplayName(membershipusage.type),status = Status.getDisplayName(membershipusage.status),
-                    gym = gymResponse,membership = membershipResponse,user = userResponse,)
-                
+                extra =  emptyMap()
             )
         }
     }

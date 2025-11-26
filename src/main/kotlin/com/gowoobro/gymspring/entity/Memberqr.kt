@@ -3,7 +3,6 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.memberqr.Isactive
 
 @Entity
 @Table(name = "memberqr_tb")
@@ -12,18 +11,14 @@ data class Memberqr(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mq_id")
     val id: Long = 0,
-
-    @Column(name = "mq_user", insertable = false, updatable = false)
-    val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mq_user")
-    val user: User? = null,
+    @Column(name = "mq_user")
+    val user: Long = 0L,
     @Column(name = "mq_code")
     val code: String = "",
     @Column(name = "mq_imageurl")
     val imageurl: String = "",
     @Column(name = "mq_isactive")
-    val isactive: Isactive = Isactive.INACTIVE,
+    val isactive: Int = 0,
     @Column(name = "mq_expiredate")
     val expiredate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "mq_generateddate")
@@ -40,7 +35,7 @@ data class MemberqrCreateRequest(
     val user: Long = 0L,
     val code: String = "",
     val imageurl: String = "",
-    val isactive: Isactive = Isactive.INACTIVE,
+    val isactive: Int = 0,
     val expiredate: LocalDateTime? = LocalDateTime.now(),
     val generateddate: LocalDateTime? = LocalDateTime.now(),
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
@@ -53,7 +48,7 @@ data class MemberqrUpdateRequest(
     val user: Long = 0L,
     val code: String = "",
     val imageurl: String = "",
-    val isactive: Isactive = Isactive.INACTIVE,
+    val isactive: Int = 0,
     val expiredate: LocalDateTime? = LocalDateTime.now(),
     val generateddate: LocalDateTime? = LocalDateTime.now(),
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
@@ -61,11 +56,6 @@ data class MemberqrUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
-data class MemberqrExtraInfo(
-    val isactive: String = "",
-
-    val user: UserResponse? = null,
-)
 
 
 data class MemberqrResponse(
@@ -80,27 +70,23 @@ data class MemberqrResponse(
     val usecount: Int,
     val date: String?,
 
-    val extra: MemberqrExtraInfo
+    val extra: Map<String, Any?> = emptyMap()
 ){
     companion object {
         fun from(memberqr: Memberqr): MemberqrResponse {
-            val userResponse = memberqr.user?.let { UserResponse.from(it) }
             return MemberqrResponse(
                 id = memberqr.id,
-                user = memberqr.userId,
+                user = memberqr.user,
                 code = memberqr.code,
                 imageurl = memberqr.imageurl,
-                isactive = memberqr.isactive.ordinal,
+                isactive = memberqr.isactive,
                 expiredate = memberqr.expiredate?.toString()?.replace("T", " ") ?: "",
                 generateddate = memberqr.generateddate?.toString()?.replace("T", " ") ?: "",
                 lastuseddate = memberqr.lastuseddate?.toString()?.replace("T", " ") ?: "",
                 usecount = memberqr.usecount,
                 date = memberqr.date?.toString()?.replace("T", " ") ?: "",
 
-                extra = MemberqrExtraInfo(
-                    isactive = Isactive.getDisplayName(memberqr.isactive),
-                    user = userResponse,)
-                
+                extra =  emptyMap()
             )
         }
     }

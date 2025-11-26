@@ -23,9 +23,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     override fun findAll(pageable: Pageable): Page<Rockerusage>
@@ -36,9 +41,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     override fun findById(id: Long): java.util.Optional<Rockerusage>
@@ -49,9 +59,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findBygymId(gym: Long): List<Rockerusage>
@@ -62,9 +77,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByrockerId(rocker: Long): List<Rockerusage>
@@ -75,9 +95,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByuserId(memberuser: Long): List<Rockerusage>
@@ -88,12 +113,17 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
-    fun findBymembershipId(membership: Long): List<Rockerusage>
+    fun findByusehealthId(usehealth: Long): List<Rockerusage>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -101,9 +131,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByStartdate(startdate: LocalDateTime): List<Rockerusage>
@@ -114,9 +149,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByEnddate(enddate: LocalDateTime): List<Rockerusage>
@@ -127,9 +167,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByStatus(status: Status): List<Rockerusage>
@@ -140,9 +185,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByDeposit(deposit: BigDecimal): List<Rockerusage>
@@ -153,9 +203,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByMonthlyfee(monthlyfee: BigDecimal): List<Rockerusage>
@@ -166,9 +221,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByNote(note: String): List<Rockerusage>
@@ -179,9 +239,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByassignedbyId(assignedbyuser: Long): List<Rockerusage>
@@ -192,9 +257,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByAssigneddate(assigneddate: LocalDateTime): List<Rockerusage>
@@ -205,9 +275,14 @@ interface RockerusageRepository : JpaRepository<Rockerusage, Long> {
         "rocker.gym",
         "rocker.rockergroup",
         "memberuser",
-        "membership",
-        "membership.gym",
-        "membership.user",
+        "usehealth",
+        "usehealth.order",
+        "usehealth.health",
+        "usehealth.user",
+        "usehealth.rocker",
+        "usehealth.term",
+        "usehealth.discount",
+        "usehealth.gym",
         "assignedbyuser"
     ])
     fun findByDate(date: LocalDateTime): List<Rockerusage>

@@ -12,49 +12,73 @@ data class Order(
     @Column(name = "o_id")
     val id: Long = 0,
 
-    @Column(name = "o_membership", insertable = false, updatable = false)
-    val membershipId: Long = 0L,
+    @Column(name = "o_user", insertable = false, updatable = false)
+    val userId: Long = 0L,
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "o_membership")
-    val membership: Membership? = null,
+    @JoinColumn(name = "o_user")
+    val user: User? = null,
+
+    @Column(name = "o_gym", insertable = false, updatable = false)
+    val gymId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "o_gym")
+    val gym: Gym? = null,
+
+    @Column(name = "o_health", insertable = false, updatable = false)
+    val healthId: Long = 0L,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "o_health")
+    val health: Health? = null,
     @Column(name = "o_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class OrderCreateRequest(
-    val membership: Long = 0L,
+    val user: Long = 0L,
+    val gym: Long = 0L,
+    val health: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class OrderUpdateRequest(
     val id: Long = 0,
-    val membership: Long = 0L,
+    val user: Long = 0L,
+    val gym: Long = 0L,
+    val health: Long = 0L,
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
 data class OrderExtraInfo(
 
-    val membership: MembershipResponse? = null,
+    val user: UserResponse? = null,
+    val gym: GymResponse? = null,
+    val health: HealthResponse? = null,
 )
 
 
 data class OrderResponse(
     val id: Long,
-    val membership: Long,
+    val user: Long,
+    val gym: Long,
+    val health: Long,
     val date: String?,
 
     val extra: OrderExtraInfo
 ){
     companion object {
         fun from(order: Order): OrderResponse {
-            val membershipResponse = order.membership?.let { MembershipResponse.from(it) }
+            val userResponse = order.user?.let { UserResponse.from(it) }
+            val gymResponse = order.gym?.let { GymResponse.from(it) }
+            val healthResponse = order.health?.let { HealthResponse.from(it) }
             return OrderResponse(
                 id = order.id,
-                membership = order.membershipId,
+                user = order.userId,
+                gym = order.gymId,
+                health = order.healthId,
                 date = order.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = OrderExtraInfo(
-                    membership = membershipResponse,)
+                    user = userResponse,gym = gymResponse,health = healthResponse,)
                 
             )
         }
