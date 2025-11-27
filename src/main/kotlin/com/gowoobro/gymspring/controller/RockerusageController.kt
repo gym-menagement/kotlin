@@ -22,14 +22,111 @@ class RockerusageController(
         return RockerusageResponse.from(rockerusage)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getRockerusages(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<RockerusageResponse>> {
-        val res = rockerusageService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) gym: Long?,
+        @RequestParam(required = false) rocker: Long?,
+        @RequestParam(required = false) user: Long?,
+        @RequestParam(required = false) usehealth: Long?,
+        @RequestParam(required = false) startstartdate: LocalDateTime?,
+        @RequestParam(required = false) endstartdate: LocalDateTime?,
+        @RequestParam(required = false) startenddate: LocalDateTime?,
+        @RequestParam(required = false) endenddate: LocalDateTime?,
+        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) deposit: BigDecimal?,
+        @RequestParam(required = false) monthlyfee: BigDecimal?,
+        @RequestParam(required = false) note: String?,
+        @RequestParam(required = false) assignedby: Long?,
+        @RequestParam(required = false) startassigneddate: LocalDateTime?,
+        @RequestParam(required = false) endassigneddate: LocalDateTime?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (gym != null || rocker != null || user != null || usehealth != null || startstartdate != null || endstartdate != null || startenddate != null || endenddate != null || status != null || deposit != null || monthlyfee != null || note != null || assignedby != null || startassigneddate != null || endassigneddate != null || startdate != null || enddate != null || false) {
+            var filtered = rockerusageService.findAll(0, Int.MAX_VALUE).content
+            if (gym != null) {
+                filtered = filtered.filter { it.gymId == gym }
+            }
+            if (rocker != null) {
+                filtered = filtered.filter { it.rockerId == rocker }
+            }
+            if (user != null) {
+                filtered = filtered.filter { it.userId == user }
+            }
+            if (usehealth != null) {
+                filtered = filtered.filter { it.usehealthId == usehealth }
+            }
+            if (startstartdate != null || endstartdate != null) {
+                filtered = filtered.filter { filterByDateRange(it.startdate, startstartdate, endstartdate) }
+            }
+            if (startenddate != null || endenddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.enddate, startenddate, endenddate) }
+            }
+            if (status != null) {
+                filtered = filtered.filter { it.status == status }
+            }
+            if (deposit != null) {
+                filtered = filtered.filter { it.deposit == deposit }
+            }
+            if (monthlyfee != null) {
+                filtered = filtered.filter { it.monthlyfee == monthlyfee }
+            }
+            if (note != null) {
+                filtered = filtered.filter { it.note == note }
+            }
+            if (assignedby != null) {
+                filtered = filtered.filter { it.assignedbyId == assignedby }
+            }
+            if (startassigneddate != null || endassigneddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.assigneddate, startassigneddate, endassigneddate) }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            rockerusageService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

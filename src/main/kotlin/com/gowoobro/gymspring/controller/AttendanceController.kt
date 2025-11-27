@@ -24,14 +24,114 @@ class AttendanceController(
         return AttendanceResponse.from(attendance)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getAttendances(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<AttendanceResponse>> {
-        val res = attendanceService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) user: Long?,
+        @RequestParam(required = false) usehealth: Long?,
+        @RequestParam(required = false) gym: Long?,
+        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) method: Method?,
+        @RequestParam(required = false) startcheckintime: LocalDateTime?,
+        @RequestParam(required = false) endcheckintime: LocalDateTime?,
+        @RequestParam(required = false) startcheckouttime: LocalDateTime?,
+        @RequestParam(required = false) endcheckouttime: LocalDateTime?,
+        @RequestParam(required = false) duration: Int?,
+        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) note: String?,
+        @RequestParam(required = false) ip: String?,
+        @RequestParam(required = false) device: String?,
+        @RequestParam(required = false) createdby: Long?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (user != null || usehealth != null || gym != null || type != null || method != null || startcheckintime != null || endcheckintime != null || startcheckouttime != null || endcheckouttime != null || duration != null || status != null || note != null || ip != null || device != null || createdby != null || startdate != null || enddate != null || false) {
+            var filtered = attendanceService.findAll(0, Int.MAX_VALUE).content
+            if (user != null) {
+                filtered = filtered.filter { it.userId == user }
+            }
+            if (usehealth != null) {
+                filtered = filtered.filter { it.usehealthId == usehealth }
+            }
+            if (gym != null) {
+                filtered = filtered.filter { it.gymId == gym }
+            }
+            if (type != null) {
+                filtered = filtered.filter { it.type == type }
+            }
+            if (method != null) {
+                filtered = filtered.filter { it.method == method }
+            }
+            if (startcheckintime != null || endcheckintime != null) {
+                filtered = filtered.filter { filterByDateRange(it.checkintime, startcheckintime, endcheckintime) }
+            }
+            if (startcheckouttime != null || endcheckouttime != null) {
+                filtered = filtered.filter { filterByDateRange(it.checkouttime, startcheckouttime, endcheckouttime) }
+            }
+            if (duration != null) {
+                filtered = filtered.filter { it.duration == duration }
+            }
+            if (status != null) {
+                filtered = filtered.filter { it.status == status }
+            }
+            if (note != null) {
+                filtered = filtered.filter { it.note == note }
+            }
+            if (ip != null) {
+                filtered = filtered.filter { it.ip == ip }
+            }
+            if (device != null) {
+                filtered = filtered.filter { it.device == device }
+            }
+            if (createdby != null) {
+                filtered = filtered.filter { it.createdby == createdby }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            attendanceService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

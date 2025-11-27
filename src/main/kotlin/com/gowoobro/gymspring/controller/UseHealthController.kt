@@ -22,14 +22,123 @@ class UsehealthController(
         return UsehealthResponse.from(usehealth)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getUsehealths(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<UsehealthResponse>> {
-        val res = usehealthService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) order: Long?,
+        @RequestParam(required = false) health: Long?,
+        @RequestParam(required = false) user: Long?,
+        @RequestParam(required = false) rocker: Long?,
+        @RequestParam(required = false) term: Long?,
+        @RequestParam(required = false) discount: Long?,
+        @RequestParam(required = false) startstartday: LocalDateTime?,
+        @RequestParam(required = false) endstartday: LocalDateTime?,
+        @RequestParam(required = false) startendday: LocalDateTime?,
+        @RequestParam(required = false) endendday: LocalDateTime?,
+        @RequestParam(required = false) gym: Long?,
+        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) totalcount: Int?,
+        @RequestParam(required = false) usedcount: Int?,
+        @RequestParam(required = false) remainingcount: Int?,
+        @RequestParam(required = false) qrcode: String?,
+        @RequestParam(required = false) startlastuseddate: LocalDateTime?,
+        @RequestParam(required = false) endlastuseddate: LocalDateTime?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (order != null || health != null || user != null || rocker != null || term != null || discount != null || startstartday != null || endstartday != null || startendday != null || endendday != null || gym != null || status != null || totalcount != null || usedcount != null || remainingcount != null || qrcode != null || startlastuseddate != null || endlastuseddate != null || startdate != null || enddate != null || false) {
+            var filtered = usehealthService.findAll(0, Int.MAX_VALUE).content
+            if (order != null) {
+                filtered = filtered.filter { it.orderId == order }
+            }
+            if (health != null) {
+                filtered = filtered.filter { it.healthId == health }
+            }
+            if (user != null) {
+                filtered = filtered.filter { it.userId == user }
+            }
+            if (rocker != null) {
+                filtered = filtered.filter { it.rockerId == rocker }
+            }
+            if (term != null) {
+                filtered = filtered.filter { it.termId == term }
+            }
+            if (discount != null) {
+                filtered = filtered.filter { it.discountId == discount }
+            }
+            if (startstartday != null || endstartday != null) {
+                filtered = filtered.filter { filterByDateRange(it.startday, startstartday, endstartday) }
+            }
+            if (startendday != null || endendday != null) {
+                filtered = filtered.filter { filterByDateRange(it.endday, startendday, endendday) }
+            }
+            if (gym != null) {
+                filtered = filtered.filter { it.gymId == gym }
+            }
+            if (status != null) {
+                filtered = filtered.filter { it.status == status }
+            }
+            if (totalcount != null) {
+                filtered = filtered.filter { it.totalcount == totalcount }
+            }
+            if (usedcount != null) {
+                filtered = filtered.filter { it.usedcount == usedcount }
+            }
+            if (remainingcount != null) {
+                filtered = filtered.filter { it.remainingcount == remainingcount }
+            }
+            if (qrcode != null) {
+                filtered = filtered.filter { it.qrcode == qrcode }
+            }
+            if (startlastuseddate != null || endlastuseddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.lastuseddate, startlastuseddate, endlastuseddate) }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            usehealthService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

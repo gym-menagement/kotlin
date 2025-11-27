@@ -21,14 +21,96 @@ class HealthController(
         return HealthResponse.from(health)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getHealths(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<HealthResponse>> {
-        val res = healthService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) category: Long?,
+        @RequestParam(required = false) term: Long?,
+        @RequestParam(required = false) name: String?,
+        @RequestParam(required = false) count: Int?,
+        @RequestParam(required = false) cost: Int?,
+        @RequestParam(required = false) discount: Long?,
+        @RequestParam(required = false) costdiscount: Int?,
+        @RequestParam(required = false) content: String?,
+        @RequestParam(required = false) gym: Long?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (category != null || term != null || name != null || count != null || cost != null || discount != null || costdiscount != null || content != null || gym != null || startdate != null || enddate != null || false) {
+            var filtered = healthService.findAll(0, Int.MAX_VALUE).content
+            if (category != null) {
+                filtered = filtered.filter { it.categoryId == category }
+            }
+            if (term != null) {
+                filtered = filtered.filter { it.termId == term }
+            }
+            if (name != null) {
+                filtered = filtered.filter { it.name == name }
+            }
+            if (count != null) {
+                filtered = filtered.filter { it.count == count }
+            }
+            if (cost != null) {
+                filtered = filtered.filter { it.cost == cost }
+            }
+            if (discount != null) {
+                filtered = filtered.filter { it.discountId == discount }
+            }
+            if (costdiscount != null) {
+                filtered = filtered.filter { it.costdiscount == costdiscount }
+            }
+            if (content != null) {
+                filtered = filtered.filter { it.content == content }
+            }
+            if (gym != null) {
+                filtered = filtered.filter { it.gymId == gym }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            healthService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

@@ -22,14 +22,92 @@ class SettingController(
         return SettingResponse.from(setting)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getSettings(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<SettingResponse>> {
-        val res = settingService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) category: String?,
+        @RequestParam(required = false) name: String?,
+        @RequestParam(required = false) key: String?,
+        @RequestParam(required = false) value: String?,
+        @RequestParam(required = false) remark: String?,
+        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) data: String?,
+        @RequestParam(required = false) order: Int?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (category != null || name != null || key != null || value != null || remark != null || type != null || data != null || order != null || startdate != null || enddate != null || false) {
+            var filtered = settingService.findAll(0, Int.MAX_VALUE).content
+            if (category != null) {
+                filtered = filtered.filter { it.category == category }
+            }
+            if (name != null) {
+                filtered = filtered.filter { it.name == name }
+            }
+            if (key != null) {
+                filtered = filtered.filter { it.key == key }
+            }
+            if (value != null) {
+                filtered = filtered.filter { it.value == value }
+            }
+            if (remark != null) {
+                filtered = filtered.filter { it.remark == remark }
+            }
+            if (type != null) {
+                filtered = filtered.filter { it.type == type }
+            }
+            if (data != null) {
+                filtered = filtered.filter { it.data == data }
+            }
+            if (order != null) {
+                filtered = filtered.filter { it.order == order }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            settingService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

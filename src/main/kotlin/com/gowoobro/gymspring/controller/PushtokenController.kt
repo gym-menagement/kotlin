@@ -22,14 +22,94 @@ class PushtokenController(
         return PushtokenResponse.from(pushtoken)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getPushtokens(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<PushtokenResponse>> {
-        val res = pushtokenService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) user: Long?,
+        @RequestParam(required = false) token: String?,
+        @RequestParam(required = false) devicetype: String?,
+        @RequestParam(required = false) deviceid: String?,
+        @RequestParam(required = false) appversion: String?,
+        @RequestParam(required = false) isactive: Isactive?,
+        @RequestParam(required = false) startcreateddate: LocalDateTime?,
+        @RequestParam(required = false) endcreateddate: LocalDateTime?,
+        @RequestParam(required = false) startupdateddate: LocalDateTime?,
+        @RequestParam(required = false) endupdateddate: LocalDateTime?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (user != null || token != null || devicetype != null || deviceid != null || appversion != null || isactive != null || startcreateddate != null || endcreateddate != null || startupdateddate != null || endupdateddate != null || startdate != null || enddate != null || false) {
+            var filtered = pushtokenService.findAll(0, Int.MAX_VALUE).content
+            if (user != null) {
+                filtered = filtered.filter { it.userId == user }
+            }
+            if (token != null) {
+                filtered = filtered.filter { it.token == token }
+            }
+            if (devicetype != null) {
+                filtered = filtered.filter { it.devicetype == devicetype }
+            }
+            if (deviceid != null) {
+                filtered = filtered.filter { it.deviceid == deviceid }
+            }
+            if (appversion != null) {
+                filtered = filtered.filter { it.appversion == appversion }
+            }
+            if (isactive != null) {
+                filtered = filtered.filter { it.isactive == isactive }
+            }
+            if (startcreateddate != null || endcreateddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.createddate, startcreateddate, endcreateddate) }
+            }
+            if (startupdateddate != null || endupdateddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.updateddate, startupdateddate, endupdateddate) }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            pushtokenService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

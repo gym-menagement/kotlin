@@ -24,14 +24,80 @@ class IpblockController(
         return IpblockResponse.from(ipblock)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getIpblocks(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<IpblockResponse>> {
-        val res = ipblockService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) address: String?,
+        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) policy: Policy?,
+        @RequestParam(required = false) use: Use?,
+        @RequestParam(required = false) order: Int?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (address != null || type != null || policy != null || use != null || order != null || startdate != null || enddate != null || false) {
+            var filtered = ipblockService.findAll(0, Int.MAX_VALUE).content
+            if (address != null) {
+                filtered = filtered.filter { it.address == address }
+            }
+            if (type != null) {
+                filtered = filtered.filter { it.type == type }
+            }
+            if (policy != null) {
+                filtered = filtered.filter { it.policy == policy }
+            }
+            if (use != null) {
+                filtered = filtered.filter { it.use == use }
+            }
+            if (order != null) {
+                filtered = filtered.filter { it.order == order }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            ipblockService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

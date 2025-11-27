@@ -22,14 +22,111 @@ class PtreservationController(
         return PtreservationResponse.from(ptreservation)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getPtreservations(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<PtreservationResponse>> {
-        val res = ptreservationService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) trainer: Long?,
+        @RequestParam(required = false) member: Long?,
+        @RequestParam(required = false) gym: Long?,
+        @RequestParam(required = false) startreservationdate: LocalDateTime?,
+        @RequestParam(required = false) endreservationdate: LocalDateTime?,
+        @RequestParam(required = false) starttime: String?,
+        @RequestParam(required = false) endtime: String?,
+        @RequestParam(required = false) duration: Int?,
+        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) note: String?,
+        @RequestParam(required = false) cancelreason: String?,
+        @RequestParam(required = false) startcreateddate: LocalDateTime?,
+        @RequestParam(required = false) endcreateddate: LocalDateTime?,
+        @RequestParam(required = false) startupdateddate: LocalDateTime?,
+        @RequestParam(required = false) endupdateddate: LocalDateTime?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (trainer != null || member != null || gym != null || startreservationdate != null || endreservationdate != null || starttime != null || endtime != null || duration != null || status != null || note != null || cancelreason != null || startcreateddate != null || endcreateddate != null || startupdateddate != null || endupdateddate != null || startdate != null || enddate != null || false) {
+            var filtered = ptreservationService.findAll(0, Int.MAX_VALUE).content
+            if (trainer != null) {
+                filtered = filtered.filter { it.trainerId == trainer }
+            }
+            if (member != null) {
+                filtered = filtered.filter { it.memberId == member }
+            }
+            if (gym != null) {
+                filtered = filtered.filter { it.gymId == gym }
+            }
+            if (startreservationdate != null || endreservationdate != null) {
+                filtered = filtered.filter { filterByDateRange(it.reservationdate, startreservationdate, endreservationdate) }
+            }
+            if (starttime != null) {
+                filtered = filtered.filter { it.starttime == starttime }
+            }
+            if (endtime != null) {
+                filtered = filtered.filter { it.endtime == endtime }
+            }
+            if (duration != null) {
+                filtered = filtered.filter { it.duration == duration }
+            }
+            if (status != null) {
+                filtered = filtered.filter { it.status == status }
+            }
+            if (note != null) {
+                filtered = filtered.filter { it.note == note }
+            }
+            if (cancelreason != null) {
+                filtered = filtered.filter { it.cancelreason == cancelreason }
+            }
+            if (startcreateddate != null || endcreateddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.createddate, startcreateddate, endcreateddate) }
+            }
+            if (startupdateddate != null || endupdateddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.updateddate, startupdateddate, endupdateddate) }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            ptreservationService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

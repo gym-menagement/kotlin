@@ -21,14 +21,129 @@ class MemberbodyController(
         return MemberbodyResponse.from(memberbody)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getMemberbodys(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<MemberbodyResponse>> {
-        val res = memberbodyService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) gym: Long?,
+        @RequestParam(required = false) user: Long?,
+        @RequestParam(required = false) height: BigDecimal?,
+        @RequestParam(required = false) weight: BigDecimal?,
+        @RequestParam(required = false) bodyfat: BigDecimal?,
+        @RequestParam(required = false) musclemass: BigDecimal?,
+        @RequestParam(required = false) bmi: BigDecimal?,
+        @RequestParam(required = false) skeletalmuscle: BigDecimal?,
+        @RequestParam(required = false) bodywater: BigDecimal?,
+        @RequestParam(required = false) chest: BigDecimal?,
+        @RequestParam(required = false) waist: BigDecimal?,
+        @RequestParam(required = false) hip: BigDecimal?,
+        @RequestParam(required = false) arm: BigDecimal?,
+        @RequestParam(required = false) thigh: BigDecimal?,
+        @RequestParam(required = false) note: String?,
+        @RequestParam(required = false) startmeasureddate: LocalDateTime?,
+        @RequestParam(required = false) endmeasureddate: LocalDateTime?,
+        @RequestParam(required = false) measuredby: Long?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (gym != null || user != null || height != null || weight != null || bodyfat != null || musclemass != null || bmi != null || skeletalmuscle != null || bodywater != null || chest != null || waist != null || hip != null || arm != null || thigh != null || note != null || startmeasureddate != null || endmeasureddate != null || measuredby != null || startdate != null || enddate != null || false) {
+            var filtered = memberbodyService.findAll(0, Int.MAX_VALUE).content
+            if (gym != null) {
+                filtered = filtered.filter { it.gymId == gym }
+            }
+            if (user != null) {
+                filtered = filtered.filter { it.userId == user }
+            }
+            if (height != null) {
+                filtered = filtered.filter { it.height == height }
+            }
+            if (weight != null) {
+                filtered = filtered.filter { it.weight == weight }
+            }
+            if (bodyfat != null) {
+                filtered = filtered.filter { it.bodyfat == bodyfat }
+            }
+            if (musclemass != null) {
+                filtered = filtered.filter { it.musclemass == musclemass }
+            }
+            if (bmi != null) {
+                filtered = filtered.filter { it.bmi == bmi }
+            }
+            if (skeletalmuscle != null) {
+                filtered = filtered.filter { it.skeletalmuscle == skeletalmuscle }
+            }
+            if (bodywater != null) {
+                filtered = filtered.filter { it.bodywater == bodywater }
+            }
+            if (chest != null) {
+                filtered = filtered.filter { it.chest == chest }
+            }
+            if (waist != null) {
+                filtered = filtered.filter { it.waist == waist }
+            }
+            if (hip != null) {
+                filtered = filtered.filter { it.hip == hip }
+            }
+            if (arm != null) {
+                filtered = filtered.filter { it.arm == arm }
+            }
+            if (thigh != null) {
+                filtered = filtered.filter { it.thigh == thigh }
+            }
+            if (note != null) {
+                filtered = filtered.filter { it.note == note }
+            }
+            if (startmeasureddate != null || endmeasureddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.measureddate, startmeasureddate, endmeasureddate) }
+            }
+            if (measuredby != null) {
+                filtered = filtered.filter { it.measuredbyId == measuredby }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            memberbodyService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

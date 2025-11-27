@@ -23,14 +23,80 @@ class AlarmController(
         return AlarmResponse.from(alarm)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getAlarms(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<AlarmResponse>> {
-        val res = alarmService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) title: String?,
+        @RequestParam(required = false) content: String?,
+        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) user: Long?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (title != null || content != null || type != null || status != null || user != null || startdate != null || enddate != null || false) {
+            var filtered = alarmService.findAll(0, Int.MAX_VALUE).content
+            if (title != null) {
+                filtered = filtered.filter { it.title == title }
+            }
+            if (content != null) {
+                filtered = filtered.filter { it.content == content }
+            }
+            if (type != null) {
+                filtered = filtered.filter { it.type == type }
+            }
+            if (status != null) {
+                filtered = filtered.filter { it.status == status }
+            }
+            if (user != null) {
+                filtered = filtered.filter { it.userId == user }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            alarmService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

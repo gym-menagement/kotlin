@@ -23,14 +23,98 @@ class AppversionController(
         return AppversionResponse.from(appversion)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getAppversions(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<AppversionResponse>> {
-        val res = appversionService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) platform: String?,
+        @RequestParam(required = false) version: String?,
+        @RequestParam(required = false) minversion: String?,
+        @RequestParam(required = false) forceupdate: Forceupdate?,
+        @RequestParam(required = false) updatemessage: String?,
+        @RequestParam(required = false) downloadurl: String?,
+        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) startreleasedate: LocalDateTime?,
+        @RequestParam(required = false) endreleasedate: LocalDateTime?,
+        @RequestParam(required = false) startcreateddate: LocalDateTime?,
+        @RequestParam(required = false) endcreateddate: LocalDateTime?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (platform != null || version != null || minversion != null || forceupdate != null || updatemessage != null || downloadurl != null || status != null || startreleasedate != null || endreleasedate != null || startcreateddate != null || endcreateddate != null || startdate != null || enddate != null || false) {
+            var filtered = appversionService.findAll(0, Int.MAX_VALUE).content
+            if (platform != null) {
+                filtered = filtered.filter { it.platform == platform }
+            }
+            if (version != null) {
+                filtered = filtered.filter { it.version == version }
+            }
+            if (minversion != null) {
+                filtered = filtered.filter { it.minversion == minversion }
+            }
+            if (forceupdate != null) {
+                filtered = filtered.filter { it.forceupdate == forceupdate }
+            }
+            if (updatemessage != null) {
+                filtered = filtered.filter { it.updatemessage == updatemessage }
+            }
+            if (downloadurl != null) {
+                filtered = filtered.filter { it.downloadurl == downloadurl }
+            }
+            if (status != null) {
+                filtered = filtered.filter { it.status == status }
+            }
+            if (startreleasedate != null || endreleasedate != null) {
+                filtered = filtered.filter { filterByDateRange(it.releasedate, startreleasedate, endreleasedate) }
+            }
+            if (startcreateddate != null || endcreateddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.createddate, startcreateddate, endcreateddate) }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            appversionService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

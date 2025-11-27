@@ -26,14 +26,120 @@ class NoticeController(
         return NoticeResponse.from(notice)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getNotices(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<NoticeResponse>> {
-        val res = noticeService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) gym: Long?,
+        @RequestParam(required = false) title: String?,
+        @RequestParam(required = false) content: String?,
+        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) ispopup: Ispopup?,
+        @RequestParam(required = false) ispush: Ispush?,
+        @RequestParam(required = false) target: Target?,
+        @RequestParam(required = false) viewcount: Int?,
+        @RequestParam(required = false) startstartdate: LocalDateTime?,
+        @RequestParam(required = false) endstartdate: LocalDateTime?,
+        @RequestParam(required = false) startenddate: LocalDateTime?,
+        @RequestParam(required = false) endenddate: LocalDateTime?,
+        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) createdby: Long?,
+        @RequestParam(required = false) startcreateddate: LocalDateTime?,
+        @RequestParam(required = false) endcreateddate: LocalDateTime?,
+        @RequestParam(required = false) startupdateddate: LocalDateTime?,
+        @RequestParam(required = false) endupdateddate: LocalDateTime?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (gym != null || title != null || content != null || type != null || ispopup != null || ispush != null || target != null || viewcount != null || startstartdate != null || endstartdate != null || startenddate != null || endenddate != null || status != null || createdby != null || startcreateddate != null || endcreateddate != null || startupdateddate != null || endupdateddate != null || startdate != null || enddate != null || false) {
+            var filtered = noticeService.findAll(0, Int.MAX_VALUE).content
+            if (gym != null) {
+                filtered = filtered.filter { it.gymId == gym }
+            }
+            if (title != null) {
+                filtered = filtered.filter { it.title == title }
+            }
+            if (content != null) {
+                filtered = filtered.filter { it.content == content }
+            }
+            if (type != null) {
+                filtered = filtered.filter { it.type == type }
+            }
+            if (ispopup != null) {
+                filtered = filtered.filter { it.ispopup == ispopup }
+            }
+            if (ispush != null) {
+                filtered = filtered.filter { it.ispush == ispush }
+            }
+            if (target != null) {
+                filtered = filtered.filter { it.target == target }
+            }
+            if (viewcount != null) {
+                filtered = filtered.filter { it.viewcount == viewcount }
+            }
+            if (startstartdate != null || endstartdate != null) {
+                filtered = filtered.filter { filterByDateRange(it.startdate, startstartdate, endstartdate) }
+            }
+            if (startenddate != null || endenddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.enddate, startenddate, endenddate) }
+            }
+            if (status != null) {
+                filtered = filtered.filter { it.status == status }
+            }
+            if (createdby != null) {
+                filtered = filtered.filter { it.createdbyId == createdby }
+            }
+            if (startcreateddate != null || endcreateddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.createddate, startcreateddate, endcreateddate) }
+            }
+            if (startupdateddate != null || endupdateddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.updateddate, startupdateddate, endupdateddate) }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            noticeService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

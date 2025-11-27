@@ -26,14 +26,127 @@ class UserController(
         return UserResponse.from(user)
     }
 
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
+        }
+    }
+
     @GetMapping
     fun getUsers(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int
-    ): ResponseEntity<Page<UserResponse>> {
-        val res = userService.findAll(page, pageSize)
-        val responsePage = res.map { toResponse(it)}
-        return ResponseEntity.ok(responsePage)
+        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(required = false) loginid: String?,
+        @RequestParam(required = false) passwd: String?,
+        @RequestParam(required = false) email: String?,
+        @RequestParam(required = false) name: String?,
+        @RequestParam(required = false) tel: String?,
+        @RequestParam(required = false) address: String?,
+        @RequestParam(required = false) image: String?,
+        @RequestParam(required = false) sex: Sex?,
+        @RequestParam(required = false) startbirth: LocalDateTime?,
+        @RequestParam(required = false) endbirth: LocalDateTime?,
+        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) connectid: String?,
+        @RequestParam(required = false) level: Level?,
+        @RequestParam(required = false) role: Role?,
+        @RequestParam(required = false) use: Use?,
+        @RequestParam(required = false) startlogindate: LocalDateTime?,
+        @RequestParam(required = false) endlogindate: LocalDateTime?,
+        @RequestParam(required = false) startlastchangepasswddate: LocalDateTime?,
+        @RequestParam(required = false) endlastchangepasswddate: LocalDateTime?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
+    ): ResponseEntity<Map<String, Any>> {
+        var results = if (loginid != null || passwd != null || email != null || name != null || tel != null || address != null || image != null || sex != null || startbirth != null || endbirth != null || type != null || connectid != null || level != null || role != null || use != null || startlogindate != null || endlogindate != null || startlastchangepasswddate != null || endlastchangepasswddate != null || startdate != null || enddate != null || false) {
+            var filtered = userService.findAll(0, Int.MAX_VALUE).content
+            if (loginid != null) {
+                filtered = filtered.filter { it.loginid == loginid }
+            }
+            if (passwd != null) {
+                filtered = filtered.filter { it.passwd == passwd }
+            }
+            if (email != null) {
+                filtered = filtered.filter { it.email == email }
+            }
+            if (name != null) {
+                filtered = filtered.filter { it.name == name }
+            }
+            if (tel != null) {
+                filtered = filtered.filter { it.tel == tel }
+            }
+            if (address != null) {
+                filtered = filtered.filter { it.address == address }
+            }
+            if (image != null) {
+                filtered = filtered.filter { it.image == image }
+            }
+            if (sex != null) {
+                filtered = filtered.filter { it.sex == sex }
+            }
+            if (startbirth != null || endbirth != null) {
+                filtered = filtered.filter { filterByDateRange(it.birth, startbirth, endbirth) }
+            }
+            if (type != null) {
+                filtered = filtered.filter { it.type == type }
+            }
+            if (connectid != null) {
+                filtered = filtered.filter { it.connectid == connectid }
+            }
+            if (level != null) {
+                filtered = filtered.filter { it.level == level }
+            }
+            if (role != null) {
+                filtered = filtered.filter { it.role == role }
+            }
+            if (use != null) {
+                filtered = filtered.filter { it.use == use }
+            }
+            if (startlogindate != null || endlogindate != null) {
+                filtered = filtered.filter { filterByDateRange(it.logindate, startlogindate, endlogindate) }
+            }
+            if (startlastchangepasswddate != null || endlastchangepasswddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.lastchangepasswddate, startlastchangepasswddate, endlastchangepasswddate) }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            userService.findAll(0, Int.MAX_VALUE).content
+        }
+
+        val totalElements = results.size
+        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
+        val startIndex = page * pageSize
+        val endIndex = minOf(startIndex + pageSize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pageSize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{id}")

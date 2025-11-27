@@ -40,27 +40,27 @@ class StopController(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int,
         @RequestParam(required = false) usehealth: Long?,
-        @RequestParam(required = false) count: Int?,
         @RequestParam(required = false) startstartday: LocalDateTime?,
         @RequestParam(required = false) endstartday: LocalDateTime?,
         @RequestParam(required = false) startendday: LocalDateTime?,
         @RequestParam(required = false) endendday: LocalDateTime?,
+        @RequestParam(required = false) count: Int?,
         @RequestParam(required = false) startdate: LocalDateTime?,
-        @RequestParam(required = false) enddate: LocalDateTime?
+        @RequestParam(required = false) enddate: LocalDateTime?,
     ): ResponseEntity<Map<String, Any>> {
-        var results = if (usehealth != null || count != null || startstartday != null || endstartday != null || startendday != null || endendday != null || startdate != null || enddate != null) {
+        var results = if (usehealth != null || startstartday != null || endstartday != null || startendday != null || endendday != null || count != null || startdate != null || enddate != null || false) {
             var filtered = stopService.findAll(0, Int.MAX_VALUE).content
             if (usehealth != null) {
                 filtered = filtered.filter { it.usehealthId == usehealth }
-            }
-            if (count != null) {
-                filtered = filtered.filter { it.count == count }
             }
             if (startstartday != null || endstartday != null) {
                 filtered = filtered.filter { filterByDateRange(it.startday, startstartday, endstartday) }
             }
             if (startendday != null || endendday != null) {
                 filtered = filtered.filter { filterByDateRange(it.endday, startendday, endendday) }
+            }
+            if (count != null) {
+                filtered = filtered.filter { it.count == count }
             }
             if (startdate != null || enddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
