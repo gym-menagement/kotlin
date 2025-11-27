@@ -50,7 +50,7 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.discount",
         "usehealth.gym"
     ])
-    fun findByusehelthId(usehealth: Long): List<Stop>
+    fun findByusehealthId(usehealth: Long): List<Stop>
 
     @EntityGraph(attributePaths = [
         "usehealth",

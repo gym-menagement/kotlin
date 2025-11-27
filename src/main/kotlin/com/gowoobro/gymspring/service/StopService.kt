@@ -32,8 +32,8 @@ class StopService(private val stopRepository: StopRepository) {
     }
 
 
-    fun findByUsehelth(usehealth: Long): List<Stop> {
-        return stopRepository.findByusehelthId(usehealth)
+    fun findByUsehealth(usehealth: Long): List<Stop> {
+        return stopRepository.findByusehealthId(usehealth)
     }
 
     fun findByStartday(startday: LocalDateTime): List<Stop> {
@@ -54,8 +54,9 @@ class StopService(private val stopRepository: StopRepository) {
 
 
     fun create(request: StopCreateRequest): Stop {
+        println("Creating Stop with request: $request")
         val entity = Stop(
-            usehelthId = request.usehelth,
+            usehealthId = request.usehealth,
             startday = request.startday,
             endday = request.endday,
             count = request.count,
@@ -67,7 +68,7 @@ class StopService(private val stopRepository: StopRepository) {
     fun createBatch(requests: List<StopCreateRequest>): List<Stop> {
         val entities = requests.map { request ->
             Stop(
-                usehelthId = request.usehelth,
+                usehealthId = request.usehealth,
                 startday = request.startday,
                 endday = request.endday,
                 count = request.count,
@@ -81,7 +82,7 @@ class StopService(private val stopRepository: StopRepository) {
         val existing = stopRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            usehelthId = request.usehelth,
+            usehealthId = request.usehealth,
             startday = request.startday,
             endday = request.endday,
             count = request.count,

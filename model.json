@@ -446,7 +446,7 @@
       "join": [
         {
           "name": "usehealth",
-          "column": "usehelth"
+          "column": "usehealth"
         }
       ]
     },

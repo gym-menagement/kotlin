@@ -12,11 +12,9 @@ data class Stop(
     @Column(name = "s_id")
     val id: Long = 0,
 
-    @Column(name = "s_usehelth", insertable = false, updatable = false)
-    val usehelthId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "s_usehelth")
-    val usehealth: Usehealth? = null,
+    @Column(name = "s_usehealth")
+    val usehealthId: Long = 0L,
+
     @Column(name = "s_startday")
     val startday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "s_endday")
@@ -25,10 +23,14 @@ data class Stop(
     val count: Int = 0,
     @Column(name = "s_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "s_usehealth", insertable = false, updatable = false)
+    var usehealth: Usehealth? = null
+}
 
 data class StopCreateRequest(
-    val usehelth: Long = 0L,
+    val usehealth: Long = 0L,
     val startday: LocalDateTime? = LocalDateTime.now(),
     val endday: LocalDateTime? = LocalDateTime.now(),
     val count: Int = 0,
@@ -37,7 +39,7 @@ data class StopCreateRequest(
 
 data class StopUpdateRequest(
     val id: Long = 0,
-    val usehelth: Long = 0L,
+    val usehealth: Long = 0L,
     val startday: LocalDateTime? = LocalDateTime.now(),
     val endday: LocalDateTime? = LocalDateTime.now(),
     val count: Int = 0,
@@ -52,7 +54,7 @@ data class StopExtraInfo(
 
 data class StopResponse(
     val id: Long,
-    val usehelth: Long,
+    val usehealth: Long,
     val startday: String?,
     val endday: String?,
     val count: Int,
@@ -65,7 +67,7 @@ data class StopResponse(
             val usehealthResponse = stop.usehealth?.let { UsehealthResponse.from(it) }
             return StopResponse(
                 id = stop.id,
-                usehelth = stop.usehelthId,
+                usehealth = stop.usehealthId,
                 startday = stop.startday?.toString()?.replace("T", " ") ?: "",
                 endday = stop.endday?.toString()?.replace("T", " ") ?: "",
                 count = stop.count,

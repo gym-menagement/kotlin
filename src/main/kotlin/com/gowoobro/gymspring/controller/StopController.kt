@@ -42,9 +42,9 @@ class StopController(
     }
 
 
-    @GetMapping("/search/usehelth")
-    fun getStopByUsehelth(@RequestParam usehelth: Long): ResponseEntity<List<StopResponse>> {
-        val res = stopService.findByUsehelth(usehelth)
+    @GetMapping("/search/usehealth")
+    fun getStopByUsehealth(@RequestParam usehealth: Long): ResponseEntity<List<StopResponse>> {
+        val res = stopService.findByUsehealth(usehealth)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 
