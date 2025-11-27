@@ -51,7 +51,7 @@ class UsehealthController(
         @RequestParam(required = false) startendday: LocalDateTime?,
         @RequestParam(required = false) endendday: LocalDateTime?,
         @RequestParam(required = false) gym: Long?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) totalcount: Int?,
         @RequestParam(required = false) usedcount: Int?,
         @RequestParam(required = false) remainingcount: Int?,
@@ -91,7 +91,7 @@ class UsehealthController(
                 filtered = filtered.filter { it.gymId == gym }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (totalcount != null) {
                 filtered = filtered.filter { it.totalcount == totalcount }

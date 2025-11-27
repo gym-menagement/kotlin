@@ -51,14 +51,14 @@ class UserController(
         @RequestParam(required = false) tel: String?,
         @RequestParam(required = false) address: String?,
         @RequestParam(required = false) image: String?,
-        @RequestParam(required = false) sex: Sex?,
+        @RequestParam(required = false) sex: Int?,
         @RequestParam(required = false) startbirth: LocalDateTime?,
         @RequestParam(required = false) endbirth: LocalDateTime?,
-        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) type: Int?,
         @RequestParam(required = false) connectid: String?,
-        @RequestParam(required = false) level: Level?,
-        @RequestParam(required = false) role: Role?,
-        @RequestParam(required = false) use: Use?,
+        @RequestParam(required = false) level: Int?,
+        @RequestParam(required = false) role: Int?,
+        @RequestParam(required = false) use: Int?,
         @RequestParam(required = false) startlogindate: LocalDateTime?,
         @RequestParam(required = false) endlogindate: LocalDateTime?,
         @RequestParam(required = false) startlastchangepasswddate: LocalDateTime?,
@@ -90,25 +90,25 @@ class UserController(
                 filtered = filtered.filter { it.image == image }
             }
             if (sex != null) {
-                filtered = filtered.filter { it.sex == sex }
+                filtered = filtered.filter { it.sex.ordinal == sex }
             }
             if (startbirth != null || endbirth != null) {
                 filtered = filtered.filter { filterByDateRange(it.birth, startbirth, endbirth) }
             }
             if (type != null) {
-                filtered = filtered.filter { it.type == type }
+                filtered = filtered.filter { it.type.ordinal == type }
             }
             if (connectid != null) {
                 filtered = filtered.filter { it.connectid == connectid }
             }
             if (level != null) {
-                filtered = filtered.filter { it.level == level }
+                filtered = filtered.filter { it.level.ordinal == level }
             }
             if (role != null) {
-                filtered = filtered.filter { it.role == role }
+                filtered = filtered.filter { it.role.ordinal == role }
             }
             if (use != null) {
-                filtered = filtered.filter { it.use == use }
+                filtered = filtered.filter { it.use.ordinal == use }
             }
             if (startlogindate != null || endlogindate != null) {
                 filtered = filtered.filter { filterByDateRange(it.logindate, startlogindate, endlogindate) }

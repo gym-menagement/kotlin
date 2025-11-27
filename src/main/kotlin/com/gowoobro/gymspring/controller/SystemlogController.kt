@@ -41,22 +41,22 @@ class SystemlogController(
     fun getSystemlogs(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int,
-        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) type: Int?,
         @RequestParam(required = false) content: String?,
-        @RequestParam(required = false) result: Result?,
+        @RequestParam(required = false) result: Int?,
         @RequestParam(required = false) startdate: LocalDateTime?,
         @RequestParam(required = false) enddate: LocalDateTime?,
     ): ResponseEntity<Map<String, Any>> {
         var results = if (type != null || content != null || result != null || startdate != null || enddate != null || false) {
             var filtered = systemlogService.findAll(0, Int.MAX_VALUE).content
             if (type != null) {
-                filtered = filtered.filter { it.type == type }
+                filtered = filtered.filter { it.type.ordinal == type }
             }
             if (content != null) {
                 filtered = filtered.filter { it.content == content }
             }
             if (result != null) {
-                filtered = filtered.filter { it.result == result }
+                filtered = filtered.filter { it.result.ordinal == result }
             }
             if (startdate != null || enddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }

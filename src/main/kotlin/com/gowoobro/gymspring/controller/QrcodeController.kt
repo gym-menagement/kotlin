@@ -43,7 +43,7 @@ class QrcodeController(
         @RequestParam(required = false) user: Long?,
         @RequestParam(required = false) code: String?,
         @RequestParam(required = false) imageurl: String?,
-        @RequestParam(required = false) isactive: Isactive?,
+        @RequestParam(required = false) isactive: Int?,
         @RequestParam(required = false) startexpiredate: LocalDateTime?,
         @RequestParam(required = false) endexpiredate: LocalDateTime?,
         @RequestParam(required = false) startgenerateddate: LocalDateTime?,
@@ -66,7 +66,7 @@ class QrcodeController(
                 filtered = filtered.filter { it.imageurl == imageurl }
             }
             if (isactive != null) {
-                filtered = filtered.filter { it.isactive == isactive }
+                filtered = filtered.filter { it.isactive.ordinal == isactive }
             }
             if (startexpiredate != null || endexpiredate != null) {
                 filtered = filtered.filter { filterByDateRange(it.expiredate, startexpiredate, endexpiredate) }

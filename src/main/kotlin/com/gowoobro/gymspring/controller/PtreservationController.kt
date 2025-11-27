@@ -48,7 +48,7 @@ class PtreservationController(
         @RequestParam(required = false) starttime: String?,
         @RequestParam(required = false) endtime: String?,
         @RequestParam(required = false) duration: Int?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) note: String?,
         @RequestParam(required = false) cancelreason: String?,
         @RequestParam(required = false) startcreateddate: LocalDateTime?,
@@ -82,7 +82,7 @@ class PtreservationController(
                 filtered = filtered.filter { it.duration == duration }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (note != null) {
                 filtered = filtered.filter { it.note == note }

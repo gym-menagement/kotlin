@@ -48,7 +48,7 @@ class RockerusageController(
         @RequestParam(required = false) endstartdate: LocalDateTime?,
         @RequestParam(required = false) startenddate: LocalDateTime?,
         @RequestParam(required = false) endenddate: LocalDateTime?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) deposit: BigDecimal?,
         @RequestParam(required = false) monthlyfee: BigDecimal?,
         @RequestParam(required = false) note: String?,
@@ -79,7 +79,7 @@ class RockerusageController(
                 filtered = filtered.filter { filterByDateRange(it.enddate, startenddate, endenddate) }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (deposit != null) {
                 filtered = filtered.filter { it.deposit == deposit }

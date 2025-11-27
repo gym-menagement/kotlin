@@ -45,7 +45,7 @@ class PushtokenController(
         @RequestParam(required = false) devicetype: String?,
         @RequestParam(required = false) deviceid: String?,
         @RequestParam(required = false) appversion: String?,
-        @RequestParam(required = false) isactive: Isactive?,
+        @RequestParam(required = false) isactive: Int?,
         @RequestParam(required = false) startcreateddate: LocalDateTime?,
         @RequestParam(required = false) endcreateddate: LocalDateTime?,
         @RequestParam(required = false) startupdateddate: LocalDateTime?,
@@ -71,7 +71,7 @@ class PushtokenController(
                 filtered = filtered.filter { it.appversion == appversion }
             }
             if (isactive != null) {
-                filtered = filtered.filter { it.isactive == isactive }
+                filtered = filtered.filter { it.isactive.ordinal == isactive }
             }
             if (startcreateddate != null || endcreateddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.createddate, startcreateddate, endcreateddate) }

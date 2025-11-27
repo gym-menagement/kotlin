@@ -41,7 +41,7 @@ class RoleController(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int,
         @RequestParam(required = false) gym: Long?,
-        @RequestParam(required = false) roleid: Roleid?,
+        @RequestParam(required = false) roleid: Int?,
         @RequestParam(required = false) name: String?,
         @RequestParam(required = false) startdate: LocalDateTime?,
         @RequestParam(required = false) enddate: LocalDateTime?,
@@ -52,7 +52,7 @@ class RoleController(
                 filtered = filtered.filter { it.gymId == gym }
             }
             if (roleid != null) {
-                filtered = filtered.filter { it.roleid == roleid }
+                filtered = filtered.filter { it.roleid.ordinal == roleid }
             }
             if (name != null) {
                 filtered = filtered.filter { it.name == name }

@@ -43,10 +43,10 @@ class InquiryController(
         @RequestParam(defaultValue = "10") pageSize: Int,
         @RequestParam(required = false) user: Long?,
         @RequestParam(required = false) gym: Long?,
-        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) type: Int?,
         @RequestParam(required = false) title: String?,
         @RequestParam(required = false) content: String?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) answer: String?,
         @RequestParam(required = false) answeredby: Long?,
         @RequestParam(required = false) startanswereddate: LocalDateTime?,
@@ -65,7 +65,7 @@ class InquiryController(
                 filtered = filtered.filter { it.gymId == gym }
             }
             if (type != null) {
-                filtered = filtered.filter { it.type == type }
+                filtered = filtered.filter { it.type.ordinal == type }
             }
             if (title != null) {
                 filtered = filtered.filter { it.title == title }
@@ -74,7 +74,7 @@ class InquiryController(
                 filtered = filtered.filter { it.content == content }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (answer != null) {
                 filtered = filtered.filter { it.answer == answer }

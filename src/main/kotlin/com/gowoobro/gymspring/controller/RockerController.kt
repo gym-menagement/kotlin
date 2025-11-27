@@ -43,7 +43,7 @@ class RockerController(
         @RequestParam(required = false) gym: Long?,
         @RequestParam(required = false) group: Long?,
         @RequestParam(required = false) name: String?,
-        @RequestParam(required = false) available: Available?,
+        @RequestParam(required = false) available: Int?,
         @RequestParam(required = false) startdate: LocalDateTime?,
         @RequestParam(required = false) enddate: LocalDateTime?,
     ): ResponseEntity<Map<String, Any>> {
@@ -59,7 +59,7 @@ class RockerController(
                 filtered = filtered.filter { it.name == name }
             }
             if (available != null) {
-                filtered = filtered.filter { it.available == available }
+                filtered = filtered.filter { it.available.ordinal == available }
             }
             if (startdate != null || enddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }

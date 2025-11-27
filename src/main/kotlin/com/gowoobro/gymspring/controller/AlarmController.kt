@@ -43,8 +43,8 @@ class AlarmController(
         @RequestParam(defaultValue = "10") pageSize: Int,
         @RequestParam(required = false) title: String?,
         @RequestParam(required = false) content: String?,
-        @RequestParam(required = false) type: Type?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) type: Int?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) user: Long?,
         @RequestParam(required = false) startdate: LocalDateTime?,
         @RequestParam(required = false) enddate: LocalDateTime?,
@@ -58,10 +58,10 @@ class AlarmController(
                 filtered = filtered.filter { it.content == content }
             }
             if (type != null) {
-                filtered = filtered.filter { it.type == type }
+                filtered = filtered.filter { it.type.ordinal == type }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (user != null) {
                 filtered = filtered.filter { it.userId == user }

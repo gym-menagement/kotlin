@@ -45,14 +45,14 @@ class AttendanceController(
         @RequestParam(required = false) user: Long?,
         @RequestParam(required = false) usehealth: Long?,
         @RequestParam(required = false) gym: Long?,
-        @RequestParam(required = false) type: Type?,
-        @RequestParam(required = false) method: Method?,
+        @RequestParam(required = false) type: Int?,
+        @RequestParam(required = false) method: Int?,
         @RequestParam(required = false) startcheckintime: LocalDateTime?,
         @RequestParam(required = false) endcheckintime: LocalDateTime?,
         @RequestParam(required = false) startcheckouttime: LocalDateTime?,
         @RequestParam(required = false) endcheckouttime: LocalDateTime?,
         @RequestParam(required = false) duration: Int?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) note: String?,
         @RequestParam(required = false) ip: String?,
         @RequestParam(required = false) device: String?,
@@ -72,10 +72,10 @@ class AttendanceController(
                 filtered = filtered.filter { it.gymId == gym }
             }
             if (type != null) {
-                filtered = filtered.filter { it.type == type }
+                filtered = filtered.filter { it.type.ordinal == type }
             }
             if (method != null) {
-                filtered = filtered.filter { it.method == method }
+                filtered = filtered.filter { it.method.ordinal == method }
             }
             if (startcheckintime != null || endcheckintime != null) {
                 filtered = filtered.filter { filterByDateRange(it.checkintime, startcheckintime, endcheckintime) }
@@ -87,7 +87,7 @@ class AttendanceController(
                 filtered = filtered.filter { it.duration == duration }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (note != null) {
                 filtered = filtered.filter { it.note == note }

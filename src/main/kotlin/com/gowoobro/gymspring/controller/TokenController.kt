@@ -42,7 +42,7 @@ class TokenController(
         @RequestParam(defaultValue = "10") pageSize: Int,
         @RequestParam(required = false) user: Long?,
         @RequestParam(required = false) token: String?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) startdate: LocalDateTime?,
         @RequestParam(required = false) enddate: LocalDateTime?,
     ): ResponseEntity<Map<String, Any>> {
@@ -55,7 +55,7 @@ class TokenController(
                 filtered = filtered.filter { it.token == token }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (startdate != null || enddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }

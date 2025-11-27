@@ -47,16 +47,16 @@ class NoticeController(
         @RequestParam(required = false) gym: Long?,
         @RequestParam(required = false) title: String?,
         @RequestParam(required = false) content: String?,
-        @RequestParam(required = false) type: Type?,
-        @RequestParam(required = false) ispopup: Ispopup?,
-        @RequestParam(required = false) ispush: Ispush?,
-        @RequestParam(required = false) target: Target?,
+        @RequestParam(required = false) type: Int?,
+        @RequestParam(required = false) ispopup: Int?,
+        @RequestParam(required = false) ispush: Int?,
+        @RequestParam(required = false) target: Int?,
         @RequestParam(required = false) viewcount: Int?,
         @RequestParam(required = false) startstartdate: LocalDateTime?,
         @RequestParam(required = false) endstartdate: LocalDateTime?,
         @RequestParam(required = false) startenddate: LocalDateTime?,
         @RequestParam(required = false) endenddate: LocalDateTime?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) createdby: Long?,
         @RequestParam(required = false) startcreateddate: LocalDateTime?,
         @RequestParam(required = false) endcreateddate: LocalDateTime?,
@@ -77,16 +77,16 @@ class NoticeController(
                 filtered = filtered.filter { it.content == content }
             }
             if (type != null) {
-                filtered = filtered.filter { it.type == type }
+                filtered = filtered.filter { it.type.ordinal == type }
             }
             if (ispopup != null) {
-                filtered = filtered.filter { it.ispopup == ispopup }
+                filtered = filtered.filter { it.ispopup.ordinal == ispopup }
             }
             if (ispush != null) {
-                filtered = filtered.filter { it.ispush == ispush }
+                filtered = filtered.filter { it.ispush.ordinal == ispush }
             }
             if (target != null) {
-                filtered = filtered.filter { it.target == target }
+                filtered = filtered.filter { it.target.ordinal == target }
             }
             if (viewcount != null) {
                 filtered = filtered.filter { it.viewcount == viewcount }
@@ -98,7 +98,7 @@ class NoticeController(
                 filtered = filtered.filter { filterByDateRange(it.enddate, startenddate, endenddate) }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (createdby != null) {
                 filtered = filtered.filter { it.createdbyId == createdby }

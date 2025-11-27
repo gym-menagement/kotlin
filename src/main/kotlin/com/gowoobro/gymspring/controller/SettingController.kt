@@ -45,7 +45,7 @@ class SettingController(
         @RequestParam(required = false) key: String?,
         @RequestParam(required = false) value: String?,
         @RequestParam(required = false) remark: String?,
-        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) type: Int?,
         @RequestParam(required = false) data: String?,
         @RequestParam(required = false) order: Int?,
         @RequestParam(required = false) startdate: LocalDateTime?,
@@ -69,7 +69,7 @@ class SettingController(
                 filtered = filtered.filter { it.remark == remark }
             }
             if (type != null) {
-                filtered = filtered.filter { it.type == type }
+                filtered = filtered.filter { it.type.ordinal == type }
             }
             if (data != null) {
                 filtered = filtered.filter { it.data == data }

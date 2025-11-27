@@ -47,7 +47,7 @@ class TrainermemberController(
         @RequestParam(required = false) endstartdate: LocalDateTime?,
         @RequestParam(required = false) startenddate: LocalDateTime?,
         @RequestParam(required = false) endenddate: LocalDateTime?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) note: String?,
         @RequestParam(required = false) startdate: LocalDateTime?,
         @RequestParam(required = false) enddate: LocalDateTime?,
@@ -70,7 +70,7 @@ class TrainermemberController(
                 filtered = filtered.filter { filterByDateRange(it.enddate, startenddate, endenddate) }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (note != null) {
                 filtered = filtered.filter { it.note == note }

@@ -44,7 +44,7 @@ class UsehealthusageController(
         @RequestParam(required = false) usehealth: Long?,
         @RequestParam(required = false) user: Long?,
         @RequestParam(required = false) attendance: Long?,
-        @RequestParam(required = false) type: Type?,
+        @RequestParam(required = false) type: Int?,
         @RequestParam(required = false) usedcount: Int?,
         @RequestParam(required = false) remainingcount: Int?,
         @RequestParam(required = false) startcheckintime: LocalDateTime?,
@@ -71,7 +71,7 @@ class UsehealthusageController(
                 filtered = filtered.filter { it.attendanceId == attendance }
             }
             if (type != null) {
-                filtered = filtered.filter { it.type == type }
+                filtered = filtered.filter { it.type.ordinal == type }
             }
             if (usedcount != null) {
                 filtered = filtered.filter { it.usedcount == usedcount }

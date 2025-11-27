@@ -44,10 +44,10 @@ class AppversionController(
         @RequestParam(required = false) platform: String?,
         @RequestParam(required = false) version: String?,
         @RequestParam(required = false) minversion: String?,
-        @RequestParam(required = false) forceupdate: Forceupdate?,
+        @RequestParam(required = false) forceupdate: Int?,
         @RequestParam(required = false) updatemessage: String?,
         @RequestParam(required = false) downloadurl: String?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) startreleasedate: LocalDateTime?,
         @RequestParam(required = false) endreleasedate: LocalDateTime?,
         @RequestParam(required = false) startcreateddate: LocalDateTime?,
@@ -67,7 +67,7 @@ class AppversionController(
                 filtered = filtered.filter { it.minversion == minversion }
             }
             if (forceupdate != null) {
-                filtered = filtered.filter { it.forceupdate == forceupdate }
+                filtered = filtered.filter { it.forceupdate.ordinal == forceupdate }
             }
             if (updatemessage != null) {
                 filtered = filtered.filter { it.updatemessage == updatemessage }
@@ -76,7 +76,7 @@ class AppversionController(
                 filtered = filtered.filter { it.downloadurl == downloadurl }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (startreleasedate != null || endreleasedate != null) {
                 filtered = filtered.filter { filterByDateRange(it.releasedate, startreleasedate, endreleasedate) }

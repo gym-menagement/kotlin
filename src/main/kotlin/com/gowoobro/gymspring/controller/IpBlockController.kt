@@ -43,9 +43,9 @@ class IpblockController(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") pageSize: Int,
         @RequestParam(required = false) address: String?,
-        @RequestParam(required = false) type: Type?,
-        @RequestParam(required = false) policy: Policy?,
-        @RequestParam(required = false) use: Use?,
+        @RequestParam(required = false) type: Int?,
+        @RequestParam(required = false) policy: Int?,
+        @RequestParam(required = false) use: Int?,
         @RequestParam(required = false) order: Int?,
         @RequestParam(required = false) startdate: LocalDateTime?,
         @RequestParam(required = false) enddate: LocalDateTime?,
@@ -56,13 +56,13 @@ class IpblockController(
                 filtered = filtered.filter { it.address == address }
             }
             if (type != null) {
-                filtered = filtered.filter { it.type == type }
+                filtered = filtered.filter { it.type.ordinal == type }
             }
             if (policy != null) {
-                filtered = filtered.filter { it.policy == policy }
+                filtered = filtered.filter { it.policy.ordinal == policy }
             }
             if (use != null) {
-                filtered = filtered.filter { it.use == use }
+                filtered = filtered.filter { it.use.ordinal == use }
             }
             if (order != null) {
                 filtered = filtered.filter { it.order == order }

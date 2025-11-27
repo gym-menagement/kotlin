@@ -46,7 +46,7 @@ class GymtrainerController(
         @RequestParam(required = false) endstartdate: LocalDateTime?,
         @RequestParam(required = false) startenddate: LocalDateTime?,
         @RequestParam(required = false) endenddate: LocalDateTime?,
-        @RequestParam(required = false) status: Status?,
+        @RequestParam(required = false) status: Int?,
         @RequestParam(required = false) position: String?,
         @RequestParam(required = false) note: String?,
         @RequestParam(required = false) startdate: LocalDateTime?,
@@ -67,7 +67,7 @@ class GymtrainerController(
                 filtered = filtered.filter { filterByDateRange(it.enddate, startenddate, endenddate) }
             }
             if (status != null) {
-                filtered = filtered.filter { it.status == status }
+                filtered = filtered.filter { it.status.ordinal == status }
             }
             if (position != null) {
                 filtered = filtered.filter { it.position == position }
