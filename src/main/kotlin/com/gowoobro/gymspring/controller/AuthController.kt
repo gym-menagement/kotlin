@@ -80,4 +80,10 @@ class AuthController(
             ResponseEntity.status(401).body(null)
         }
     }
+
+    @GetMapping("/test/encode-password")
+    fun encodePassword(@RequestParam password: String): ResponseEntity<Map<String, String>> {
+        val encoded = passwordEncoder.encode(password)
+        return ResponseEntity.ok(mapOf("password" to password, "encoded" to encoded))
+    }
 }
