@@ -92,6 +92,25 @@ data class NoticeUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class NoticePatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val title: String? = null,
+    val content: String? = null,
+    val type: Type? = null,
+    val ispopup: Ispopup? = null,
+    val ispush: Ispush? = null,
+    val target: Target? = null,
+    val viewcount: Int? = null,
+    val startdate: LocalDateTime? = null,
+    val enddate: LocalDateTime? = null,
+    val status: Status? = null,
+    val createdby: Long? = null,
+    val createddate: LocalDateTime? = null,
+    val updateddate: LocalDateTime? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class NoticeExtraInfo(
     val type: String = "",
     val ispopup: String = "",

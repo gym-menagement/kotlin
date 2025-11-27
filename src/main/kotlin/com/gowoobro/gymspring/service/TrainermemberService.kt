@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Trainermember
 import com.gowoobro.gymspring.entity.TrainermemberCreateRequest
 import com.gowoobro.gymspring.entity.TrainermemberUpdateRequest
+import com.gowoobro.gymspring.entity.TrainermemberPatchRequest
 import com.gowoobro.gymspring.repository.TrainermemberRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -137,5 +138,21 @@ class TrainermemberService(private val trainermemberRepository: TrainermemberRep
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: TrainermemberPatchRequest): Trainermember? {
+        val existing = trainermemberRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            trainerId = request.trainer ?: existing.trainerId,
+            memberId = request.member ?: existing.memberId,
+            gymId = request.gym ?: existing.gymId,
+            startdate = request.startdate ?: existing.startdate,
+            enddate = request.enddate ?: existing.enddate,
+            status = request.status ?: existing.status,
+            note = request.note ?: existing.note,
+            date = request.date ?: existing.date,
+        )
+        return trainermemberRepository.save(updated)
     }
 }

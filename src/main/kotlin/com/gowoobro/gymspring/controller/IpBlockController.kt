@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Ipblock
 import com.gowoobro.gymspring.entity.IpblockCreateRequest
 import com.gowoobro.gymspring.entity.IpblockUpdateRequest
+import com.gowoobro.gymspring.entity.IpblockPatchRequest
 import com.gowoobro.gymspring.service.IpblockService
 import com.gowoobro.gymspring.entity.IpblockResponse
 import com.gowoobro.gymspring.enums.ipblock.Type
@@ -181,6 +182,20 @@ class IpblockController(
     ): ResponseEntity<IpblockResponse> {
         val updatedRequest = request.copy(id = id)
         val res = ipblockService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchIpblock(
+        @PathVariable id: Long,
+        @RequestBody request: IpblockPatchRequest
+    ): ResponseEntity<IpblockResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = ipblockService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

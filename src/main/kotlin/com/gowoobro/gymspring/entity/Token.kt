@@ -41,6 +41,14 @@ data class TokenUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class TokenPatchRequest(
+    val id: Long = 0,
+    val user: Long? = null,
+    val token: String? = null,
+    val status: Status? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class TokenExtraInfo(
     val status: String = "",
 

@@ -107,6 +107,26 @@ data class UsehealthUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class UsehealthPatchRequest(
+    val id: Long = 0,
+    val order: Long? = null,
+    val health: Long? = null,
+    val user: Long? = null,
+    val rocker: Long? = null,
+    val term: Long? = null,
+    val discount: Long? = null,
+    val startday: LocalDateTime? = null,
+    val endday: LocalDateTime? = null,
+    val gym: Long? = null,
+    val status: Status? = null,
+    val totalcount: Int? = null,
+    val usedcount: Int? = null,
+    val remainingcount: Int? = null,
+    val qrcode: String? = null,
+    val lastuseddate: LocalDateTime? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class UsehealthExtraInfo(
     val status: String = "",
 

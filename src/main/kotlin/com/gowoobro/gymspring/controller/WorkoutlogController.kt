@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Workoutlog
 import com.gowoobro.gymspring.entity.WorkoutlogCreateRequest
 import com.gowoobro.gymspring.entity.WorkoutlogUpdateRequest
+import com.gowoobro.gymspring.entity.WorkoutlogPatchRequest
 import com.gowoobro.gymspring.service.WorkoutlogService
 import com.gowoobro.gymspring.entity.WorkoutlogResponse
 
@@ -238,6 +239,20 @@ class WorkoutlogController(
     ): ResponseEntity<WorkoutlogResponse> {
         val updatedRequest = request.copy(id = id)
         val res = workoutlogService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchWorkoutlog(
+        @PathVariable id: Long,
+        @RequestBody request: WorkoutlogPatchRequest
+    ): ResponseEntity<WorkoutlogResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = workoutlogService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Stop
 import com.gowoobro.gymspring.entity.StopCreateRequest
 import com.gowoobro.gymspring.entity.StopUpdateRequest
+import com.gowoobro.gymspring.entity.StopPatchRequest
 import com.gowoobro.gymspring.service.StopService
 import com.gowoobro.gymspring.entity.StopResponse
 
@@ -170,6 +171,20 @@ class StopController(
     ): ResponseEntity<StopResponse> {
         val updatedRequest = request.copy(id = id)
         val res = stopService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchStop(
+        @PathVariable id: Long,
+        @RequestBody request: StopPatchRequest
+    ): ResponseEntity<StopResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = stopService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Order
 import com.gowoobro.gymspring.entity.OrderCreateRequest
 import com.gowoobro.gymspring.entity.OrderUpdateRequest
+import com.gowoobro.gymspring.entity.OrderPatchRequest
 import com.gowoobro.gymspring.service.OrderService
 import com.gowoobro.gymspring.entity.OrderResponse
 
@@ -158,6 +159,20 @@ class OrderController(
     ): ResponseEntity<OrderResponse> {
         val updatedRequest = request.copy(id = id)
         val res = orderService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchOrder(
+        @PathVariable id: Long,
+        @RequestBody request: OrderPatchRequest
+    ): ResponseEntity<OrderResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = orderService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

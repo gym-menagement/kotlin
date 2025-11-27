@@ -83,6 +83,23 @@ data class PtreservationUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class PtreservationPatchRequest(
+    val id: Long = 0,
+    val trainer: Long? = null,
+    val member: Long? = null,
+    val gym: Long? = null,
+    val reservationdate: LocalDateTime? = null,
+    val starttime: String? = null,
+    val endtime: String? = null,
+    val duration: Int? = null,
+    val status: Status? = null,
+    val note: String? = null,
+    val cancelreason: String? = null,
+    val createddate: LocalDateTime? = null,
+    val updateddate: LocalDateTime? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class PtreservationExtraInfo(
     val status: String = "",
 

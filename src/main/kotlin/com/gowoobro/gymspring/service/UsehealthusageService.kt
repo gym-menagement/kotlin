@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Usehealthusage
 import com.gowoobro.gymspring.entity.UsehealthusageCreateRequest
 import com.gowoobro.gymspring.entity.UsehealthusageUpdateRequest
+import com.gowoobro.gymspring.entity.UsehealthusagePatchRequest
 import com.gowoobro.gymspring.repository.UsehealthusageRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -165,5 +166,25 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: UsehealthusagePatchRequest): Usehealthusage? {
+        val existing = usehealthusageRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            usehealthId = request.usehealth ?: existing.usehealthId,
+            userId = request.user ?: existing.userId,
+            attendanceId = request.attendance ?: existing.attendanceId,
+            type = request.type ?: existing.type,
+            usedcount = request.usedcount ?: existing.usedcount,
+            remainingcount = request.remainingcount ?: existing.remainingcount,
+            checkintime = request.checkintime ?: existing.checkintime,
+            checkouttime = request.checkouttime ?: existing.checkouttime,
+            duration = request.duration ?: existing.duration,
+            note = request.note ?: existing.note,
+            date = request.date ?: existing.date,
+        )
+        return usehealthusageRepository.save(updated)
     }
 }

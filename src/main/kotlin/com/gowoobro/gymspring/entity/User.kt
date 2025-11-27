@@ -93,6 +93,27 @@ data class UserUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class UserPatchRequest(
+    val id: Long = 0,
+    val loginid: String? = null,
+    val passwd: String? = null,
+    val email: String? = null,
+    val name: String? = null,
+    val tel: String? = null,
+    val address: String? = null,
+    val image: String? = null,
+    val sex: Sex? = null,
+    val birth: LocalDateTime? = null,
+    val type: Type? = null,
+    val connectid: String? = null,
+    val level: Level? = null,
+    val role: Role? = null,
+    val use: Use? = null,
+    val logindate: LocalDateTime? = null,
+    val lastchangepasswddate: LocalDateTime? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class UserExtraInfo(
     val level: String = "",
     val use: String = "",

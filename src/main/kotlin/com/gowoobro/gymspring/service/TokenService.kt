@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Token
 import com.gowoobro.gymspring.entity.TokenCreateRequest
 import com.gowoobro.gymspring.entity.TokenUpdateRequest
+import com.gowoobro.gymspring.entity.TokenPatchRequest
 import com.gowoobro.gymspring.repository.TokenRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -109,5 +110,17 @@ class TokenService(private val tokenRepository: TokenRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: TokenPatchRequest): Token? {
+        val existing = tokenRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            userId = request.user ?: existing.userId,
+            token = request.token ?: existing.token,
+            status = request.status ?: existing.status,
+            date = request.date ?: existing.date,
+        )
+        return tokenRepository.save(updated)
     }
 }

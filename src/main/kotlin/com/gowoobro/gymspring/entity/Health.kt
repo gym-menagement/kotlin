@@ -73,6 +73,20 @@ data class HealthUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class HealthPatchRequest(
+    val id: Long = 0,
+    val category: Long? = null,
+    val term: Long? = null,
+    val name: String? = null,
+    val count: Int? = null,
+    val cost: Int? = null,
+    val discount: Long? = null,
+    val costdiscount: Int? = null,
+    val content: String? = null,
+    val gym: Long? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class HealthExtraInfo(
 
     val healthcategory: HealthcategoryResponse? = null,

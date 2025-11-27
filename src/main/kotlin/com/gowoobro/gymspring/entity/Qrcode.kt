@@ -61,6 +61,19 @@ data class QrcodeUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class QrcodePatchRequest(
+    val id: Long = 0,
+    val user: Long? = null,
+    val code: String? = null,
+    val imageurl: String? = null,
+    val isactive: Isactive? = null,
+    val expiredate: LocalDateTime? = null,
+    val generateddate: LocalDateTime? = null,
+    val lastuseddate: LocalDateTime? = null,
+    val usecount: Int? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class QrcodeExtraInfo(
     val isactive: String = "",
 

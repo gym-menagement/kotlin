@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Token
 import com.gowoobro.gymspring.entity.TokenCreateRequest
 import com.gowoobro.gymspring.entity.TokenUpdateRequest
+import com.gowoobro.gymspring.entity.TokenPatchRequest
 import com.gowoobro.gymspring.service.TokenService
 import com.gowoobro.gymspring.entity.TokenResponse
 import com.gowoobro.gymspring.enums.token.Status
@@ -159,6 +160,20 @@ class TokenController(
     ): ResponseEntity<TokenResponse> {
         val updatedRequest = request.copy(id = id)
         val res = tokenService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchToken(
+        @PathVariable id: Long,
+        @RequestBody request: TokenPatchRequest
+    ): ResponseEntity<TokenResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = tokenService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

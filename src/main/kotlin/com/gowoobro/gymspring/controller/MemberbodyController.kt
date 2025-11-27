@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Memberbody
 import com.gowoobro.gymspring.entity.MemberbodyCreateRequest
 import com.gowoobro.gymspring.entity.MemberbodyUpdateRequest
+import com.gowoobro.gymspring.entity.MemberbodyPatchRequest
 import com.gowoobro.gymspring.service.MemberbodyService
 import com.gowoobro.gymspring.entity.MemberbodyResponse
 
@@ -299,6 +300,20 @@ class MemberbodyController(
     ): ResponseEntity<MemberbodyResponse> {
         val updatedRequest = request.copy(id = id)
         val res = memberbodyService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchMemberbody(
+        @PathVariable id: Long,
+        @RequestBody request: MemberbodyPatchRequest
+    ): ResponseEntity<MemberbodyResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = memberbodyService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

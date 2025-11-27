@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Gymtrainer
 import com.gowoobro.gymspring.entity.GymtrainerCreateRequest
 import com.gowoobro.gymspring.entity.GymtrainerUpdateRequest
+import com.gowoobro.gymspring.entity.GymtrainerPatchRequest
 import com.gowoobro.gymspring.repository.GymtrainerRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -137,5 +138,21 @@ class GymtrainerService(private val gymtrainerRepository: GymtrainerRepository) 
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: GymtrainerPatchRequest): Gymtrainer? {
+        val existing = gymtrainerRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            trainerId = request.trainer ?: existing.trainerId,
+            startdate = request.startdate ?: existing.startdate,
+            enddate = request.enddate ?: existing.enddate,
+            status = request.status ?: existing.status,
+            position = request.position ?: existing.position,
+            note = request.note ?: existing.note,
+            date = request.date ?: existing.date,
+        )
+        return gymtrainerRepository.save(updated)
     }
 }

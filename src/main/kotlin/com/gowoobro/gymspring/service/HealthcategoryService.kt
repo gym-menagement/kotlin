@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Healthcategory
 import com.gowoobro.gymspring.entity.HealthcategoryCreateRequest
 import com.gowoobro.gymspring.entity.HealthcategoryUpdateRequest
+import com.gowoobro.gymspring.entity.HealthcategoryPatchRequest
 import com.gowoobro.gymspring.repository.HealthcategoryRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -101,5 +102,16 @@ class HealthcategoryService(private val healthcategoryRepository: Healthcategory
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: HealthcategoryPatchRequest): Healthcategory? {
+        val existing = healthcategoryRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            name = request.name ?: existing.name,
+            date = request.date ?: existing.date,
+        )
+        return healthcategoryRepository.save(updated)
     }
 }

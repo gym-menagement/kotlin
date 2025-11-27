@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Inquiry
 import com.gowoobro.gymspring.entity.InquiryCreateRequest
 import com.gowoobro.gymspring.entity.InquiryUpdateRequest
+import com.gowoobro.gymspring.entity.InquiryPatchRequest
 import com.gowoobro.gymspring.service.InquiryService
 import com.gowoobro.gymspring.entity.InquiryResponse
 import com.gowoobro.gymspring.enums.inquiry.Type
@@ -232,6 +233,20 @@ class InquiryController(
     ): ResponseEntity<InquiryResponse> {
         val updatedRequest = request.copy(id = id)
         val res = inquiryService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchInquiry(
+        @PathVariable id: Long,
+        @RequestBody request: InquiryPatchRequest
+    ): ResponseEntity<InquiryResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = inquiryService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

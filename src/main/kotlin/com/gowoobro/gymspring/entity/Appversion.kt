@@ -62,6 +62,20 @@ data class AppversionUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class AppversionPatchRequest(
+    val id: Long = 0,
+    val platform: String? = null,
+    val version: String? = null,
+    val minversion: String? = null,
+    val forceupdate: Forceupdate? = null,
+    val updatemessage: String? = null,
+    val downloadurl: String? = null,
+    val status: Status? = null,
+    val releasedate: LocalDateTime? = null,
+    val createddate: LocalDateTime? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class AppversionExtraInfo(
     val forceupdate: String = "",
     val status: String = "",

@@ -102,6 +102,28 @@ data class MemberbodyUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class MemberbodyPatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val user: Long? = null,
+    val height: BigDecimal? = null,
+    val weight: BigDecimal? = null,
+    val bodyfat: BigDecimal? = null,
+    val musclemass: BigDecimal? = null,
+    val bmi: BigDecimal? = null,
+    val skeletalmuscle: BigDecimal? = null,
+    val bodywater: BigDecimal? = null,
+    val chest: BigDecimal? = null,
+    val waist: BigDecimal? = null,
+    val hip: BigDecimal? = null,
+    val arm: BigDecimal? = null,
+    val thigh: BigDecimal? = null,
+    val note: String? = null,
+    val measureddate: LocalDateTime? = null,
+    val measuredby: Long? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class MemberbodyExtraInfo(
 
     val gym: GymResponse? = null,

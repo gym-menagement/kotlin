@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Term
 import com.gowoobro.gymspring.entity.TermCreateRequest
 import com.gowoobro.gymspring.entity.TermUpdateRequest
+import com.gowoobro.gymspring.entity.TermPatchRequest
 import com.gowoobro.gymspring.service.TermService
 import com.gowoobro.gymspring.entity.TermResponse
 
@@ -168,6 +169,20 @@ class TermController(
     ): ResponseEntity<TermResponse> {
         val updatedRequest = request.copy(id = id)
         val res = termService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchTerm(
+        @PathVariable id: Long,
+        @RequestBody request: TermPatchRequest
+    ): ResponseEntity<TermResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = termService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

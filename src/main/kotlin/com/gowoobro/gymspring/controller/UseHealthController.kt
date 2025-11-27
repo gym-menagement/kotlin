@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Usehealth
 import com.gowoobro.gymspring.entity.UsehealthCreateRequest
 import com.gowoobro.gymspring.entity.UsehealthUpdateRequest
+import com.gowoobro.gymspring.entity.UsehealthPatchRequest
 import com.gowoobro.gymspring.service.UsehealthService
 import com.gowoobro.gymspring.entity.UsehealthResponse
 import com.gowoobro.gymspring.enums.usehealth.Status
@@ -282,6 +283,20 @@ class UsehealthController(
     ): ResponseEntity<UsehealthResponse> {
         val updatedRequest = request.copy(id = id)
         val res = usehealthService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchUsehealth(
+        @PathVariable id: Long,
+        @RequestBody request: UsehealthPatchRequest
+    ): ResponseEntity<UsehealthResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = usehealthService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

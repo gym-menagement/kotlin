@@ -44,6 +44,15 @@ data class StopUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class StopPatchRequest(
+    val id: Long = 0,
+    val usehealth: Long? = null,
+    val startday: LocalDateTime? = null,
+    val endday: LocalDateTime? = null,
+    val count: Int? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class StopExtraInfo(
 
     val usehealth: UsehealthResponse? = null,

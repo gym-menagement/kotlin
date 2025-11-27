@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Systemlog
 import com.gowoobro.gymspring.entity.SystemlogCreateRequest
 import com.gowoobro.gymspring.entity.SystemlogUpdateRequest
+import com.gowoobro.gymspring.entity.SystemlogPatchRequest
 import com.gowoobro.gymspring.repository.SystemlogRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -110,5 +111,17 @@ class SystemlogService(private val systemlogRepository: SystemlogRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: SystemlogPatchRequest): Systemlog? {
+        val existing = systemlogRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            type = request.type ?: existing.type,
+            content = request.content ?: existing.content,
+            result = request.result ?: existing.result,
+            date = request.date ?: existing.date,
+        )
+        return systemlogRepository.save(updated)
     }
 }

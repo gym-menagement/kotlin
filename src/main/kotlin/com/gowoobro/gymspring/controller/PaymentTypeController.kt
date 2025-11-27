@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Paymenttype
 import com.gowoobro.gymspring.entity.PaymenttypeCreateRequest
 import com.gowoobro.gymspring.entity.PaymenttypeUpdateRequest
+import com.gowoobro.gymspring.entity.PaymenttypePatchRequest
 import com.gowoobro.gymspring.service.PaymenttypeService
 import com.gowoobro.gymspring.entity.PaymenttypeResponse
 
@@ -148,6 +149,20 @@ class PaymenttypeController(
     ): ResponseEntity<PaymenttypeResponse> {
         val updatedRequest = request.copy(id = id)
         val res = paymenttypeService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchPaymenttype(
+        @PathVariable id: Long,
+        @RequestBody request: PaymenttypePatchRequest
+    ): ResponseEntity<PaymenttypeResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = paymenttypeService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

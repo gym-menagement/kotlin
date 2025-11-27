@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Rockerusage
 import com.gowoobro.gymspring.entity.RockerusageCreateRequest
 import com.gowoobro.gymspring.entity.RockerusageUpdateRequest
+import com.gowoobro.gymspring.entity.RockerusagePatchRequest
 import com.gowoobro.gymspring.repository.RockerusageRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -172,5 +173,26 @@ class RockerusageService(private val rockerusageRepository: RockerusageRepositor
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: RockerusagePatchRequest): Rockerusage? {
+        val existing = rockerusageRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            rockerId = request.rocker ?: existing.rockerId,
+            userId = request.user ?: existing.userId,
+            usehealthId = request.usehealth ?: existing.usehealthId,
+            startdate = request.startdate ?: existing.startdate,
+            enddate = request.enddate ?: existing.enddate,
+            status = request.status ?: existing.status,
+            deposit = request.deposit ?: existing.deposit,
+            monthlyfee = request.monthlyfee ?: existing.monthlyfee,
+            note = request.note ?: existing.note,
+            assignedbyId = request.assignedby ?: existing.assignedbyId,
+            assigneddate = request.assigneddate ?: existing.assigneddate,
+            date = request.date ?: existing.date,
+        )
+        return rockerusageRepository.save(updated)
     }
 }

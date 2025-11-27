@@ -89,6 +89,24 @@ data class AttendanceUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class AttendancePatchRequest(
+    val id: Long = 0,
+    val user: Long? = null,
+    val usehealth: Long? = null,
+    val gym: Long? = null,
+    val type: Type? = null,
+    val method: Method? = null,
+    val checkintime: LocalDateTime? = null,
+    val checkouttime: LocalDateTime? = null,
+    val duration: Int? = null,
+    val status: Status? = null,
+    val note: String? = null,
+    val ip: String? = null,
+    val device: String? = null,
+    val createdby: Long? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class AttendanceExtraInfo(
     val type: String = "",
     val method: String = "",

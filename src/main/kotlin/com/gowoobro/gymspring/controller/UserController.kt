@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.User
 import com.gowoobro.gymspring.entity.UserCreateRequest
 import com.gowoobro.gymspring.entity.UserUpdateRequest
+import com.gowoobro.gymspring.entity.UserPatchRequest
 import com.gowoobro.gymspring.service.UserService
 import com.gowoobro.gymspring.entity.UserResponse
 import com.gowoobro.gymspring.enums.user.Level
@@ -296,6 +297,20 @@ class UserController(
     ): ResponseEntity<UserResponse> {
         val updatedRequest = request.copy(id = id)
         val res = userService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchUser(
+        @PathVariable id: Long,
+        @RequestBody request: UserPatchRequest
+    ): ResponseEntity<UserResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = userService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

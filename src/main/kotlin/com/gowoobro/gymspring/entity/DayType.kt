@@ -36,6 +36,13 @@ data class DaytypeUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class DaytypePatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val name: String? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class DaytypeExtraInfo(
 
     val gym: GymResponse? = null,

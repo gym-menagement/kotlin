@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Ptreservation
 import com.gowoobro.gymspring.entity.PtreservationCreateRequest
 import com.gowoobro.gymspring.entity.PtreservationUpdateRequest
+import com.gowoobro.gymspring.entity.PtreservationPatchRequest
 import com.gowoobro.gymspring.repository.PtreservationRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -172,5 +173,26 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: PtreservationPatchRequest): Ptreservation? {
+        val existing = ptreservationRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            trainerId = request.trainer ?: existing.trainerId,
+            memberId = request.member ?: existing.memberId,
+            gymId = request.gym ?: existing.gymId,
+            reservationdate = request.reservationdate ?: existing.reservationdate,
+            starttime = request.starttime ?: existing.starttime,
+            endtime = request.endtime ?: existing.endtime,
+            duration = request.duration ?: existing.duration,
+            status = request.status ?: existing.status,
+            note = request.note ?: existing.note,
+            cancelreason = request.cancelreason ?: existing.cancelreason,
+            createddate = request.createddate ?: existing.createddate,
+            updateddate = request.updateddate ?: existing.updateddate,
+            date = request.date ?: existing.date,
+        )
+        return ptreservationRepository.save(updated)
     }
 }

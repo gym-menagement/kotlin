@@ -47,6 +47,16 @@ data class IpblockUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class IpblockPatchRequest(
+    val id: Long = 0,
+    val address: String? = null,
+    val type: Type? = null,
+    val policy: Policy? = null,
+    val use: Use? = null,
+    val order: Int? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class IpblockExtraInfo(
     val type: String = "",
     val policy: String = "",

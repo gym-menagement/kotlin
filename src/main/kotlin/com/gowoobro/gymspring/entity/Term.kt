@@ -47,6 +47,15 @@ data class TermUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class TermPatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val daytype: Long? = null,
+    val name: String? = null,
+    val term: Int? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class TermExtraInfo(
 
     val gym: GymResponse? = null,

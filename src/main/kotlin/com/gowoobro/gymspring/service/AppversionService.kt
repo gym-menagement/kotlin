@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Appversion
 import com.gowoobro.gymspring.entity.AppversionCreateRequest
 import com.gowoobro.gymspring.entity.AppversionUpdateRequest
+import com.gowoobro.gymspring.entity.AppversionPatchRequest
 import com.gowoobro.gymspring.repository.AppversionRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -152,5 +153,23 @@ class AppversionService(private val appversionRepository: AppversionRepository) 
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: AppversionPatchRequest): Appversion? {
+        val existing = appversionRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            platform = request.platform ?: existing.platform,
+            version = request.version ?: existing.version,
+            minversion = request.minversion ?: existing.minversion,
+            forceupdate = request.forceupdate ?: existing.forceupdate,
+            updatemessage = request.updatemessage ?: existing.updatemessage,
+            downloadurl = request.downloadurl ?: existing.downloadurl,
+            status = request.status ?: existing.status,
+            releasedate = request.releasedate ?: existing.releasedate,
+            createddate = request.createddate ?: existing.createddate,
+            date = request.date ?: existing.date,
+        )
+        return appversionRepository.save(updated)
     }
 }

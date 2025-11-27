@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Notice
 import com.gowoobro.gymspring.entity.NoticeCreateRequest
 import com.gowoobro.gymspring.entity.NoticeUpdateRequest
+import com.gowoobro.gymspring.entity.NoticePatchRequest
 import com.gowoobro.gymspring.service.NoticeService
 import com.gowoobro.gymspring.entity.NoticeResponse
 import com.gowoobro.gymspring.enums.notice.Type
@@ -277,6 +278,20 @@ class NoticeController(
     ): ResponseEntity<NoticeResponse> {
         val updatedRequest = request.copy(id = id)
         val res = noticeService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchNotice(
+        @PathVariable id: Long,
+        @RequestBody request: NoticePatchRequest
+    ): ResponseEntity<NoticeResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = noticeService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

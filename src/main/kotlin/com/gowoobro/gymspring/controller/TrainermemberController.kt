@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Trainermember
 import com.gowoobro.gymspring.entity.TrainermemberCreateRequest
 import com.gowoobro.gymspring.entity.TrainermemberUpdateRequest
+import com.gowoobro.gymspring.entity.TrainermemberPatchRequest
 import com.gowoobro.gymspring.service.TrainermemberService
 import com.gowoobro.gymspring.entity.TrainermemberResponse
 import com.gowoobro.gymspring.enums.trainermember.Status
@@ -201,6 +202,20 @@ class TrainermemberController(
     ): ResponseEntity<TrainermemberResponse> {
         val updatedRequest = request.copy(id = id)
         val res = trainermemberService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchTrainermember(
+        @PathVariable id: Long,
+        @RequestBody request: TrainermemberPatchRequest
+    ): ResponseEntity<TrainermemberResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = trainermemberService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

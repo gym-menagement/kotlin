@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.User
 import com.gowoobro.gymspring.entity.UserCreateRequest
 import com.gowoobro.gymspring.entity.UserUpdateRequest
+import com.gowoobro.gymspring.entity.UserPatchRequest
 import com.gowoobro.gymspring.repository.UserRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -210,5 +211,30 @@ class UserService(private val userRepository: UserRepository, private val passwo
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: UserPatchRequest): User? {
+        val existing = userRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            loginid = request.loginid ?: existing.loginid,
+            passwd = request.passwd ?: existing.passwd,
+            email = request.email ?: existing.email,
+            name = request.name ?: existing.name,
+            tel = request.tel ?: existing.tel,
+            address = request.address ?: existing.address,
+            image = request.image ?: existing.image,
+            sex = request.sex ?: existing.sex,
+            birth = request.birth ?: existing.birth,
+            type = request.type ?: existing.type,
+            connectid = request.connectid ?: existing.connectid,
+            level = request.level ?: existing.level,
+            role = request.role ?: existing.role,
+            use = request.use ?: existing.use,
+            logindate = request.logindate ?: existing.logindate,
+            lastchangepasswddate = request.lastchangepasswddate ?: existing.lastchangepasswddate,
+            date = request.date ?: existing.date,
+        )
+        return userRepository.save(updated)
     }
 }

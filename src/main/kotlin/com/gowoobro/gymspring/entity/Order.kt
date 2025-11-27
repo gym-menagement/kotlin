@@ -46,6 +46,14 @@ data class OrderUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class OrderPatchRequest(
+    val id: Long = 0,
+    val user: Long? = null,
+    val gym: Long? = null,
+    val health: Long? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class OrderExtraInfo(
 
     val user: UserResponse? = null,

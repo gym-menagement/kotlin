@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Loginlog
 import com.gowoobro.gymspring.entity.LoginlogCreateRequest
 import com.gowoobro.gymspring.entity.LoginlogUpdateRequest
+import com.gowoobro.gymspring.entity.LoginlogPatchRequest
 import com.gowoobro.gymspring.service.LoginlogService
 import com.gowoobro.gymspring.entity.LoginlogResponse
 
@@ -158,6 +159,20 @@ class LoginlogController(
     ): ResponseEntity<LoginlogResponse> {
         val updatedRequest = request.copy(id = id)
         val res = loginlogService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchLoginlog(
+        @PathVariable id: Long,
+        @RequestBody request: LoginlogPatchRequest
+    ): ResponseEntity<LoginlogResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = loginlogService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

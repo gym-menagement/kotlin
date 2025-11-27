@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Memberbody
 import com.gowoobro.gymspring.entity.MemberbodyCreateRequest
 import com.gowoobro.gymspring.entity.MemberbodyUpdateRequest
+import com.gowoobro.gymspring.entity.MemberbodyPatchRequest
 import com.gowoobro.gymspring.repository.MemberbodyRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -206,5 +207,31 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: MemberbodyPatchRequest): Memberbody? {
+        val existing = memberbodyRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            userId = request.user ?: existing.userId,
+            height = request.height ?: existing.height,
+            weight = request.weight ?: existing.weight,
+            bodyfat = request.bodyfat ?: existing.bodyfat,
+            musclemass = request.musclemass ?: existing.musclemass,
+            bmi = request.bmi ?: existing.bmi,
+            skeletalmuscle = request.skeletalmuscle ?: existing.skeletalmuscle,
+            bodywater = request.bodywater ?: existing.bodywater,
+            chest = request.chest ?: existing.chest,
+            waist = request.waist ?: existing.waist,
+            hip = request.hip ?: existing.hip,
+            arm = request.arm ?: existing.arm,
+            thigh = request.thigh ?: existing.thigh,
+            note = request.note ?: existing.note,
+            measureddate = request.measureddate ?: existing.measureddate,
+            measuredbyId = request.measuredby ?: existing.measuredbyId,
+            date = request.date ?: existing.date,
+        )
+        return memberbodyRepository.save(updated)
     }
 }

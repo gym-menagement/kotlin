@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Setting
 import com.gowoobro.gymspring.entity.SettingCreateRequest
 import com.gowoobro.gymspring.entity.SettingUpdateRequest
+import com.gowoobro.gymspring.entity.SettingPatchRequest
 import com.gowoobro.gymspring.service.SettingService
 import com.gowoobro.gymspring.entity.SettingResponse
 import com.gowoobro.gymspring.enums.setting.Type
@@ -209,6 +210,20 @@ class SettingController(
     ): ResponseEntity<SettingResponse> {
         val updatedRequest = request.copy(id = id)
         val res = settingService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchSetting(
+        @PathVariable id: Long,
+        @RequestBody request: SettingPatchRequest
+    ): ResponseEntity<SettingResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = settingService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

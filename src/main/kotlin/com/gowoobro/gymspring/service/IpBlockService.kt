@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Ipblock
 import com.gowoobro.gymspring.entity.IpblockCreateRequest
 import com.gowoobro.gymspring.entity.IpblockUpdateRequest
+import com.gowoobro.gymspring.entity.IpblockPatchRequest
 import com.gowoobro.gymspring.repository.IpblockRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -125,5 +126,19 @@ class IpblockService(private val ipblockRepository: IpblockRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: IpblockPatchRequest): Ipblock? {
+        val existing = ipblockRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            address = request.address ?: existing.address,
+            type = request.type ?: existing.type,
+            policy = request.policy ?: existing.policy,
+            use = request.use ?: existing.use,
+            order = request.order ?: existing.order,
+            date = request.date ?: existing.date,
+        )
+        return ipblockRepository.save(updated)
     }
 }

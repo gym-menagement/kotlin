@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Appversion
 import com.gowoobro.gymspring.entity.AppversionCreateRequest
 import com.gowoobro.gymspring.entity.AppversionUpdateRequest
+import com.gowoobro.gymspring.entity.AppversionPatchRequest
 import com.gowoobro.gymspring.service.AppversionService
 import com.gowoobro.gymspring.entity.AppversionResponse
 import com.gowoobro.gymspring.enums.appversion.Forceupdate
@@ -222,6 +223,20 @@ class AppversionController(
     ): ResponseEntity<AppversionResponse> {
         val updatedRequest = request.copy(id = id)
         val res = appversionService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchAppversion(
+        @PathVariable id: Long,
+        @RequestBody request: AppversionPatchRequest
+    ): ResponseEntity<AppversionResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = appversionService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

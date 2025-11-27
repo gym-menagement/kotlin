@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Alarm
 import com.gowoobro.gymspring.entity.AlarmCreateRequest
 import com.gowoobro.gymspring.entity.AlarmUpdateRequest
+import com.gowoobro.gymspring.entity.AlarmPatchRequest
 import com.gowoobro.gymspring.service.AlarmService
 import com.gowoobro.gymspring.entity.AlarmResponse
 import com.gowoobro.gymspring.enums.alarm.Type
@@ -180,6 +181,20 @@ class AlarmController(
     ): ResponseEntity<AlarmResponse> {
         val updatedRequest = request.copy(id = id)
         val res = alarmService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchAlarm(
+        @PathVariable id: Long,
+        @RequestBody request: AlarmPatchRequest
+    ): ResponseEntity<AlarmResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = alarmService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

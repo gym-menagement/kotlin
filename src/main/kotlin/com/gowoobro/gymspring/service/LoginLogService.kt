@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Loginlog
 import com.gowoobro.gymspring.entity.LoginlogCreateRequest
 import com.gowoobro.gymspring.entity.LoginlogUpdateRequest
+import com.gowoobro.gymspring.entity.LoginlogPatchRequest
 import com.gowoobro.gymspring.repository.LoginlogRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -108,5 +109,17 @@ class LoginlogService(private val loginlogRepository: LoginlogRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: LoginlogPatchRequest): Loginlog? {
+        val existing = loginlogRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            ip = request.ip ?: existing.ip,
+            ipvalue = request.ipvalue ?: existing.ipvalue,
+            userId = request.user ?: existing.userId,
+            date = request.date ?: existing.date,
+        )
+        return loginlogRepository.save(updated)
     }
 }

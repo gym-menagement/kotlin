@@ -40,6 +40,14 @@ data class DiscountUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class DiscountPatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val name: String? = null,
+    val discount: Int? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class DiscountExtraInfo(
 
     val gym: GymResponse? = null,

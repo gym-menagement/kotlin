@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Daytype
 import com.gowoobro.gymspring.entity.DaytypeCreateRequest
 import com.gowoobro.gymspring.entity.DaytypeUpdateRequest
+import com.gowoobro.gymspring.entity.DaytypePatchRequest
 import com.gowoobro.gymspring.service.DaytypeService
 import com.gowoobro.gymspring.entity.DaytypeResponse
 
@@ -148,6 +149,20 @@ class DaytypeController(
     ): ResponseEntity<DaytypeResponse> {
         val updatedRequest = request.copy(id = id)
         val res = daytypeService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchDaytype(
+        @PathVariable id: Long,
+        @RequestBody request: DaytypePatchRequest
+    ): ResponseEntity<DaytypeResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = daytypeService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

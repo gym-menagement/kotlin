@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Gym
 import com.gowoobro.gymspring.entity.GymCreateRequest
 import com.gowoobro.gymspring.entity.GymUpdateRequest
+import com.gowoobro.gymspring.entity.GymPatchRequest
 import com.gowoobro.gymspring.service.GymService
 import com.gowoobro.gymspring.entity.GymResponse
 
@@ -168,6 +169,20 @@ class GymController(
     ): ResponseEntity<GymResponse> {
         val updatedRequest = request.copy(id = id)
         val res = gymService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchGym(
+        @PathVariable id: Long,
+        @RequestBody request: GymPatchRequest
+    ): ResponseEntity<GymResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = gymService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

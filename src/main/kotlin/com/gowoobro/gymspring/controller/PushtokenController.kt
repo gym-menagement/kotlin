@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Pushtoken
 import com.gowoobro.gymspring.entity.PushtokenCreateRequest
 import com.gowoobro.gymspring.entity.PushtokenUpdateRequest
+import com.gowoobro.gymspring.entity.PushtokenPatchRequest
 import com.gowoobro.gymspring.service.PushtokenService
 import com.gowoobro.gymspring.entity.PushtokenResponse
 import com.gowoobro.gymspring.enums.pushtoken.Isactive
@@ -211,6 +212,20 @@ class PushtokenController(
     ): ResponseEntity<PushtokenResponse> {
         val updatedRequest = request.copy(id = id)
         val res = pushtokenService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchPushtoken(
+        @PathVariable id: Long,
+        @RequestBody request: PushtokenPatchRequest
+    ): ResponseEntity<PushtokenResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = pushtokenService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

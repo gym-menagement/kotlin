@@ -40,6 +40,14 @@ data class LoginlogUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class LoginlogPatchRequest(
+    val id: Long = 0,
+    val ip: String? = null,
+    val ipvalue: Long? = null,
+    val user: Long? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class LoginlogExtraInfo(
 
     val user: UserResponse? = null,

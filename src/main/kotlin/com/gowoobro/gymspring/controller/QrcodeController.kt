@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Qrcode
 import com.gowoobro.gymspring.entity.QrcodeCreateRequest
 import com.gowoobro.gymspring.entity.QrcodeUpdateRequest
+import com.gowoobro.gymspring.entity.QrcodePatchRequest
 import com.gowoobro.gymspring.service.QrcodeService
 import com.gowoobro.gymspring.entity.QrcodeResponse
 import com.gowoobro.gymspring.enums.qrcode.Isactive
@@ -212,6 +213,20 @@ class QrcodeController(
     ): ResponseEntity<QrcodeResponse> {
         val updatedRequest = request.copy(id = id)
         val res = qrcodeService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchQrcode(
+        @PathVariable id: Long,
+        @RequestBody request: QrcodePatchRequest
+    ): ResponseEntity<QrcodeResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = qrcodeService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

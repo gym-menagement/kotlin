@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Gym
 import com.gowoobro.gymspring.entity.GymCreateRequest
 import com.gowoobro.gymspring.entity.GymUpdateRequest
+import com.gowoobro.gymspring.entity.GymPatchRequest
 import com.gowoobro.gymspring.repository.GymRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -115,5 +116,18 @@ class GymService(private val gymRepository: GymRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: GymPatchRequest): Gym? {
+        val existing = gymRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            name = request.name ?: existing.name,
+            address = request.address ?: existing.address,
+            tel = request.tel ?: existing.tel,
+            user = request.user ?: existing.user,
+            date = request.date ?: existing.date,
+        )
+        return gymRepository.save(updated)
     }
 }

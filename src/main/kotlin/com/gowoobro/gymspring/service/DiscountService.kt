@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Discount
 import com.gowoobro.gymspring.entity.DiscountCreateRequest
 import com.gowoobro.gymspring.entity.DiscountUpdateRequest
+import com.gowoobro.gymspring.entity.DiscountPatchRequest
 import com.gowoobro.gymspring.repository.DiscountRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -108,5 +109,17 @@ class DiscountService(private val discountRepository: DiscountRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: DiscountPatchRequest): Discount? {
+        val existing = discountRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            name = request.name ?: existing.name,
+            discount = request.discount ?: existing.discount,
+            date = request.date ?: existing.date,
+        )
+        return discountRepository.save(updated)
     }
 }

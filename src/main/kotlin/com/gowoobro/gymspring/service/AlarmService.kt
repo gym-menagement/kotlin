@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Alarm
 import com.gowoobro.gymspring.entity.AlarmCreateRequest
 import com.gowoobro.gymspring.entity.AlarmUpdateRequest
+import com.gowoobro.gymspring.entity.AlarmPatchRequest
 import com.gowoobro.gymspring.repository.AlarmRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -124,5 +125,19 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: AlarmPatchRequest): Alarm? {
+        val existing = alarmRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            title = request.title ?: existing.title,
+            content = request.content ?: existing.content,
+            type = request.type ?: existing.type,
+            status = request.status ?: existing.status,
+            userId = request.user ?: existing.userId,
+            date = request.date ?: existing.date,
+        )
+        return alarmRepository.save(updated)
     }
 }

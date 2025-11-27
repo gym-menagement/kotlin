@@ -76,6 +76,21 @@ data class InquiryUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class InquiryPatchRequest(
+    val id: Long = 0,
+    val user: Long? = null,
+    val gym: Long? = null,
+    val type: Type? = null,
+    val title: String? = null,
+    val content: String? = null,
+    val status: Status? = null,
+    val answer: String? = null,
+    val answeredby: Long? = null,
+    val answereddate: LocalDateTime? = null,
+    val createddate: LocalDateTime? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class InquiryExtraInfo(
     val type: String = "",
     val status: String = "",

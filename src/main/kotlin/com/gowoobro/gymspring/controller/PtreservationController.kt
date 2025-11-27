@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Ptreservation
 import com.gowoobro.gymspring.entity.PtreservationCreateRequest
 import com.gowoobro.gymspring.entity.PtreservationUpdateRequest
+import com.gowoobro.gymspring.entity.PtreservationPatchRequest
 import com.gowoobro.gymspring.service.PtreservationService
 import com.gowoobro.gymspring.entity.PtreservationResponse
 import com.gowoobro.gymspring.enums.ptreservation.Status
@@ -252,6 +253,20 @@ class PtreservationController(
     ): ResponseEntity<PtreservationResponse> {
         val updatedRequest = request.copy(id = id)
         val res = ptreservationService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchPtreservation(
+        @PathVariable id: Long,
+        @RequestBody request: PtreservationPatchRequest
+    ): ResponseEntity<PtreservationResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = ptreservationService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Rocker
 import com.gowoobro.gymspring.entity.RockerCreateRequest
 import com.gowoobro.gymspring.entity.RockerUpdateRequest
+import com.gowoobro.gymspring.entity.RockerPatchRequest
 import com.gowoobro.gymspring.service.RockerService
 import com.gowoobro.gymspring.entity.RockerResponse
 import com.gowoobro.gymspring.enums.rocker.Available
@@ -169,6 +170,20 @@ class RockerController(
     ): ResponseEntity<RockerResponse> {
         val updatedRequest = request.copy(id = id)
         val res = rockerService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchRocker(
+        @PathVariable id: Long,
+        @RequestBody request: RockerPatchRequest
+    ): ResponseEntity<RockerResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = rockerService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

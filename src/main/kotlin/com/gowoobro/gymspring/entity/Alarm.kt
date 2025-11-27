@@ -50,6 +50,16 @@ data class AlarmUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class AlarmPatchRequest(
+    val id: Long = 0,
+    val title: String? = null,
+    val content: String? = null,
+    val type: Type? = null,
+    val status: Status? = null,
+    val user: Long? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class AlarmExtraInfo(
     val type: String = "",
     val status: String = "",

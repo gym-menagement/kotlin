@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Qrcode
 import com.gowoobro.gymspring.entity.QrcodeCreateRequest
 import com.gowoobro.gymspring.entity.QrcodeUpdateRequest
+import com.gowoobro.gymspring.entity.QrcodePatchRequest
 import com.gowoobro.gymspring.repository.QrcodeRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -144,5 +145,22 @@ class QrcodeService(private val qrcodeRepository: QrcodeRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: QrcodePatchRequest): Qrcode? {
+        val existing = qrcodeRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            userId = request.user ?: existing.userId,
+            code = request.code ?: existing.code,
+            imageurl = request.imageurl ?: existing.imageurl,
+            isactive = request.isactive ?: existing.isactive,
+            expiredate = request.expiredate ?: existing.expiredate,
+            generateddate = request.generateddate ?: existing.generateddate,
+            lastuseddate = request.lastuseddate ?: existing.lastuseddate,
+            usecount = request.usecount ?: existing.usecount,
+            date = request.date ?: existing.date,
+        )
+        return qrcodeRepository.save(updated)
     }
 }

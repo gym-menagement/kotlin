@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Attendance
 import com.gowoobro.gymspring.entity.AttendanceCreateRequest
 import com.gowoobro.gymspring.entity.AttendanceUpdateRequest
+import com.gowoobro.gymspring.entity.AttendancePatchRequest
 import com.gowoobro.gymspring.service.AttendanceService
 import com.gowoobro.gymspring.entity.AttendanceResponse
 import com.gowoobro.gymspring.enums.attendance.Type
@@ -263,6 +264,20 @@ class AttendanceController(
     ): ResponseEntity<AttendanceResponse> {
         val updatedRequest = request.copy(id = id)
         val res = attendanceService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchAttendance(
+        @PathVariable id: Long,
+        @RequestBody request: AttendancePatchRequest
+    ): ResponseEntity<AttendanceResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = attendanceService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

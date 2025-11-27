@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Healthcategory
 import com.gowoobro.gymspring.entity.HealthcategoryCreateRequest
 import com.gowoobro.gymspring.entity.HealthcategoryUpdateRequest
+import com.gowoobro.gymspring.entity.HealthcategoryPatchRequest
 import com.gowoobro.gymspring.service.HealthcategoryService
 import com.gowoobro.gymspring.entity.HealthcategoryResponse
 
@@ -148,6 +149,20 @@ class HealthcategoryController(
     ): ResponseEntity<HealthcategoryResponse> {
         val updatedRequest = request.copy(id = id)
         val res = healthcategoryService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchHealthcategory(
+        @PathVariable id: Long,
+        @RequestBody request: HealthcategoryPatchRequest
+    ): ResponseEntity<HealthcategoryResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = healthcategoryService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

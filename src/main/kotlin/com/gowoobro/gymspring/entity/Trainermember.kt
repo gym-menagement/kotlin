@@ -63,6 +63,18 @@ data class TrainermemberUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class TrainermemberPatchRequest(
+    val id: Long = 0,
+    val trainer: Long? = null,
+    val member: Long? = null,
+    val gym: Long? = null,
+    val startdate: LocalDateTime? = null,
+    val enddate: LocalDateTime? = null,
+    val status: Status? = null,
+    val note: String? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class TrainermemberExtraInfo(
     val status: String = "",
 

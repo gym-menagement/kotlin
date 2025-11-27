@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Role
 import com.gowoobro.gymspring.entity.RoleCreateRequest
 import com.gowoobro.gymspring.entity.RoleUpdateRequest
+import com.gowoobro.gymspring.entity.RolePatchRequest
 import com.gowoobro.gymspring.service.RoleService
 import com.gowoobro.gymspring.entity.RoleResponse
 import com.gowoobro.gymspring.enums.role.Roleid
@@ -159,6 +160,20 @@ class RoleController(
     ): ResponseEntity<RoleResponse> {
         val updatedRequest = request.copy(id = id)
         val res = roleService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchRole(
+        @PathVariable id: Long,
+        @RequestBody request: RolePatchRequest
+    ): ResponseEntity<RoleResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = roleService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

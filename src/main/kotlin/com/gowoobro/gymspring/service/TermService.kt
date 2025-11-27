@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Term
 import com.gowoobro.gymspring.entity.TermCreateRequest
 import com.gowoobro.gymspring.entity.TermUpdateRequest
+import com.gowoobro.gymspring.entity.TermPatchRequest
 import com.gowoobro.gymspring.repository.TermRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -115,5 +116,18 @@ class TermService(private val termRepository: TermRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: TermPatchRequest): Term? {
+        val existing = termRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            daytypeId = request.daytype ?: existing.daytypeId,
+            name = request.name ?: existing.name,
+            term = request.term ?: existing.term,
+            date = request.date ?: existing.date,
+        )
+        return termRepository.save(updated)
     }
 }

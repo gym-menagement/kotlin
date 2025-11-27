@@ -36,6 +36,13 @@ data class RockergroupUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class RockergroupPatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val name: String? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class RockergroupExtraInfo(
 
     val gym: GymResponse? = null,

@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Attendance
 import com.gowoobro.gymspring.entity.AttendanceCreateRequest
 import com.gowoobro.gymspring.entity.AttendanceUpdateRequest
+import com.gowoobro.gymspring.entity.AttendancePatchRequest
 import com.gowoobro.gymspring.repository.AttendanceRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -181,5 +182,27 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: AttendancePatchRequest): Attendance? {
+        val existing = attendanceRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            userId = request.user ?: existing.userId,
+            usehealthId = request.usehealth ?: existing.usehealthId,
+            gymId = request.gym ?: existing.gymId,
+            type = request.type ?: existing.type,
+            method = request.method ?: existing.method,
+            checkintime = request.checkintime ?: existing.checkintime,
+            checkouttime = request.checkouttime ?: existing.checkouttime,
+            duration = request.duration ?: existing.duration,
+            status = request.status ?: existing.status,
+            note = request.note ?: existing.note,
+            ip = request.ip ?: existing.ip,
+            device = request.device ?: existing.device,
+            createdby = request.createdby ?: existing.createdby,
+            date = request.date ?: existing.date,
+        )
+        return attendanceRepository.save(updated)
     }
 }

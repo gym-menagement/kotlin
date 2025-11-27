@@ -81,6 +81,22 @@ data class WorkoutlogUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class WorkoutlogPatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val user: Long? = null,
+    val attendance: Long? = null,
+    val health: Long? = null,
+    val exercisename: String? = null,
+    val sets: Int? = null,
+    val reps: Int? = null,
+    val weight: BigDecimal? = null,
+    val duration: Int? = null,
+    val calories: Int? = null,
+    val note: String? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class WorkoutlogExtraInfo(
 
     val gym: GymResponse? = null,

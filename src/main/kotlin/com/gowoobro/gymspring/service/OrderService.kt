@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Order
 import com.gowoobro.gymspring.entity.OrderCreateRequest
 import com.gowoobro.gymspring.entity.OrderUpdateRequest
+import com.gowoobro.gymspring.entity.OrderPatchRequest
 import com.gowoobro.gymspring.repository.OrderRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -108,5 +109,17 @@ class OrderService(private val orderRepository: OrderRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: OrderPatchRequest): Order? {
+        val existing = orderRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            userId = request.user ?: existing.userId,
+            gymId = request.gym ?: existing.gymId,
+            healthId = request.health ?: existing.healthId,
+            date = request.date ?: existing.date,
+        )
+        return orderRepository.save(updated)
     }
 }

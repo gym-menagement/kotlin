@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Stop
 import com.gowoobro.gymspring.entity.StopCreateRequest
 import com.gowoobro.gymspring.entity.StopUpdateRequest
+import com.gowoobro.gymspring.entity.StopPatchRequest
 import com.gowoobro.gymspring.repository.StopRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -115,5 +116,18 @@ class StopService(private val stopRepository: StopRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: StopPatchRequest): Stop? {
+        val existing = stopRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            usehealthId = request.usehealth ?: existing.usehealthId,
+            startday = request.startday ?: existing.startday,
+            endday = request.endday ?: existing.endday,
+            count = request.count ?: existing.count,
+            date = request.date ?: existing.date,
+        )
+        return stopRepository.save(updated)
     }
 }

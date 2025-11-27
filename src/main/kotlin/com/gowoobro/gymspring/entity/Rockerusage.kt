@@ -89,6 +89,23 @@ data class RockerusageUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class RockerusagePatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val rocker: Long? = null,
+    val user: Long? = null,
+    val usehealth: Long? = null,
+    val startdate: LocalDateTime? = null,
+    val enddate: LocalDateTime? = null,
+    val status: Status? = null,
+    val deposit: BigDecimal? = null,
+    val monthlyfee: BigDecimal? = null,
+    val note: String? = null,
+    val assignedby: Long? = null,
+    val assigneddate: LocalDateTime? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class RockerusageExtraInfo(
     val status: String = "",
 

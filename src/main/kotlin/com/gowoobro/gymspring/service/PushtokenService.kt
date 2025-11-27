@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Pushtoken
 import com.gowoobro.gymspring.entity.PushtokenCreateRequest
 import com.gowoobro.gymspring.entity.PushtokenUpdateRequest
+import com.gowoobro.gymspring.entity.PushtokenPatchRequest
 import com.gowoobro.gymspring.repository.PushtokenRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -144,5 +145,22 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: PushtokenPatchRequest): Pushtoken? {
+        val existing = pushtokenRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            userId = request.user ?: existing.userId,
+            token = request.token ?: existing.token,
+            devicetype = request.devicetype ?: existing.devicetype,
+            deviceid = request.deviceid ?: existing.deviceid,
+            appversion = request.appversion ?: existing.appversion,
+            isactive = request.isactive ?: existing.isactive,
+            createddate = request.createddate ?: existing.createddate,
+            updateddate = request.updateddate ?: existing.updateddate,
+            date = request.date ?: existing.date,
+        )
+        return pushtokenRepository.save(updated)
     }
 }

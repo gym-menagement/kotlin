@@ -61,6 +61,19 @@ data class PushtokenUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class PushtokenPatchRequest(
+    val id: Long = 0,
+    val user: Long? = null,
+    val token: String? = null,
+    val devicetype: String? = null,
+    val deviceid: String? = null,
+    val appversion: String? = null,
+    val isactive: Isactive? = null,
+    val createddate: LocalDateTime? = null,
+    val updateddate: LocalDateTime? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class PushtokenExtraInfo(
     val isactive: String = "",
 

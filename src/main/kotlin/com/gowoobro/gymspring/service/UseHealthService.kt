@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Usehealth
 import com.gowoobro.gymspring.entity.UsehealthCreateRequest
 import com.gowoobro.gymspring.entity.UsehealthUpdateRequest
+import com.gowoobro.gymspring.entity.UsehealthPatchRequest
 import com.gowoobro.gymspring.repository.UsehealthRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -193,5 +194,29 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: UsehealthPatchRequest): Usehealth? {
+        val existing = usehealthRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            orderId = request.order ?: existing.orderId,
+            healthId = request.health ?: existing.healthId,
+            userId = request.user ?: existing.userId,
+            rockerId = request.rocker ?: existing.rockerId,
+            termId = request.term ?: existing.termId,
+            discountId = request.discount ?: existing.discountId,
+            startday = request.startday ?: existing.startday,
+            endday = request.endday ?: existing.endday,
+            gymId = request.gym ?: existing.gymId,
+            status = request.status ?: existing.status,
+            totalcount = request.totalcount ?: existing.totalcount,
+            usedcount = request.usedcount ?: existing.usedcount,
+            remainingcount = request.remainingcount ?: existing.remainingcount,
+            qrcode = request.qrcode ?: existing.qrcode,
+            lastuseddate = request.lastuseddate ?: existing.lastuseddate,
+            date = request.date ?: existing.date,
+        )
+        return usehealthRepository.save(updated)
     }
 }

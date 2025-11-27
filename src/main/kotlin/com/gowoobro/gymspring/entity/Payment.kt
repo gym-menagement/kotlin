@@ -50,6 +50,15 @@ data class PaymentUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class PaymentPatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val order: Long? = null,
+    val user: Long? = null,
+    val cost: Int? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class PaymentExtraInfo(
 
     val gym: GymResponse? = null,

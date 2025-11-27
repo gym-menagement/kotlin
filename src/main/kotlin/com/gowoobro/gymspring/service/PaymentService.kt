@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Payment
 import com.gowoobro.gymspring.entity.PaymentCreateRequest
 import com.gowoobro.gymspring.entity.PaymentUpdateRequest
+import com.gowoobro.gymspring.entity.PaymentPatchRequest
 import com.gowoobro.gymspring.repository.PaymentRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -115,5 +116,18 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: PaymentPatchRequest): Payment? {
+        val existing = paymentRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            orderId = request.order ?: existing.orderId,
+            userId = request.user ?: existing.userId,
+            cost = request.cost ?: existing.cost,
+            date = request.date ?: existing.date,
+        )
+        return paymentRepository.save(updated)
     }
 }

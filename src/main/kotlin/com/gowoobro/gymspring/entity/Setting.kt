@@ -57,6 +57,19 @@ data class SettingUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class SettingPatchRequest(
+    val id: Long = 0,
+    val category: String? = null,
+    val name: String? = null,
+    val key: String? = null,
+    val value: String? = null,
+    val remark: String? = null,
+    val type: Type? = null,
+    val data: String? = null,
+    val order: Int? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class SettingExtraInfo(
     val type: String = "",
 

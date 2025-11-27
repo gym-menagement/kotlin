@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Role
 import com.gowoobro.gymspring.entity.RoleCreateRequest
 import com.gowoobro.gymspring.entity.RoleUpdateRequest
+import com.gowoobro.gymspring.entity.RolePatchRequest
 import com.gowoobro.gymspring.repository.RoleRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -109,5 +110,17 @@ class RoleService(private val roleRepository: RoleRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: RolePatchRequest): Role? {
+        val existing = roleRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            roleid = request.roleid ?: existing.roleid,
+            name = request.name ?: existing.name,
+            date = request.date ?: existing.date,
+        )
+        return roleRepository.save(updated)
     }
 }

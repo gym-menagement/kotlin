@@ -41,6 +41,14 @@ data class RoleUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class RolePatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val roleid: Roleid? = null,
+    val name: String? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class RoleExtraInfo(
     val roleid: String = "",
 

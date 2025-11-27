@@ -38,6 +38,14 @@ data class SystemlogUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class SystemlogPatchRequest(
+    val id: Long = 0,
+    val type: Type? = null,
+    val content: String? = null,
+    val result: Result? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class SystemlogExtraInfo(
     val type: String = "",
     val result: String = "",

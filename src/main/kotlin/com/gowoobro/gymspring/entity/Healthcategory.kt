@@ -36,6 +36,13 @@ data class HealthcategoryUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class HealthcategoryPatchRequest(
+    val id: Long = 0,
+    val gym: Long? = null,
+    val name: String? = null,
+    val date: LocalDateTime? = null,
+)
+
 data class HealthcategoryExtraInfo(
 
     val gym: GymResponse? = null,

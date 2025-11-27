@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Discount
 import com.gowoobro.gymspring.entity.DiscountCreateRequest
 import com.gowoobro.gymspring.entity.DiscountUpdateRequest
+import com.gowoobro.gymspring.entity.DiscountPatchRequest
 import com.gowoobro.gymspring.service.DiscountService
 import com.gowoobro.gymspring.entity.DiscountResponse
 
@@ -158,6 +159,20 @@ class DiscountController(
     ): ResponseEntity<DiscountResponse> {
         val updatedRequest = request.copy(id = id)
         val res = discountService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchDiscount(
+        @PathVariable id: Long,
+        @RequestBody request: DiscountPatchRequest
+    ): ResponseEntity<DiscountResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = discountService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Rockergroup
 import com.gowoobro.gymspring.entity.RockergroupCreateRequest
 import com.gowoobro.gymspring.entity.RockergroupUpdateRequest
+import com.gowoobro.gymspring.entity.RockergroupPatchRequest
 import com.gowoobro.gymspring.repository.RockergroupRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -101,5 +102,16 @@ class RockergroupService(private val rockergroupRepository: RockergroupRepositor
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: RockergroupPatchRequest): Rockergroup? {
+        val existing = rockergroupRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            name = request.name ?: existing.name,
+            date = request.date ?: existing.date,
+        )
+        return rockergroupRepository.save(updated)
     }
 }

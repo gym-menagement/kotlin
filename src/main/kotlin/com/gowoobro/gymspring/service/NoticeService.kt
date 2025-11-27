@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Notice
 import com.gowoobro.gymspring.entity.NoticeCreateRequest
 import com.gowoobro.gymspring.entity.NoticeUpdateRequest
+import com.gowoobro.gymspring.entity.NoticePatchRequest
 import com.gowoobro.gymspring.repository.NoticeRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -190,5 +191,28 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: NoticePatchRequest): Notice? {
+        val existing = noticeRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            title = request.title ?: existing.title,
+            content = request.content ?: existing.content,
+            type = request.type ?: existing.type,
+            ispopup = request.ispopup ?: existing.ispopup,
+            ispush = request.ispush ?: existing.ispush,
+            target = request.target ?: existing.target,
+            viewcount = request.viewcount ?: existing.viewcount,
+            startdate = request.startdate ?: existing.startdate,
+            enddate = request.enddate ?: existing.enddate,
+            status = request.status ?: existing.status,
+            createdbyId = request.createdby ?: existing.createdbyId,
+            createddate = request.createddate ?: existing.createddate,
+            updateddate = request.updateddate ?: existing.updateddate,
+            date = request.date ?: existing.date,
+        )
+        return noticeRepository.save(updated)
     }
 }

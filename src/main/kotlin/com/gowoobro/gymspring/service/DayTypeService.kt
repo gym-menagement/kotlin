@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Daytype
 import com.gowoobro.gymspring.entity.DaytypeCreateRequest
 import com.gowoobro.gymspring.entity.DaytypeUpdateRequest
+import com.gowoobro.gymspring.entity.DaytypePatchRequest
 import com.gowoobro.gymspring.repository.DaytypeRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -101,5 +102,16 @@ class DaytypeService(private val daytypeRepository: DaytypeRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: DaytypePatchRequest): Daytype? {
+        val existing = daytypeRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            name = request.name ?: existing.name,
+            date = request.date ?: existing.date,
+        )
+        return daytypeRepository.save(updated)
     }
 }

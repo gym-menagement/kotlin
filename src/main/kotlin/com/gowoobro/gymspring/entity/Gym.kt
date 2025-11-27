@@ -40,6 +40,15 @@ data class GymUpdateRequest(
     val date: LocalDateTime? = LocalDateTime.now(),
 )
 
+data class GymPatchRequest(
+    val id: Long = 0,
+    val name: String? = null,
+    val address: String? = null,
+    val tel: String? = null,
+    val user: Long? = null,
+    val date: LocalDateTime? = null,
+)
+
 
 
 data class GymResponse(

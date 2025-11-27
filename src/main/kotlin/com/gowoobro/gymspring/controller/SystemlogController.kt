@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Systemlog
 import com.gowoobro.gymspring.entity.SystemlogCreateRequest
 import com.gowoobro.gymspring.entity.SystemlogUpdateRequest
+import com.gowoobro.gymspring.entity.SystemlogPatchRequest
 import com.gowoobro.gymspring.service.SystemlogService
 import com.gowoobro.gymspring.entity.SystemlogResponse
 import com.gowoobro.gymspring.enums.systemlog.Type
@@ -160,6 +161,20 @@ class SystemlogController(
     ): ResponseEntity<SystemlogResponse> {
         val updatedRequest = request.copy(id = id)
         val res = systemlogService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchSystemlog(
+        @PathVariable id: Long,
+        @RequestBody request: SystemlogPatchRequest
+    ): ResponseEntity<SystemlogResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = systemlogService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

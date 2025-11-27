@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.controller
 import com.gowoobro.gymspring.entity.Payment
 import com.gowoobro.gymspring.entity.PaymentCreateRequest
 import com.gowoobro.gymspring.entity.PaymentUpdateRequest
+import com.gowoobro.gymspring.entity.PaymentPatchRequest
 import com.gowoobro.gymspring.service.PaymentService
 import com.gowoobro.gymspring.entity.PaymentResponse
 
@@ -168,6 +169,20 @@ class PaymentController(
     ): ResponseEntity<PaymentResponse> {
         val updatedRequest = request.copy(id = id)
         val res = paymentService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchPayment(
+        @PathVariable id: Long,
+        @RequestBody request: PaymentPatchRequest
+    ): ResponseEntity<PaymentResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = paymentService.patch(patchRequest)
         return if (res != null) {
             ResponseEntity.ok(toResponse(res))
         } else {

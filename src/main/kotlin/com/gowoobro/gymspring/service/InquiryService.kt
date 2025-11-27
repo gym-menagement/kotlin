@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Inquiry
 import com.gowoobro.gymspring.entity.InquiryCreateRequest
 import com.gowoobro.gymspring.entity.InquiryUpdateRequest
+import com.gowoobro.gymspring.entity.InquiryPatchRequest
 import com.gowoobro.gymspring.repository.InquiryRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -159,5 +160,24 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: InquiryPatchRequest): Inquiry? {
+        val existing = inquiryRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            userId = request.user ?: existing.userId,
+            gymId = request.gym ?: existing.gymId,
+            type = request.type ?: existing.type,
+            title = request.title ?: existing.title,
+            content = request.content ?: existing.content,
+            status = request.status ?: existing.status,
+            answer = request.answer ?: existing.answer,
+            answeredbyId = request.answeredby ?: existing.answeredbyId,
+            answereddate = request.answereddate ?: existing.answereddate,
+            createddate = request.createddate ?: existing.createddate,
+            date = request.date ?: existing.date,
+        )
+        return inquiryRepository.save(updated)
     }
 }

@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Workoutlog
 import com.gowoobro.gymspring.entity.WorkoutlogCreateRequest
 import com.gowoobro.gymspring.entity.WorkoutlogUpdateRequest
+import com.gowoobro.gymspring.entity.WorkoutlogPatchRequest
 import com.gowoobro.gymspring.repository.WorkoutlogRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -164,5 +165,25 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: WorkoutlogPatchRequest): Workoutlog? {
+        val existing = workoutlogRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            gymId = request.gym ?: existing.gymId,
+            userId = request.user ?: existing.userId,
+            attendanceId = request.attendance ?: existing.attendanceId,
+            healthId = request.health ?: existing.healthId,
+            exercisename = request.exercisename ?: existing.exercisename,
+            sets = request.sets ?: existing.sets,
+            reps = request.reps ?: existing.reps,
+            weight = request.weight ?: existing.weight,
+            duration = request.duration ?: existing.duration,
+            calories = request.calories ?: existing.calories,
+            note = request.note ?: existing.note,
+            date = request.date ?: existing.date,
+        )
+        return workoutlogRepository.save(updated)
     }
 }

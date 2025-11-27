@@ -3,6 +3,7 @@ package com.gowoobro.gymspring.service
 import com.gowoobro.gymspring.entity.Setting
 import com.gowoobro.gymspring.entity.SettingCreateRequest
 import com.gowoobro.gymspring.entity.SettingUpdateRequest
+import com.gowoobro.gymspring.entity.SettingPatchRequest
 import com.gowoobro.gymspring.repository.SettingRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -144,5 +145,22 @@ class SettingService(private val settingRepository: SettingRepository) {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun patch(request: SettingPatchRequest): Setting? {
+        val existing = settingRepository.findById(request.id).orElse(null) ?: return null
+
+        val updated = existing.copy(
+            category = request.category ?: existing.category,
+            name = request.name ?: existing.name,
+            key = request.key ?: existing.key,
+            value = request.value ?: existing.value,
+            remark = request.remark ?: existing.remark,
+            type = request.type ?: existing.type,
+            data = request.data ?: existing.data,
+            order = request.order ?: existing.order,
+            date = request.date ?: existing.date,
+        )
+        return settingRepository.save(updated)
     }
 }
