@@ -13,18 +13,10 @@ data class Inquiry(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "iq_id")
     val id: Long = 0,
-
-    @Column(name = "iq_user", insertable = false, updatable = false)
+    @Column(name = "iq_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iq_user")
-    val inquireruser: User? = null,
-
-    @Column(name = "iq_gym", insertable = false, updatable = false)
+    @Column(name = "iq_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iq_gym")
-    val gym: Gym? = null,
     @Column(name = "iq_type")
     val type: Type = Type.GENERAL,
     @Column(name = "iq_title")
@@ -35,19 +27,25 @@ data class Inquiry(
     val status: Status = Status.WAITING,
     @Column(name = "iq_answer")
     val answer: String = "",
-
-    @Column(name = "iq_answeredby", insertable = false, updatable = false)
+    @Column(name = "iq_answeredby")
     val answeredbyId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iq_answeredby")
-    val answeredbyuser: User? = null,
     @Column(name = "iq_answereddate")
     val answereddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "iq_createddate")
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "iq_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iq_user", insertable = false, updatable = false)
+    var inquireruser: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iq_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iq_answeredby", insertable = false, updatable = false)
+    var answeredbyuser: User? = null
+}
 
 data class InquiryCreateRequest(
     val user: Long = 0L,

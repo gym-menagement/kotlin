@@ -33,7 +33,7 @@ data class Appversion(
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "av_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) 
 
 data class AppversionCreateRequest(
     val platform: String = "",

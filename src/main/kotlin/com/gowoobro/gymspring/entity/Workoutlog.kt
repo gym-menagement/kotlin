@@ -11,30 +11,14 @@ data class Workoutlog(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wl_id")
     val id: Long = 0,
-
-    @Column(name = "wl_gym", insertable = false, updatable = false)
+    @Column(name = "wl_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wl_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "wl_user", insertable = false, updatable = false)
+    @Column(name = "wl_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wl_user")
-    val user: User? = null,
-
-    @Column(name = "wl_attendance", insertable = false, updatable = false)
+    @Column(name = "wl_attendance")
     val attendanceId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wl_attendance")
-    val attendance: Attendance? = null,
-
-    @Column(name = "wl_health", insertable = false, updatable = false)
+    @Column(name = "wl_health")
     val healthId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wl_health")
-    val health: Health? = null,
     @Column(name = "wl_exercisename")
     val exercisename: String = "",
     @Column(name = "wl_sets")
@@ -51,7 +35,20 @@ data class Workoutlog(
     val note: String = "",
     @Column(name = "wl_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wl_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wl_user", insertable = false, updatable = false)
+    var user: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wl_attendance", insertable = false, updatable = false)
+    var attendance: Attendance? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wl_health", insertable = false, updatable = false)
+    var health: Health? = null
+}
 
 data class WorkoutlogCreateRequest(
     val gym: Long = 0L,

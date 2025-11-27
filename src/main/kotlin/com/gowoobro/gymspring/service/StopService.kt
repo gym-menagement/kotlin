@@ -54,7 +54,6 @@ class StopService(private val stopRepository: StopRepository) {
 
 
     fun create(request: StopCreateRequest): Stop {
-        println("Creating Stop with request: $request")
         val entity = Stop(
             usehealthId = request.usehealth,
             startday = request.startday,

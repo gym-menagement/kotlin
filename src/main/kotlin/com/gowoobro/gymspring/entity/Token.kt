@@ -12,19 +12,19 @@ data class Token(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "to_id")
     val id: Long = 0,
-
-    @Column(name = "to_user", insertable = false, updatable = false)
+    @Column(name = "to_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "to_user")
-    val user: User? = null,
     @Column(name = "to_token")
     val token: String = "",
     @Column(name = "to_status")
     val status: Status = Status.ACTIVE,
     @Column(name = "to_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "to_user", insertable = false, updatable = false)
+    var user: User? = null
+}
 
 data class TokenCreateRequest(
     val user: Long = 0L,

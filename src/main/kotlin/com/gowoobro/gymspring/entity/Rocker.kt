@@ -12,25 +12,24 @@ data class Rocker(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "r_id")
     val id: Long = 0,
-
-    @Column(name = "r_gym", insertable = false, updatable = false)
+    @Column(name = "r_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "r_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "r_group", insertable = false, updatable = false)
+    @Column(name = "r_group")
     val groupId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "r_group")
-    val rockergroup: Rockergroup? = null,
     @Column(name = "r_name")
     val name: String = "",
     @Column(name = "r_available")
     val available: Available = Available.IN_USE,
     @Column(name = "r_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "r_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "r_group", insertable = false, updatable = false)
+    var rockergroup: Rockergroup? = null
+}
 
 data class RockerCreateRequest(
     val gym: Long = 0L,

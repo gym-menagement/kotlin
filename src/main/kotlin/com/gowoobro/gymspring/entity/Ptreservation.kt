@@ -12,24 +12,12 @@ data class Ptreservation(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pr_id")
     val id: Long = 0,
-
-    @Column(name = "pr_trainer", insertable = false, updatable = false)
+    @Column(name = "pr_trainer")
     val trainerId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pr_trainer")
-    val traineruser: User? = null,
-
-    @Column(name = "pr_member", insertable = false, updatable = false)
+    @Column(name = "pr_member")
     val memberId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pr_member")
-    val memberuser: User? = null,
-
-    @Column(name = "pr_gym", insertable = false, updatable = false)
+    @Column(name = "pr_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pr_gym")
-    val gym: Gym? = null,
     @Column(name = "pr_reservationdate")
     val reservationdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "pr_starttime")
@@ -50,7 +38,17 @@ data class Ptreservation(
     val updateddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "pr_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pr_trainer", insertable = false, updatable = false)
+    var traineruser: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pr_member", insertable = false, updatable = false)
+    var memberuser: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pr_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class PtreservationCreateRequest(
     val trainer: Long = 0L,

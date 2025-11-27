@@ -21,7 +21,7 @@ data class Gym(
     val user: Long = 0L,
     @Column(name = "g_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) 
 
 data class GymCreateRequest(
     val name: String = "",

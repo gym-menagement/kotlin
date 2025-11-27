@@ -12,12 +12,8 @@ data class Qrcode(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "qr_id")
     val id: Long = 0,
-
-    @Column(name = "qr_user", insertable = false, updatable = false)
+    @Column(name = "qr_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "qr_user")
-    val user: User? = null,
     @Column(name = "qr_code")
     val code: String = "",
     @Column(name = "qr_imageurl")
@@ -34,7 +30,11 @@ data class Qrcode(
     val usecount: Int = 0,
     @Column(name = "qr_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "qr_user", insertable = false, updatable = false)
+    var user: User? = null
+}
 
 data class QrcodeCreateRequest(
     val user: Long = 0L,

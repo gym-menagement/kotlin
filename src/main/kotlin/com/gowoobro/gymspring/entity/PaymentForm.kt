@@ -11,29 +11,27 @@ data class Paymentform(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pf_id")
     val id: Long = 0,
-
-    @Column(name = "pf_gym", insertable = false, updatable = false)
+    @Column(name = "pf_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pf_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "pf_payment", insertable = false, updatable = false)
+    @Column(name = "pf_payment")
     val paymentId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pf_payment")
-    val payment: Payment? = null,
-
-    @Column(name = "pf_type", insertable = false, updatable = false)
+    @Column(name = "pf_type")
     val typeId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pf_type")
-    val paymenttype: Paymenttype? = null,
     @Column(name = "pf_cost")
     val cost: Int = 0,
     @Column(name = "pf_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pf_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pf_payment", insertable = false, updatable = false)
+    var payment: Payment? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pf_type", insertable = false, updatable = false)
+    var paymenttype: Paymenttype? = null
+}
 
 data class PaymentformCreateRequest(
     val gym: Long = 0L,

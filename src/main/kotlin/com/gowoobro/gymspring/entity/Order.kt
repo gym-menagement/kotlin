@@ -11,27 +11,25 @@ data class Order(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "o_id")
     val id: Long = 0,
-
-    @Column(name = "o_user", insertable = false, updatable = false)
+    @Column(name = "o_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "o_user")
-    val user: User? = null,
-
-    @Column(name = "o_gym", insertable = false, updatable = false)
+    @Column(name = "o_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "o_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "o_health", insertable = false, updatable = false)
+    @Column(name = "o_health")
     val healthId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "o_health")
-    val health: Health? = null,
     @Column(name = "o_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "o_user", insertable = false, updatable = false)
+    var user: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "o_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "o_health", insertable = false, updatable = false)
+    var health: Health? = null
+}
 
 data class OrderCreateRequest(
     val user: Long = 0L,

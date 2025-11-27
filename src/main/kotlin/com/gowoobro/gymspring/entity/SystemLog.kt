@@ -21,7 +21,7 @@ data class Systemlog(
     val result: Result = Result.SUCCESS,
     @Column(name = "sl_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) 
 
 data class SystemlogCreateRequest(
     val type: Type = Type.LOGIN,

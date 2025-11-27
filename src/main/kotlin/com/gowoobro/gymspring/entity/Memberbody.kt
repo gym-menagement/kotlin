@@ -11,18 +11,10 @@ data class Memberbody(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mb_id")
     val id: Long = 0,
-
-    @Column(name = "mb_gym", insertable = false, updatable = false)
+    @Column(name = "mb_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mb_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "mb_user", insertable = false, updatable = false)
+    @Column(name = "mb_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mb_user")
-    val memberuser: User? = null,
     @Column(name = "mb_height")
     val height: BigDecimal = BigDecimal.ZERO,
     @Column(name = "mb_weight")
@@ -51,15 +43,21 @@ data class Memberbody(
     val note: String = "",
     @Column(name = "mb_measureddate")
     val measureddate: LocalDateTime? = LocalDateTime.now(),
-
-    @Column(name = "mb_measuredby", insertable = false, updatable = false)
+    @Column(name = "mb_measuredby")
     val measuredbyId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mb_measuredby")
-    val measuredbyuser: User? = null,
     @Column(name = "mb_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mb_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mb_user", insertable = false, updatable = false)
+    var memberuser: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mb_measuredby", insertable = false, updatable = false)
+    var measuredbyuser: User? = null
+}
 
 data class MemberbodyCreateRequest(
     val gym: Long = 0L,

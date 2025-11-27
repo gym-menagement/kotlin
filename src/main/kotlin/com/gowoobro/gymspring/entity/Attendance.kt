@@ -14,24 +14,12 @@ data class Attendance(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "at_id")
     val id: Long = 0,
-
-    @Column(name = "at_user", insertable = false, updatable = false)
+    @Column(name = "at_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "at_user")
-    val user: User? = null,
-
-    @Column(name = "at_usehealth", insertable = false, updatable = false)
+    @Column(name = "at_usehealth")
     val usehealthId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "at_usehealth")
-    val usehealth: Usehealth? = null,
-
-    @Column(name = "at_gym", insertable = false, updatable = false)
+    @Column(name = "at_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "at_gym")
-    val gym: Gym? = null,
     @Column(name = "at_type")
     val type: Type = Type.ENTRY,
     @Column(name = "at_method")
@@ -54,7 +42,17 @@ data class Attendance(
     val createdby: Long = 0L,
     @Column(name = "at_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "at_user", insertable = false, updatable = false)
+    var user: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "at_usehealth", insertable = false, updatable = false)
+    var usehealth: Usehealth? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "at_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class AttendanceCreateRequest(
     val user: Long = 0L,

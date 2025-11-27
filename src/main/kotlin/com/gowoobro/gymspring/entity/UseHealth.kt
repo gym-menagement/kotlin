@@ -12,52 +12,24 @@ data class Usehealth(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uh_id")
     val id: Long = 0,
-
-    @Column(name = "uh_order", insertable = false, updatable = false)
+    @Column(name = "uh_order")
     val orderId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_order")
-    val order: Order? = null,
-
-    @Column(name = "uh_health", insertable = false, updatable = false)
+    @Column(name = "uh_health")
     val healthId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_health")
-    val health: Health? = null,
-
-    @Column(name = "uh_user", insertable = false, updatable = false)
+    @Column(name = "uh_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_user")
-    val user: User? = null,
-
-    @Column(name = "uh_rocker", insertable = false, updatable = false)
+    @Column(name = "uh_rocker")
     val rockerId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_rocker")
-    val rocker: Rocker? = null,
-
-    @Column(name = "uh_term", insertable = false, updatable = false)
+    @Column(name = "uh_term")
     val termId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_term")
-    val term: Term? = null,
-
-    @Column(name = "uh_discount", insertable = false, updatable = false)
+    @Column(name = "uh_discount")
     val discountId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_discount")
-    val discount: Discount? = null,
     @Column(name = "uh_startday")
     val startday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "uh_endday")
     val endday: LocalDateTime? = LocalDateTime.now(),
-
-    @Column(name = "uh_gym", insertable = false, updatable = false)
+    @Column(name = "uh_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_gym")
-    val gym: Gym? = null,
     @Column(name = "uh_status")
     val status: Status = Status.TERMINATED,
     @Column(name = "uh_totalcount")
@@ -72,7 +44,29 @@ data class Usehealth(
     val lastuseddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "uh_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uh_order", insertable = false, updatable = false)
+    var order: Order? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uh_health", insertable = false, updatable = false)
+    var health: Health? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uh_user", insertable = false, updatable = false)
+    var user: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uh_rocker", insertable = false, updatable = false)
+    var rocker: Rocker? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uh_term", insertable = false, updatable = false)
+    var term: Term? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uh_discount", insertable = false, updatable = false)
+    var discount: Discount? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uh_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class UsehealthCreateRequest(
     val order: Long = 0L,

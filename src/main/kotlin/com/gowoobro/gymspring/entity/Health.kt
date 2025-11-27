@@ -11,43 +11,40 @@ data class Health(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "h_id")
     val id: Long = 0,
-
-    @Column(name = "h_category", insertable = false, updatable = false)
+    @Column(name = "h_category")
     val categoryId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_category")
-    val healthcategory: Healthcategory? = null,
-
-    @Column(name = "h_term", insertable = false, updatable = false)
+    @Column(name = "h_term")
     val termId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_term")
-    val term: Term? = null,
     @Column(name = "h_name")
     val name: String = "",
     @Column(name = "h_count")
     val count: Int = 0,
     @Column(name = "h_cost")
     val cost: Int = 0,
-
-    @Column(name = "h_discount", insertable = false, updatable = false)
+    @Column(name = "h_discount")
     val discountId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_discount")
-    val discount: Discount? = null,
     @Column(name = "h_costdiscount")
     val costdiscount: Int = 0,
     @Column(name = "h_content")
     val content: String = "",
-
-    @Column(name = "h_gym", insertable = false, updatable = false)
+    @Column(name = "h_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_gym")
-    val gym: Gym? = null,
     @Column(name = "h_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "h_category", insertable = false, updatable = false)
+    var healthcategory: Healthcategory? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "h_term", insertable = false, updatable = false)
+    var term: Term? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "h_discount", insertable = false, updatable = false)
+    var discount: Discount? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "h_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class HealthCreateRequest(
     val category: Long = 0L,

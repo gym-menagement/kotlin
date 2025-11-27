@@ -12,12 +12,8 @@ data class Pushtoken(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pt_id")
     val id: Long = 0,
-
-    @Column(name = "pt_user", insertable = false, updatable = false)
+    @Column(name = "pt_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pt_user")
-    val user: User? = null,
     @Column(name = "pt_token")
     val token: String = "",
     @Column(name = "pt_devicetype")
@@ -34,7 +30,11 @@ data class Pushtoken(
     val updateddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "pt_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pt_user", insertable = false, updatable = false)
+    var user: User? = null
+}
 
 data class PushtokenCreateRequest(
     val user: Long = 0L,

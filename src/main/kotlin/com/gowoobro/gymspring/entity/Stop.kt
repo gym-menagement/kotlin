@@ -11,10 +11,8 @@ data class Stop(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "s_id")
     val id: Long = 0,
-
     @Column(name = "s_usehealth")
     val usehealthId: Long = 0L,
-
     @Column(name = "s_startday")
     val startday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "s_endday")

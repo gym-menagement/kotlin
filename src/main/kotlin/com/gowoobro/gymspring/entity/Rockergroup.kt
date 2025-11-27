@@ -11,17 +11,17 @@ data class Rockergroup(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rg_id")
     val id: Long = 0,
-
-    @Column(name = "rg_gym", insertable = false, updatable = false)
+    @Column(name = "rg_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rg_gym")
-    val gym: Gym? = null,
     @Column(name = "rg_name")
     val name: String = "",
     @Column(name = "rg_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rg_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class RockergroupCreateRequest(
     val gym: Long = 0L,

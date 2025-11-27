@@ -11,29 +11,27 @@ data class Payment(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "p_id")
     val id: Long = 0,
-
-    @Column(name = "p_gym", insertable = false, updatable = false)
+    @Column(name = "p_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "p_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "p_order", insertable = false, updatable = false)
+    @Column(name = "p_order")
     val orderId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "p_order")
-    val order: Order? = null,
-
-    @Column(name = "p_user", insertable = false, updatable = false)
+    @Column(name = "p_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "p_user")
-    val user: User? = null,
     @Column(name = "p_cost")
     val cost: Int = 0,
     @Column(name = "p_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "p_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "p_order", insertable = false, updatable = false)
+    var order: Order? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "p_user", insertable = false, updatable = false)
+    var user: User? = null
+}
 
 data class PaymentCreateRequest(
     val gym: Long = 0L,

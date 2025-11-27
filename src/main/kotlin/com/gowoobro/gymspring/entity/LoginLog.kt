@@ -15,15 +15,15 @@ data class Loginlog(
     val ip: String = "",
     @Column(name = "ll_ipvalue")
     val ipvalue: Long = 0L,
-
-    @Column(name = "ll_user", insertable = false, updatable = false)
+    @Column(name = "ll_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ll_user")
-    val user: User? = null,
     @Column(name = "ll_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ll_user", insertable = false, updatable = false)
+    var user: User? = null
+}
 
 data class LoginlogCreateRequest(
     val ip: String = "",

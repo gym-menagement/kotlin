@@ -12,24 +12,12 @@ data class Trainermember(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tm_id")
     val id: Long = 0,
-
-    @Column(name = "tm_trainer", insertable = false, updatable = false)
+    @Column(name = "tm_trainer")
     val trainerId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tm_trainer")
-    val traineruser: User? = null,
-
-    @Column(name = "tm_member", insertable = false, updatable = false)
+    @Column(name = "tm_member")
     val memberId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tm_member")
-    val memberuser: User? = null,
-
-    @Column(name = "tm_gym", insertable = false, updatable = false)
+    @Column(name = "tm_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tm_gym")
-    val gym: Gym? = null,
     @Column(name = "tm_startdate")
     val startdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "tm_enddate")
@@ -40,7 +28,17 @@ data class Trainermember(
     val note: String = "",
     @Column(name = "tm_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tm_trainer", insertable = false, updatable = false)
+    var traineruser: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tm_member", insertable = false, updatable = false)
+    var memberuser: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tm_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class TrainermemberCreateRequest(
     val trainer: Long = 0L,

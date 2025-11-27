@@ -21,15 +21,15 @@ data class Alarm(
     val type: Type = Type.NOTICE,
     @Column(name = "al_status")
     val status: Status = Status.SUCCESS,
-
-    @Column(name = "al_user", insertable = false, updatable = false)
+    @Column(name = "al_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "al_user")
-    val user: User? = null,
     @Column(name = "al_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "al_user", insertable = false, updatable = false)
+    var user: User? = null
+}
 
 data class AlarmCreateRequest(
     val title: String = "",

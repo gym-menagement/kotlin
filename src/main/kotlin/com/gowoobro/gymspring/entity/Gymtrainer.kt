@@ -12,18 +12,10 @@ data class Gymtrainer(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gt_id")
     val id: Long = 0,
-
-    @Column(name = "gt_gym", insertable = false, updatable = false)
+    @Column(name = "gt_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gt_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "gt_trainer", insertable = false, updatable = false)
+    @Column(name = "gt_trainer")
     val trainerId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gt_trainer")
-    val traineruser: User? = null,
     @Column(name = "gt_startdate")
     val startdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "gt_enddate")
@@ -36,7 +28,14 @@ data class Gymtrainer(
     val note: String = "",
     @Column(name = "gt_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gt_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gt_trainer", insertable = false, updatable = false)
+    var traineruser: User? = null
+}
 
 data class GymtrainerCreateRequest(
     val gym: Long = 0L,

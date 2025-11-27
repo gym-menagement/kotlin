@@ -50,7 +50,7 @@ data class User(
     val lastchangepasswddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "u_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) 
 
 data class UserCreateRequest(
     val loginid: String = "",

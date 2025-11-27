@@ -12,30 +12,14 @@ data class Usehealthusage(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uhu_id")
     val id: Long = 0,
-
-    @Column(name = "uhu_gym", insertable = false, updatable = false)
+    @Column(name = "uhu_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uhu_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "uhu_usehealth", insertable = false, updatable = false)
+    @Column(name = "uhu_usehealth")
     val usehealthId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uhu_usehealth")
-    val usehealth: Usehealth? = null,
-
-    @Column(name = "uhu_user", insertable = false, updatable = false)
+    @Column(name = "uhu_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uhu_user")
-    val user: User? = null,
-
-    @Column(name = "uhu_attendance", insertable = false, updatable = false)
+    @Column(name = "uhu_attendance")
     val attendanceId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uhu_attendance")
-    val attendance: Attendance? = null,
     @Column(name = "uhu_type")
     val type: Type = Type.ENTRY,
     @Column(name = "uhu_usedcount")
@@ -52,7 +36,20 @@ data class Usehealthusage(
     val note: String = "",
     @Column(name = "uhu_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uhu_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uhu_usehealth", insertable = false, updatable = false)
+    var usehealth: Usehealth? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uhu_user", insertable = false, updatable = false)
+    var user: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uhu_attendance", insertable = false, updatable = false)
+    var attendance: Attendance? = null
+}
 
 data class UsehealthusageCreateRequest(
     val gym: Long = 0L,

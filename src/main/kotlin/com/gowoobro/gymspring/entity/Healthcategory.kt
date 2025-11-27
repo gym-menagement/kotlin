@@ -11,17 +11,17 @@ data class Healthcategory(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hc_id")
     val id: Long = 0,
-
-    @Column(name = "hc_gym", insertable = false, updatable = false)
+    @Column(name = "hc_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hc_gym")
-    val gym: Gym? = null,
     @Column(name = "hc_name")
     val name: String = "",
     @Column(name = "hc_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hc_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class HealthcategoryCreateRequest(
     val gym: Long = 0L,

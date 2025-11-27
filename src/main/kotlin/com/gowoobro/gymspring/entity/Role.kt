@@ -12,19 +12,19 @@ data class Role(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "r_id")
     val id: Long = 0,
-
-    @Column(name = "r_gym", insertable = false, updatable = false)
+    @Column(name = "r_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "r_gym")
-    val gym: Gym? = null,
     @Column(name = "r_roleid")
     val roleid: Roleid = Roleid.MEMBER,
     @Column(name = "r_name")
     val name: String = "",
     @Column(name = "r_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "r_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class RoleCreateRequest(
     val gym: Long = 0L,

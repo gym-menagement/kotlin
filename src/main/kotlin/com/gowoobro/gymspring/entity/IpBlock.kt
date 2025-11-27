@@ -26,7 +26,7 @@ data class Ipblock(
     val order: Int = 0,
     @Column(name = "ib_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) 
 
 data class IpblockCreateRequest(
     val address: String = "",

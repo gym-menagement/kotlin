@@ -11,17 +11,17 @@ data class Daytype(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dt_id")
     val id: Long = 0,
-
-    @Column(name = "dt_gym", insertable = false, updatable = false)
+    @Column(name = "dt_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dt_gym")
-    val gym: Gym? = null,
     @Column(name = "dt_name")
     val name: String = "",
     @Column(name = "dt_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dt_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class DaytypeCreateRequest(
     val gym: Long = 0L,

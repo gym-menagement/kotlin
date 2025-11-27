@@ -12,30 +12,14 @@ data class Rockerusage(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ru_id")
     val id: Long = 0,
-
-    @Column(name = "ru_gym", insertable = false, updatable = false)
+    @Column(name = "ru_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ru_gym")
-    val gym: Gym? = null,
-
-    @Column(name = "ru_rocker", insertable = false, updatable = false)
+    @Column(name = "ru_rocker")
     val rockerId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ru_rocker")
-    val rocker: Rocker? = null,
-
-    @Column(name = "ru_user", insertable = false, updatable = false)
+    @Column(name = "ru_user")
     val userId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ru_user")
-    val memberuser: User? = null,
-
-    @Column(name = "ru_usehealth", insertable = false, updatable = false)
+    @Column(name = "ru_usehealth")
     val usehealthId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ru_usehealth")
-    val usehealth: Usehealth? = null,
     @Column(name = "ru_startdate")
     val startdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "ru_enddate")
@@ -48,17 +32,29 @@ data class Rockerusage(
     val monthlyfee: BigDecimal = BigDecimal.ZERO,
     @Column(name = "ru_note")
     val note: String = "",
-
-    @Column(name = "ru_assignedby", insertable = false, updatable = false)
+    @Column(name = "ru_assignedby")
     val assignedbyId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ru_assignedby")
-    val assignedbyuser: User? = null,
     @Column(name = "ru_assigneddate")
     val assigneddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "ru_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ru_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ru_rocker", insertable = false, updatable = false)
+    var rocker: Rocker? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ru_user", insertable = false, updatable = false)
+    var memberuser: User? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ru_usehealth", insertable = false, updatable = false)
+    var usehealth: Usehealth? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ru_assignedby", insertable = false, updatable = false)
+    var assignedbyuser: User? = null
+}
 
 data class RockerusageCreateRequest(
     val gym: Long = 0L,

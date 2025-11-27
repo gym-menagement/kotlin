@@ -11,19 +11,19 @@ data class Discount(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "d_id")
     val id: Long = 0,
-
-    @Column(name = "d_gym", insertable = false, updatable = false)
+    @Column(name = "d_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "d_gym")
-    val gym: Gym? = null,
     @Column(name = "d_name")
     val name: String = "",
     @Column(name = "d_discount")
     val discount: Int = 0,
     @Column(name = "d_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "d_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+}
 
 data class DiscountCreateRequest(
     val gym: Long = 0L,

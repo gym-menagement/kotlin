@@ -16,12 +16,8 @@ data class Notice(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nt_id")
     val id: Long = 0,
-
-    @Column(name = "nt_gym", insertable = false, updatable = false)
+    @Column(name = "nt_gym")
     val gymId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nt_gym")
-    val gym: Gym? = null,
     @Column(name = "nt_title")
     val title: String = "",
     @Column(name = "nt_content")
@@ -42,19 +38,22 @@ data class Notice(
     val enddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "nt_status")
     val status: Status = Status.PRIVATE,
-
-    @Column(name = "nt_createdby", insertable = false, updatable = false)
+    @Column(name = "nt_createdby")
     val createdbyId: Long = 0L,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nt_createdby")
-    val user: User? = null,
     @Column(name = "nt_createddate")
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "nt_updateddate")
     val updateddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "nt_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nt_gym", insertable = false, updatable = false)
+    var gym: Gym? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nt_createdby", insertable = false, updatable = false)
+    var user: User? = null
+}
 
 data class NoticeCreateRequest(
     val gym: Long = 0L,

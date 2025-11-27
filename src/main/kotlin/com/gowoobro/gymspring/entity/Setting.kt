@@ -30,7 +30,7 @@ data class Setting(
     val order: Int = 0,
     @Column(name = "se_date")
     val date: LocalDateTime? = LocalDateTime.now(),
-)
+) 
 
 data class SettingCreateRequest(
     val category: String = "",
