@@ -164,8 +164,21 @@ CREATE TABLE `loginlog_tb` (
 
 --
 -- Table structure for table `membership_tb`
--- (DEPRECATED: 이 테이블은 더 이상 사용하지 않습니다. usehealth_tb가 회원권 정보를 관리합니다)
+-- 회원 테이블 (user와 회원권을 연결하는 중간 테이블)
 --
+
+DROP TABLE IF EXISTS `membership_tb`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `membership_tb` (
+  `m_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '회원 ID',
+  `m_user` bigint(20) NOT NULL DEFAULT 0 COMMENT '사용자 ID (user_tb 참조)',
+  `m_gym` bigint(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
+  `m_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
+  PRIMARY KEY (`m_id`),
+  INDEX idx_user (m_user)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='회원 테이블';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `order_tb`
@@ -397,7 +410,8 @@ CREATE TABLE `usehealth_tb` (
   `uh_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '운동권 사용 ID (회원권 ID)',
   `uh_order` bigint(20) NOT NULL DEFAULT 0 COMMENT '주문 ID (order_tb 참조)',
   `uh_health` bigint(20) NOT NULL DEFAULT 0 COMMENT '운동권 ID (health_tb 참조)',
-  `uh_user` bigint(20) NOT NULL DEFAULT 0 COMMENT '회원 ID (user_tb 참조)',
+  `uh_membership` bigint(20) NOT NULL DEFAULT 0 COMMENT '회원 ID (membership_tb 참조)',
+  `uh_user` bigint(20) NOT NULL DEFAULT 0 COMMENT '사용자 ID (user_tb 참조) - DEPRECATED: uh_membership 사용 권장',
   `uh_rocker` bigint(20) NOT NULL DEFAULT 0 COMMENT '락커 ID (rocker_tb 참조)',
   `uh_term` bigint(20) NOT NULL DEFAULT 0 COMMENT '기간 ID (term_tb 참조)',
   `uh_discount` bigint(20) NOT NULL DEFAULT 0 COMMENT '할인 ID (discount_tb 참조)',
@@ -413,6 +427,7 @@ CREATE TABLE `usehealth_tb` (
   `uh_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
   PRIMARY KEY (`uh_id`),
   INDEX idx_gym (uh_gym),
+  INDEX idx_membership (uh_membership),
   INDEX idx_user (uh_user),
   INDEX idx_status (uh_status),
   INDEX idx_endday (uh_endday),
@@ -541,7 +556,8 @@ CREATE TABLE IF NOT EXISTS usehealthusage_tb (
     uhu_id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '이용내역 ID',
     uhu_gym BIGINT(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
     uhu_usehealth BIGINT(20) NOT NULL DEFAULT 0 COMMENT '운동권 사용 ID (usehealth_tb 참조)',
-    uhu_user BIGINT(20) NOT NULL DEFAULT 0 COMMENT '회원 ID (user_tb 참조)',
+    uhu_membership BIGINT(20) NOT NULL DEFAULT 0 COMMENT '회원 ID (membership_tb 참조)',
+    uhu_user BIGINT(20) NOT NULL DEFAULT 0 COMMENT '사용자 ID (user_tb 참조) - DEPRECATED: uhu_membership 사용 권장',
     uhu_attendance BIGINT(20) NOT NULL DEFAULT 0 COMMENT '출석 ID (attendance_tb 참조)',
     uhu_type INT(11) NOT NULL DEFAULT 0 COMMENT '이용 타입 (ENTRY:입장, PT:PT수업, CLASS:그룹수업)',
     uhu_usedcount INT(11) NOT NULL DEFAULT 1 COMMENT '차감된 횟수 (기본 1회)',
@@ -554,6 +570,7 @@ CREATE TABLE IF NOT EXISTS usehealthusage_tb (
     PRIMARY KEY (uhu_id),
     INDEX idx_gym (uhu_gym),
     INDEX idx_usehealth (uhu_usehealth),
+    INDEX idx_membership (uhu_membership),
     INDEX idx_user (uhu_user),
     INDEX idx_attendance (uhu_attendance),
     INDEX idx_date (uhu_date)

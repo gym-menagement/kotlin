@@ -16,6 +16,8 @@ data class Usehealth(
     val orderId: Long = 0L,
     @Column(name = "uh_health")
     val healthId: Long = 0L,
+    @Column(name = "uh_membership")
+    val membershipId: Long = 0L,
     @Column(name = "uh_user")
     val userId: Long = 0L,
     @Column(name = "uh_rocker")
@@ -52,6 +54,9 @@ data class Usehealth(
     @JoinColumn(name = "uh_health", insertable = false, updatable = false)
     var health: Health? = null
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uh_membership", insertable = false, updatable = false)
+    var membership: Membership? = null
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uh_user", insertable = false, updatable = false)
     var user: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
@@ -71,6 +76,7 @@ data class Usehealth(
 data class UsehealthCreateRequest(
     val order: Long = 0L,
     val health: Long = 0L,
+    val membership: Long = 0L,
     val user: Long = 0L,
     val rocker: Long = 0L,
     val term: Long = 0L,
@@ -91,6 +97,7 @@ data class UsehealthUpdateRequest(
     val id: Long = 0,
     val order: Long = 0L,
     val health: Long = 0L,
+    val membership: Long = 0L,
     val user: Long = 0L,
     val rocker: Long = 0L,
     val term: Long = 0L,
@@ -111,6 +118,7 @@ data class UsehealthPatchRequest(
     val id: Long = 0,
     val order: Long? = null,
     val health: Long? = null,
+    val membership: Long? = null,
     val user: Long? = null,
     val rocker: Long? = null,
     val term: Long? = null,
@@ -132,6 +140,7 @@ data class UsehealthExtraInfo(
 
     val order: OrderResponse? = null,
     val health: HealthResponse? = null,
+    val membership: MembershipResponse? = null,
     val user: UserResponse? = null,
     val rocker: RockerResponse? = null,
     val term: TermResponse? = null,
@@ -144,6 +153,7 @@ data class UsehealthResponse(
     val id: Long,
     val order: Long,
     val health: Long,
+    val membership: Long,
     val user: Long,
     val rocker: Long,
     val term: Long,
@@ -165,6 +175,7 @@ data class UsehealthResponse(
         fun from(usehealth: Usehealth): UsehealthResponse {
             val orderResponse = usehealth.order?.let { OrderResponse.from(it) }
             val healthResponse = usehealth.health?.let { HealthResponse.from(it) }
+            val membershipResponse = usehealth.membership?.let { MembershipResponse.from(it) }
             val userResponse = usehealth.user?.let { UserResponse.from(it) }
             val rockerResponse = usehealth.rocker?.let { RockerResponse.from(it) }
             val termResponse = usehealth.term?.let { TermResponse.from(it) }
@@ -174,6 +185,7 @@ data class UsehealthResponse(
                 id = usehealth.id,
                 order = usehealth.orderId,
                 health = usehealth.healthId,
+                membership = usehealth.membershipId,
                 user = usehealth.userId,
                 rocker = usehealth.rockerId,
                 term = usehealth.termId,
@@ -191,7 +203,7 @@ data class UsehealthResponse(
 
                 extra = UsehealthExtraInfo(
                     status = Status.getDisplayName(usehealth.status),
-                    order = orderResponse,health = healthResponse,user = userResponse,rocker = rockerResponse,term = termResponse,discount = discountResponse,gym = gymResponse,)
+                    order = orderResponse,health = healthResponse,membership = membershipResponse,user = userResponse,rocker = rockerResponse,term = termResponse,discount = discountResponse,gym = gymResponse,)
                 
             )
         }

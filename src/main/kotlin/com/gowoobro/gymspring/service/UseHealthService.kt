@@ -42,6 +42,10 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         return usehealthRepository.findByhealthId(health)
     }
 
+    fun findByMembership(membership: Long): List<Usehealth> {
+        return usehealthRepository.findBymembershipId(membership)
+    }
+
     fun findByUser(user: Long): List<Usehealth> {
         return usehealthRepository.findByuserId(user)
     }
@@ -103,6 +107,7 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         val entity = Usehealth(
             orderId = request.order,
             healthId = request.health,
+            membershipId = request.membership,
             userId = request.user,
             rockerId = request.rocker,
             termId = request.term,
@@ -126,6 +131,7 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
             Usehealth(
                 orderId = request.order,
                 healthId = request.health,
+                membershipId = request.membership,
                 userId = request.user,
                 rockerId = request.rocker,
                 termId = request.term,
@@ -151,6 +157,7 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         val updated = existing.copy(
             orderId = request.order,
             healthId = request.health,
+            membershipId = request.membership,
             userId = request.user,
             rockerId = request.rocker,
             termId = request.term,
@@ -202,6 +209,7 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         val updated = existing.copy(
             orderId = request.order ?: existing.orderId,
             healthId = request.health ?: existing.healthId,
+            membershipId = request.membership ?: existing.membershipId,
             userId = request.user ?: existing.userId,
             rockerId = request.rocker ?: existing.rockerId,
             termId = request.term ?: existing.termId,

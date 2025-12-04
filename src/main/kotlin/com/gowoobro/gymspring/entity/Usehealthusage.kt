@@ -16,6 +16,8 @@ data class Usehealthusage(
     val gymId: Long = 0L,
     @Column(name = "uhu_usehealth")
     val usehealthId: Long = 0L,
+    @Column(name = "uhu_membership")
+    val membershipId: Long = 0L,
     @Column(name = "uhu_user")
     val userId: Long = 0L,
     @Column(name = "uhu_attendance")
@@ -44,6 +46,9 @@ data class Usehealthusage(
     @JoinColumn(name = "uhu_usehealth", insertable = false, updatable = false)
     var usehealth: Usehealth? = null
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uhu_membership", insertable = false, updatable = false)
+    var membership: Membership? = null
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uhu_user", insertable = false, updatable = false)
     var user: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,6 +59,7 @@ data class Usehealthusage(
 data class UsehealthusageCreateRequest(
     val gym: Long = 0L,
     val usehealth: Long = 0L,
+    val membership: Long = 0L,
     val user: Long = 0L,
     val attendance: Long = 0L,
     val type: Type = Type.ENTRY,
@@ -70,6 +76,7 @@ data class UsehealthusageUpdateRequest(
     val id: Long = 0,
     val gym: Long = 0L,
     val usehealth: Long = 0L,
+    val membership: Long = 0L,
     val user: Long = 0L,
     val attendance: Long = 0L,
     val type: Type = Type.ENTRY,
@@ -86,6 +93,7 @@ data class UsehealthusagePatchRequest(
     val id: Long = 0,
     val gym: Long? = null,
     val usehealth: Long? = null,
+    val membership: Long? = null,
     val user: Long? = null,
     val attendance: Long? = null,
     val type: Type? = null,
@@ -103,6 +111,7 @@ data class UsehealthusageExtraInfo(
 
     val gym: GymResponse? = null,
     val usehealth: UsehealthResponse? = null,
+    val membership: MembershipResponse? = null,
     val user: UserResponse? = null,
     val attendance: AttendanceResponse? = null,
 )
@@ -112,6 +121,7 @@ data class UsehealthusageResponse(
     val id: Long,
     val gym: Long,
     val usehealth: Long,
+    val membership: Long,
     val user: Long,
     val attendance: Long,
     val type: Int,
@@ -129,12 +139,14 @@ data class UsehealthusageResponse(
         fun from(usehealthusage: Usehealthusage): UsehealthusageResponse {
             val gymResponse = usehealthusage.gym?.let { GymResponse.from(it) }
             val usehealthResponse = usehealthusage.usehealth?.let { UsehealthResponse.from(it) }
+            val membershipResponse = usehealthusage.membership?.let { MembershipResponse.from(it) }
             val userResponse = usehealthusage.user?.let { UserResponse.from(it) }
             val attendanceResponse = usehealthusage.attendance?.let { AttendanceResponse.from(it) }
             return UsehealthusageResponse(
                 id = usehealthusage.id,
                 gym = usehealthusage.gymId,
                 usehealth = usehealthusage.usehealthId,
+                membership = usehealthusage.membershipId,
                 user = usehealthusage.userId,
                 attendance = usehealthusage.attendanceId,
                 type = usehealthusage.type.ordinal,
@@ -148,7 +160,7 @@ data class UsehealthusageResponse(
 
                 extra = UsehealthusageExtraInfo(
                     type = Type.getDisplayName(usehealthusage.type),
-                    gym = gymResponse,usehealth = usehealthResponse,user = userResponse,attendance = attendanceResponse,)
+                    gym = gymResponse,usehealth = usehealthResponse,membership = membershipResponse,user = userResponse,attendance = attendanceResponse,)
                 
             )
         }

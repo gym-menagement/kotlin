@@ -43,6 +43,7 @@ class UsehealthusageController(
         @RequestParam(defaultValue = "10") pageSize: Int,
         @RequestParam(required = false) gym: Long?,
         @RequestParam(required = false) usehealth: Long?,
+        @RequestParam(required = false) membership: Long?,
         @RequestParam(required = false) user: Long?,
         @RequestParam(required = false) attendance: Long?,
         @RequestParam(required = false) type: Int?,
@@ -57,13 +58,16 @@ class UsehealthusageController(
         @RequestParam(required = false) startdate: LocalDateTime?,
         @RequestParam(required = false) enddate: LocalDateTime?,
     ): ResponseEntity<Map<String, Any>> {
-        var results = if (gym != null || usehealth != null || user != null || attendance != null || type != null || usedcount != null || remainingcount != null || startcheckintime != null || endcheckintime != null || startcheckouttime != null || endcheckouttime != null || duration != null || note != null || startdate != null || enddate != null || false) {
+        var results = if (gym != null || usehealth != null || membership != null || user != null || attendance != null || type != null || usedcount != null || remainingcount != null || startcheckintime != null || endcheckintime != null || startcheckouttime != null || endcheckouttime != null || duration != null || note != null || startdate != null || enddate != null || false) {
             var filtered = usehealthusageService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
                 filtered = filtered.filter { it.gymId == gym }
             }
             if (usehealth != null) {
                 filtered = filtered.filter { it.usehealthId == usehealth }
+            }
+            if (membership != null) {
+                filtered = filtered.filter { it.membershipId == membership }
             }
             if (user != null) {
                 filtered = filtered.filter { it.userId == user }
@@ -145,6 +149,12 @@ class UsehealthusageController(
     @GetMapping("/search/usehealth")
     fun getUsehealthusageByUsehealth(@RequestParam usehealth: Long): ResponseEntity<List<UsehealthusageResponse>> {
         val res = usehealthusageService.findByUsehealth(usehealth)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/membership")
+    fun getUsehealthusageByMembership(@RequestParam membership: Long): ResponseEntity<List<UsehealthusageResponse>> {
+        val res = usehealthusageService.findByMembership(membership)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 

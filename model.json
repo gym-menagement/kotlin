@@ -272,22 +272,6 @@
           "name": "user",
           "column": "user"
         }
-      ],
-      "map": [
-        {
-          "name": "sex",
-          "data": ["", "male:남성", "female:여성"]
-        }
-      ],
-      "compare": [
-        {
-          "name": "name",
-          "type": "like"
-        },
-        {
-          "name": "phonenum",
-          "type": "like"
-        }
       ]
     },
     {
@@ -406,6 +390,10 @@
         {
           "name": "health",
           "column": "health"
+        },
+        {
+          "name": "membership",
+          "column": "membership"
         },
         {
           "name": "user",
@@ -592,6 +580,10 @@
         {
           "name": "usehealth",
           "column": "usehealth"
+        },
+        {
+          "name": "membership",
+          "column": "membership"
         },
         {
           "name": "user",

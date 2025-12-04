@@ -42,6 +42,10 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
         return usehealthusageRepository.findByusehealthId(usehealth)
     }
 
+    fun findByMembership(membership: Long): List<Usehealthusage> {
+        return usehealthusageRepository.findBymembershipId(membership)
+    }
+
     fun findByUser(user: Long): List<Usehealthusage> {
         return usehealthusageRepository.findByuserId(user)
     }
@@ -87,6 +91,7 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
         val entity = Usehealthusage(
             gymId = request.gym,
             usehealthId = request.usehealth,
+            membershipId = request.membership,
             userId = request.user,
             attendanceId = request.attendance,
             type = request.type,
@@ -106,6 +111,7 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
             Usehealthusage(
                 gymId = request.gym,
                 usehealthId = request.usehealth,
+                membershipId = request.membership,
                 userId = request.user,
                 attendanceId = request.attendance,
                 type = request.type,
@@ -127,6 +133,7 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
         val updated = existing.copy(
             gymId = request.gym,
             usehealthId = request.usehealth,
+            membershipId = request.membership,
             userId = request.user,
             attendanceId = request.attendance,
             type = request.type,
@@ -174,6 +181,7 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
         val updated = existing.copy(
             gymId = request.gym ?: existing.gymId,
             usehealthId = request.usehealth ?: existing.usehealthId,
+            membershipId = request.membership ?: existing.membershipId,
             userId = request.user ?: existing.userId,
             attendanceId = request.attendance ?: existing.attendanceId,
             type = request.type ?: existing.type,
