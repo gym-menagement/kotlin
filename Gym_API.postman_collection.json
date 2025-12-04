@@ -88,7 +88,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/user?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/user?page=0&pageSize=10&loginid=&passwd=&email=&name=&tel=&address=&image=&sex=&startbirth=&endbirth=&type=&connectid=&level=&role=&use=&startlogindate=&endlogindate=&startlastchangepasswddate=&endlastchangepasswddate=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -104,6 +104,111 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "loginid",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "passwd",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "email",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "tel",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "address",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "image",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "sex",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startbirth",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endbirth",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "connectid",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "level",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "role",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "use",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startlogindate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endlogindate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startlastchangepasswddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endlastchangepasswddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -303,6 +408,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch User",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/user/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "user",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -315,7 +448,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/alarm?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/alarm?page=0&pageSize=10&title=&content=&type=&status=&user=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -331,6 +464,41 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "title",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "content",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -504,6 +672,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Alarm",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/alarm/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "alarm",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -516,7 +712,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/daytype?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/daytype?page=0&pageSize=10&gym=&name=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -532,6 +728,26 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -705,6 +921,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch DayType",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/daytype/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "daytype",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -717,7 +961,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/discount?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/discount?page=0&pageSize=10&gym=&name=&discount=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -733,6 +977,31 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "discount",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -906,6 +1175,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Discount",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/discount/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "discount",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -918,7 +1215,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/gym?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/gym?page=0&pageSize=10&name=&address=&tel=&user=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -934,6 +1231,36 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "address",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "tel",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -1107,6 +1434,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Gym",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/gym/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "gym",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -1119,7 +1474,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/health?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/health?page=0&pageSize=10&category=&term=&name=&count=&cost=&discount=&costdiscount=&content=&gym=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -1135,6 +1490,61 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "category",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "term",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "count",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "cost",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "discount",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "costdiscount",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "content",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -1308,6 +1718,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Health",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/health/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "health",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -1320,7 +1758,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/healthcategory?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/healthcategory?page=0&pageSize=10&gym=&name=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -1336,6 +1774,26 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -1509,6 +1967,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch HealthCategory",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/healthcategory/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "healthcategory",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -1521,7 +2007,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/ipblock?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/ipblock?page=0&pageSize=10&address=&type=&policy=&use=&order=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -1537,6 +2023,41 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "address",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "policy",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "use",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "order",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -1710,6 +2231,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch IPBlock",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ipblock/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -1722,7 +2271,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/loginlog?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/loginlog?page=0&pageSize=10&ip=&ipvalue=&user=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -1738,6 +2287,31 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "ip",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "ipvalue",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -1907,6 +2481,34 @@
                 "api",
                 "loginlog",
                 "batch"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch LoginLog",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loginlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog",
+                "1"
               ]
             }
           },
@@ -2124,7 +2726,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/order?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/order?page=0&pageSize=10&user=&gym=&health=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -2140,6 +2742,31 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "health",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -2313,6 +2940,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Order",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/order/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "order",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -2325,7 +2980,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/payment?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/payment?page=0&pageSize=10&gym=&order=&user=&cost=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -2341,6 +2996,36 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "order",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "cost",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -2514,6 +3199,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Payment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/payment/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "payment",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -2526,7 +3239,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/paymenttype?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/paymenttype?page=0&pageSize=10&gym=&name=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -2542,6 +3255,26 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -2715,6 +3448,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch PaymentType",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/paymenttype/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "paymenttype",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -2727,7 +3488,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/paymentform?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/paymentform?page=0&pageSize=10&gym=&payment=&type=&cost=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -2743,6 +3504,36 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "payment",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "cost",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -2916,6 +3707,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch PaymentForm",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/paymentform/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "paymentform",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -2928,7 +3747,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/rocker?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/rocker?page=0&pageSize=10&gym=&group=&name=&available=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -2944,6 +3763,36 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "group",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "available",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -3117,6 +3966,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Rocker",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/rocker/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rocker",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -3129,7 +4006,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/rockergroup?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/rockergroup?page=0&pageSize=10&gym=&name=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -3145,6 +4022,26 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -3318,6 +4215,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch RockerGroup",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/rockergroup/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rockergroup",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -3330,7 +4255,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/role?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/role?page=0&pageSize=10&gym=&roleid=&name=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -3346,6 +4271,31 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "roleid",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -3519,6 +4469,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/role/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "role",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -3531,7 +4509,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/setting?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/setting?page=0&pageSize=10&category=&name=&key=&value=&remark=&type=&data=&order=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -3547,6 +4525,56 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "category",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "key",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "value",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "remark",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "data",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "order",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -3720,6 +4748,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Setting",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/setting/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "setting",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -3732,7 +4788,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/stop?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/stop?page=0&pageSize=10&usehealth=&startstartday=&endstartday=&startendday=&endendday=&count=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -3748,6 +4804,46 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "usehealth",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startstartday",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endstartday",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startendday",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endendday",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "count",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -3921,6 +5017,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Stop",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/stop/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stop",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -3933,7 +5057,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/systemlog?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/systemlog?page=0&pageSize=10&type=&content=&result=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -3949,6 +5073,31 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "content",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "result",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -4122,6 +5271,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch SystemLog",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/systemlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -4134,7 +5311,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/term?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/term?page=0&pageSize=10&gym=&daytype=&name=&term=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -4150,6 +5327,36 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "daytype",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "name",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "term",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -4323,6 +5530,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Term",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/term/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "term",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -4335,7 +5570,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/token?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/token?page=0&pageSize=10&user=&token=&status=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -4351,6 +5586,31 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "token",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -4524,6 +5784,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Token",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/token/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "token",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -4536,7 +5824,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/usehealth?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/usehealth?page=0&pageSize=10&order=&health=&user=&rocker=&term=&discount=&startstartday=&endstartday=&startendday=&endendday=&gym=&status=&totalcount=&usedcount=&remainingcount=&qrcode=&startlastuseddate=&endlastuseddate=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -4552,6 +5840,106 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "order",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "health",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "rocker",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "term",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "discount",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startstartday",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endstartday",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startendday",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endendday",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "totalcount",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "usedcount",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "remainingcount",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "qrcode",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startlastuseddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endlastuseddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -4725,6 +6113,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch UseHealth",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/usehealth/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "usehealth",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -4737,7 +6153,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/appversion?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/appversion?page=0&pageSize=10&platform=&version=&minversion=&forceupdate=&updatemessage=&downloadurl=&status=&startreleasedate=&endreleasedate=&startcreateddate=&endcreateddate=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -4753,6 +6169,71 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "platform",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "version",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "minversion",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "forceupdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "updatemessage",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "downloadurl",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startreleasedate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endreleasedate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -5190,6 +6671,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Appversion",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/appversion/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "appversion",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -5202,7 +6711,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/attendance?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/attendance?page=0&pageSize=10&user=&usehealth=&gym=&type=&method=&startcheckintime=&endcheckintime=&startcheckouttime=&endcheckouttime=&duration=&status=&note=&ip=&device=&createdby=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -5218,6 +6727,91 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "usehealth",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "method",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startcheckintime",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endcheckintime",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startcheckouttime",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endcheckouttime",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "duration",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "note",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "ip",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "device",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "createdby",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -5759,6 +7353,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Attendance",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/attendance/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "attendance",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -5771,7 +7393,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/inquiry?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/inquiry?page=0&pageSize=10&user=&gym=&type=&title=&content=&status=&answer=&answeredby=&startanswereddate=&endanswereddate=&startcreateddate=&endcreateddate=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -5787,6 +7409,76 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "title",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "content",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "answer",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "answeredby",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startanswereddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endanswereddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -6250,6 +7942,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Inquiry",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/inquiry/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "inquiry",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -6262,7 +7982,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/memberbody?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/memberbody?page=0&pageSize=10&gym=&user=&height=&weight=&bodyfat=&musclemass=&bmi=&skeletalmuscle=&bodywater=&chest=&waist=&hip=&arm=&thigh=&note=&startmeasureddate=&endmeasureddate=&measuredby=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -6278,6 +7998,106 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "height",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "weight",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "bodyfat",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "musclemass",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "bmi",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "skeletalmuscle",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "bodywater",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "chest",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "waist",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "hip",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "arm",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "thigh",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "note",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startmeasureddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endmeasureddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "measuredby",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -6897,6 +8717,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Memberbody",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/memberbody/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "memberbody",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -7332,6 +9180,34 @@
                 "api",
                 "memberqr",
                 "batch"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch Memberqr",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/memberqr/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "memberqr",
+                "1"
               ]
             }
           },
@@ -7943,7 +9819,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/notice?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/notice?page=0&pageSize=10&gym=&title=&content=&type=&ispopup=&ispush=&target=&viewcount=&startstartdate=&endstartdate=&startenddate=&endenddate=&status=&createdby=&startcreateddate=&endcreateddate=&startupdateddate=&endupdateddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -7959,6 +9835,106 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "title",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "content",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "ispopup",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "ispush",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "target",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "viewcount",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startstartdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endstartdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startenddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endenddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "createdby",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startupdateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endupdateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -8526,6 +10502,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Notice",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/notice/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "notice",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -8538,7 +10542,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/ptreservation?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/ptreservation?page=0&pageSize=10&trainer=&member=&gym=&startreservationdate=&endreservationdate=&starttime=&endtime=&duration=&status=&note=&cancelreason=&startcreateddate=&endcreateddate=&startupdateddate=&endupdateddate=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -8554,6 +10558,91 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "trainer",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "member",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startreservationdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endreservationdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "starttime",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endtime",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "duration",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "note",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "cancelreason",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startupdateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endupdateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -9069,6 +11158,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Ptreservation",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ptreservation/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ptreservation",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -9081,7 +11198,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/pushtoken?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/pushtoken?page=0&pageSize=10&user=&token=&devicetype=&deviceid=&appversion=&isactive=&startcreateddate=&endcreateddate=&startupdateddate=&endupdateddate=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -9097,6 +11214,66 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "token",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "devicetype",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "deviceid",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "appversion",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "isactive",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endcreateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startupdateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endupdateddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -9508,6 +11685,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Pushtoken",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/pushtoken/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pushtoken",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -9520,7 +11725,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/rockerusage?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/rockerusage?page=0&pageSize=10&gym=&rocker=&user=&usehealth=&startstartdate=&endstartdate=&startenddate=&endenddate=&status=&deposit=&monthlyfee=&note=&assignedby=&startassigneddate=&endassigneddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -9536,6 +11741,91 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "rocker",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "usehealth",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startstartdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endstartdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startenddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endenddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "deposit",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "monthlyfee",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "note",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "assignedby",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startassigneddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endassigneddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -10025,6 +12315,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Rockerusage",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/rockerusage/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "rockerusage",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -10037,7 +12355,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/trainermember?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/trainermember?page=0&pageSize=10&trainer=&member=&gym=&startstartdate=&endstartdate=&startenddate=&endenddate=&status=&note=",
               "host": [
                 "{{base_url}}"
               ],
@@ -10053,6 +12371,61 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "trainer",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "member",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startstartdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endstartdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startenddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "endenddate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "note",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -10438,6 +12811,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Patch Trainermember",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/trainermember/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "trainermember",
+                "1"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -10450,7 +12851,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/api/workoutlog?page=0&pageSize=10",
+              "raw": "{{base_url}}/api/workoutlog?page=0&pageSize=10&gym=&user=&attendance=&health=&exercisename=&sets=&reps=&weight=&duration=&calories=&note=&startdate=&enddate=",
               "host": [
                 "{{base_url}}"
               ],
@@ -10466,6 +12867,71 @@
                 {
                   "key": "pageSize",
                   "value": "10"
+                },
+                {
+                  "key": "gym",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "attendance",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "health",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "exercisename",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "sets",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "reps",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "weight",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "duration",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "calories",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "note",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
                 }
               ]
             }
@@ -10925,6 +13391,806 @@
                 "api",
                 "workoutlog",
                 "batch"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch Workoutlog",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/workoutlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "workoutlog",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "IpBlock Management",
+      "item": [
+        {
+          "name": "Get All IpBlocks (Paginated)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ipblock?page=0&pageSize=10&address=&type=&policy=&use=&order=&startdate=&enddate=",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10"
+                },
+                {
+                  "key": "address",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "policy",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "use",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "order",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get IpBlock by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ipblock/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get IpBlock Count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ipblock/count",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock",
+                "count"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create IpBlock",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ipblock",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create IpBlocks (Batch)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ipblock/batch",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock",
+                "batch"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update IpBlock",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ipblock/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete IpBlock by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ipblock/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete IpBlocks (Batch)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ipblock/batch",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock",
+                "batch"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch IpBlock",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ipblock/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ipblock",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SystemLog Management",
+      "item": [
+        {
+          "name": "Get All SystemLogs (Paginated)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/systemlog?page=0&pageSize=10&type=&content=&result=&startdate=&enddate=",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10"
+                },
+                {
+                  "key": "type",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "content",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "result",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get SystemLog by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/systemlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get SystemLog Count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/systemlog/count",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog",
+                "count"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create SystemLog",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/systemlog",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create SystemLogs (Batch)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/systemlog/batch",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog",
+                "batch"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update SystemLog",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/systemlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete SystemLog by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/systemlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete SystemLogs (Batch)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/systemlog/batch",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog",
+                "batch"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch SystemLog",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/systemlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "systemlog",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "LoginLog Management",
+      "item": [
+        {
+          "name": "Get All LoginLogs (Paginated)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loginlog?page=0&pageSize=10&ip=&ipvalue=&user=&startdate=&enddate=",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "pageSize",
+                  "value": "10"
+                },
+                {
+                  "key": "ip",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "ipvalue",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "user",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "startdate",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "enddate",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get LoginLog by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loginlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get LoginLog Count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loginlog/count",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog",
+                "count"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create LoginLog",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loginlog",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create LoginLogs (Batch)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loginlog/batch",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog",
+                "batch"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update LoginLog",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loginlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete LoginLog by ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loginlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete LoginLogs (Batch)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[]"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loginlog/batch",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog",
+                "batch"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch LoginLog",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loginlog/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loginlog",
+                "1"
               ]
             }
           },
