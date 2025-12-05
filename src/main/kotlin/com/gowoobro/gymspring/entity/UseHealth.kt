@@ -20,8 +20,6 @@ data class Usehealth(
     val membershipId: Long = 0L,
     @Column(name = "uh_user")
     val userId: Long = 0L,
-    @Column(name = "uh_rocker")
-    val rockerId: Long = 0L,
     @Column(name = "uh_term")
     val termId: Long = 0L,
     @Column(name = "uh_discount")
@@ -78,7 +76,6 @@ data class UsehealthCreateRequest(
     val health: Long = 0L,
     val membership: Long = 0L,
     val user: Long = 0L,
-    val rocker: Long = 0L,
     val term: Long = 0L,
     val discount: Long = 0L,
     val startday: LocalDateTime? = LocalDateTime.now(),
@@ -99,7 +96,6 @@ data class UsehealthUpdateRequest(
     val health: Long = 0L,
     val membership: Long = 0L,
     val user: Long = 0L,
-    val rocker: Long = 0L,
     val term: Long = 0L,
     val discount: Long = 0L,
     val startday: LocalDateTime? = LocalDateTime.now(),
@@ -120,7 +116,6 @@ data class UsehealthPatchRequest(
     val health: Long? = null,
     val membership: Long? = null,
     val user: Long? = null,
-    val rocker: Long? = null,
     val term: Long? = null,
     val discount: Long? = null,
     val startday: LocalDateTime? = null,
@@ -155,7 +150,6 @@ data class UsehealthResponse(
     val health: Long,
     val membership: Long,
     val user: Long,
-    val rocker: Long,
     val term: Long,
     val discount: Long,
     val startday: String?,
@@ -187,7 +181,6 @@ data class UsehealthResponse(
                 health = usehealth.healthId,
                 membership = usehealth.membershipId,
                 user = usehealth.userId,
-                rocker = usehealth.rockerId,
                 term = usehealth.termId,
                 discount = usehealth.discountId,
                 startday = usehealth.startday?.toString()?.replace("T", " ") ?: "",

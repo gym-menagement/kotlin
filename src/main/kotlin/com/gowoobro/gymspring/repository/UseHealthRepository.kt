@@ -197,32 +197,6 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findByrockerId(rocker: Long): List<Usehealth>
-
-    @EntityGraph(attributePaths = [
-        "order",
-        "order.user",
-        "order.gym",
-        "order.health",
-        "health",
-        "health.healthcategory",
-        "health.term",
-        "health.discount",
-        "health.gym",
-        "membership",
-        "membership.gym",
-        "membership.user",
-        "user",
-        "rocker",
-        "rocker.gym",
-        "rocker.rockergroup",
-        "term",
-        "term.gym",
-        "term.daytype",
-        "discount",
-        "discount.gym",
-        "gym"
-    ])
     fun findBytermId(term: Long): List<Usehealth>
 
     @EntityGraph(attributePaths = [

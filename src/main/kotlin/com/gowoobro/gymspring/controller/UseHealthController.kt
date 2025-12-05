@@ -45,7 +45,6 @@ class UsehealthController(
         @RequestParam(required = false) health: Long?,
         @RequestParam(required = false) membership: Long?,
         @RequestParam(required = false) user: Long?,
-        @RequestParam(required = false) rocker: Long?,
         @RequestParam(required = false) term: Long?,
         @RequestParam(required = false) discount: Long?,
         @RequestParam(required = false) startstartday: LocalDateTime?,
@@ -63,7 +62,7 @@ class UsehealthController(
         @RequestParam(required = false) startdate: LocalDateTime?,
         @RequestParam(required = false) enddate: LocalDateTime?,
     ): ResponseEntity<Map<String, Any>> {
-        var results = if (order != null || health != null || membership != null || user != null || rocker != null || term != null || discount != null || startstartday != null || endstartday != null || startendday != null || endendday != null || gym != null || status != null || totalcount != null || usedcount != null || remainingcount != null || qrcode != null || startlastuseddate != null || endlastuseddate != null || startdate != null || enddate != null || false) {
+        var results = if (order != null || health != null || membership != null || user != null || term != null || discount != null || startstartday != null || endstartday != null || startendday != null || endendday != null || gym != null || status != null || totalcount != null || usedcount != null || remainingcount != null || qrcode != null || startlastuseddate != null || endlastuseddate != null || startdate != null || enddate != null || false) {
             var filtered = usehealthService.findAll(0, Int.MAX_VALUE).content
             if (order != null) {
                 filtered = filtered.filter { it.orderId == order }
@@ -76,9 +75,6 @@ class UsehealthController(
             }
             if (user != null) {
                 filtered = filtered.filter { it.userId == user }
-            }
-            if (rocker != null) {
-                filtered = filtered.filter { it.rockerId == rocker }
             }
             if (term != null) {
                 filtered = filtered.filter { it.termId == term }
@@ -178,12 +174,6 @@ class UsehealthController(
     @GetMapping("/search/user")
     fun getUsehealthByUser(@RequestParam user: Long): ResponseEntity<List<UsehealthResponse>> {
         val res = usehealthService.findByUser(user)
-        return ResponseEntity.ok(res.map { toResponse(it) } )
-    }
-
-    @GetMapping("/search/rocker")
-    fun getUsehealthByRocker(@RequestParam rocker: Long): ResponseEntity<List<UsehealthResponse>> {
-        val res = usehealthService.findByRocker(rocker)
         return ResponseEntity.ok(res.map { toResponse(it) } )
     }
 

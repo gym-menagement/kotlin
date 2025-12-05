@@ -50,10 +50,6 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         return usehealthRepository.findByuserId(user)
     }
 
-    fun findByRocker(rocker: Long): List<Usehealth> {
-        return usehealthRepository.findByrockerId(rocker)
-    }
-
     fun findByTerm(term: Long): List<Usehealth> {
         return usehealthRepository.findBytermId(term)
     }
@@ -109,7 +105,6 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
             healthId = request.health,
             membershipId = request.membership,
             userId = request.user,
-            rockerId = request.rocker,
             termId = request.term,
             discountId = request.discount,
             startday = request.startday,
@@ -133,7 +128,6 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
                 healthId = request.health,
                 membershipId = request.membership,
                 userId = request.user,
-                rockerId = request.rocker,
                 termId = request.term,
                 discountId = request.discount,
                 startday = request.startday,
@@ -159,7 +153,6 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
             healthId = request.health,
             membershipId = request.membership,
             userId = request.user,
-            rockerId = request.rocker,
             termId = request.term,
             discountId = request.discount,
             startday = request.startday,
@@ -211,7 +204,6 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
             healthId = request.health ?: existing.healthId,
             membershipId = request.membership ?: existing.membershipId,
             userId = request.user ?: existing.userId,
-            rockerId = request.rocker ?: existing.rockerId,
             termId = request.term ?: existing.termId,
             discountId = request.discount ?: existing.discountId,
             startday = request.startday ?: existing.startday,
