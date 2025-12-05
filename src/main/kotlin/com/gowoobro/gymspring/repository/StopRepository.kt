@@ -22,7 +22,6 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
-        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -35,7 +34,6 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
-        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -48,7 +46,6 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
-        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -61,7 +58,6 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
-        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -74,7 +70,6 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
-        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -87,7 +82,6 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
-        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -100,7 +94,6 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
-        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"

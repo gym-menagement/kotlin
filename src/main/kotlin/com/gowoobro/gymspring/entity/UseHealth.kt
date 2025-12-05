@@ -58,9 +58,6 @@ data class Usehealth(
     @JoinColumn(name = "uh_user", insertable = false, updatable = false)
     var user: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_rocker", insertable = false, updatable = false)
-    var rocker: Rocker? = null
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uh_term", insertable = false, updatable = false)
     var term: Term? = null
     @ManyToOne(fetch = FetchType.LAZY)
@@ -137,7 +134,6 @@ data class UsehealthExtraInfo(
     val health: HealthResponse? = null,
     val membership: MembershipResponse? = null,
     val user: UserResponse? = null,
-    val rocker: RockerResponse? = null,
     val term: TermResponse? = null,
     val discount: DiscountResponse? = null,
     val gym: GymResponse? = null,
@@ -171,7 +167,6 @@ data class UsehealthResponse(
             val healthResponse = usehealth.health?.let { HealthResponse.from(it) }
             val membershipResponse = usehealth.membership?.let { MembershipResponse.from(it) }
             val userResponse = usehealth.user?.let { UserResponse.from(it) }
-            val rockerResponse = usehealth.rocker?.let { RockerResponse.from(it) }
             val termResponse = usehealth.term?.let { TermResponse.from(it) }
             val discountResponse = usehealth.discount?.let { DiscountResponse.from(it) }
             val gymResponse = usehealth.gym?.let { GymResponse.from(it) }
@@ -196,7 +191,7 @@ data class UsehealthResponse(
 
                 extra = UsehealthExtraInfo(
                     status = Status.getDisplayName(usehealth.status),
-                    order = orderResponse,health = healthResponse,membership = membershipResponse,user = userResponse,rocker = rockerResponse,term = termResponse,discount = discountResponse,gym = gymResponse,)
+                    order = orderResponse,health = healthResponse,membership = membershipResponse,user = userResponse,term = termResponse,discount = discountResponse,gym = gymResponse,)
                 
             )
         }
