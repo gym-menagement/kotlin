@@ -38,3 +38,12 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### model.json ###
+model.json
+
+### sql ###
+*.sql
+
+### postman ###
+*.postman_collection.json

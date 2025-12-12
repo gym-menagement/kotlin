@@ -7,10 +7,10 @@
   "auth": "jwt",
   "authTimeout": "not",
   "adminLevel": "3",
-  "language": "react",
-  "goModelFilePath": "../gym/gymspring/",
+  "language": "",
+  "goModelFilePath": "../gym/back/",
   "dartModelFilePath": "../../gym/gym/lib/model/",
-  "kotlinModelFilePath": "../../gym/android/app/src/main/kotlin/com/gowoobro/gymspring/",
+  "kotlinModelFilePath": "../../gym/gymspring/android/app/src/main/kotlin/com/gowoobro/gymspring/",
   "ReactModelFilePath": "../../gym/front/src/",
   "table": [
     {
