@@ -9,9 +9,9 @@
   "adminLevel": "3",
   "language": "",
   "goModelFilePath": "../gym/back/",
-  "dartModelFilePath": "../../gym/gym/lib/model/",
-  "kotlinModelFilePath": "../../gym/gymspring/android/app/src/main/kotlin/com/gowoobro/gymspring/",
-  "ReactModelFilePath": "../../gym/front/src/",
+  "dartModelFilePath": "../gym/app/lib/model/",
+  "kotlinModelFilePath": "../gym/gymspring/android/app/src/main/kotlin/com/gowoobro/gymspring/",
+  "ReactModelFilePath": "../gym/front/",
   "table": [
     {
       "name": "user",
