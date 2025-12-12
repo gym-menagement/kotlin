@@ -31,6 +31,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -54,6 +57,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -77,6 +83,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -84,7 +93,7 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findByorderId(order: Long): List<Usehealth>
+    fun findByOrder(order: Long): List<Usehealth>
 
     @EntityGraph(attributePaths = [
         "order",
@@ -100,6 +109,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -107,7 +119,7 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findByhealthId(health: Long): List<Usehealth>
+    fun findByHealth(health: Long): List<Usehealth>
 
     @EntityGraph(attributePaths = [
         "order",
@@ -123,6 +135,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -130,7 +145,7 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findBymembershipId(membership: Long): List<Usehealth>
+    fun findByMembership(membership: Long): List<Usehealth>
 
     @EntityGraph(attributePaths = [
         "order",
@@ -146,6 +161,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -153,7 +171,7 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findByuserId(user: Long): List<Usehealth>
+    fun findByUser(user: Long): List<Usehealth>
 
     @EntityGraph(attributePaths = [
         "order",
@@ -169,6 +187,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -176,7 +197,7 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findBytermId(term: Long): List<Usehealth>
+    fun findByTerm(term: Long): List<Usehealth>
 
     @EntityGraph(attributePaths = [
         "order",
@@ -192,6 +213,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -199,7 +223,7 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findBydiscountId(discount: Long): List<Usehealth>
+    fun findByDiscount(discount: Long): List<Usehealth>
 
     @EntityGraph(attributePaths = [
         "order",
@@ -215,6 +239,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -238,6 +265,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -261,6 +291,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -268,7 +301,7 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findBygymId(gym: Long): List<Usehealth>
+    fun findByGym(gym: Long): List<Usehealth>
 
     @EntityGraph(attributePaths = [
         "order",
@@ -284,6 +317,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -307,6 +343,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -330,6 +369,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -353,6 +395,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -376,6 +421,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -399,6 +447,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",
@@ -422,6 +473,9 @@ interface UsehealthRepository : JpaRepository<Usehealth, Long> {
         "membership.gym",
         "membership.user",
         "user",
+        "rocker",
+        "rocker.gym",
+        "rocker.rockergroup",
         "term",
         "term.gym",
         "term.daytype",

@@ -50,7 +50,7 @@ class TokenController(
         var results = if (user != null || token != null || status != null || startdate != null || enddate != null || false) {
             var filtered = tokenService.findAll(0, Int.MAX_VALUE).content
             if (user != null) {
-                filtered = filtered.filter { it.userId == user }
+                filtered = filtered.filter { it.user == user }
             }
             if (token != null) {
                 filtered = filtered.filter { it.token == token }

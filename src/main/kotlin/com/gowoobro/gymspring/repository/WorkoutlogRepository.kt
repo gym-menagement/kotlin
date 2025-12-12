@@ -59,7 +59,7 @@ interface WorkoutlogRepository : JpaRepository<Workoutlog, Long> {
         "health.discount",
         "health.gym"
     ])
-    fun findBygymId(gym: Long): List<Workoutlog>
+    fun findByGym(gym: Long): List<Workoutlog>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -74,7 +74,7 @@ interface WorkoutlogRepository : JpaRepository<Workoutlog, Long> {
         "health.discount",
         "health.gym"
     ])
-    fun findByuserId(user: Long): List<Workoutlog>
+    fun findByUser(user: Long): List<Workoutlog>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -89,7 +89,7 @@ interface WorkoutlogRepository : JpaRepository<Workoutlog, Long> {
         "health.discount",
         "health.gym"
     ])
-    fun findByattendanceId(attendance: Long): List<Workoutlog>
+    fun findByAttendance(attendance: Long): List<Workoutlog>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -104,7 +104,7 @@ interface WorkoutlogRepository : JpaRepository<Workoutlog, Long> {
         "health.discount",
         "health.gym"
     ])
-    fun findByhealthId(health: Long): List<Workoutlog>
+    fun findByHealth(health: Long): List<Workoutlog>
 
     @EntityGraph(attributePaths = [
         "gym",

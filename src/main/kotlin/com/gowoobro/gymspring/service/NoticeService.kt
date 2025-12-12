@@ -39,7 +39,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
 
 
     fun findByGym(gym: Long): List<Notice> {
-        return noticeRepository.findBygymId(gym)
+        return noticeRepository.findByGym(gym)
     }
 
     fun findByTitle(title: String): List<Notice> {
@@ -82,8 +82,8 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
         return noticeRepository.findByStatus(status)
     }
 
-    fun findByCreatedby(user: Long): List<Notice> {
-        return noticeRepository.findBycreatedbyId(user)
+    fun findByCreatedby(createdby: Long): List<Notice> {
+        return noticeRepository.findByCreatedby(createdby)
     }
 
     fun findByCreateddate(createddate: LocalDateTime): List<Notice> {
@@ -101,7 +101,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
 
     fun create(request: NoticeCreateRequest): Notice {
         val entity = Notice(
-            gymId = request.gym,
+            gym = request.gym,
             title = request.title,
             content = request.content,
             type = request.type,
@@ -112,7 +112,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
-            createdbyId = request.createdby,
+            createdby = request.createdby,
             createddate = request.createddate,
             updateddate = request.updateddate,
             date = request.date,
@@ -123,7 +123,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
     fun createBatch(requests: List<NoticeCreateRequest>): List<Notice> {
         val entities = requests.map { request ->
             Notice(
-                gymId = request.gym,
+                gym = request.gym,
                 title = request.title,
                 content = request.content,
                 type = request.type,
@@ -134,7 +134,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
                 startdate = request.startdate,
                 enddate = request.enddate,
                 status = request.status,
-                createdbyId = request.createdby,
+                createdby = request.createdby,
                 createddate = request.createddate,
                 updateddate = request.updateddate,
                 date = request.date,
@@ -147,7 +147,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
         val existing = noticeRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym,
+            gym = request.gym,
             title = request.title,
             content = request.content,
             type = request.type,
@@ -158,7 +158,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
-            createdbyId = request.createdby,
+            createdby = request.createdby,
             createddate = request.createddate,
             updateddate = request.updateddate,
             date = request.date,
@@ -197,7 +197,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
         val existing = noticeRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym ?: existing.gymId,
+            gym = request.gym ?: existing.gym,
             title = request.title ?: existing.title,
             content = request.content ?: existing.content,
             type = request.type ?: existing.type,
@@ -208,7 +208,7 @@ class NoticeService(private val noticeRepository: NoticeRepository) {
             startdate = request.startdate ?: existing.startdate,
             enddate = request.enddate ?: existing.enddate,
             status = request.status ?: existing.status,
-            createdbyId = request.createdby ?: existing.createdbyId,
+            createdby = request.createdby ?: existing.createdby,
             createddate = request.createddate ?: existing.createddate,
             updateddate = request.updateddate ?: existing.updateddate,
             date = request.date ?: existing.date,

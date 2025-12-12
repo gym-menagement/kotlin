@@ -55,7 +55,7 @@ class LoginlogController(
                 filtered = filtered.filter { it.ipvalue == ipvalue }
             }
             if (user != null) {
-                filtered = filtered.filter { it.userId == user }
+                filtered = filtered.filter { it.user == user }
             }
             if (startdate != null || enddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }

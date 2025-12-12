@@ -36,21 +36,21 @@ interface TrainermemberRepository : JpaRepository<Trainermember, Long> {
         "memberuser",
         "gym"
     ])
-    fun findBytrainerId(traineruser: Long): List<Trainermember>
+    fun findByTrainer(trainer: Long): List<Trainermember>
 
     @EntityGraph(attributePaths = [
         "traineruser",
         "memberuser",
         "gym"
     ])
-    fun findBymemberId(memberuser: Long): List<Trainermember>
+    fun findByMember(member: Long): List<Trainermember>
 
     @EntityGraph(attributePaths = [
         "traineruser",
         "memberuser",
         "gym"
     ])
-    fun findBygymId(gym: Long): List<Trainermember>
+    fun findByGym(gym: Long): List<Trainermember>
 
     @EntityGraph(attributePaths = [
         "traineruser",

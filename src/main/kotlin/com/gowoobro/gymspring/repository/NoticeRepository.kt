@@ -37,7 +37,7 @@ interface NoticeRepository : JpaRepository<Notice, Long> {
         "gym",
         "user"
     ])
-    fun findBygymId(gym: Long): List<Notice>
+    fun findByGym(gym: Long): List<Notice>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -103,7 +103,7 @@ interface NoticeRepository : JpaRepository<Notice, Long> {
         "gym",
         "user"
     ])
-    fun findBycreatedbyId(user: Long): List<Notice>
+    fun findByCreatedby(createdby: Long): List<Notice>
 
     @EntityGraph(attributePaths = [
         "gym",

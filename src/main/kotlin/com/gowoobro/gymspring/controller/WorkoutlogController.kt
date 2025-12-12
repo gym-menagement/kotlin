@@ -57,16 +57,16 @@ class WorkoutlogController(
         var results = if (gym != null || user != null || attendance != null || health != null || exercisename != null || sets != null || reps != null || weight != null || duration != null || calories != null || note != null || startdate != null || enddate != null || false) {
             var filtered = workoutlogService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gymId == gym }
+                filtered = filtered.filter { it.gym == gym }
             }
             if (user != null) {
-                filtered = filtered.filter { it.userId == user }
+                filtered = filtered.filter { it.user == user }
             }
             if (attendance != null) {
-                filtered = filtered.filter { it.attendanceId == attendance }
+                filtered = filtered.filter { it.attendance == attendance }
             }
             if (health != null) {
-                filtered = filtered.filter { it.healthId == health }
+                filtered = filtered.filter { it.health == health }
             }
             if (exercisename != null) {
                 filtered = filtered.filter { it.exercisename == exercisename }

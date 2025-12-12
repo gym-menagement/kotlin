@@ -39,7 +39,7 @@ interface LoginlogRepository : JpaRepository<Loginlog, Long> {
     @EntityGraph(attributePaths = [
         "user"
     ])
-    fun findByuserId(user: Long): List<Loginlog>
+    fun findByUser(user: Long): List<Loginlog>
 
     @EntityGraph(attributePaths = [
         "user"

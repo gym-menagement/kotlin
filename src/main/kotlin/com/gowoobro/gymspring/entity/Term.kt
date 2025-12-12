@@ -12,9 +12,9 @@ data class Term(
     @Column(name = "t_id")
     val id: Long = 0,
     @Column(name = "t_gym")
-    val gymId: Long = 0L,
+    val gym: Long = 0L,
     @Column(name = "t_daytype")
-    val daytypeId: Long = 0L,
+    val daytype: Long = 0L,
     @Column(name = "t_name")
     val name: String = "",
     @Column(name = "t_term")
@@ -23,10 +23,10 @@ data class Term(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "t_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "t_daytype", insertable = false, updatable = false)
+    @JoinColumn(name = "dt_daytype", insertable = false, updatable = false)
     var daytype: Daytype? = null
 }
 
@@ -79,8 +79,8 @@ data class TermResponse(
             val daytypeResponse = term.daytype?.let { DaytypeResponse.from(it) }
             return TermResponse(
                 id = term.id,
-                gym = term.gymId,
-                daytype = term.daytypeId,
+                gym = term.gym,
+                daytype = term.daytype,
                 name = term.name,
                 term = term.term,
                 date = term.date?.toString()?.replace("T", " ") ?: "",

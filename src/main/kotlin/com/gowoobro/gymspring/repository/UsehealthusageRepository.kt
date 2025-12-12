@@ -24,6 +24,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -45,6 +46,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -66,6 +68,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -78,7 +81,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "attendance.usehealth",
         "attendance.gym"
     ])
-    fun findBygymId(gym: Long): List<Usehealthusage>
+    fun findByGym(gym: Long): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -87,6 +90,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -99,7 +103,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "attendance.usehealth",
         "attendance.gym"
     ])
-    fun findByusehealthId(usehealth: Long): List<Usehealthusage>
+    fun findByUsehealth(usehealth: Long): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -108,6 +112,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -120,7 +125,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "attendance.usehealth",
         "attendance.gym"
     ])
-    fun findBymembershipId(membership: Long): List<Usehealthusage>
+    fun findByMembership(membership: Long): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -129,6 +134,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -141,7 +147,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "attendance.usehealth",
         "attendance.gym"
     ])
-    fun findByuserId(user: Long): List<Usehealthusage>
+    fun findByUser(user: Long): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -150,6 +156,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -162,7 +169,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "attendance.usehealth",
         "attendance.gym"
     ])
-    fun findByattendanceId(attendance: Long): List<Usehealthusage>
+    fun findByAttendance(attendance: Long): List<Usehealthusage>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -171,6 +178,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -192,6 +200,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -213,6 +222,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -234,6 +244,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -255,6 +266,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -276,6 +288,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -297,6 +310,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",
@@ -318,6 +332,7 @@ interface UsehealthusageRepository : JpaRepository<Usehealthusage, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym",

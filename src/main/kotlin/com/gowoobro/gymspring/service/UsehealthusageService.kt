@@ -35,23 +35,23 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
 
 
     fun findByGym(gym: Long): List<Usehealthusage> {
-        return usehealthusageRepository.findBygymId(gym)
+        return usehealthusageRepository.findByGym(gym)
     }
 
     fun findByUsehealth(usehealth: Long): List<Usehealthusage> {
-        return usehealthusageRepository.findByusehealthId(usehealth)
+        return usehealthusageRepository.findByUsehealth(usehealth)
     }
 
     fun findByMembership(membership: Long): List<Usehealthusage> {
-        return usehealthusageRepository.findBymembershipId(membership)
+        return usehealthusageRepository.findByMembership(membership)
     }
 
     fun findByUser(user: Long): List<Usehealthusage> {
-        return usehealthusageRepository.findByuserId(user)
+        return usehealthusageRepository.findByUser(user)
     }
 
     fun findByAttendance(attendance: Long): List<Usehealthusage> {
-        return usehealthusageRepository.findByattendanceId(attendance)
+        return usehealthusageRepository.findByAttendance(attendance)
     }
 
     fun findByType(type: Type): List<Usehealthusage> {
@@ -89,11 +89,11 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
 
     fun create(request: UsehealthusageCreateRequest): Usehealthusage {
         val entity = Usehealthusage(
-            gymId = request.gym,
-            usehealthId = request.usehealth,
-            membershipId = request.membership,
-            userId = request.user,
-            attendanceId = request.attendance,
+            gym = request.gym,
+            usehealth = request.usehealth,
+            membership = request.membership,
+            user = request.user,
+            attendance = request.attendance,
             type = request.type,
             usedcount = request.usedcount,
             remainingcount = request.remainingcount,
@@ -109,11 +109,11 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
     fun createBatch(requests: List<UsehealthusageCreateRequest>): List<Usehealthusage> {
         val entities = requests.map { request ->
             Usehealthusage(
-                gymId = request.gym,
-                usehealthId = request.usehealth,
-                membershipId = request.membership,
-                userId = request.user,
-                attendanceId = request.attendance,
+                gym = request.gym,
+                usehealth = request.usehealth,
+                membership = request.membership,
+                user = request.user,
+                attendance = request.attendance,
                 type = request.type,
                 usedcount = request.usedcount,
                 remainingcount = request.remainingcount,
@@ -131,11 +131,11 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
         val existing = usehealthusageRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym,
-            usehealthId = request.usehealth,
-            membershipId = request.membership,
-            userId = request.user,
-            attendanceId = request.attendance,
+            gym = request.gym,
+            usehealth = request.usehealth,
+            membership = request.membership,
+            user = request.user,
+            attendance = request.attendance,
             type = request.type,
             usedcount = request.usedcount,
             remainingcount = request.remainingcount,
@@ -179,11 +179,11 @@ class UsehealthusageService(private val usehealthusageRepository: Usehealthusage
         val existing = usehealthusageRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym ?: existing.gymId,
-            usehealthId = request.usehealth ?: existing.usehealthId,
-            membershipId = request.membership ?: existing.membershipId,
-            userId = request.user ?: existing.userId,
-            attendanceId = request.attendance ?: existing.attendanceId,
+            gym = request.gym ?: existing.gym,
+            usehealth = request.usehealth ?: existing.usehealth,
+            membership = request.membership ?: existing.membership,
+            user = request.user ?: existing.user,
+            attendance = request.attendance ?: existing.attendance,
             type = request.type ?: existing.type,
             usedcount = request.usedcount ?: existing.usedcount,
             remainingcount = request.remainingcount ?: existing.remainingcount,

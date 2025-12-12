@@ -35,7 +35,7 @@ class QrcodeService(private val qrcodeRepository: QrcodeRepository) {
 
 
     fun findByUser(user: Long): List<Qrcode> {
-        return qrcodeRepository.findByuserId(user)
+        return qrcodeRepository.findByUser(user)
     }
 
     fun findByCode(code: String): List<Qrcode> {
@@ -73,7 +73,7 @@ class QrcodeService(private val qrcodeRepository: QrcodeRepository) {
 
     fun create(request: QrcodeCreateRequest): Qrcode {
         val entity = Qrcode(
-            userId = request.user,
+            user = request.user,
             code = request.code,
             imageurl = request.imageurl,
             isactive = request.isactive,
@@ -89,7 +89,7 @@ class QrcodeService(private val qrcodeRepository: QrcodeRepository) {
     fun createBatch(requests: List<QrcodeCreateRequest>): List<Qrcode> {
         val entities = requests.map { request ->
             Qrcode(
-                userId = request.user,
+                user = request.user,
                 code = request.code,
                 imageurl = request.imageurl,
                 isactive = request.isactive,
@@ -107,7 +107,7 @@ class QrcodeService(private val qrcodeRepository: QrcodeRepository) {
         val existing = qrcodeRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            userId = request.user,
+            user = request.user,
             code = request.code,
             imageurl = request.imageurl,
             isactive = request.isactive,
@@ -151,7 +151,7 @@ class QrcodeService(private val qrcodeRepository: QrcodeRepository) {
         val existing = qrcodeRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            userId = request.user ?: existing.userId,
+            user = request.user ?: existing.user,
             code = request.code ?: existing.code,
             imageurl = request.imageurl ?: existing.imageurl,
             isactive = request.isactive ?: existing.isactive,

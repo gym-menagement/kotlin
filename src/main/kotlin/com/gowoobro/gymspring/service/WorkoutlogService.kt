@@ -34,19 +34,19 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
 
 
     fun findByGym(gym: Long): List<Workoutlog> {
-        return workoutlogRepository.findBygymId(gym)
+        return workoutlogRepository.findByGym(gym)
     }
 
     fun findByUser(user: Long): List<Workoutlog> {
-        return workoutlogRepository.findByuserId(user)
+        return workoutlogRepository.findByUser(user)
     }
 
     fun findByAttendance(attendance: Long): List<Workoutlog> {
-        return workoutlogRepository.findByattendanceId(attendance)
+        return workoutlogRepository.findByAttendance(attendance)
     }
 
     fun findByHealth(health: Long): List<Workoutlog> {
-        return workoutlogRepository.findByhealthId(health)
+        return workoutlogRepository.findByHealth(health)
     }
 
     fun findByExercisename(exercisename: String): List<Workoutlog> {
@@ -84,10 +84,10 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
 
     fun create(request: WorkoutlogCreateRequest): Workoutlog {
         val entity = Workoutlog(
-            gymId = request.gym,
-            userId = request.user,
-            attendanceId = request.attendance,
-            healthId = request.health,
+            gym = request.gym,
+            user = request.user,
+            attendance = request.attendance,
+            health = request.health,
             exercisename = request.exercisename,
             sets = request.sets,
             reps = request.reps,
@@ -103,10 +103,10 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
     fun createBatch(requests: List<WorkoutlogCreateRequest>): List<Workoutlog> {
         val entities = requests.map { request ->
             Workoutlog(
-                gymId = request.gym,
-                userId = request.user,
-                attendanceId = request.attendance,
-                healthId = request.health,
+                gym = request.gym,
+                user = request.user,
+                attendance = request.attendance,
+                health = request.health,
                 exercisename = request.exercisename,
                 sets = request.sets,
                 reps = request.reps,
@@ -124,10 +124,10 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
         val existing = workoutlogRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym,
-            userId = request.user,
-            attendanceId = request.attendance,
-            healthId = request.health,
+            gym = request.gym,
+            user = request.user,
+            attendance = request.attendance,
+            health = request.health,
             exercisename = request.exercisename,
             sets = request.sets,
             reps = request.reps,
@@ -171,10 +171,10 @@ class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) 
         val existing = workoutlogRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym ?: existing.gymId,
-            userId = request.user ?: existing.userId,
-            attendanceId = request.attendance ?: existing.attendanceId,
-            healthId = request.health ?: existing.healthId,
+            gym = request.gym ?: existing.gym,
+            user = request.user ?: existing.user,
+            attendance = request.attendance ?: existing.attendance,
+            health = request.health ?: existing.health,
             exercisename = request.exercisename ?: existing.exercisename,
             sets = request.sets ?: existing.sets,
             reps = request.reps ?: existing.reps,

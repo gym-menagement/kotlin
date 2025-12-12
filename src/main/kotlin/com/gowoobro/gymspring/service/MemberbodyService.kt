@@ -34,11 +34,11 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
 
 
     fun findByGym(gym: Long): List<Memberbody> {
-        return memberbodyRepository.findBygymId(gym)
+        return memberbodyRepository.findByGym(gym)
     }
 
-    fun findByUser(memberuser: Long): List<Memberbody> {
-        return memberbodyRepository.findByuserId(memberuser)
+    fun findByUser(user: Long): List<Memberbody> {
+        return memberbodyRepository.findByUser(user)
     }
 
     fun findByHeight(height: BigDecimal): List<Memberbody> {
@@ -97,8 +97,8 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
         return memberbodyRepository.findByMeasureddate(measureddate)
     }
 
-    fun findByMeasuredby(measuredbyuser: Long): List<Memberbody> {
-        return memberbodyRepository.findBymeasuredbyId(measuredbyuser)
+    fun findByMeasuredby(measuredby: Long): List<Memberbody> {
+        return memberbodyRepository.findByMeasuredby(measuredby)
     }
 
     fun findByDate(date: LocalDateTime): List<Memberbody> {
@@ -108,8 +108,8 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
 
     fun create(request: MemberbodyCreateRequest): Memberbody {
         val entity = Memberbody(
-            gymId = request.gym,
-            userId = request.user,
+            gym = request.gym,
+            user = request.user,
             height = request.height,
             weight = request.weight,
             bodyfat = request.bodyfat,
@@ -124,7 +124,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
             thigh = request.thigh,
             note = request.note,
             measureddate = request.measureddate,
-            measuredbyId = request.measuredby,
+            measuredby = request.measuredby,
             date = request.date,
         )
         return memberbodyRepository.save(entity)
@@ -133,8 +133,8 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
     fun createBatch(requests: List<MemberbodyCreateRequest>): List<Memberbody> {
         val entities = requests.map { request ->
             Memberbody(
-                gymId = request.gym,
-                userId = request.user,
+                gym = request.gym,
+                user = request.user,
                 height = request.height,
                 weight = request.weight,
                 bodyfat = request.bodyfat,
@@ -149,7 +149,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
                 thigh = request.thigh,
                 note = request.note,
                 measureddate = request.measureddate,
-                measuredbyId = request.measuredby,
+                measuredby = request.measuredby,
                 date = request.date,
             )
         }
@@ -160,8 +160,8 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
         val existing = memberbodyRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym,
-            userId = request.user,
+            gym = request.gym,
+            user = request.user,
             height = request.height,
             weight = request.weight,
             bodyfat = request.bodyfat,
@@ -176,7 +176,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
             thigh = request.thigh,
             note = request.note,
             measureddate = request.measureddate,
-            measuredbyId = request.measuredby,
+            measuredby = request.measuredby,
             date = request.date,
         )
         return memberbodyRepository.save(updated)
@@ -213,8 +213,8 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
         val existing = memberbodyRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym ?: existing.gymId,
-            userId = request.user ?: existing.userId,
+            gym = request.gym ?: existing.gym,
+            user = request.user ?: existing.user,
             height = request.height ?: existing.height,
             weight = request.weight ?: existing.weight,
             bodyfat = request.bodyfat ?: existing.bodyfat,
@@ -229,7 +229,7 @@ class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) 
             thigh = request.thigh ?: existing.thigh,
             note = request.note ?: existing.note,
             measureddate = request.measureddate ?: existing.measureddate,
-            measuredbyId = request.measuredby ?: existing.measuredbyId,
+            measuredby = request.measuredby ?: existing.measuredby,
             date = request.date ?: existing.date,
         )
         return memberbodyRepository.save(updated)

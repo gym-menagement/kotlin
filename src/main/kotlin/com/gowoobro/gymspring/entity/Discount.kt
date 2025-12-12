@@ -12,7 +12,7 @@ data class Discount(
     @Column(name = "d_id")
     val id: Long = 0,
     @Column(name = "d_gym")
-    val gymId: Long = 0L,
+    val gym: Long = 0L,
     @Column(name = "d_name")
     val name: String = "",
     @Column(name = "d_discount")
@@ -21,7 +21,7 @@ data class Discount(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "d_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
     var gym: Gym? = null
 }
 
@@ -68,7 +68,7 @@ data class DiscountResponse(
             val gymResponse = discount.gym?.let { GymResponse.from(it) }
             return DiscountResponse(
                 id = discount.id,
-                gym = discount.gymId,
+                gym = discount.gym,
                 name = discount.name,
                 discount = discount.discount,
                 date = discount.date?.toString()?.replace("T", " ") ?: "",

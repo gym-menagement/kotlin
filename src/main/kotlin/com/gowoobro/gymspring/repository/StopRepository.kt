@@ -22,6 +22,7 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -34,6 +35,7 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -46,11 +48,12 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
     ])
-    fun findByusehealthId(usehealth: Long): List<Stop>
+    fun findByUsehealth(usehealth: Long): List<Stop>
 
     @EntityGraph(attributePaths = [
         "usehealth",
@@ -58,6 +61,7 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -70,6 +74,7 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -82,6 +87,7 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"
@@ -94,6 +100,7 @@ interface StopRepository : JpaRepository<Stop, Long> {
         "usehealth.health",
         "usehealth.membership",
         "usehealth.user",
+        "usehealth.rocker",
         "usehealth.term",
         "usehealth.discount",
         "usehealth.gym"

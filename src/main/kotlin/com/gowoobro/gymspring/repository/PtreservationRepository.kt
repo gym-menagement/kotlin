@@ -36,21 +36,21 @@ interface PtreservationRepository : JpaRepository<Ptreservation, Long> {
         "memberuser",
         "gym"
     ])
-    fun findBytrainerId(traineruser: Long): List<Ptreservation>
+    fun findByTrainer(trainer: Long): List<Ptreservation>
 
     @EntityGraph(attributePaths = [
         "traineruser",
         "memberuser",
         "gym"
     ])
-    fun findBymemberId(memberuser: Long): List<Ptreservation>
+    fun findByMember(member: Long): List<Ptreservation>
 
     @EntityGraph(attributePaths = [
         "traineruser",
         "memberuser",
         "gym"
     ])
-    fun findBygymId(gym: Long): List<Ptreservation>
+    fun findByGym(gym: Long): List<Ptreservation>
 
     @EntityGraph(attributePaths = [
         "traineruser",

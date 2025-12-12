@@ -34,7 +34,7 @@ class DaytypeService(private val daytypeRepository: DaytypeRepository) {
 
 
     fun findByGym(gym: Long): List<Daytype> {
-        return daytypeRepository.findBygymId(gym)
+        return daytypeRepository.findByGym(gym)
     }
 
     fun findByName(name: String): List<Daytype> {
@@ -48,7 +48,7 @@ class DaytypeService(private val daytypeRepository: DaytypeRepository) {
 
     fun create(request: DaytypeCreateRequest): Daytype {
         val entity = Daytype(
-            gymId = request.gym,
+            gym = request.gym,
             name = request.name,
             date = request.date,
         )
@@ -58,7 +58,7 @@ class DaytypeService(private val daytypeRepository: DaytypeRepository) {
     fun createBatch(requests: List<DaytypeCreateRequest>): List<Daytype> {
         val entities = requests.map { request ->
             Daytype(
-                gymId = request.gym,
+                gym = request.gym,
                 name = request.name,
                 date = request.date,
             )
@@ -70,7 +70,7 @@ class DaytypeService(private val daytypeRepository: DaytypeRepository) {
         val existing = daytypeRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym,
+            gym = request.gym,
             name = request.name,
             date = request.date,
         )
@@ -108,7 +108,7 @@ class DaytypeService(private val daytypeRepository: DaytypeRepository) {
         val existing = daytypeRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym ?: existing.gymId,
+            gym = request.gym ?: existing.gym,
             name = request.name ?: existing.name,
             date = request.date ?: existing.date,
         )

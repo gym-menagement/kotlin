@@ -34,7 +34,7 @@ class StopService(private val stopRepository: StopRepository) {
 
 
     fun findByUsehealth(usehealth: Long): List<Stop> {
-        return stopRepository.findByusehealthId(usehealth)
+        return stopRepository.findByUsehealth(usehealth)
     }
 
     fun findByStartday(startday: LocalDateTime): List<Stop> {
@@ -56,7 +56,7 @@ class StopService(private val stopRepository: StopRepository) {
 
     fun create(request: StopCreateRequest): Stop {
         val entity = Stop(
-            usehealthId = request.usehealth,
+            usehealth = request.usehealth,
             startday = request.startday,
             endday = request.endday,
             count = request.count,
@@ -68,7 +68,7 @@ class StopService(private val stopRepository: StopRepository) {
     fun createBatch(requests: List<StopCreateRequest>): List<Stop> {
         val entities = requests.map { request ->
             Stop(
-                usehealthId = request.usehealth,
+                usehealth = request.usehealth,
                 startday = request.startday,
                 endday = request.endday,
                 count = request.count,
@@ -82,7 +82,7 @@ class StopService(private val stopRepository: StopRepository) {
         val existing = stopRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            usehealthId = request.usehealth,
+            usehealth = request.usehealth,
             startday = request.startday,
             endday = request.endday,
             count = request.count,
@@ -122,7 +122,7 @@ class StopService(private val stopRepository: StopRepository) {
         val existing = stopRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            usehealthId = request.usehealth ?: existing.usehealthId,
+            usehealth = request.usehealth ?: existing.usehealth,
             startday = request.startday ?: existing.startday,
             endday = request.endday ?: existing.endday,
             count = request.count ?: existing.count,

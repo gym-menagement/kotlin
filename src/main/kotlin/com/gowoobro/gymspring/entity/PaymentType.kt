@@ -12,14 +12,14 @@ data class Paymenttype(
     @Column(name = "pt_id")
     val id: Long = 0,
     @Column(name = "pt_gym")
-    val gymId: Long = 0L,
+    val gym: Long = 0L,
     @Column(name = "pt_name")
     val name: String = "",
     @Column(name = "pt_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pt_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
     var gym: Gym? = null
 }
 
@@ -62,7 +62,7 @@ data class PaymenttypeResponse(
             val gymResponse = paymenttype.gym?.let { GymResponse.from(it) }
             return PaymenttypeResponse(
                 id = paymenttype.id,
-                gym = paymenttype.gymId,
+                gym = paymenttype.gym,
                 name = paymenttype.name,
                 date = paymenttype.date?.toString()?.replace("T", " ") ?: "",
 

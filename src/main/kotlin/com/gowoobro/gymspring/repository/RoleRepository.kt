@@ -30,7 +30,7 @@ interface RoleRepository : JpaRepository<Role, Long> {
     @EntityGraph(attributePaths = [
         "gym"
     ])
-    fun findBygymId(gym: Long): List<Role>
+    fun findByGym(gym: Long): List<Role>
 
     @EntityGraph(attributePaths = [
         "gym"

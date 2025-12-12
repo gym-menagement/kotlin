@@ -52,7 +52,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
     }
 
     fun findByUser(user: Long): List<Alarm> {
-        return alarmRepository.findByuserId(user)
+        return alarmRepository.findByUser(user)
     }
 
     fun findByDate(date: LocalDateTime): List<Alarm> {
@@ -66,7 +66,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
             content = request.content,
             type = request.type,
             status = request.status,
-            userId = request.user,
+            user = request.user,
             date = request.date,
         )
         return alarmRepository.save(entity)
@@ -79,7 +79,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
                 content = request.content,
                 type = request.type,
                 status = request.status,
-                userId = request.user,
+                user = request.user,
                 date = request.date,
             )
         }
@@ -94,7 +94,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
             content = request.content,
             type = request.type,
             status = request.status,
-            userId = request.user,
+            user = request.user,
             date = request.date,
         )
         return alarmRepository.save(updated)
@@ -135,7 +135,7 @@ class AlarmService(private val alarmRepository: AlarmRepository) {
             content = request.content ?: existing.content,
             type = request.type ?: existing.type,
             status = request.status ?: existing.status,
-            userId = request.user ?: existing.userId,
+            user = request.user ?: existing.user,
             date = request.date ?: existing.date,
         )
         return alarmRepository.save(updated)

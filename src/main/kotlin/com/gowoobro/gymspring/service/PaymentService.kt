@@ -34,15 +34,15 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
 
 
     fun findByGym(gym: Long): List<Payment> {
-        return paymentRepository.findBygymId(gym)
+        return paymentRepository.findByGym(gym)
     }
 
     fun findByOrder(order: Long): List<Payment> {
-        return paymentRepository.findByorderId(order)
+        return paymentRepository.findByOrder(order)
     }
 
     fun findByUser(user: Long): List<Payment> {
-        return paymentRepository.findByuserId(user)
+        return paymentRepository.findByUser(user)
     }
 
     fun findByCost(cost: Int): List<Payment> {
@@ -56,9 +56,9 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
 
     fun create(request: PaymentCreateRequest): Payment {
         val entity = Payment(
-            gymId = request.gym,
-            orderId = request.order,
-            userId = request.user,
+            gym = request.gym,
+            order = request.order,
+            user = request.user,
             cost = request.cost,
             date = request.date,
         )
@@ -68,9 +68,9 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
     fun createBatch(requests: List<PaymentCreateRequest>): List<Payment> {
         val entities = requests.map { request ->
             Payment(
-                gymId = request.gym,
-                orderId = request.order,
-                userId = request.user,
+                gym = request.gym,
+                order = request.order,
+                user = request.user,
                 cost = request.cost,
                 date = request.date,
             )
@@ -82,9 +82,9 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
         val existing = paymentRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym,
-            orderId = request.order,
-            userId = request.user,
+            gym = request.gym,
+            order = request.order,
+            user = request.user,
             cost = request.cost,
             date = request.date,
         )
@@ -122,9 +122,9 @@ class PaymentService(private val paymentRepository: PaymentRepository) {
         val existing = paymentRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym ?: existing.gymId,
-            orderId = request.order ?: existing.orderId,
-            userId = request.user ?: existing.userId,
+            gym = request.gym ?: existing.gym,
+            order = request.order ?: existing.order,
+            user = request.user ?: existing.user,
             cost = request.cost ?: existing.cost,
             date = request.date ?: existing.date,
         )

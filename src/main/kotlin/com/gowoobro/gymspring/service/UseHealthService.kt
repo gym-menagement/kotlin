@@ -35,27 +35,27 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
 
 
     fun findByOrder(order: Long): List<Usehealth> {
-        return usehealthRepository.findByorderId(order)
+        return usehealthRepository.findByOrder(order)
     }
 
     fun findByHealth(health: Long): List<Usehealth> {
-        return usehealthRepository.findByhealthId(health)
+        return usehealthRepository.findByHealth(health)
     }
 
     fun findByMembership(membership: Long): List<Usehealth> {
-        return usehealthRepository.findBymembershipId(membership)
+        return usehealthRepository.findByMembership(membership)
     }
 
     fun findByUser(user: Long): List<Usehealth> {
-        return usehealthRepository.findByuserId(user)
+        return usehealthRepository.findByUser(user)
     }
 
     fun findByTerm(term: Long): List<Usehealth> {
-        return usehealthRepository.findBytermId(term)
+        return usehealthRepository.findByTerm(term)
     }
 
     fun findByDiscount(discount: Long): List<Usehealth> {
-        return usehealthRepository.findBydiscountId(discount)
+        return usehealthRepository.findByDiscount(discount)
     }
 
     fun findByStartday(startday: LocalDateTime): List<Usehealth> {
@@ -67,7 +67,7 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
     }
 
     fun findByGym(gym: Long): List<Usehealth> {
-        return usehealthRepository.findBygymId(gym)
+        return usehealthRepository.findByGym(gym)
     }
 
     fun findByStatus(status: Status): List<Usehealth> {
@@ -101,15 +101,15 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
 
     fun create(request: UsehealthCreateRequest): Usehealth {
         val entity = Usehealth(
-            orderId = request.order,
-            healthId = request.health,
-            membershipId = request.membership,
-            userId = request.user,
-            termId = request.term,
-            discountId = request.discount,
+            order = request.order,
+            health = request.health,
+            membership = request.membership,
+            user = request.user,
+            term = request.term,
+            discount = request.discount,
             startday = request.startday,
             endday = request.endday,
-            gymId = request.gym,
+            gym = request.gym,
             status = request.status,
             totalcount = request.totalcount,
             usedcount = request.usedcount,
@@ -124,15 +124,15 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
     fun createBatch(requests: List<UsehealthCreateRequest>): List<Usehealth> {
         val entities = requests.map { request ->
             Usehealth(
-                orderId = request.order,
-                healthId = request.health,
-                membershipId = request.membership,
-                userId = request.user,
-                termId = request.term,
-                discountId = request.discount,
+                order = request.order,
+                health = request.health,
+                membership = request.membership,
+                user = request.user,
+                term = request.term,
+                discount = request.discount,
                 startday = request.startday,
                 endday = request.endday,
-                gymId = request.gym,
+                gym = request.gym,
                 status = request.status,
                 totalcount = request.totalcount,
                 usedcount = request.usedcount,
@@ -149,15 +149,15 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         val existing = usehealthRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            orderId = request.order,
-            healthId = request.health,
-            membershipId = request.membership,
-            userId = request.user,
-            termId = request.term,
-            discountId = request.discount,
+            order = request.order,
+            health = request.health,
+            membership = request.membership,
+            user = request.user,
+            term = request.term,
+            discount = request.discount,
             startday = request.startday,
             endday = request.endday,
-            gymId = request.gym,
+            gym = request.gym,
             status = request.status,
             totalcount = request.totalcount,
             usedcount = request.usedcount,
@@ -200,15 +200,15 @@ class UsehealthService(private val usehealthRepository: UsehealthRepository) {
         val existing = usehealthRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            orderId = request.order ?: existing.orderId,
-            healthId = request.health ?: existing.healthId,
-            membershipId = request.membership ?: existing.membershipId,
-            userId = request.user ?: existing.userId,
-            termId = request.term ?: existing.termId,
-            discountId = request.discount ?: existing.discountId,
+            order = request.order ?: existing.order,
+            health = request.health ?: existing.health,
+            membership = request.membership ?: existing.membership,
+            user = request.user ?: existing.user,
+            term = request.term ?: existing.term,
+            discount = request.discount ?: existing.discount,
             startday = request.startday ?: existing.startday,
             endday = request.endday ?: existing.endday,
-            gymId = request.gym ?: existing.gymId,
+            gym = request.gym ?: existing.gym,
             status = request.status ?: existing.status,
             totalcount = request.totalcount ?: existing.totalcount,
             usedcount = request.usedcount ?: existing.usedcount,

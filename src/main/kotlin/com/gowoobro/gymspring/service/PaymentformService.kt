@@ -34,15 +34,15 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
 
 
     fun findByGym(gym: Long): List<Paymentform> {
-        return paymentformRepository.findBygymId(gym)
+        return paymentformRepository.findByGym(gym)
     }
 
     fun findByPayment(payment: Long): List<Paymentform> {
-        return paymentformRepository.findBypaymentId(payment)
+        return paymentformRepository.findByPayment(payment)
     }
 
-    fun findByType(paymenttype: Long): List<Paymentform> {
-        return paymentformRepository.findBytypeId(paymenttype)
+    fun findByType(type: Long): List<Paymentform> {
+        return paymentformRepository.findByType(type)
     }
 
     fun findByCost(cost: Int): List<Paymentform> {
@@ -56,9 +56,9 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
 
     fun create(request: PaymentformCreateRequest): Paymentform {
         val entity = Paymentform(
-            gymId = request.gym,
-            paymentId = request.payment,
-            typeId = request.type,
+            gym = request.gym,
+            payment = request.payment,
+            type = request.type,
             cost = request.cost,
             date = request.date,
         )
@@ -68,9 +68,9 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
     fun createBatch(requests: List<PaymentformCreateRequest>): List<Paymentform> {
         val entities = requests.map { request ->
             Paymentform(
-                gymId = request.gym,
-                paymentId = request.payment,
-                typeId = request.type,
+                gym = request.gym,
+                payment = request.payment,
+                type = request.type,
                 cost = request.cost,
                 date = request.date,
             )
@@ -82,9 +82,9 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
         val existing = paymentformRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym,
-            paymentId = request.payment,
-            typeId = request.type,
+            gym = request.gym,
+            payment = request.payment,
+            type = request.type,
             cost = request.cost,
             date = request.date,
         )
@@ -122,9 +122,9 @@ class PaymentformService(private val paymentformRepository: PaymentformRepositor
         val existing = paymentformRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym ?: existing.gymId,
-            paymentId = request.payment ?: existing.paymentId,
-            typeId = request.type ?: existing.typeId,
+            gym = request.gym ?: existing.gym,
+            payment = request.payment ?: existing.payment,
+            type = request.type ?: existing.type,
             cost = request.cost ?: existing.cost,
             date = request.date ?: existing.date,
         )

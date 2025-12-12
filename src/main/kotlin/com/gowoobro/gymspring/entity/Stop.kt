@@ -12,7 +12,7 @@ data class Stop(
     @Column(name = "s_id")
     val id: Long = 0,
     @Column(name = "s_usehealth")
-    val usehealthId: Long = 0L,
+    val usehealth: Long = 0L,
     @Column(name = "s_startday")
     val startday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "s_endday")
@@ -23,7 +23,7 @@ data class Stop(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "s_usehealth", insertable = false, updatable = false)
+    @JoinColumn(name = "uh_usehealth", insertable = false, updatable = false)
     var usehealth: Usehealth? = null
 }
 
@@ -74,7 +74,7 @@ data class StopResponse(
             val usehealthResponse = stop.usehealth?.let { UsehealthResponse.from(it) }
             return StopResponse(
                 id = stop.id,
-                usehealth = stop.usehealthId,
+                usehealth = stop.usehealth,
                 startday = stop.startday?.toString()?.replace("T", " ") ?: "",
                 endday = stop.endday?.toString()?.replace("T", " ") ?: "",
                 count = stop.count,

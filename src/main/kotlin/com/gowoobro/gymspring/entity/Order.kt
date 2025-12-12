@@ -12,22 +12,22 @@ data class Order(
     @Column(name = "o_id")
     val id: Long = 0,
     @Column(name = "o_user")
-    val userId: Long = 0L,
+    val user: Long = 0L,
     @Column(name = "o_gym")
-    val gymId: Long = 0L,
+    val gym: Long = 0L,
     @Column(name = "o_health")
-    val healthId: Long = 0L,
+    val health: Long = 0L,
     @Column(name = "o_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "o_user", insertable = false, updatable = false)
+    @JoinColumn(name = "u_user", insertable = false, updatable = false)
     var user: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "o_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "o_health", insertable = false, updatable = false)
+    @JoinColumn(name = "h_health", insertable = false, updatable = false)
     var health: Health? = null
 }
 
@@ -78,9 +78,9 @@ data class OrderResponse(
             val healthResponse = order.health?.let { HealthResponse.from(it) }
             return OrderResponse(
                 id = order.id,
-                user = order.userId,
-                gym = order.gymId,
-                health = order.healthId,
+                user = order.user,
+                gym = order.gym,
+                health = order.health,
                 date = order.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = OrderExtraInfo(

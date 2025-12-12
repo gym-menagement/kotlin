@@ -16,12 +16,12 @@ data class Loginlog(
     @Column(name = "ll_ipvalue")
     val ipvalue: Long = 0L,
     @Column(name = "ll_user")
-    val userId: Long = 0L,
+    val user: Long = 0L,
     @Column(name = "ll_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ll_user", insertable = false, updatable = false)
+    @JoinColumn(name = "u_user", insertable = false, updatable = false)
     var user: User? = null
 }
 
@@ -70,7 +70,7 @@ data class LoginlogResponse(
                 id = loginlog.id,
                 ip = loginlog.ip,
                 ipvalue = loginlog.ipvalue,
-                user = loginlog.userId,
+                user = loginlog.user,
                 date = loginlog.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = LoginlogExtraInfo(

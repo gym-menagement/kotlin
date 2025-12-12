@@ -12,24 +12,24 @@ data class Paymentform(
     @Column(name = "pf_id")
     val id: Long = 0,
     @Column(name = "pf_gym")
-    val gymId: Long = 0L,
+    val gym: Long = 0L,
     @Column(name = "pf_payment")
-    val paymentId: Long = 0L,
+    val payment: Long = 0L,
     @Column(name = "pf_type")
-    val typeId: Long = 0L,
+    val type: Long = 0L,
     @Column(name = "pf_cost")
     val cost: Int = 0,
     @Column(name = "pf_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pf_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pf_payment", insertable = false, updatable = false)
+    @JoinColumn(name = "p_payment", insertable = false, updatable = false)
     var payment: Payment? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pf_type", insertable = false, updatable = false)
+    @JoinColumn(name = "pt_type", insertable = false, updatable = false)
     var paymenttype: Paymenttype? = null
 }
 
@@ -84,9 +84,9 @@ data class PaymentformResponse(
             val paymenttypeResponse = paymentform.paymenttype?.let { PaymenttypeResponse.from(it) }
             return PaymentformResponse(
                 id = paymentform.id,
-                gym = paymentform.gymId,
-                payment = paymentform.paymentId,
-                type = paymentform.typeId,
+                gym = paymentform.gym,
+                payment = paymentform.payment,
+                type = paymentform.type,
                 cost = paymentform.cost,
                 date = paymentform.date?.toString()?.replace("T", " ") ?: "",
 

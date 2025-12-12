@@ -33,13 +33,13 @@ interface GymtrainerRepository : JpaRepository<Gymtrainer, Long> {
         "gym",
         "traineruser"
     ])
-    fun findBygymId(gym: Long): List<Gymtrainer>
+    fun findByGym(gym: Long): List<Gymtrainer>
 
     @EntityGraph(attributePaths = [
         "gym",
         "traineruser"
     ])
-    fun findBytrainerId(traineruser: Long): List<Gymtrainer>
+    fun findByTrainer(trainer: Long): List<Gymtrainer>
 
     @EntityGraph(attributePaths = [
         "gym",

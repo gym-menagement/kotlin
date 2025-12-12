@@ -34,16 +34,16 @@ class TrainermemberService(private val trainermemberRepository: TrainermemberRep
     }
 
 
-    fun findByTrainer(traineruser: Long): List<Trainermember> {
-        return trainermemberRepository.findBytrainerId(traineruser)
+    fun findByTrainer(trainer: Long): List<Trainermember> {
+        return trainermemberRepository.findByTrainer(trainer)
     }
 
-    fun findByMember(memberuser: Long): List<Trainermember> {
-        return trainermemberRepository.findBymemberId(memberuser)
+    fun findByMember(member: Long): List<Trainermember> {
+        return trainermemberRepository.findByMember(member)
     }
 
     fun findByGym(gym: Long): List<Trainermember> {
-        return trainermemberRepository.findBygymId(gym)
+        return trainermemberRepository.findByGym(gym)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Trainermember> {
@@ -69,9 +69,9 @@ class TrainermemberService(private val trainermemberRepository: TrainermemberRep
 
     fun create(request: TrainermemberCreateRequest): Trainermember {
         val entity = Trainermember(
-            trainerId = request.trainer,
-            memberId = request.member,
-            gymId = request.gym,
+            trainer = request.trainer,
+            member = request.member,
+            gym = request.gym,
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
@@ -84,9 +84,9 @@ class TrainermemberService(private val trainermemberRepository: TrainermemberRep
     fun createBatch(requests: List<TrainermemberCreateRequest>): List<Trainermember> {
         val entities = requests.map { request ->
             Trainermember(
-                trainerId = request.trainer,
-                memberId = request.member,
-                gymId = request.gym,
+                trainer = request.trainer,
+                member = request.member,
+                gym = request.gym,
                 startdate = request.startdate,
                 enddate = request.enddate,
                 status = request.status,
@@ -101,9 +101,9 @@ class TrainermemberService(private val trainermemberRepository: TrainermemberRep
         val existing = trainermemberRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            trainerId = request.trainer,
-            memberId = request.member,
-            gymId = request.gym,
+            trainer = request.trainer,
+            member = request.member,
+            gym = request.gym,
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
@@ -144,9 +144,9 @@ class TrainermemberService(private val trainermemberRepository: TrainermemberRep
         val existing = trainermemberRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            trainerId = request.trainer ?: existing.trainerId,
-            memberId = request.member ?: existing.memberId,
-            gymId = request.gym ?: existing.gymId,
+            trainer = request.trainer ?: existing.trainer,
+            member = request.member ?: existing.member,
+            gym = request.gym ?: existing.gym,
             startdate = request.startdate ?: existing.startdate,
             enddate = request.enddate ?: existing.enddate,
             status = request.status ?: existing.status,

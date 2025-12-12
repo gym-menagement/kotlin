@@ -60,10 +60,10 @@ class InquiryController(
         var results = if (user != null || gym != null || type != null || title != null || content != null || status != null || answer != null || answeredby != null || startanswereddate != null || endanswereddate != null || startcreateddate != null || endcreateddate != null || startdate != null || enddate != null || false) {
             var filtered = inquiryService.findAll(0, Int.MAX_VALUE).content
             if (user != null) {
-                filtered = filtered.filter { it.userId == user }
+                filtered = filtered.filter { it.user == user }
             }
             if (gym != null) {
-                filtered = filtered.filter { it.gymId == gym }
+                filtered = filtered.filter { it.gym == gym }
             }
             if (type != null) {
                 filtered = filtered.filter { it.type.ordinal == type }
@@ -81,7 +81,7 @@ class InquiryController(
                 filtered = filtered.filter { it.answer == answer }
             }
             if (answeredby != null) {
-                filtered = filtered.filter { it.answeredbyId == answeredby }
+                filtered = filtered.filter { it.answeredby == answeredby }
             }
             if (startanswereddate != null || endanswereddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.answereddate, startanswereddate, endanswereddate) }

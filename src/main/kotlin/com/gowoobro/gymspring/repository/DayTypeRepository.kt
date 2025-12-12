@@ -29,7 +29,7 @@ interface DaytypeRepository : JpaRepository<Daytype, Long> {
     @EntityGraph(attributePaths = [
         "gym"
     ])
-    fun findBygymId(gym: Long): List<Daytype>
+    fun findByGym(gym: Long): List<Daytype>
 
     @EntityGraph(attributePaths = [
         "gym"

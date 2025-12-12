@@ -65,7 +65,7 @@ class AlarmController(
                 filtered = filtered.filter { it.status.ordinal == status }
             }
             if (user != null) {
-                filtered = filtered.filter { it.userId == user }
+                filtered = filtered.filter { it.user == user }
             }
             if (startdate != null || enddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }

@@ -48,7 +48,7 @@ class HealthcategoryController(
         var results = if (gym != null || name != null || startdate != null || enddate != null || false) {
             var filtered = healthcategoryService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gymId == gym }
+                filtered = filtered.filter { it.gym == gym }
             }
             if (name != null) {
                 filtered = filtered.filter { it.name == name }

@@ -30,7 +30,7 @@ interface QrcodeRepository : JpaRepository<Qrcode, Long> {
     @EntityGraph(attributePaths = [
         "user"
     ])
-    fun findByuserId(user: Long): List<Qrcode>
+    fun findByUser(user: Long): List<Qrcode>
 
     @EntityGraph(attributePaths = [
         "user"

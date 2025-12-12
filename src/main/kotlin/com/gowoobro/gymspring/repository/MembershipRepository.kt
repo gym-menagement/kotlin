@@ -32,13 +32,13 @@ interface MembershipRepository : JpaRepository<Membership, Long> {
         "gym",
         "user"
     ])
-    fun findByuserId(user: Long): List<Membership>
+    fun findByUser(user: Long): List<Membership>
 
     @EntityGraph(attributePaths = [
         "gym",
         "user"
     ])
-    fun findBygymId(gym: Long): List<Membership>
+    fun findByGym(gym: Long): List<Membership>
 
     @EntityGraph(attributePaths = [
         "gym",

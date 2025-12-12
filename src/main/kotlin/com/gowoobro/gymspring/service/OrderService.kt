@@ -34,15 +34,15 @@ class OrderService(private val orderRepository: OrderRepository) {
 
 
     fun findByUser(user: Long): List<Order> {
-        return orderRepository.findByuserId(user)
+        return orderRepository.findByUser(user)
     }
 
     fun findByGym(gym: Long): List<Order> {
-        return orderRepository.findBygymId(gym)
+        return orderRepository.findByGym(gym)
     }
 
     fun findByHealth(health: Long): List<Order> {
-        return orderRepository.findByhealthId(health)
+        return orderRepository.findByHealth(health)
     }
 
     fun findByDate(date: LocalDateTime): List<Order> {
@@ -52,9 +52,9 @@ class OrderService(private val orderRepository: OrderRepository) {
 
     fun create(request: OrderCreateRequest): Order {
         val entity = Order(
-            userId = request.user,
-            gymId = request.gym,
-            healthId = request.health,
+            user = request.user,
+            gym = request.gym,
+            health = request.health,
             date = request.date,
         )
         return orderRepository.save(entity)
@@ -63,9 +63,9 @@ class OrderService(private val orderRepository: OrderRepository) {
     fun createBatch(requests: List<OrderCreateRequest>): List<Order> {
         val entities = requests.map { request ->
             Order(
-                userId = request.user,
-                gymId = request.gym,
-                healthId = request.health,
+                user = request.user,
+                gym = request.gym,
+                health = request.health,
                 date = request.date,
             )
         }
@@ -76,9 +76,9 @@ class OrderService(private val orderRepository: OrderRepository) {
         val existing = orderRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            userId = request.user,
-            gymId = request.gym,
-            healthId = request.health,
+            user = request.user,
+            gym = request.gym,
+            health = request.health,
             date = request.date,
         )
         return orderRepository.save(updated)
@@ -115,9 +115,9 @@ class OrderService(private val orderRepository: OrderRepository) {
         val existing = orderRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            userId = request.user ?: existing.userId,
-            gymId = request.gym ?: existing.gymId,
-            healthId = request.health ?: existing.healthId,
+            user = request.user ?: existing.user,
+            gym = request.gym ?: existing.gym,
+            health = request.health ?: existing.health,
             date = request.date ?: existing.date,
         )
         return orderRepository.save(updated)

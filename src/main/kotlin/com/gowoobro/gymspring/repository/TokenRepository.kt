@@ -30,7 +30,7 @@ interface TokenRepository : JpaRepository<Token, Long> {
     @EntityGraph(attributePaths = [
         "user"
     ])
-    fun findByuserId(user: Long): List<Token>
+    fun findByUser(user: Long): List<Token>
 
     @EntityGraph(attributePaths = [
         "user"

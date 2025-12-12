@@ -50,13 +50,13 @@ class PaymentformController(
         var results = if (gym != null || payment != null || type != null || cost != null || startdate != null || enddate != null || false) {
             var filtered = paymentformService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gymId == gym }
+                filtered = filtered.filter { it.gym == gym }
             }
             if (payment != null) {
-                filtered = filtered.filter { it.paymentId == payment }
+                filtered = filtered.filter { it.payment == payment }
             }
             if (type != null) {
-                filtered = filtered.filter { it.typeId == type }
+                filtered = filtered.filter { it.type == type }
             }
             if (cost != null) {
                 filtered = filtered.filter { it.cost == cost }

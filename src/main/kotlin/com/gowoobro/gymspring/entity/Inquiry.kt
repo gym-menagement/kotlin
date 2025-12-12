@@ -14,9 +14,9 @@ data class Inquiry(
     @Column(name = "iq_id")
     val id: Long = 0,
     @Column(name = "iq_user")
-    val userId: Long = 0L,
+    val user: Long = 0L,
     @Column(name = "iq_gym")
-    val gymId: Long = 0L,
+    val gym: Long = 0L,
     @Column(name = "iq_type")
     val type: Type = Type.GENERAL,
     @Column(name = "iq_title")
@@ -28,7 +28,7 @@ data class Inquiry(
     @Column(name = "iq_answer")
     val answer: String = "",
     @Column(name = "iq_answeredby")
-    val answeredbyId: Long = 0L,
+    val answeredby: Long = 0L,
     @Column(name = "iq_answereddate")
     val answereddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "iq_createddate")
@@ -37,13 +37,13 @@ data class Inquiry(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iq_user", insertable = false, updatable = false)
+    @JoinColumn(name = "u_user", insertable = false, updatable = false)
     var inquireruser: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iq_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "iq_answeredby", insertable = false, updatable = false)
+    @JoinColumn(name = "u_answeredby", insertable = false, updatable = false)
     var answeredbyuser: User? = null
 }
 
@@ -124,14 +124,14 @@ data class InquiryResponse(
             val answeredbyuserResponse = inquiry.answeredbyuser?.let { UserResponse.from(it) }
             return InquiryResponse(
                 id = inquiry.id,
-                user = inquiry.userId,
-                gym = inquiry.gymId,
+                user = inquiry.user,
+                gym = inquiry.gym,
                 type = inquiry.type.ordinal,
                 title = inquiry.title,
                 content = inquiry.content,
                 status = inquiry.status.ordinal,
                 answer = inquiry.answer,
-                answeredby = inquiry.answeredbyId,
+                answeredby = inquiry.answeredby,
                 answereddate = inquiry.answereddate?.toString()?.replace("T", " ") ?: "",
                 createddate = inquiry.createddate?.toString()?.replace("T", " ") ?: "",
                 date = inquiry.date?.toString()?.replace("T", " ") ?: "",

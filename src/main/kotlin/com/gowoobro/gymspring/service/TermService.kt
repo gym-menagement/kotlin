@@ -34,11 +34,11 @@ class TermService(private val termRepository: TermRepository) {
 
 
     fun findByGym(gym: Long): List<Term> {
-        return termRepository.findBygymId(gym)
+        return termRepository.findByGym(gym)
     }
 
     fun findByDaytype(daytype: Long): List<Term> {
-        return termRepository.findBydaytypeId(daytype)
+        return termRepository.findByDaytype(daytype)
     }
 
     fun findByName(name: String): List<Term> {
@@ -56,8 +56,8 @@ class TermService(private val termRepository: TermRepository) {
 
     fun create(request: TermCreateRequest): Term {
         val entity = Term(
-            gymId = request.gym,
-            daytypeId = request.daytype,
+            gym = request.gym,
+            daytype = request.daytype,
             name = request.name,
             term = request.term,
             date = request.date,
@@ -68,8 +68,8 @@ class TermService(private val termRepository: TermRepository) {
     fun createBatch(requests: List<TermCreateRequest>): List<Term> {
         val entities = requests.map { request ->
             Term(
-                gymId = request.gym,
-                daytypeId = request.daytype,
+                gym = request.gym,
+                daytype = request.daytype,
                 name = request.name,
                 term = request.term,
                 date = request.date,
@@ -82,8 +82,8 @@ class TermService(private val termRepository: TermRepository) {
         val existing = termRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym,
-            daytypeId = request.daytype,
+            gym = request.gym,
+            daytype = request.daytype,
             name = request.name,
             term = request.term,
             date = request.date,
@@ -122,8 +122,8 @@ class TermService(private val termRepository: TermRepository) {
         val existing = termRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gymId = request.gym ?: existing.gymId,
-            daytypeId = request.daytype ?: existing.daytypeId,
+            gym = request.gym ?: existing.gym,
+            daytype = request.daytype ?: existing.daytype,
             name = request.name ?: existing.name,
             term = request.term ?: existing.term,
             date = request.date ?: existing.date,

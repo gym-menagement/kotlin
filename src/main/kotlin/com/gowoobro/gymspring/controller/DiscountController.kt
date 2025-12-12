@@ -49,7 +49,7 @@ class DiscountController(
         var results = if (gym != null || name != null || discount != null || startdate != null || enddate != null || false) {
             var filtered = discountService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gymId == gym }
+                filtered = filtered.filter { it.gym == gym }
             }
             if (name != null) {
                 filtered = filtered.filter { it.name == name }

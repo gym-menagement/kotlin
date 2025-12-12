@@ -65,22 +65,22 @@ class UsehealthController(
         var results = if (order != null || health != null || membership != null || user != null || term != null || discount != null || startstartday != null || endstartday != null || startendday != null || endendday != null || gym != null || status != null || totalcount != null || usedcount != null || remainingcount != null || qrcode != null || startlastuseddate != null || endlastuseddate != null || startdate != null || enddate != null || false) {
             var filtered = usehealthService.findAll(0, Int.MAX_VALUE).content
             if (order != null) {
-                filtered = filtered.filter { it.orderId == order }
+                filtered = filtered.filter { it.order == order }
             }
             if (health != null) {
-                filtered = filtered.filter { it.healthId == health }
+                filtered = filtered.filter { it.health == health }
             }
             if (membership != null) {
-                filtered = filtered.filter { it.membershipId == membership }
+                filtered = filtered.filter { it.membership == membership }
             }
             if (user != null) {
-                filtered = filtered.filter { it.userId == user }
+                filtered = filtered.filter { it.user == user }
             }
             if (term != null) {
-                filtered = filtered.filter { it.termId == term }
+                filtered = filtered.filter { it.term == term }
             }
             if (discount != null) {
-                filtered = filtered.filter { it.discountId == discount }
+                filtered = filtered.filter { it.discount == discount }
             }
             if (startstartday != null || endstartday != null) {
                 filtered = filtered.filter { filterByDateRange(it.startday, startstartday, endstartday) }
@@ -89,7 +89,7 @@ class UsehealthController(
                 filtered = filtered.filter { filterByDateRange(it.endday, startendday, endendday) }
             }
             if (gym != null) {
-                filtered = filtered.filter { it.gymId == gym }
+                filtered = filtered.filter { it.gym == gym }
             }
             if (status != null) {
                 filtered = filtered.filter { it.status.ordinal == status }

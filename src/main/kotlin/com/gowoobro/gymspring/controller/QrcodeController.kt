@@ -58,7 +58,7 @@ class QrcodeController(
         var results = if (user != null || code != null || imageurl != null || isactive != null || startexpiredate != null || endexpiredate != null || startgenerateddate != null || endgenerateddate != null || startlastuseddate != null || endlastuseddate != null || usecount != null || startdate != null || enddate != null || false) {
             var filtered = qrcodeService.findAll(0, Int.MAX_VALUE).content
             if (user != null) {
-                filtered = filtered.filter { it.userId == user }
+                filtered = filtered.filter { it.user == user }
             }
             if (code != null) {
                 filtered = filtered.filter { it.code == code }

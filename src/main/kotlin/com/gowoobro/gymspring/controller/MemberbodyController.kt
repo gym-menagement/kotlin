@@ -64,10 +64,10 @@ class MemberbodyController(
         var results = if (gym != null || user != null || height != null || weight != null || bodyfat != null || musclemass != null || bmi != null || skeletalmuscle != null || bodywater != null || chest != null || waist != null || hip != null || arm != null || thigh != null || note != null || startmeasureddate != null || endmeasureddate != null || measuredby != null || startdate != null || enddate != null || false) {
             var filtered = memberbodyService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gymId == gym }
+                filtered = filtered.filter { it.gym == gym }
             }
             if (user != null) {
-                filtered = filtered.filter { it.userId == user }
+                filtered = filtered.filter { it.user == user }
             }
             if (height != null) {
                 filtered = filtered.filter { it.height == height }
@@ -112,7 +112,7 @@ class MemberbodyController(
                 filtered = filtered.filter { filterByDateRange(it.measureddate, startmeasureddate, endmeasureddate) }
             }
             if (measuredby != null) {
-                filtered = filtered.filter { it.measuredbyId == measuredby }
+                filtered = filtered.filter { it.measuredby == measuredby }
             }
             if (startdate != null || enddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }

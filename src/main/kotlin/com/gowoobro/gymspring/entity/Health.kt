@@ -12,9 +12,9 @@ data class Health(
     @Column(name = "h_id")
     val id: Long = 0,
     @Column(name = "h_category")
-    val categoryId: Long = 0L,
+    val category: Long = 0L,
     @Column(name = "h_term")
-    val termId: Long = 0L,
+    val term: Long = 0L,
     @Column(name = "h_name")
     val name: String = "",
     @Column(name = "h_count")
@@ -22,27 +22,27 @@ data class Health(
     @Column(name = "h_cost")
     val cost: Int = 0,
     @Column(name = "h_discount")
-    val discountId: Long = 0L,
+    val discount: Long = 0L,
     @Column(name = "h_costdiscount")
     val costdiscount: Int = 0,
     @Column(name = "h_content")
     val content: String = "",
     @Column(name = "h_gym")
-    val gymId: Long = 0L,
+    val gym: Long = 0L,
     @Column(name = "h_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_category", insertable = false, updatable = false)
+    @JoinColumn(name = "hc_category", insertable = false, updatable = false)
     var healthcategory: Healthcategory? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_term", insertable = false, updatable = false)
+    @JoinColumn(name = "t_term", insertable = false, updatable = false)
     var term: Term? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_discount", insertable = false, updatable = false)
+    @JoinColumn(name = "d_discount", insertable = false, updatable = false)
     var discount: Discount? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
     var gym: Gym? = null
 }
 
@@ -119,15 +119,15 @@ data class HealthResponse(
             val gymResponse = health.gym?.let { GymResponse.from(it) }
             return HealthResponse(
                 id = health.id,
-                category = health.categoryId,
-                term = health.termId,
+                category = health.category,
+                term = health.term,
                 name = health.name,
                 count = health.count,
                 cost = health.cost,
-                discount = health.discountId,
+                discount = health.discount,
                 costdiscount = health.costdiscount,
                 content = health.content,
-                gym = health.gymId,
+                gym = health.gym,
                 date = health.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = HealthExtraInfo(

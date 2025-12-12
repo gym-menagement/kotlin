@@ -51,7 +51,7 @@ interface AlarmRepository : JpaRepository<Alarm, Long> {
     @EntityGraph(attributePaths = [
         "user"
     ])
-    fun findByuserId(user: Long): List<Alarm>
+    fun findByUser(user: Long): List<Alarm>
 
     @EntityGraph(attributePaths = [
         "user"

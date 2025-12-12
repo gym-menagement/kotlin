@@ -13,7 +13,7 @@ data class Pushtoken(
     @Column(name = "pt_id")
     val id: Long = 0,
     @Column(name = "pt_user")
-    val userId: Long = 0L,
+    val user: Long = 0L,
     @Column(name = "pt_token")
     val token: String = "",
     @Column(name = "pt_devicetype")
@@ -32,7 +32,7 @@ data class Pushtoken(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pt_user", insertable = false, updatable = false)
+    @JoinColumn(name = "u_user", insertable = false, updatable = false)
     var user: User? = null
 }
 
@@ -100,7 +100,7 @@ data class PushtokenResponse(
             val userResponse = pushtoken.user?.let { UserResponse.from(it) }
             return PushtokenResponse(
                 id = pushtoken.id,
-                user = pushtoken.userId,
+                user = pushtoken.user,
                 token = pushtoken.token,
                 devicetype = pushtoken.devicetype,
                 deviceid = pushtoken.deviceid,

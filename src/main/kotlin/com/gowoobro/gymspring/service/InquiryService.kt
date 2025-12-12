@@ -35,12 +35,12 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
     }
 
 
-    fun findByUser(inquireruser: Long): List<Inquiry> {
-        return inquiryRepository.findByuserId(inquireruser)
+    fun findByUser(user: Long): List<Inquiry> {
+        return inquiryRepository.findByUser(user)
     }
 
     fun findByGym(gym: Long): List<Inquiry> {
-        return inquiryRepository.findBygymId(gym)
+        return inquiryRepository.findByGym(gym)
     }
 
     fun findByType(type: Type): List<Inquiry> {
@@ -63,8 +63,8 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
         return inquiryRepository.findByAnswer(answer)
     }
 
-    fun findByAnsweredby(answeredbyuser: Long): List<Inquiry> {
-        return inquiryRepository.findByansweredbyId(answeredbyuser)
+    fun findByAnsweredby(answeredby: Long): List<Inquiry> {
+        return inquiryRepository.findByAnsweredby(answeredby)
     }
 
     fun findByAnswereddate(answereddate: LocalDateTime): List<Inquiry> {
@@ -82,14 +82,14 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
 
     fun create(request: InquiryCreateRequest): Inquiry {
         val entity = Inquiry(
-            userId = request.user,
-            gymId = request.gym,
+            user = request.user,
+            gym = request.gym,
             type = request.type,
             title = request.title,
             content = request.content,
             status = request.status,
             answer = request.answer,
-            answeredbyId = request.answeredby,
+            answeredby = request.answeredby,
             answereddate = request.answereddate,
             createddate = request.createddate,
             date = request.date,
@@ -100,14 +100,14 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
     fun createBatch(requests: List<InquiryCreateRequest>): List<Inquiry> {
         val entities = requests.map { request ->
             Inquiry(
-                userId = request.user,
-                gymId = request.gym,
+                user = request.user,
+                gym = request.gym,
                 type = request.type,
                 title = request.title,
                 content = request.content,
                 status = request.status,
                 answer = request.answer,
-                answeredbyId = request.answeredby,
+                answeredby = request.answeredby,
                 answereddate = request.answereddate,
                 createddate = request.createddate,
                 date = request.date,
@@ -120,14 +120,14 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
         val existing = inquiryRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            userId = request.user,
-            gymId = request.gym,
+            user = request.user,
+            gym = request.gym,
             type = request.type,
             title = request.title,
             content = request.content,
             status = request.status,
             answer = request.answer,
-            answeredbyId = request.answeredby,
+            answeredby = request.answeredby,
             answereddate = request.answereddate,
             createddate = request.createddate,
             date = request.date,
@@ -166,14 +166,14 @@ class InquiryService(private val inquiryRepository: InquiryRepository) {
         val existing = inquiryRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            userId = request.user ?: existing.userId,
-            gymId = request.gym ?: existing.gymId,
+            user = request.user ?: existing.user,
+            gym = request.gym ?: existing.gym,
             type = request.type ?: existing.type,
             title = request.title ?: existing.title,
             content = request.content ?: existing.content,
             status = request.status ?: existing.status,
             answer = request.answer ?: existing.answer,
-            answeredbyId = request.answeredby ?: existing.answeredbyId,
+            answeredby = request.answeredby ?: existing.answeredby,
             answereddate = request.answereddate ?: existing.answereddate,
             createddate = request.createddate ?: existing.createddate,
             date = request.date ?: existing.date,

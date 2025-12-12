@@ -15,11 +15,11 @@ data class Attendance(
     @Column(name = "at_id")
     val id: Long = 0,
     @Column(name = "at_user")
-    val userId: Long = 0L,
+    val user: Long = 0L,
     @Column(name = "at_usehealth")
-    val usehealthId: Long = 0L,
+    val usehealth: Long = 0L,
     @Column(name = "at_gym")
-    val gymId: Long = 0L,
+    val gym: Long = 0L,
     @Column(name = "at_type")
     val type: Type = Type.ENTRY,
     @Column(name = "at_method")
@@ -44,13 +44,13 @@ data class Attendance(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "at_user", insertable = false, updatable = false)
+    @JoinColumn(name = "u_user", insertable = false, updatable = false)
     var user: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "at_usehealth", insertable = false, updatable = false)
+    @JoinColumn(name = "uh_usehealth", insertable = false, updatable = false)
     var usehealth: Usehealth? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "at_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
     var gym: Gym? = null
 }
 
@@ -144,9 +144,9 @@ data class AttendanceResponse(
             val gymResponse = attendance.gym?.let { GymResponse.from(it) }
             return AttendanceResponse(
                 id = attendance.id,
-                user = attendance.userId,
-                usehealth = attendance.usehealthId,
-                gym = attendance.gymId,
+                user = attendance.user,
+                usehealth = attendance.usehealth,
+                gym = attendance.gym,
                 type = attendance.type.ordinal,
                 method = attendance.method.ordinal,
                 checkintime = attendance.checkintime?.toString()?.replace("T", " ") ?: "",
