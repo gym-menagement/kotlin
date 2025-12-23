@@ -13,7 +13,7 @@ data class Token(
     @Column(name = "to_id")
     val id: Long = 0,
     @Column(name = "to_user")
-    val user: Long = 0L,
+    val userId: Long = 0L,
     @Column(name = "to_token")
     val token: String = "",
     @Column(name = "to_status")
@@ -22,7 +22,7 @@ data class Token(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_user", insertable = false, updatable = false)
+    @JoinColumn(name = "to_user", insertable = false, updatable = false)
     var user: User? = null
 }
 
@@ -70,7 +70,7 @@ data class TokenResponse(
             val userResponse = token.user?.let { UserResponse.from(it) }
             return TokenResponse(
                 id = token.id,
-                user = token.user,
+                user = token.userId,
                 token = token.token,
                 status = token.status.ordinal,
                 date = token.date?.toString()?.replace("T", " ") ?: "",

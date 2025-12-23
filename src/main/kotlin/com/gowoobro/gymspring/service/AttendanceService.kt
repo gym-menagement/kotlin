@@ -37,15 +37,15 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
 
 
     fun findByUser(user: Long): List<Attendance> {
-        return attendanceRepository.findByUser(user)
+        return attendanceRepository.findByuserId(user)
     }
 
     fun findByUsehealth(usehealth: Long): List<Attendance> {
-        return attendanceRepository.findByUsehealth(usehealth)
+        return attendanceRepository.findByusehealthId(usehealth)
     }
 
     fun findByGym(gym: Long): List<Attendance> {
-        return attendanceRepository.findByGym(gym)
+        return attendanceRepository.findBygymId(gym)
     }
 
     fun findByType(type: Type): List<Attendance> {
@@ -95,9 +95,9 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
 
     fun create(request: AttendanceCreateRequest): Attendance {
         val entity = Attendance(
-            user = request.user,
-            usehealth = request.usehealth,
-            gym = request.gym,
+            userId = request.user,
+            usehealthId = request.usehealth,
+            gymId = request.gym,
             type = request.type,
             method = request.method,
             checkintime = request.checkintime,
@@ -116,9 +116,9 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
     fun createBatch(requests: List<AttendanceCreateRequest>): List<Attendance> {
         val entities = requests.map { request ->
             Attendance(
-                user = request.user,
-                usehealth = request.usehealth,
-                gym = request.gym,
+                userId = request.user,
+                usehealthId = request.usehealth,
+                gymId = request.gym,
                 type = request.type,
                 method = request.method,
                 checkintime = request.checkintime,
@@ -139,9 +139,9 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
         val existing = attendanceRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            user = request.user,
-            usehealth = request.usehealth,
-            gym = request.gym,
+            userId = request.user,
+            usehealthId = request.usehealth,
+            gymId = request.gym,
             type = request.type,
             method = request.method,
             checkintime = request.checkintime,
@@ -188,9 +188,9 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
         val existing = attendanceRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            user = request.user ?: existing.user,
-            usehealth = request.usehealth ?: existing.usehealth,
-            gym = request.gym ?: existing.gym,
+            userId = request.user ?: existing.userId,
+            usehealthId = request.usehealth ?: existing.usehealthId,
+            gymId = request.gym ?: existing.gymId,
             type = request.type ?: existing.type,
             method = request.method ?: existing.method,
             checkintime = request.checkintime ?: existing.checkintime,

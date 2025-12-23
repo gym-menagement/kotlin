@@ -49,13 +49,13 @@ class OrderController(
         var results = if (user != null || gym != null || health != null || startdate != null || enddate != null || false) {
             var filtered = orderService.findAll(0, Int.MAX_VALUE).content
             if (user != null) {
-                filtered = filtered.filter { it.user == user }
+                filtered = filtered.filter { it.userId == user }
             }
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (health != null) {
-                filtered = filtered.filter { it.health == health }
+                filtered = filtered.filter { it.healthId == health }
             }
             if (startdate != null || enddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }

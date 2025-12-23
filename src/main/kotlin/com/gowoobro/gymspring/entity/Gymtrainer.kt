@@ -13,9 +13,9 @@ data class Gymtrainer(
     @Column(name = "gt_id")
     val id: Long = 0,
     @Column(name = "gt_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "gt_trainer")
-    val trainer: Long = 0L,
+    val trainerId: Long = 0L,
     @Column(name = "gt_startdate")
     val startdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "gt_enddate")
@@ -30,10 +30,10 @@ data class Gymtrainer(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "gt_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_trainer", insertable = false, updatable = false)
+    @JoinColumn(name = "gt_trainer", insertable = false, updatable = false)
     var traineruser: User? = null
 }
 
@@ -99,8 +99,8 @@ data class GymtrainerResponse(
             val traineruserResponse = gymtrainer.traineruser?.let { UserResponse.from(it) }
             return GymtrainerResponse(
                 id = gymtrainer.id,
-                gym = gymtrainer.gym,
-                trainer = gymtrainer.trainer,
+                gym = gymtrainer.gymId,
+                trainer = gymtrainer.trainerId,
                 startdate = gymtrainer.startdate?.toString()?.replace("T", " ") ?: "",
                 enddate = gymtrainer.enddate?.toString()?.replace("T", " ") ?: "",
                 status = gymtrainer.status.ordinal,

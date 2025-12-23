@@ -55,10 +55,10 @@ class HealthController(
         var results = if (category != null || term != null || name != null || count != null || cost != null || discount != null || costdiscount != null || content != null || gym != null || startdate != null || enddate != null || false) {
             var filtered = healthService.findAll(0, Int.MAX_VALUE).content
             if (category != null) {
-                filtered = filtered.filter { it.category == category }
+                filtered = filtered.filter { it.categoryId == category }
             }
             if (term != null) {
-                filtered = filtered.filter { it.term == term }
+                filtered = filtered.filter { it.termId == term }
             }
             if (name != null) {
                 filtered = filtered.filter { it.name == name }
@@ -70,7 +70,7 @@ class HealthController(
                 filtered = filtered.filter { it.cost == cost }
             }
             if (discount != null) {
-                filtered = filtered.filter { it.discount == discount }
+                filtered = filtered.filter { it.discountId == discount }
             }
             if (costdiscount != null) {
                 filtered = filtered.filter { it.costdiscount == costdiscount }
@@ -79,7 +79,7 @@ class HealthController(
                 filtered = filtered.filter { it.content == content }
             }
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (startdate != null || enddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }

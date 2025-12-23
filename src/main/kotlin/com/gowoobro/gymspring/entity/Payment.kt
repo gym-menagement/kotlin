@@ -12,24 +12,24 @@ data class Payment(
     @Column(name = "p_id")
     val id: Long = 0,
     @Column(name = "p_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "p_order")
-    val order: Long = 0L,
+    val orderId: Long = 0L,
     @Column(name = "p_user")
-    val user: Long = 0L,
+    val userId: Long = 0L,
     @Column(name = "p_cost")
     val cost: Int = 0,
     @Column(name = "p_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "p_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "o_order", insertable = false, updatable = false)
+    @JoinColumn(name = "p_order", insertable = false, updatable = false)
     var order: Order? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_user", insertable = false, updatable = false)
+    @JoinColumn(name = "p_user", insertable = false, updatable = false)
     var user: User? = null
 }
 
@@ -84,9 +84,9 @@ data class PaymentResponse(
             val userResponse = payment.user?.let { UserResponse.from(it) }
             return PaymentResponse(
                 id = payment.id,
-                gym = payment.gym,
-                order = payment.order,
-                user = payment.user,
+                gym = payment.gymId,
+                order = payment.orderId,
+                user = payment.userId,
                 cost = payment.cost,
                 date = payment.date?.toString()?.replace("T", " ") ?: "",
 

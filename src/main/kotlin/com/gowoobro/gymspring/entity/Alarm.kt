@@ -22,12 +22,12 @@ data class Alarm(
     @Column(name = "al_status")
     val status: Status = Status.SUCCESS,
     @Column(name = "al_user")
-    val user: Long = 0L,
+    val userId: Long = 0L,
     @Column(name = "al_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_user", insertable = false, updatable = false)
+    @JoinColumn(name = "al_user", insertable = false, updatable = false)
     var user: User? = null
 }
 
@@ -88,7 +88,7 @@ data class AlarmResponse(
                 content = alarm.content,
                 type = alarm.type.ordinal,
                 status = alarm.status.ordinal,
-                user = alarm.user,
+                user = alarm.userId,
                 date = alarm.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = AlarmExtraInfo(

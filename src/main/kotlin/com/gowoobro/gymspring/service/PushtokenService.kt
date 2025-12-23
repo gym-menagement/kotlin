@@ -35,7 +35,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
 
 
     fun findByUser(user: Long): List<Pushtoken> {
-        return pushtokenRepository.findByUser(user)
+        return pushtokenRepository.findByuserId(user)
     }
 
     fun findByToken(token: String): List<Pushtoken> {
@@ -73,7 +73,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
 
     fun create(request: PushtokenCreateRequest): Pushtoken {
         val entity = Pushtoken(
-            user = request.user,
+            userId = request.user,
             token = request.token,
             devicetype = request.devicetype,
             deviceid = request.deviceid,
@@ -89,7 +89,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
     fun createBatch(requests: List<PushtokenCreateRequest>): List<Pushtoken> {
         val entities = requests.map { request ->
             Pushtoken(
-                user = request.user,
+                userId = request.user,
                 token = request.token,
                 devicetype = request.devicetype,
                 deviceid = request.deviceid,
@@ -107,7 +107,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
         val existing = pushtokenRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            user = request.user,
+            userId = request.user,
             token = request.token,
             devicetype = request.devicetype,
             deviceid = request.deviceid,
@@ -151,7 +151,7 @@ class PushtokenService(private val pushtokenRepository: PushtokenRepository) {
         val existing = pushtokenRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            user = request.user ?: existing.user,
+            userId = request.user ?: existing.userId,
             token = request.token ?: existing.token,
             devicetype = request.devicetype ?: existing.devicetype,
             deviceid = request.deviceid ?: existing.deviceid,

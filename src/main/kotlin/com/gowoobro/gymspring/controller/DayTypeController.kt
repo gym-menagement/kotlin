@@ -48,7 +48,7 @@ class DaytypeController(
         var results = if (gym != null || name != null || startdate != null || enddate != null || false) {
             var filtered = daytypeService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (name != null) {
                 filtered = filtered.filter { it.name == name }

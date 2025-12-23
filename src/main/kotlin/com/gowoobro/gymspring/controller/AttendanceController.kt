@@ -64,13 +64,13 @@ class AttendanceController(
         var results = if (user != null || usehealth != null || gym != null || type != null || method != null || startcheckintime != null || endcheckintime != null || startcheckouttime != null || endcheckouttime != null || duration != null || status != null || note != null || ip != null || device != null || createdby != null || startdate != null || enddate != null || false) {
             var filtered = attendanceService.findAll(0, Int.MAX_VALUE).content
             if (user != null) {
-                filtered = filtered.filter { it.user == user }
+                filtered = filtered.filter { it.userId == user }
             }
             if (usehealth != null) {
-                filtered = filtered.filter { it.usehealth == usehealth }
+                filtered = filtered.filter { it.usehealthId == usehealth }
             }
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (type != null) {
                 filtered = filtered.filter { it.type.ordinal == type }

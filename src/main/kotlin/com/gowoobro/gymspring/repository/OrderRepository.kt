@@ -47,7 +47,7 @@ interface OrderRepository : JpaRepository<Order, Long> {
         "health.discount",
         "health.gym"
     ])
-    fun findByUser(user: Long): List<Order>
+    fun findByuserId(user: Long): List<Order>
 
     @EntityGraph(attributePaths = [
         "user",
@@ -58,7 +58,7 @@ interface OrderRepository : JpaRepository<Order, Long> {
         "health.discount",
         "health.gym"
     ])
-    fun findByGym(gym: Long): List<Order>
+    fun findBygymId(gym: Long): List<Order>
 
     @EntityGraph(attributePaths = [
         "user",
@@ -69,7 +69,7 @@ interface OrderRepository : JpaRepository<Order, Long> {
         "health.discount",
         "health.gym"
     ])
-    fun findByHealth(health: Long): List<Order>
+    fun findByhealthId(health: Long): List<Order>
 
     @EntityGraph(attributePaths = [
         "user",

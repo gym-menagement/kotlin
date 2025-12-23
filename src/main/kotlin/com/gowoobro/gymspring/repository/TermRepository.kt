@@ -35,14 +35,14 @@ interface TermRepository : JpaRepository<Term, Long> {
         "daytype",
         "daytype.gym"
     ])
-    fun findByGym(gym: Long): List<Term>
+    fun findBygymId(gym: Long): List<Term>
 
     @EntityGraph(attributePaths = [
         "gym",
         "daytype",
         "daytype.gym"
     ])
-    fun findByDaytype(daytype: Long): List<Term>
+    fun findBydaytypeId(daytype: Long): List<Term>
 
     @EntityGraph(attributePaths = [
         "gym",

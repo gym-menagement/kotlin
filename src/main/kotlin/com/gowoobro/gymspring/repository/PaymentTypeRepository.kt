@@ -29,7 +29,7 @@ interface PaymenttypeRepository : JpaRepository<Paymenttype, Long> {
     @EntityGraph(attributePaths = [
         "gym"
     ])
-    fun findByGym(gym: Long): List<Paymenttype>
+    fun findBygymId(gym: Long): List<Paymenttype>
 
     @EntityGraph(attributePaths = [
         "gym"

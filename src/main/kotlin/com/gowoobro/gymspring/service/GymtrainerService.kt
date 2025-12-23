@@ -35,11 +35,11 @@ class GymtrainerService(private val gymtrainerRepository: GymtrainerRepository) 
 
 
     fun findByGym(gym: Long): List<Gymtrainer> {
-        return gymtrainerRepository.findByGym(gym)
+        return gymtrainerRepository.findBygymId(gym)
     }
 
-    fun findByTrainer(trainer: Long): List<Gymtrainer> {
-        return gymtrainerRepository.findByTrainer(trainer)
+    fun findByTrainer(traineruser: Long): List<Gymtrainer> {
+        return gymtrainerRepository.findBytrainerId(traineruser)
     }
 
     fun findByStartdate(startdate: LocalDateTime): List<Gymtrainer> {
@@ -69,8 +69,8 @@ class GymtrainerService(private val gymtrainerRepository: GymtrainerRepository) 
 
     fun create(request: GymtrainerCreateRequest): Gymtrainer {
         val entity = Gymtrainer(
-            gym = request.gym,
-            trainer = request.trainer,
+            gymId = request.gym,
+            trainerId = request.trainer,
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
@@ -84,8 +84,8 @@ class GymtrainerService(private val gymtrainerRepository: GymtrainerRepository) 
     fun createBatch(requests: List<GymtrainerCreateRequest>): List<Gymtrainer> {
         val entities = requests.map { request ->
             Gymtrainer(
-                gym = request.gym,
-                trainer = request.trainer,
+                gymId = request.gym,
+                trainerId = request.trainer,
                 startdate = request.startdate,
                 enddate = request.enddate,
                 status = request.status,
@@ -101,8 +101,8 @@ class GymtrainerService(private val gymtrainerRepository: GymtrainerRepository) 
         val existing = gymtrainerRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gym = request.gym,
-            trainer = request.trainer,
+            gymId = request.gym,
+            trainerId = request.trainer,
             startdate = request.startdate,
             enddate = request.enddate,
             status = request.status,
@@ -144,8 +144,8 @@ class GymtrainerService(private val gymtrainerRepository: GymtrainerRepository) 
         val existing = gymtrainerRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            gym = request.gym ?: existing.gym,
-            trainer = request.trainer ?: existing.trainer,
+            gymId = request.gym ?: existing.gymId,
+            trainerId = request.trainer ?: existing.trainerId,
             startdate = request.startdate ?: existing.startdate,
             enddate = request.enddate ?: existing.enddate,
             status = request.status ?: existing.status,

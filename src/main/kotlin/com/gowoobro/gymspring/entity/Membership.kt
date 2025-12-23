@@ -12,17 +12,17 @@ data class Membership(
     @Column(name = "m_id")
     val id: Long = 0,
     @Column(name = "m_user")
-    val user: Long = 0L,
+    val userId: Long = 0L,
     @Column(name = "m_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "m_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "m_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_user", insertable = false, updatable = false)
+    @JoinColumn(name = "m_user", insertable = false, updatable = false)
     var user: User? = null
 }
 
@@ -67,8 +67,8 @@ data class MembershipResponse(
             val userResponse = membership.user?.let { UserResponse.from(it) }
             return MembershipResponse(
                 id = membership.id,
-                user = membership.user,
-                gym = membership.gym,
+                user = membership.userId,
+                gym = membership.gymId,
                 date = membership.date?.toString()?.replace("T", " ") ?: "",
 
                 extra = MembershipExtraInfo(

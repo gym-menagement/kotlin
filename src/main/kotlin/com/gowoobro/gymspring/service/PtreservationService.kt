@@ -34,16 +34,16 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
     }
 
 
-    fun findByTrainer(trainer: Long): List<Ptreservation> {
-        return ptreservationRepository.findByTrainer(trainer)
+    fun findByTrainer(traineruser: Long): List<Ptreservation> {
+        return ptreservationRepository.findBytrainerId(traineruser)
     }
 
-    fun findByMember(member: Long): List<Ptreservation> {
-        return ptreservationRepository.findByMember(member)
+    fun findByMember(memberuser: Long): List<Ptreservation> {
+        return ptreservationRepository.findBymemberId(memberuser)
     }
 
     fun findByGym(gym: Long): List<Ptreservation> {
-        return ptreservationRepository.findByGym(gym)
+        return ptreservationRepository.findBygymId(gym)
     }
 
     fun findByReservationdate(reservationdate: LocalDateTime): List<Ptreservation> {
@@ -89,9 +89,9 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
 
     fun create(request: PtreservationCreateRequest): Ptreservation {
         val entity = Ptreservation(
-            trainer = request.trainer,
-            member = request.member,
-            gym = request.gym,
+            trainerId = request.trainer,
+            memberId = request.member,
+            gymId = request.gym,
             reservationdate = request.reservationdate,
             starttime = request.starttime,
             endtime = request.endtime,
@@ -109,9 +109,9 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
     fun createBatch(requests: List<PtreservationCreateRequest>): List<Ptreservation> {
         val entities = requests.map { request ->
             Ptreservation(
-                trainer = request.trainer,
-                member = request.member,
-                gym = request.gym,
+                trainerId = request.trainer,
+                memberId = request.member,
+                gymId = request.gym,
                 reservationdate = request.reservationdate,
                 starttime = request.starttime,
                 endtime = request.endtime,
@@ -131,9 +131,9 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
         val existing = ptreservationRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            trainer = request.trainer,
-            member = request.member,
-            gym = request.gym,
+            trainerId = request.trainer,
+            memberId = request.member,
+            gymId = request.gym,
             reservationdate = request.reservationdate,
             starttime = request.starttime,
             endtime = request.endtime,
@@ -179,9 +179,9 @@ class PtreservationService(private val ptreservationRepository: PtreservationRep
         val existing = ptreservationRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            trainer = request.trainer ?: existing.trainer,
-            member = request.member ?: existing.member,
-            gym = request.gym ?: existing.gym,
+            trainerId = request.trainer ?: existing.trainerId,
+            memberId = request.member ?: existing.memberId,
+            gymId = request.gym ?: existing.gymId,
             reservationdate = request.reservationdate ?: existing.reservationdate,
             starttime = request.starttime ?: existing.starttime,
             endtime = request.endtime ?: existing.endtime,

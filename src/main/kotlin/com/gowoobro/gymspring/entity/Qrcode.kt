@@ -13,7 +13,7 @@ data class Qrcode(
     @Column(name = "qr_id")
     val id: Long = 0,
     @Column(name = "qr_user")
-    val user: Long = 0L,
+    val userId: Long = 0L,
     @Column(name = "qr_code")
     val code: String = "",
     @Column(name = "qr_imageurl")
@@ -32,7 +32,7 @@ data class Qrcode(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_user", insertable = false, updatable = false)
+    @JoinColumn(name = "qr_user", insertable = false, updatable = false)
     var user: User? = null
 }
 
@@ -100,7 +100,7 @@ data class QrcodeResponse(
             val userResponse = qrcode.user?.let { UserResponse.from(it) }
             return QrcodeResponse(
                 id = qrcode.id,
-                user = qrcode.user,
+                user = qrcode.userId,
                 code = qrcode.code,
                 imageurl = qrcode.imageurl,
                 isactive = qrcode.isactive.ordinal,

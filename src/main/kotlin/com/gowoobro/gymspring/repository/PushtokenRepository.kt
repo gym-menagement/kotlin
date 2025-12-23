@@ -30,7 +30,7 @@ interface PushtokenRepository : JpaRepository<Pushtoken, Long> {
     @EntityGraph(attributePaths = [
         "user"
     ])
-    fun findByUser(user: Long): List<Pushtoken>
+    fun findByuserId(user: Long): List<Pushtoken>
 
     @EntityGraph(attributePaths = [
         "user"

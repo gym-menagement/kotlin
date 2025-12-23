@@ -13,23 +13,23 @@ data class Usehealth(
     @Column(name = "uh_id")
     val id: Long = 0,
     @Column(name = "uh_order")
-    val order: Long = 0L,
+    val orderId: Long = 0L,
     @Column(name = "uh_health")
-    val health: Long = 0L,
+    val healthId: Long = 0L,
     @Column(name = "uh_membership")
-    val membership: Long = 0L,
+    val membershipId: Long = 0L,
     @Column(name = "uh_user")
-    val user: Long = 0L,
+    val userId: Long = 0L,
     @Column(name = "uh_term")
-    val term: Long = 0L,
+    val termId: Long = 0L,
     @Column(name = "uh_discount")
-    val discount: Long = 0L,
+    val discountId: Long = 0L,
     @Column(name = "uh_startday")
     val startday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "uh_endday")
     val endday: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "uh_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "uh_status")
     val status: Status = Status.TERMINATED,
     @Column(name = "uh_totalcount")
@@ -46,28 +46,25 @@ data class Usehealth(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "o_order", insertable = false, updatable = false)
+    @JoinColumn(name = "uh_order", insertable = false, updatable = false)
     var order: Order? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_health", insertable = false, updatable = false)
+    @JoinColumn(name = "uh_health", insertable = false, updatable = false)
     var health: Health? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "m_membership", insertable = false, updatable = false)
+    @JoinColumn(name = "uh_membership", insertable = false, updatable = false)
     var membership: Membership? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_user", insertable = false, updatable = false)
+    @JoinColumn(name = "uh_user", insertable = false, updatable = false)
     var user: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_rocker", insertable = false, updatable = false)
-    var rocker: Rocker? = null
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "t_term", insertable = false, updatable = false)
+    @JoinColumn(name = "uh_term", insertable = false, updatable = false)
     var term: Term? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "d_discount", insertable = false, updatable = false)
+    @JoinColumn(name = "uh_discount", insertable = false, updatable = false)
     var discount: Discount? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "uh_gym", insertable = false, updatable = false)
     var gym: Gym? = null
 }
 
@@ -137,7 +134,6 @@ data class UsehealthExtraInfo(
     val health: HealthResponse? = null,
     val membership: MembershipResponse? = null,
     val user: UserResponse? = null,
-    val rocker: RockerResponse? = null,
     val term: TermResponse? = null,
     val discount: DiscountResponse? = null,
     val gym: GymResponse? = null,
@@ -171,21 +167,20 @@ data class UsehealthResponse(
             val healthResponse = usehealth.health?.let { HealthResponse.from(it) }
             val membershipResponse = usehealth.membership?.let { MembershipResponse.from(it) }
             val userResponse = usehealth.user?.let { UserResponse.from(it) }
-            val rockerResponse = usehealth.rocker?.let { RockerResponse.from(it) }
             val termResponse = usehealth.term?.let { TermResponse.from(it) }
             val discountResponse = usehealth.discount?.let { DiscountResponse.from(it) }
             val gymResponse = usehealth.gym?.let { GymResponse.from(it) }
             return UsehealthResponse(
                 id = usehealth.id,
-                order = usehealth.order,
-                health = usehealth.health,
-                membership = usehealth.membership,
-                user = usehealth.user,
-                term = usehealth.term,
-                discount = usehealth.discount,
+                order = usehealth.orderId,
+                health = usehealth.healthId,
+                membership = usehealth.membershipId,
+                user = usehealth.userId,
+                term = usehealth.termId,
+                discount = usehealth.discountId,
                 startday = usehealth.startday?.toString()?.replace("T", " ") ?: "",
                 endday = usehealth.endday?.toString()?.replace("T", " ") ?: "",
-                gym = usehealth.gym,
+                gym = usehealth.gymId,
                 status = usehealth.status.ordinal,
                 totalcount = usehealth.totalcount,
                 usedcount = usehealth.usedcount,
@@ -196,7 +191,7 @@ data class UsehealthResponse(
 
                 extra = UsehealthExtraInfo(
                     status = Status.getDisplayName(usehealth.status),
-                    order = orderResponse,health = healthResponse,membership = membershipResponse,user = userResponse,rocker = rockerResponse,term = termResponse,discount = discountResponse,gym = gymResponse,)
+                    order = orderResponse,health = healthResponse,membership = membershipResponse,user = userResponse,term = termResponse,discount = discountResponse,gym = gymResponse,)
                 
             )
         }

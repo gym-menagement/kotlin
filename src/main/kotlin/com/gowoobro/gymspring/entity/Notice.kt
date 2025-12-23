@@ -17,7 +17,7 @@ data class Notice(
     @Column(name = "nt_id")
     val id: Long = 0,
     @Column(name = "nt_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "nt_title")
     val title: String = "",
     @Column(name = "nt_content")
@@ -39,7 +39,7 @@ data class Notice(
     @Column(name = "nt_status")
     val status: Status = Status.PRIVATE,
     @Column(name = "nt_createdby")
-    val createdby: Long = 0L,
+    val createdbyId: Long = 0L,
     @Column(name = "nt_createddate")
     val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "nt_updateddate")
@@ -48,10 +48,10 @@ data class Notice(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "nt_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_createdby", insertable = false, updatable = false)
+    @JoinColumn(name = "nt_createdby", insertable = false, updatable = false)
     var user: User? = null
 }
 
@@ -149,7 +149,7 @@ data class NoticeResponse(
             val userResponse = notice.user?.let { UserResponse.from(it) }
             return NoticeResponse(
                 id = notice.id,
-                gym = notice.gym,
+                gym = notice.gymId,
                 title = notice.title,
                 content = notice.content,
                 type = notice.type.ordinal,
@@ -160,7 +160,7 @@ data class NoticeResponse(
                 startdate = notice.startdate?.toString()?.replace("T", " ") ?: "",
                 enddate = notice.enddate?.toString()?.replace("T", " ") ?: "",
                 status = notice.status.ordinal,
-                createdby = notice.createdby,
+                createdby = notice.createdbyId,
                 createddate = notice.createddate?.toString()?.replace("T", " ") ?: "",
                 updateddate = notice.updateddate?.toString()?.replace("T", " ") ?: "",
                 date = notice.date?.toString()?.replace("T", " ") ?: "",

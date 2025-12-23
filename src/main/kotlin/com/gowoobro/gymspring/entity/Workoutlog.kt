@@ -12,13 +12,13 @@ data class Workoutlog(
     @Column(name = "wl_id")
     val id: Long = 0,
     @Column(name = "wl_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "wl_user")
-    val user: Long = 0L,
+    val userId: Long = 0L,
     @Column(name = "wl_attendance")
-    val attendance: Long = 0L,
+    val attendanceId: Long = 0L,
     @Column(name = "wl_health")
-    val health: Long = 0L,
+    val healthId: Long = 0L,
     @Column(name = "wl_exercisename")
     val exercisename: String = "",
     @Column(name = "wl_sets")
@@ -37,16 +37,16 @@ data class Workoutlog(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "wl_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_user", insertable = false, updatable = false)
+    @JoinColumn(name = "wl_user", insertable = false, updatable = false)
     var user: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "at_attendance", insertable = false, updatable = false)
+    @JoinColumn(name = "wl_attendance", insertable = false, updatable = false)
     var attendance: Attendance? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_health", insertable = false, updatable = false)
+    @JoinColumn(name = "wl_health", insertable = false, updatable = false)
     var health: Health? = null
 }
 
@@ -131,10 +131,10 @@ data class WorkoutlogResponse(
             val healthResponse = workoutlog.health?.let { HealthResponse.from(it) }
             return WorkoutlogResponse(
                 id = workoutlog.id,
-                gym = workoutlog.gym,
-                user = workoutlog.user,
-                attendance = workoutlog.attendance,
-                health = workoutlog.health,
+                gym = workoutlog.gymId,
+                user = workoutlog.userId,
+                attendance = workoutlog.attendanceId,
+                health = workoutlog.healthId,
                 exercisename = workoutlog.exercisename,
                 sets = workoutlog.sets,
                 reps = workoutlog.reps,

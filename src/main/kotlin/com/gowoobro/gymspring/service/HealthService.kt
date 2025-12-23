@@ -33,12 +33,12 @@ class HealthService(private val healthRepository: HealthRepository) {
     }
 
 
-    fun findByCategory(category: Long): List<Health> {
-        return healthRepository.findByCategory(category)
+    fun findByCategory(healthcategory: Long): List<Health> {
+        return healthRepository.findBycategoryId(healthcategory)
     }
 
     fun findByTerm(term: Long): List<Health> {
-        return healthRepository.findByTerm(term)
+        return healthRepository.findBytermId(term)
     }
 
     fun findByName(name: String): List<Health> {
@@ -54,7 +54,7 @@ class HealthService(private val healthRepository: HealthRepository) {
     }
 
     fun findByDiscount(discount: Long): List<Health> {
-        return healthRepository.findByDiscount(discount)
+        return healthRepository.findBydiscountId(discount)
     }
 
     fun findByCostdiscount(costdiscount: Int): List<Health> {
@@ -66,7 +66,7 @@ class HealthService(private val healthRepository: HealthRepository) {
     }
 
     fun findByGym(gym: Long): List<Health> {
-        return healthRepository.findByGym(gym)
+        return healthRepository.findBygymId(gym)
     }
 
     fun findByDate(date: LocalDateTime): List<Health> {
@@ -76,15 +76,15 @@ class HealthService(private val healthRepository: HealthRepository) {
 
     fun create(request: HealthCreateRequest): Health {
         val entity = Health(
-            category = request.category,
-            term = request.term,
+            categoryId = request.category,
+            termId = request.term,
             name = request.name,
             count = request.count,
             cost = request.cost,
-            discount = request.discount,
+            discountId = request.discount,
             costdiscount = request.costdiscount,
             content = request.content,
-            gym = request.gym,
+            gymId = request.gym,
             date = request.date,
         )
         return healthRepository.save(entity)
@@ -93,15 +93,15 @@ class HealthService(private val healthRepository: HealthRepository) {
     fun createBatch(requests: List<HealthCreateRequest>): List<Health> {
         val entities = requests.map { request ->
             Health(
-                category = request.category,
-                term = request.term,
+                categoryId = request.category,
+                termId = request.term,
                 name = request.name,
                 count = request.count,
                 cost = request.cost,
-                discount = request.discount,
+                discountId = request.discount,
                 costdiscount = request.costdiscount,
                 content = request.content,
-                gym = request.gym,
+                gymId = request.gym,
                 date = request.date,
             )
         }
@@ -112,15 +112,15 @@ class HealthService(private val healthRepository: HealthRepository) {
         val existing = healthRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            category = request.category,
-            term = request.term,
+            categoryId = request.category,
+            termId = request.term,
             name = request.name,
             count = request.count,
             cost = request.cost,
-            discount = request.discount,
+            discountId = request.discount,
             costdiscount = request.costdiscount,
             content = request.content,
-            gym = request.gym,
+            gymId = request.gym,
             date = request.date,
         )
         return healthRepository.save(updated)
@@ -157,15 +157,15 @@ class HealthService(private val healthRepository: HealthRepository) {
         val existing = healthRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            category = request.category ?: existing.category,
-            term = request.term ?: existing.term,
+            categoryId = request.category ?: existing.categoryId,
+            termId = request.term ?: existing.termId,
             name = request.name ?: existing.name,
             count = request.count ?: existing.count,
             cost = request.cost ?: existing.cost,
-            discount = request.discount ?: existing.discount,
+            discountId = request.discount ?: existing.discountId,
             costdiscount = request.costdiscount ?: existing.costdiscount,
             content = request.content ?: existing.content,
-            gym = request.gym ?: existing.gym,
+            gymId = request.gym ?: existing.gymId,
             date = request.date ?: existing.date,
         )
         return healthRepository.save(updated)

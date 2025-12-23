@@ -57,7 +57,7 @@ class PushtokenController(
         var results = if (user != null || token != null || devicetype != null || deviceid != null || appversion != null || isactive != null || startcreateddate != null || endcreateddate != null || startupdateddate != null || endupdateddate != null || startdate != null || enddate != null || false) {
             var filtered = pushtokenService.findAll(0, Int.MAX_VALUE).content
             if (user != null) {
-                filtered = filtered.filter { it.user == user }
+                filtered = filtered.filter { it.userId == user }
             }
             if (token != null) {
                 filtered = filtered.filter { it.token == token }

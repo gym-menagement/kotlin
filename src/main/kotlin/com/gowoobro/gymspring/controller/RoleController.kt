@@ -50,7 +50,7 @@ class RoleController(
         var results = if (gym != null || roleid != null || name != null || startdate != null || enddate != null || false) {
             var filtered = roleService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (roleid != null) {
                 filtered = filtered.filter { it.roleid.ordinal == roleid }

@@ -62,13 +62,13 @@ class PtreservationController(
         var results = if (trainer != null || member != null || gym != null || startreservationdate != null || endreservationdate != null || starttime != null || endtime != null || duration != null || status != null || note != null || cancelreason != null || startcreateddate != null || endcreateddate != null || startupdateddate != null || endupdateddate != null || startdate != null || enddate != null || false) {
             var filtered = ptreservationService.findAll(0, Int.MAX_VALUE).content
             if (trainer != null) {
-                filtered = filtered.filter { it.trainer == trainer }
+                filtered = filtered.filter { it.trainerId == trainer }
             }
             if (member != null) {
-                filtered = filtered.filter { it.member == member }
+                filtered = filtered.filter { it.memberId == member }
             }
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (startreservationdate != null || endreservationdate != null) {
                 filtered = filtered.filter { filterByDateRange(it.reservationdate, startreservationdate, endreservationdate) }

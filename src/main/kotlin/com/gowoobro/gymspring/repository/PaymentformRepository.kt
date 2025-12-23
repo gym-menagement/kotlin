@@ -47,7 +47,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "paymenttype",
         "paymenttype.gym"
     ])
-    fun findByGym(gym: Long): List<Paymentform>
+    fun findBygymId(gym: Long): List<Paymentform>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -58,7 +58,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "paymenttype",
         "paymenttype.gym"
     ])
-    fun findByPayment(payment: Long): List<Paymentform>
+    fun findBypaymentId(payment: Long): List<Paymentform>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -69,7 +69,7 @@ interface PaymentformRepository : JpaRepository<Paymentform, Long> {
         "paymenttype",
         "paymenttype.gym"
     ])
-    fun findByType(type: Long): List<Paymentform>
+    fun findBytypeId(paymenttype: Long): List<Paymentform>
 
     @EntityGraph(attributePaths = [
         "gym",

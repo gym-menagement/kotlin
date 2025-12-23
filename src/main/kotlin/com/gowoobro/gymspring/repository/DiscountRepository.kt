@@ -29,7 +29,7 @@ interface DiscountRepository : JpaRepository<Discount, Long> {
     @EntityGraph(attributePaths = [
         "gym"
     ])
-    fun findByGym(gym: Long): List<Discount>
+    fun findBygymId(gym: Long): List<Discount>
 
     @EntityGraph(attributePaths = [
         "gym"

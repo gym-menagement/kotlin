@@ -13,11 +13,11 @@ data class Ptreservation(
     @Column(name = "pr_id")
     val id: Long = 0,
     @Column(name = "pr_trainer")
-    val trainer: Long = 0L,
+    val trainerId: Long = 0L,
     @Column(name = "pr_member")
-    val member: Long = 0L,
+    val memberId: Long = 0L,
     @Column(name = "pr_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "pr_reservationdate")
     val reservationdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "pr_starttime")
@@ -40,13 +40,13 @@ data class Ptreservation(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_trainer", insertable = false, updatable = false)
+    @JoinColumn(name = "pr_trainer", insertable = false, updatable = false)
     var traineruser: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_member", insertable = false, updatable = false)
+    @JoinColumn(name = "pr_member", insertable = false, updatable = false)
     var memberuser: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "pr_gym", insertable = false, updatable = false)
     var gym: Gym? = null
 }
 
@@ -134,9 +134,9 @@ data class PtreservationResponse(
             val gymResponse = ptreservation.gym?.let { GymResponse.from(it) }
             return PtreservationResponse(
                 id = ptreservation.id,
-                trainer = ptreservation.trainer,
-                member = ptreservation.member,
-                gym = ptreservation.gym,
+                trainer = ptreservation.trainerId,
+                member = ptreservation.memberId,
+                gym = ptreservation.gymId,
                 reservationdate = ptreservation.reservationdate?.toString()?.replace("T", " ") ?: "",
                 starttime = ptreservation.starttime,
                 endtime = ptreservation.endtime,

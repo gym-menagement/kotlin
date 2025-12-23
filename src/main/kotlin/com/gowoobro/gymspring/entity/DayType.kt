@@ -12,14 +12,14 @@ data class Daytype(
     @Column(name = "dt_id")
     val id: Long = 0,
     @Column(name = "dt_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "dt_name")
     val name: String = "",
     @Column(name = "dt_date")
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "dt_gym", insertable = false, updatable = false)
     var gym: Gym? = null
 }
 
@@ -62,7 +62,7 @@ data class DaytypeResponse(
             val gymResponse = daytype.gym?.let { GymResponse.from(it) }
             return DaytypeResponse(
                 id = daytype.id,
-                gym = daytype.gym,
+                gym = daytype.gymId,
                 name = daytype.name,
                 date = daytype.date?.toString()?.replace("T", " ") ?: "",
 

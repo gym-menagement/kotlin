@@ -35,14 +35,14 @@ interface MemberbodyRepository : JpaRepository<Memberbody, Long> {
         "memberuser",
         "measuredbyuser"
     ])
-    fun findByGym(gym: Long): List<Memberbody>
+    fun findBygymId(gym: Long): List<Memberbody>
 
     @EntityGraph(attributePaths = [
         "gym",
         "memberuser",
         "measuredbyuser"
     ])
-    fun findByUser(user: Long): List<Memberbody>
+    fun findByuserId(memberuser: Long): List<Memberbody>
 
     @EntityGraph(attributePaths = [
         "gym",
@@ -147,7 +147,7 @@ interface MemberbodyRepository : JpaRepository<Memberbody, Long> {
         "memberuser",
         "measuredbyuser"
     ])
-    fun findByMeasuredby(measuredby: Long): List<Memberbody>
+    fun findBymeasuredbyId(measuredbyuser: Long): List<Memberbody>
 
     @EntityGraph(attributePaths = [
         "gym",

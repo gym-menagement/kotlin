@@ -37,14 +37,14 @@ interface InquiryRepository : JpaRepository<Inquiry, Long> {
         "gym",
         "answeredbyuser"
     ])
-    fun findByUser(user: Long): List<Inquiry>
+    fun findByuserId(inquireruser: Long): List<Inquiry>
 
     @EntityGraph(attributePaths = [
         "inquireruser",
         "gym",
         "answeredbyuser"
     ])
-    fun findByGym(gym: Long): List<Inquiry>
+    fun findBygymId(gym: Long): List<Inquiry>
 
     @EntityGraph(attributePaths = [
         "inquireruser",
@@ -86,7 +86,7 @@ interface InquiryRepository : JpaRepository<Inquiry, Long> {
         "gym",
         "answeredbyuser"
     ])
-    fun findByAnsweredby(answeredby: Long): List<Inquiry>
+    fun findByansweredbyId(answeredbyuser: Long): List<Inquiry>
 
     @EntityGraph(attributePaths = [
         "inquireruser",

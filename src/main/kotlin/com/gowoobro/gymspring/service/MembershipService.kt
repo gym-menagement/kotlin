@@ -34,11 +34,11 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
 
 
     fun findByUser(user: Long): List<Membership> {
-        return membershipRepository.findByUser(user)
+        return membershipRepository.findByuserId(user)
     }
 
     fun findByGym(gym: Long): List<Membership> {
-        return membershipRepository.findByGym(gym)
+        return membershipRepository.findBygymId(gym)
     }
 
     fun findByDate(date: LocalDateTime): List<Membership> {
@@ -48,8 +48,8 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
 
     fun create(request: MembershipCreateRequest): Membership {
         val entity = Membership(
-            user = request.user,
-            gym = request.gym,
+            userId = request.user,
+            gymId = request.gym,
             date = request.date,
         )
         return membershipRepository.save(entity)
@@ -58,8 +58,8 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
     fun createBatch(requests: List<MembershipCreateRequest>): List<Membership> {
         val entities = requests.map { request ->
             Membership(
-                user = request.user,
-                gym = request.gym,
+                userId = request.user,
+                gymId = request.gym,
                 date = request.date,
             )
         }
@@ -70,8 +70,8 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
         val existing = membershipRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            user = request.user,
-            gym = request.gym,
+            userId = request.user,
+            gymId = request.gym,
             date = request.date,
         )
         return membershipRepository.save(updated)
@@ -108,8 +108,8 @@ class MembershipService(private val membershipRepository: MembershipRepository) 
         val existing = membershipRepository.findById(request.id).orElse(null) ?: return null
 
         val updated = existing.copy(
-            user = request.user ?: existing.user,
-            gym = request.gym ?: existing.gym,
+            userId = request.user ?: existing.userId,
+            gymId = request.gym ?: existing.gymId,
             date = request.date ?: existing.date,
         )
         return membershipRepository.save(updated)

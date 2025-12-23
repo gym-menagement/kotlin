@@ -52,7 +52,7 @@ class StopController(
         var results = if (usehealth != null || startstartday != null || endstartday != null || startendday != null || endendday != null || count != null || startdate != null || enddate != null || false) {
             var filtered = stopService.findAll(0, Int.MAX_VALUE).content
             if (usehealth != null) {
-                filtered = filtered.filter { it.usehealth == usehealth }
+                filtered = filtered.filter { it.usehealthId == usehealth }
             }
             if (startstartday != null || endstartday != null) {
                 filtered = filtered.filter { filterByDateRange(it.startday, startstartday, endstartday) }

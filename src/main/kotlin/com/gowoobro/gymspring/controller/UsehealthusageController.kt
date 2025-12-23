@@ -61,19 +61,19 @@ class UsehealthusageController(
         var results = if (gym != null || usehealth != null || membership != null || user != null || attendance != null || type != null || usedcount != null || remainingcount != null || startcheckintime != null || endcheckintime != null || startcheckouttime != null || endcheckouttime != null || duration != null || note != null || startdate != null || enddate != null || false) {
             var filtered = usehealthusageService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (usehealth != null) {
-                filtered = filtered.filter { it.usehealth == usehealth }
+                filtered = filtered.filter { it.usehealthId == usehealth }
             }
             if (membership != null) {
-                filtered = filtered.filter { it.membership == membership }
+                filtered = filtered.filter { it.membershipId == membership }
             }
             if (user != null) {
-                filtered = filtered.filter { it.user == user }
+                filtered = filtered.filter { it.userId == user }
             }
             if (attendance != null) {
-                filtered = filtered.filter { it.attendance == attendance }
+                filtered = filtered.filter { it.attendanceId == attendance }
             }
             if (type != null) {
                 filtered = filtered.filter { it.type.ordinal == type }

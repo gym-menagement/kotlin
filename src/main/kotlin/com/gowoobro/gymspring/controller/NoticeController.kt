@@ -69,7 +69,7 @@ class NoticeController(
         var results = if (gym != null || title != null || content != null || type != null || ispopup != null || ispush != null || target != null || viewcount != null || startstartdate != null || endstartdate != null || startenddate != null || endenddate != null || status != null || createdby != null || startcreateddate != null || endcreateddate != null || startupdateddate != null || endupdateddate != null || startdate != null || enddate != null || false) {
             var filtered = noticeService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (title != null) {
                 filtered = filtered.filter { it.title == title }
@@ -102,7 +102,7 @@ class NoticeController(
                 filtered = filtered.filter { it.status.ordinal == status }
             }
             if (createdby != null) {
-                filtered = filtered.filter { it.createdby == createdby }
+                filtered = filtered.filter { it.createdbyId == createdby }
             }
             if (startcreateddate != null || endcreateddate != null) {
                 filtered = filtered.filter { filterByDateRange(it.createddate, startcreateddate, endcreateddate) }

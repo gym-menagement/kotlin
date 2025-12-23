@@ -50,10 +50,10 @@ class TermController(
         var results = if (gym != null || daytype != null || name != null || term != null || startdate != null || enddate != null || false) {
             var filtered = termService.findAll(0, Int.MAX_VALUE).content
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (daytype != null) {
-                filtered = filtered.filter { it.daytype == daytype }
+                filtered = filtered.filter { it.daytypeId == daytype }
             }
             if (name != null) {
                 filtered = filtered.filter { it.name == name }

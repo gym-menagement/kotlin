@@ -13,7 +13,7 @@ data class Role(
     @Column(name = "r_id")
     val id: Long = 0,
     @Column(name = "r_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "r_roleid")
     val roleid: Roleid = Roleid.MEMBER,
     @Column(name = "r_name")
@@ -22,7 +22,7 @@ data class Role(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "r_gym", insertable = false, updatable = false)
     var gym: Gym? = null
 }
 
@@ -70,7 +70,7 @@ data class RoleResponse(
             val gymResponse = role.gym?.let { GymResponse.from(it) }
             return RoleResponse(
                 id = role.id,
-                gym = role.gym,
+                gym = role.gymId,
                 roleid = role.roleid.ordinal,
                 name = role.name,
                 date = role.date?.toString()?.replace("T", " ") ?: "",

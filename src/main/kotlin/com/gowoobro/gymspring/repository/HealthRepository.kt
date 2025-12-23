@@ -50,7 +50,7 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findByCategory(category: Long): List<Health>
+    fun findBycategoryId(healthcategory: Long): List<Health>
 
     @EntityGraph(attributePaths = [
         "healthcategory",
@@ -62,7 +62,7 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findByTerm(term: Long): List<Health>
+    fun findBytermId(term: Long): List<Health>
 
     @EntityGraph(attributePaths = [
         "healthcategory",
@@ -110,7 +110,7 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findByDiscount(discount: Long): List<Health>
+    fun findBydiscountId(discount: Long): List<Health>
 
     @EntityGraph(attributePaths = [
         "healthcategory",
@@ -146,7 +146,7 @@ interface HealthRepository : JpaRepository<Health, Long> {
         "discount.gym",
         "gym"
     ])
-    fun findByGym(gym: Long): List<Health>
+    fun findBygymId(gym: Long): List<Health>
 
     @EntityGraph(attributePaths = [
         "healthcategory",

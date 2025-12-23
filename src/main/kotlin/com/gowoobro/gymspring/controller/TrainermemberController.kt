@@ -56,13 +56,13 @@ class TrainermemberController(
         var results = if (trainer != null || member != null || gym != null || startstartdate != null || endstartdate != null || startenddate != null || endenddate != null || status != null || note != null || startdate != null || enddate != null || false) {
             var filtered = trainermemberService.findAll(0, Int.MAX_VALUE).content
             if (trainer != null) {
-                filtered = filtered.filter { it.trainer == trainer }
+                filtered = filtered.filter { it.trainerId == trainer }
             }
             if (member != null) {
-                filtered = filtered.filter { it.member == member }
+                filtered = filtered.filter { it.memberId == member }
             }
             if (gym != null) {
-                filtered = filtered.filter { it.gym == gym }
+                filtered = filtered.filter { it.gymId == gym }
             }
             if (startstartdate != null || endstartdate != null) {
                 filtered = filtered.filter { filterByDateRange(it.startdate, startstartdate, endstartdate) }

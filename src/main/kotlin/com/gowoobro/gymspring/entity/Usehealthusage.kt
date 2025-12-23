@@ -13,15 +13,15 @@ data class Usehealthusage(
     @Column(name = "uhu_id")
     val id: Long = 0,
     @Column(name = "uhu_gym")
-    val gym: Long = 0L,
+    val gymId: Long = 0L,
     @Column(name = "uhu_usehealth")
-    val usehealth: Long = 0L,
+    val usehealthId: Long = 0L,
     @Column(name = "uhu_membership")
-    val membership: Long = 0L,
+    val membershipId: Long = 0L,
     @Column(name = "uhu_user")
-    val user: Long = 0L,
+    val userId: Long = 0L,
     @Column(name = "uhu_attendance")
-    val attendance: Long = 0L,
+    val attendanceId: Long = 0L,
     @Column(name = "uhu_type")
     val type: Type = Type.ENTRY,
     @Column(name = "uhu_usedcount")
@@ -40,19 +40,19 @@ data class Usehealthusage(
     val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "g_gym", insertable = false, updatable = false)
+    @JoinColumn(name = "uhu_gym", insertable = false, updatable = false)
     var gym: Gym? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uh_usehealth", insertable = false, updatable = false)
+    @JoinColumn(name = "uhu_usehealth", insertable = false, updatable = false)
     var usehealth: Usehealth? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "m_membership", insertable = false, updatable = false)
+    @JoinColumn(name = "uhu_membership", insertable = false, updatable = false)
     var membership: Membership? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_user", insertable = false, updatable = false)
+    @JoinColumn(name = "uhu_user", insertable = false, updatable = false)
     var user: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "at_attendance", insertable = false, updatable = false)
+    @JoinColumn(name = "uhu_attendance", insertable = false, updatable = false)
     var attendance: Attendance? = null
 }
 
@@ -144,11 +144,11 @@ data class UsehealthusageResponse(
             val attendanceResponse = usehealthusage.attendance?.let { AttendanceResponse.from(it) }
             return UsehealthusageResponse(
                 id = usehealthusage.id,
-                gym = usehealthusage.gym,
-                usehealth = usehealthusage.usehealth,
-                membership = usehealthusage.membership,
-                user = usehealthusage.user,
-                attendance = usehealthusage.attendance,
+                gym = usehealthusage.gymId,
+                usehealth = usehealthusage.usehealthId,
+                membership = usehealthusage.membershipId,
+                user = usehealthusage.userId,
+                attendance = usehealthusage.attendanceId,
                 type = usehealthusage.type.ordinal,
                 usedcount = usehealthusage.usedcount,
                 remainingcount = usehealthusage.remainingcount,

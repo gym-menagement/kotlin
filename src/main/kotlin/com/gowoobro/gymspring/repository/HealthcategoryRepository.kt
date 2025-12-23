@@ -29,7 +29,7 @@ interface HealthcategoryRepository : JpaRepository<Healthcategory, Long> {
     @EntityGraph(attributePaths = [
         "gym"
     ])
-    fun findByGym(gym: Long): List<Healthcategory>
+    fun findBygymId(gym: Long): List<Healthcategory>
 
     @EntityGraph(attributePaths = [
         "gym"
