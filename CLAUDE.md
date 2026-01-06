@@ -8,7 +8,7 @@ This is a gym management Spring Boot application built with Kotlin. It provides 
 
 **Stack:** Spring Boot 3.5.5, Kotlin 1.9.25, Spring Data JPA, Spring Security, JWT (jjwt 0.12.3), MySQL
 
-**Server Port:** 9410
+**Server Port:** 8004
 
 ## Build & Run Commands
 
@@ -40,6 +40,7 @@ controller → service → repository → entity
 ```
 
 Each domain entity has a corresponding set of files:
+
 - **Entity**: JPA entity with `@Entity` annotation (in `entity/`)
 - **Repository**: Spring Data JPA repository interface extending `JpaRepository` (in `repository/`)
 - **Service**: Business logic with `@Service` and `@Transactional` annotations (in `service/`)
@@ -48,6 +49,7 @@ Each domain entity has a corresponding set of files:
 ### Key Components
 
 **Authentication & Security:**
+
 - JWT-based authentication configured in [SecurityConfig.kt](src/main/kotlin/com/gowoobro/gymspring/config/SecurityConfig.kt)
 - `JwtAuthenticationFilter` intercepts requests and validates JWT tokens from the `Authorization: Bearer <token>` header
 - `CustomUserDetailsService` loads users from the database for authentication
@@ -55,15 +57,18 @@ Each domain entity has a corresponding set of files:
 - All other `/api/**` endpoints require authentication
 
 **JWT Configuration:**
+
 - Secret key and expiration defined in [application.yml](src/main/resources/application.yml)
 - Expiration: 24 hours (86400000 ms)
 - Login endpoints: `GET /api/jwt?loginid=X&passwd=Y` or `POST /api/auth/login`
 
 **API Response Format:**
+
 - Standard responses use `ApiResponse<T>` wrapper with `_t` (timestamp), `code`, and `items` fields
 - Single item responses use `ApiSingleResponse<T>` with `item` field instead of `items`
 
 **Database Configuration:**
+
 - MySQL database connection configured in [application.yml](src/main/resources/application.yml)
 - Hibernate DDL mode: `update` (auto-updates schema)
 - SQL logging enabled with formatted output
@@ -71,6 +76,7 @@ Each domain entity has a corresponding set of files:
 ### Domain Entities
 
 The application manages 24+ domain entities including:
+
 - **User Management**: User, Role, LoginLog, IpBlock
 - **Membership**: Membership, Order, Payment, PaymentType, PaymentForm, Discount
 - **Health Services**: Health, Healthcategory, UseHealth, DayType
@@ -78,6 +84,7 @@ The application manages 24+ domain entities including:
 - **System**: Setting, SystemLog, Alarm, Term, Token, Stop
 
 **Enums** are centralized in [Enums.kt](src/main/kotlin/com/gowoobro/gymspring/entity/Enums.kt):
+
 - `Type`: SYSTEM, USER, ADMIN, NOTIFICATION, WARNING, ERROR, INFO, DEBUG
 - `Status`: ACTIVE, INACTIVE, PENDING, COMPLETED, CANCELLED, EXPIRED
 - `Policy`: ALLOW, DENY, BLOCK, WARN
@@ -88,6 +95,7 @@ The application manages 24+ domain entities including:
 ### Controller Patterns
 
 All controllers follow a consistent REST pattern with these endpoints:
+
 - `GET /api/{entity}` - Get paginated list (default: page=0, pageSize=10)
 - `GET /api/{entity}/{id}` - Get single entity by ID
 - `GET /api/{entity}/search/{field}?{field}=value` - Search by specific field
@@ -105,6 +113,7 @@ All repositories extend `JpaRepository<Entity, Long>` and override methods to pr
 ### Service Patterns
 
 Services are annotated with `@Service` and `@Transactional`, containing business logic for:
+
 - CRUD operations (create, findById, findAll with pagination, update, delete)
 - Field-based search methods delegating to repository
 - Batch operations (createBatch, deleteBatch)
@@ -112,6 +121,7 @@ Services are annotated with `@Service` and `@Transactional`, containing business
 ## Development Notes
 
 **Adding New Entities:**
+
 1. Create entity class in `entity/` with JPA annotations
 2. Create corresponding CreateRequest and UpdateRequest data classes
 3. Create repository interface extending `JpaRepository` in `repository/`
@@ -120,14 +130,17 @@ Services are annotated with `@Service` and `@Transactional`, containing business
 6. Create controller in `controller/` following standard REST patterns
 
 **Password Encoding:**
+
 - Uses BCrypt for password hashing
 - CustomUserDetailsService handles authentication against encoded passwords
 
 **Kotlin-Specific Configuration:**
+
 - `allOpen` plugin configured for JPA entities (`@Entity`, `@MappedSuperclass`, `@Embeddable`)
 - JSR305 strict mode enabled for null safety
 
 **Database Column Naming:**
+
 - Table columns typically prefixed with abbreviated entity name (e.g., `u_` for user_tb)
 - Example: User entity has `u_id`, `u_loginid`, `u_passwd`, etc.
 
@@ -140,6 +153,7 @@ This is a **multi-gym platform** where multiple gyms operate independently on a 
 ### 1. Platform Admin
 
 **Initial Setup:**
+
 ```
 Platform setup → Create system admin account (user_tb, role: ADMIN)
 → Configure basic settings (discount policies, app version management)
@@ -147,6 +161,7 @@ Platform setup → Create system admin account (user_tb, role: ADMIN)
 ```
 
 **Gym Onboarding:**
+
 ```
 Gym business inquiry → Contract signing
 → Register gym information (gym_tb)
@@ -155,6 +170,7 @@ Gym business inquiry → Contract signing
 ```
 
 **Operations Management:**
+
 - Monitor all gyms (revenue, member count, usage status)
 - Settlement management (settlement_tb) - fee calculation per gym
 - Send system-wide notices (notice_tb, target: all)
@@ -164,6 +180,7 @@ Gym business inquiry → Contract signing
 ### 2. Gym Owner/Manager
 
 **Gym Registration & Setup:**
+
 ```
 Receive account from platform admin
 → Enter gym basic info (gym_tb: name, address, contact)
@@ -172,6 +189,7 @@ Receive account from platform admin
 ```
 
 **Product Setup:**
+
 ```
 Create exercise categories (healthcategory_tb: gym/PT/yoga/pilates)
 → Register products per category (health_tb)
@@ -182,6 +200,7 @@ Create exercise categories (healthcategory_tb: gym/PT/yoga/pilates)
 ```
 
 **Staff Management:**
+
 ```
 Create trainer accounts (user_tb, role: TRAINER)
 → Set staff permissions (role: STAFF)
@@ -189,6 +208,7 @@ Create trainer accounts (user_tb, role: TRAINER)
 ```
 
 **Daily Operations:**
+
 - Member management: new registration, membership renewal, refunds
 - Check entry records (attendance_tb)
 - Locker assignment and management (rockerusage_tb)
@@ -200,6 +220,7 @@ Create trainer accounts (user_tb, role: TRAINER)
 ### 3. Regular Member
 
 **Sign Up:**
+
 ```
 Download app → Sign up (user_tb, role: MEMBER)
 → Enter basic info (name, phone, birth date)
@@ -208,6 +229,7 @@ Download app → Sign up (user_tb, role: MEMBER)
 ```
 
 **Find Gym & Purchase Membership:**
+
 ```
 Search gym by location/keyword (gym_tb)
 → View gym details (hours, facilities, products)
@@ -222,6 +244,7 @@ Search gym by location/keyword (gym_tb)
 ```
 
 **Check-in (Core Feature):**
+
 ```
 Arrive at gym → Open app → Display QR code (memberqr_tb)
 → Scan QR at entry terminal
@@ -236,6 +259,7 @@ Arrive at gym → Open app → Display QR code (memberqr_tb)
 ```
 
 **PT Usage:**
+
 ```
 Assign trainer (trainermember_tb)
 → Book PT session (ptreservation_tb: select date, time)
@@ -248,6 +272,7 @@ Assign trainer (trainermember_tb)
 ```
 
 **Locker Usage:**
+
 ```
 Request locker → Check available lockers (rocker_tb, status: AVAILABLE)
 → Assign locker (rockerusage_tb)
@@ -257,6 +282,7 @@ Request locker → Check available lockers (rocker_tb, status: AVAILABLE)
 ```
 
 **Other Services:**
+
 - View workout records (attendance_tb, membershipusage_tb)
 - Check payment history (order_tb, payment_tb)
 - Track body changes (memberbody_tb)
@@ -267,12 +293,14 @@ Request locker → Check available lockers (rocker_tb, status: AVAILABLE)
 ### 4. Trainer
 
 **Account & Permissions:**
+
 ```
 Gym admin creates account (user_tb, role: TRAINER)
 → Login → Auto-mapped to assigned gym
 ```
 
 **Member Management:**
+
 ```
 Get assigned members (trainermember_tb)
 → Manage PT schedule (ptreservation_tb)
@@ -284,6 +312,7 @@ Get assigned members (trainermember_tb)
 ```
 
 **Schedule Management:**
+
 - Check daily PT schedule
 - Handle no-show members (pr_status: 3)
 - Mark session completion (pr_status: 1)
@@ -292,6 +321,7 @@ Get assigned members (trainermember_tb)
 ### 5. Payment & Settlement Process
 
 **Membership Purchase Payment:**
+
 ```
 Member selects product → Create order (order_tb)
 → Select payment method (card/transfer/cash)
@@ -302,6 +332,7 @@ Member selects product → Create order (order_tb)
 ```
 
 **Monthly/Daily Settlement:**
+
 ```
 Daily batch job at midnight
 → Aggregate daily revenue (settlement_tb)
@@ -317,6 +348,7 @@ Daily batch job at midnight
 ### 6. Notification System
 
 **Push Notifications:**
+
 ```
 Trigger event (e.g., PT booking confirmed, membership expiring soon)
 → Create notification (alarm_tb)
@@ -326,6 +358,7 @@ Trigger event (e.g., PT booking confirmed, membership expiring soon)
 ```
 
 **Notification Types:**
+
 - Membership expiration D-7, D-3, D-1
 - PT booking confirmed/cancelled
 - Locker expiring soon
@@ -336,6 +369,7 @@ Trigger event (e.g., PT booking confirmed, membership expiring soon)
 ### 7. Security & Monitoring
 
 **Login Security:**
+
 ```
 Login attempt → Check IP address (ipblock_tb)
 → Deny access if blocked IP
@@ -345,6 +379,7 @@ Login attempt → Check IP address (ipblock_tb)
 ```
 
 **Access Control:**
+
 - Platform admin: full data access
 - Gym admin: own gym data only
 - Trainer: assigned member data only
