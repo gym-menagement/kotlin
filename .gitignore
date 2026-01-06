@@ -47,3 +47,6 @@ model.json
 
 ### postman ###
 *.postman_collection.json
+
+### Firebase ###
+**/firebase-service-account.json

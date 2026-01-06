@@ -26,8 +26,12 @@ jwt:
   secret: WkaQHd100%MySecureJwtSecretKey2024ForGymspringApplicationWith256BitsLength
   expiration: 86400000 # 24 hours in milliseconds
 
+firebase:
+  service-account-file: classpath:firebase-service-account.json
+
 server:
-  port: 9410
+  port: 8004
+  address: 0.0.0.0
 
 logging:
   level:
