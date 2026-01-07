@@ -50,3 +50,17 @@ model.json
 
 ### Firebase ###
 **/firebase-service-account.json
+
+### Environment Variables ###
+.env
+.env.local
+.env.*.local
+!.env.server
+
+### Data & Config Directories ###
+data/
+config/
+logs/
+
+### Docker ###
+docker-compose.override.yml
