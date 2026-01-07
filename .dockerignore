@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vscode
+.idea
+*.iml
+*.ipr
+*.iws
+
+# Build
+build/
+target/
+out/
+bin/
+.gradle/
+
+# Documentation
+*.md
+HELP.md
+CLAUDE.md
+EXPLAIN.md
+
+# Postman
+*.postman_collection.json
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# SQL dumps
+*.sql
+
+# Config (특정 파일만 제외)
+config/
+
+# Claude
+.claude/

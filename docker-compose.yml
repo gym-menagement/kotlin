@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  gymspring:
+    image: kobums/gymspring:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms:
+        - linux/amd64
+    container_name: gymspring
+    ports:
+      - '8004:8004'
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - TZ=Asia/Seoul
+      # 로컬 테스트용 - 서버에서는 .env 파일 사용
+      - SPRING_DATASOURCE_URL=jdbc:mysql://140.82.12.99:3306/gym?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8
+      - SPRING_DATASOURCE_USERNAME=gym
+      - SPRING_DATASOURCE_PASSWORD=gymdb
+    networks:
+      - gymspring-network
+    restart: unless-stopped
+
+networks:
+  gymspring-network:
+    driver: bridge
