@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/notifications")
 class NotificationController(
     private val fcmService: FcmService,
-    private val pushtokenRepository: PushtokenRepository
+    private val pushtokenRepository: PushtokenRepository,
+    private val notificationSchedulerService: com.gowoobro.gymspring.service.NotificationSchedulerService
 ) {
 
     /**
@@ -17,13 +18,13 @@ class NotificationController(
      */
     @PostMapping("/test")
     fun sendTestNotification(
-        @RequestParam userId: Int,
+        @RequestParam userId: Long,
         @RequestParam(required = false, defaultValue = "테스트 알림") title: String,
         @RequestParam(required = false, defaultValue = "이것은 테스트 알림입니다") body: String
     ): ResponseEntity<Map<String, Any>> {
         return try {
             // 사용자의 FCM 토큰 조회
-            val tokens = pushtokenRepository.findByUser(userId)
+            val tokens = pushtokenRepository.findByuserId(userId)
                 .mapNotNull { it.token }
                 .filter { it.isNotBlank() }
 
@@ -72,15 +73,53 @@ class NotificationController(
                 data = request.data ?: emptyMap()
             )
 
-            ResponseEntity.ok(mapOf(
+            ResponseEntity.ok(mapOf<String, Any>(
                 "success" to (response != null),
                 "message" to if (response != null) "Notification sent successfully" else "Failed to send notification",
-                "messageId" to response
+                "messageId" to (response ?: "")
             ))
         } catch (e: Exception) {
             ResponseEntity.ok(mapOf(
                 "success" to false,
                 "message" to "Failed to send notification: ${e.message}"
+            ))
+        }
+    }
+
+    /**
+     * 스케줄러 수동 실행 - 이용권 만료 체크
+     */
+    @PostMapping("/test/check-expiry")
+    fun testCheckMembershipExpiry(): ResponseEntity<Map<String, Any>> {
+        return try {
+            notificationSchedulerService.checkMembershipExpiry()
+            ResponseEntity.ok(mapOf(
+                "success" to true,
+                "message" to "Membership expiry check executed successfully"
+            ))
+        } catch (e: Exception) {
+            ResponseEntity.ok(mapOf(
+                "success" to false,
+                "message" to "Failed to check membership expiry: ${e.message}"
+            ))
+        }
+    }
+
+    /**
+     * 스케줄러 수동 실행 - 3일 미출석 체크
+     */
+    @PostMapping("/test/check-inactive")
+    fun testCheckInactiveUsers(): ResponseEntity<Map<String, Any>> {
+        return try {
+            notificationSchedulerService.checkInactiveUsers()
+            ResponseEntity.ok(mapOf(
+                "success" to true,
+                "message" to "Inactive users check executed successfully"
+            ))
+        } catch (e: Exception) {
+            ResponseEntity.ok(mapOf(
+                "success" to false,
+                "message" to "Failed to check inactive users: ${e.message}"
             ))
         }
     }
