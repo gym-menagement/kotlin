@@ -45,13 +45,13 @@ class NotificationSchedulerService(
         try {
             // targetDate에 만료되는 이용권 조회
             val usehealths = usehealthRepository.findAll().filter {
-                val endDay = LocalDateTime.parse(it.endday, DateTimeFormatter.ISO_DATE_TIME).toLocalDate()
-                endDay == targetDate && it.status == 2 // status 2 = 사용중
+                val endDay = it.endday?.toLocalDate()
+                endDay == targetDate && it.status == com.gowoobro.gymspring.enums.usehealth.Status.USE // 사용중
             }
 
             usehealths.forEach { usehealth ->
                 // 사용자의 FCM 토큰 조회
-                val tokens = pushtokenRepository.findByUser(usehealth.user)
+                val tokens = pushtokenRepository.findByuserId(usehealth.userId)
                     .mapNotNull { it.token }
                     .filter { it.isNotBlank() }
 
@@ -64,10 +64,10 @@ class NotificationSchedulerService(
                         data = mapOf(
                             "type" to "membership_expiry",
                             "usehealthId" to usehealth.id.toString(),
-                            "expiryDate" to usehealth.endday
+                            "expiryDate" to (usehealth.endday?.toString() ?: "")
                         )
                     )
-                    println("Sent expiry notification to user ${usehealth.user}")
+                    println("Sent expiry notification to user ${usehealth.userId}")
                 }
             }
         } catch (e: Exception) {
@@ -88,24 +88,20 @@ class NotificationSchedulerService(
 
             // 활성 이용권 중 3일 이상 미사용 조회
             val usehealths = usehealthRepository.findAll().filter {
-                if (it.status != 2) return@filter false // status 2 = 사용중
+                if (it.status != com.gowoobro.gymspring.enums.usehealth.Status.USE) return@filter false // 사용중
 
-                val lastUsedDate = try {
-                    LocalDateTime.parse(it.lastuseddate, DateTimeFormatter.ISO_DATE_TIME)
-                } catch (e: Exception) {
-                    return@filter false
-                }
+                val lastUsedDate = it.lastuseddate ?: return@filter false
 
                 lastUsedDate.isBefore(threeDaysAgo)
             }
 
             usehealths.forEach { usehealth ->
-                val tokens = pushtokenRepository.findByUser(usehealth.user)
+                val tokens = pushtokenRepository.findByuserId(usehealth.userId)
                     .mapNotNull { it.token }
                     .filter { it.isNotBlank() }
 
                 if (tokens.isNotEmpty()) {
-                    val lastUsedDate = LocalDateTime.parse(usehealth.lastuseddate, DateTimeFormatter.ISO_DATE_TIME)
+                    val lastUsedDate = usehealth.lastuseddate!!
                     val daysSinceLastUse = java.time.temporal.ChronoUnit.DAYS.between(lastUsedDate, LocalDateTime.now())
 
                     fcmService.sendMulticastNotification(
@@ -118,7 +114,7 @@ class NotificationSchedulerService(
                             "daysSinceLastUse" to daysSinceLastUse.toString()
                         )
                     )
-                    println("Sent inactivity reminder to user ${usehealth.user}")
+                    println("Sent inactivity reminder to user ${usehealth.userId}")
                 }
             }
         } catch (e: Exception) {
