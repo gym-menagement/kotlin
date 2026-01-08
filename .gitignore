@@ -55,7 +55,7 @@ model.json
 .env
 .env.local
 .env.*.local
-!.env.server
+.env.server
 
 ### Data & Config Directories ###
 data/
