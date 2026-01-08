@@ -20,8 +20,8 @@ import com.gowoobro.gymspring.enums.ptreservation.Status
 @Transactional
 class PtreservationService(private val ptreservationRepository: PtreservationRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Ptreservation> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Ptreservation> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return ptreservationRepository.findAll(pageable)
     }
 

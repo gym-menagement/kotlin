@@ -20,8 +20,8 @@ import com.gowoobro.gymspring.enums.usehealth.Status
 @Transactional
 class UsehealthService(private val usehealthRepository: UsehealthRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Usehealth> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Usehealth> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return usehealthRepository.findAll(pageable)
     }
 

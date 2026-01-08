@@ -19,8 +19,8 @@ import java.math.BigDecimal
 @Transactional
 class MemberbodyService(private val memberbodyRepository: MemberbodyRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Memberbody> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Memberbody> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return memberbodyRepository.findAll(pageable)
     }
 

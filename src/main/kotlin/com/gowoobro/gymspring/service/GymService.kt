@@ -19,8 +19,8 @@ import java.time.LocalDateTime
 @Transactional
 class GymService(private val gymRepository: GymRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Gym> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Gym> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return gymRepository.findAll(pageable)
     }
 

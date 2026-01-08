@@ -41,7 +41,7 @@ class SystemlogController(
     @GetMapping
     fun getSystemlogs(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") pageSize: Int,
+        @RequestParam(defaultValue = "10") pagesize: Int,
         @RequestParam(required = false) type: Int?,
         @RequestParam(required = false) content: String?,
         @RequestParam(required = false) result: Int?,
@@ -68,9 +68,9 @@ class SystemlogController(
         }
 
         val totalElements = results.size
-        val totalPages = if (pageSize > 0) (totalElements + pageSize - 1) / pageSize else 1
-        val startIndex = page * pageSize
-        val endIndex = minOf(startIndex + pageSize, totalElements)
+        val totalPages = if (pagesize > 0) (totalElements + pagesize - 1) / pagesize else 1
+        val startIndex = page * pagesize
+        val endIndex = minOf(startIndex + pagesize, totalElements)
 
         val pagedResults = if (startIndex < totalElements) {
             results.subList(startIndex, endIndex)
@@ -81,7 +81,7 @@ class SystemlogController(
         val response = mapOf(
             "content" to pagedResults.map { toResponse(it) },
             "page" to page,
-            "size" to pageSize,
+            "size" to pagesize,
             "totalElements" to totalElements,
             "totalPages" to totalPages,
             "first" to (page == 0),

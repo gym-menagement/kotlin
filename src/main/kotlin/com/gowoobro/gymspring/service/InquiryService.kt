@@ -21,8 +21,8 @@ import com.gowoobro.gymspring.enums.inquiry.Status
 @Transactional
 class InquiryService(private val inquiryRepository: InquiryRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Inquiry> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Inquiry> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return inquiryRepository.findAll(pageable)
     }
 

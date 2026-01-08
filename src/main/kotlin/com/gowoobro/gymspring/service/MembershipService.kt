@@ -19,8 +19,8 @@ import java.time.LocalDateTime
 @Transactional
 class MembershipService(private val membershipRepository: MembershipRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Membership> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Membership> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return membershipRepository.findAll(pageable)
     }
 

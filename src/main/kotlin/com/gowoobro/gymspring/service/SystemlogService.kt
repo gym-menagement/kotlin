@@ -21,8 +21,8 @@ import com.gowoobro.gymspring.enums.systemlog.Result
 @Transactional
 class SystemlogService(private val systemlogRepository: SystemlogRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Systemlog> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Systemlog> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return systemlogRepository.findAll(pageable)
     }
 

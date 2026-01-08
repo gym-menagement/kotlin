@@ -21,8 +21,8 @@ import com.gowoobro.gymspring.enums.appversion.Status
 @Transactional
 class AppversionService(private val appversionRepository: AppversionRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Appversion> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Appversion> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return appversionRepository.findAll(pageable)
     }
 

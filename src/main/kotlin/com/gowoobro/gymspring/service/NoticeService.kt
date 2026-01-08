@@ -24,8 +24,8 @@ import com.gowoobro.gymspring.enums.notice.Status
 @Transactional
 class NoticeService(private val noticeRepository: NoticeRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Notice> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Notice> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return noticeRepository.findAll(pageable)
     }
 

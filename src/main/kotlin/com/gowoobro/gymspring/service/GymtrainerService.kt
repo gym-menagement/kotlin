@@ -20,8 +20,8 @@ import com.gowoobro.gymspring.enums.gymtrainer.Status
 @Transactional
 class GymtrainerService(private val gymtrainerRepository: GymtrainerRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Gymtrainer> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Gymtrainer> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return gymtrainerRepository.findAll(pageable)
     }
 

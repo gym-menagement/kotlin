@@ -20,8 +20,8 @@ import com.gowoobro.gymspring.enums.role.Roleid
 @Transactional
 class RoleService(private val roleRepository: RoleRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Role> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Role> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return roleRepository.findAll(pageable)
     }
 

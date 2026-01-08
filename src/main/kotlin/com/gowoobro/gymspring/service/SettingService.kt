@@ -20,8 +20,8 @@ import com.gowoobro.gymspring.enums.setting.Type
 @Transactional
 class SettingService(private val settingRepository: SettingRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Setting> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Setting> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return settingRepository.findAll(pageable)
     }
 

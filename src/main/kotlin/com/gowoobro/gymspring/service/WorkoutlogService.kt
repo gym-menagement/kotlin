@@ -19,8 +19,8 @@ import java.math.BigDecimal
 @Transactional
 class WorkoutlogService(private val workoutlogRepository: WorkoutlogRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Workoutlog> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Workoutlog> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return workoutlogRepository.findAll(pageable)
     }
 

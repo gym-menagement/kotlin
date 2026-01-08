@@ -24,8 +24,8 @@ import com.gowoobro.gymspring.enums.user.Sex
 @Transactional
 class UserService(private val userRepository: UserRepository, private val passwordEncoder: PasswordEncoder) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<User> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<User> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return userRepository.findAll(pageable)
     }
 

@@ -22,8 +22,8 @@ import com.gowoobro.gymspring.enums.attendance.Status
 @Transactional
 class AttendanceService(private val attendanceRepository: AttendanceRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Attendance> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Attendance> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return attendanceRepository.findAll(pageable)
     }
 

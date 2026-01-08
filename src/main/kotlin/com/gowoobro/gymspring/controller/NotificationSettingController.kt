@@ -1,350 +1,337 @@
 package com.gowoobro.gymspring.controller
 
-import com.gowoobro.gymspring.entity.NotificationSetting
-import com.gowoobro.gymspring.entity.NotificationSettingResponse
-import com.gowoobro.gymspring.repository.NotificationSettingRepository
-import com.gowoobro.gymspring.enums.notificationsetting.NotificationEnabled
+import com.gowoobro.gymspring.entity.Notificationsetting
+import com.gowoobro.gymspring.entity.NotificationsettingCreateRequest
+import com.gowoobro.gymspring.entity.NotificationsettingUpdateRequest
+import com.gowoobro.gymspring.entity.NotificationsettingPatchRequest
+import com.gowoobro.gymspring.service.NotificationsettingService
+import com.gowoobro.gymspring.entity.NotificationsettingResponse
+import com.gowoobro.gymspring.enums.notificationsetting.Enabled
+import com.gowoobro.gymspring.enums.notificationsetting.Membershipexpiry
+import com.gowoobro.gymspring.enums.notificationsetting.Membershipnear
+import com.gowoobro.gymspring.enums.notificationsetting.Attendanceenc
+import com.gowoobro.gymspring.enums.notificationsetting.Gymannounce
+import com.gowoobro.gymspring.enums.notificationsetting.Systemnotice
+import com.gowoobro.gymspring.enums.notificationsetting.Paymentconfirm
+import com.gowoobro.gymspring.enums.notificationsetting.Pauseexpiry
+import com.gowoobro.gymspring.enums.notificationsetting.Weeklygoal
+import com.gowoobro.gymspring.enums.notificationsetting.Personalrecord
+import com.gowoobro.gymspring.enums.notificationsetting.Quietenabled
+
+import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
-import java.time.LocalTime
+
 
 @RestController
-@RequestMapping("/api/notification-settings")
-class NotificationSettingController(
-    private val notificationSettingRepository: NotificationSettingRepository
-) {
+@RequestMapping("/api/notificationsetting")
+class NotificationsettingController(
+    private val notificationsettingService: NotificationsettingService) {
 
-    /**
-     * 사용자 알림 설정 조회
-     * GET /api/notification-settings/user/{userId}
-     */
-    @GetMapping("/user/{userId}")
-    fun getUserNotificationSetting(
-        @PathVariable userId: Long
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val setting = notificationSettingRepository.findByUserId(userId)
+    private fun toResponse(notificationsetting: Notificationsetting): NotificationsettingResponse {
+        return NotificationsettingResponse.from(notificationsetting)
+    }
 
-            if (setting != null) {
-                ResponseEntity.ok(mapOf<String, Any>(
-                    "success" to true,
-                    "data" to NotificationSettingResponse.from(setting)
-                ))
-            } else {
-                // 설정이 없으면 기본 설정 반환
-                ResponseEntity.ok(mapOf<String, Any>(
-                    "success" to true,
-                    "message" to "No settings found. Using default settings."
-                ))
-            }
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to get notification settings: ${e.message}"
-            ))
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
         }
     }
 
-    /**
-     * 사용자 알림 설정 생성 (첫 설정)
-     * POST /api/notification-settings/user/{userId}
-     */
-    @PostMapping("/user/{userId}")
-    fun createUserNotificationSetting(
-        @PathVariable userId: Long
+    @GetMapping
+    fun getNotificationsettings(
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") pagesize: Int,
+        @RequestParam(required = false) user: Long?,
+        @RequestParam(required = false) enabled: Int?,
+        @RequestParam(required = false) membershipexpiry: Int?,
+        @RequestParam(required = false) membershipnear: Int?,
+        @RequestParam(required = false) attendanceenc: Int?,
+        @RequestParam(required = false) gymannounce: Int?,
+        @RequestParam(required = false) systemnotice: Int?,
+        @RequestParam(required = false) paymentconfirm: Int?,
+        @RequestParam(required = false) pauseexpiry: Int?,
+        @RequestParam(required = false) weeklygoal: Int?,
+        @RequestParam(required = false) personalrecord: Int?,
+        @RequestParam(required = false) quietenabled: Int?,
+        @RequestParam(required = false) quietstart: String?,
+        @RequestParam(required = false) quietend: String?,
+        @RequestParam(required = false) startcreateddate: LocalDateTime?,
+        @RequestParam(required = false) endcreateddate: LocalDateTime?,
+        @RequestParam(required = false) startupdateddate: LocalDateTime?,
+        @RequestParam(required = false) endupdateddate: LocalDateTime?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
     ): ResponseEntity<Map<String, Any>> {
-        return try {
-            // 이미 설정이 있는지 확인
-            val existing = notificationSettingRepository.findByUserId(userId)
-            if (existing != null) {
-                return ResponseEntity.ok(mapOf(
-                    "success" to false,
-                    "message" to "Notification settings already exist for this user",
-                    "data" to NotificationSettingResponse.from(existing)
-                ))
+        var results = if (user != null || enabled != null || membershipexpiry != null || membershipnear != null || attendanceenc != null || gymannounce != null || systemnotice != null || paymentconfirm != null || pauseexpiry != null || weeklygoal != null || personalrecord != null || quietenabled != null || quietstart != null || quietend != null || startcreateddate != null || endcreateddate != null || startupdateddate != null || endupdateddate != null || startdate != null || enddate != null || false) {
+            var filtered = notificationsettingService.findAll(0, Int.MAX_VALUE).content
+            if (user != null) {
+                filtered = filtered.filter { it.userId == user }
             }
+            if (enabled != null) {
+                filtered = filtered.filter { it.enabled.ordinal == enabled }
+            }
+            if (membershipexpiry != null) {
+                filtered = filtered.filter { it.membershipexpiry.ordinal == membershipexpiry }
+            }
+            if (membershipnear != null) {
+                filtered = filtered.filter { it.membershipnear.ordinal == membershipnear }
+            }
+            if (attendanceenc != null) {
+                filtered = filtered.filter { it.attendanceenc.ordinal == attendanceenc }
+            }
+            if (gymannounce != null) {
+                filtered = filtered.filter { it.gymannounce.ordinal == gymannounce }
+            }
+            if (systemnotice != null) {
+                filtered = filtered.filter { it.systemnotice.ordinal == systemnotice }
+            }
+            if (paymentconfirm != null) {
+                filtered = filtered.filter { it.paymentconfirm.ordinal == paymentconfirm }
+            }
+            if (pauseexpiry != null) {
+                filtered = filtered.filter { it.pauseexpiry.ordinal == pauseexpiry }
+            }
+            if (weeklygoal != null) {
+                filtered = filtered.filter { it.weeklygoal.ordinal == weeklygoal }
+            }
+            if (personalrecord != null) {
+                filtered = filtered.filter { it.personalrecord.ordinal == personalrecord }
+            }
+            if (quietenabled != null) {
+                filtered = filtered.filter { it.quietenabled.ordinal == quietenabled }
+            }
+            if (quietstart != null) {
+                filtered = filtered.filter { it.quietstart == quietstart }
+            }
+            if (quietend != null) {
+                filtered = filtered.filter { it.quietend == quietend }
+            }
+            if (startcreateddate != null || endcreateddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.createddate, startcreateddate, endcreateddate) }
+            }
+            if (startupdateddate != null || endupdateddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.updateddate, startupdateddate, endupdateddate) }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            notificationsettingService.findAll(0, Int.MAX_VALUE).content
+        }
 
-            // 기본 설정으로 생성 (모두 켜짐)
-            val newSetting = NotificationSetting(
-                userId = userId,
-                enabled = NotificationEnabled.ENABLED,
-                membershipExpiry = NotificationEnabled.ENABLED,
-                membershipNearExpiry = NotificationEnabled.ENABLED,
-                attendanceEncourage = NotificationEnabled.ENABLED,
-                gymAnnouncement = NotificationEnabled.ENABLED,
-                systemNotice = NotificationEnabled.ENABLED,
-                paymentConfirm = NotificationEnabled.ENABLED,
-                pauseExpiry = NotificationEnabled.ENABLED,
-                weeklyGoalAchieved = NotificationEnabled.ENABLED,
-                personalRecord = NotificationEnabled.ENABLED,
-                quietHoursEnabled = NotificationEnabled.DISABLED,
-                quietHoursStart = null,
-                quietHoursEnd = null,
-                createdDate = LocalDateTime.now(),
-                updatedDate = LocalDateTime.now(),
-                date = LocalDateTime.now()
-            )
+        val totalElements = results.size
+        val totalPages = if (pagesize > 0) (totalElements + pagesize - 1) / pagesize else 1
+        val startIndex = page * pagesize
+        val endIndex = minOf(startIndex + pagesize, totalElements)
 
-            val saved = notificationSettingRepository.save(newSetting)
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
 
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "message" to "Notification settings created successfully",
-                "data" to NotificationSettingResponse.from(saved)
-            ))
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to create notification settings: ${e.message}"
-            ))
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pagesize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
+    }
+
+    @GetMapping("/{id}")
+    fun getNotificationsetting(@PathVariable id: Long): ResponseEntity<NotificationsettingResponse> {
+        val res = notificationsettingService.findById(id)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
         }
     }
 
-    /**
-     * 전체 알림 ON/OFF 토글
-     * PATCH /api/notification-settings/user/{userId}/toggle-all
-     */
-    @PatchMapping("/user/{userId}/toggle-all")
-    fun toggleAllNotifications(
-        @PathVariable userId: Long,
-        @RequestParam enabled: Boolean
-    ): ResponseEntity<Map<String, Any>> {
+
+    @GetMapping("/search/user")
+    fun getNotificationsettingByUser(@RequestParam user: Long): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByUser(user)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/enabled")
+    fun getNotificationsettingByEnabled(@RequestParam enabled: Enabled): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByEnabled(enabled)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/membershipexpiry")
+    fun getNotificationsettingByMembershipexpiry(@RequestParam membershipexpiry: Membershipexpiry): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByMembershipexpiry(membershipexpiry)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/membershipnear")
+    fun getNotificationsettingByMembershipnear(@RequestParam membershipnear: Membershipnear): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByMembershipnear(membershipnear)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/attendanceenc")
+    fun getNotificationsettingByAttendanceenc(@RequestParam attendanceenc: Attendanceenc): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByAttendanceenc(attendanceenc)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/gymannounce")
+    fun getNotificationsettingByGymannounce(@RequestParam gymannounce: Gymannounce): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByGymannounce(gymannounce)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/systemnotice")
+    fun getNotificationsettingBySystemnotice(@RequestParam systemnotice: Systemnotice): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findBySystemnotice(systemnotice)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/paymentconfirm")
+    fun getNotificationsettingByPaymentconfirm(@RequestParam paymentconfirm: Paymentconfirm): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByPaymentconfirm(paymentconfirm)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/pauseexpiry")
+    fun getNotificationsettingByPauseexpiry(@RequestParam pauseexpiry: Pauseexpiry): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByPauseexpiry(pauseexpiry)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/weeklygoal")
+    fun getNotificationsettingByWeeklygoal(@RequestParam weeklygoal: Weeklygoal): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByWeeklygoal(weeklygoal)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/personalrecord")
+    fun getNotificationsettingByPersonalrecord(@RequestParam personalrecord: Personalrecord): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByPersonalrecord(personalrecord)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/quietenabled")
+    fun getNotificationsettingByQuietenabled(@RequestParam quietenabled: Quietenabled): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByQuietenabled(quietenabled)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/quietstart")
+    fun getNotificationsettingByQuietstart(@RequestParam quietstart: String): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByQuietstart(quietstart)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/quietend")
+    fun getNotificationsettingByQuietend(@RequestParam quietend: String): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByQuietend(quietend)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/createddate")
+    fun getNotificationsettingByCreateddate(@RequestParam createddate: LocalDateTime): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByCreateddate(createddate)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/updateddate")
+    fun getNotificationsettingByUpdateddate(@RequestParam updateddate: LocalDateTime): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByUpdateddate(updateddate)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/date")
+    fun getNotificationsettingByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<NotificationsettingResponse>> {
+        val res = notificationsettingService.findByDate(date)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+
+    @GetMapping("/count")
+    fun getCount(): ResponseEntity<Map<String, Long>> {
+        val count = notificationsettingService.count()
+        return ResponseEntity.ok(mapOf("count" to count))
+    }
+
+    @PostMapping
+    fun createNotificationsetting(@RequestBody request: NotificationsettingCreateRequest): ResponseEntity<NotificationsettingResponse> {
         return try {
-            var setting = notificationSettingRepository.findByUserId(userId)
-                ?: notificationSettingRepository.save(NotificationSetting(userId = userId))
-
-            val enabledState = if (enabled) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED
-
-            setting = notificationSettingRepository.save(setting.copy(
-                enabled = enabledState,
-                updatedDate = LocalDateTime.now()
-            ))
-
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "message" to "All notifications ${if (enabled) "enabled" else "disabled"}",
-                "data" to NotificationSettingResponse.from(setting)
-            ))
+            val res = notificationsettingService.create(request)
+            ResponseEntity.ok(toResponse(res))
         } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to toggle notifications: ${e.message}"
-            ))
+            ResponseEntity.badRequest().build()
         }
     }
 
-    /**
-     * 특정 알림 타입 ON/OFF 설정
-     * PATCH /api/notification-settings/user/{userId}/type
-     */
-    @PatchMapping("/user/{userId}/type")
-    fun updateNotificationType(
-        @PathVariable userId: Long,
-        @RequestParam(required = false) membershipExpiry: Boolean?,
-        @RequestParam(required = false) membershipNearExpiry: Boolean?,
-        @RequestParam(required = false) attendanceEncourage: Boolean?,
-        @RequestParam(required = false) gymAnnouncement: Boolean?,
-        @RequestParam(required = false) systemNotice: Boolean?,
-        @RequestParam(required = false) paymentConfirm: Boolean?,
-        @RequestParam(required = false) pauseExpiry: Boolean?,
-        @RequestParam(required = false) weeklyGoalAchieved: Boolean?,
-        @RequestParam(required = false) personalRecord: Boolean?
-    ): ResponseEntity<Map<String, Any>> {
+    @PostMapping("/batch")
+    fun createNotificationsettings(@RequestBody requests: List<NotificationsettingCreateRequest>): ResponseEntity<List<NotificationsettingResponse>> {
         return try {
-            var setting = notificationSettingRepository.findByUserId(userId)
-                ?: notificationSettingRepository.save(NotificationSetting(userId = userId))
-
-            setting = notificationSettingRepository.save(setting.copy(
-                membershipExpiry = membershipExpiry?.let { if (it) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED } ?: setting.membershipExpiry,
-                membershipNearExpiry = membershipNearExpiry?.let { if (it) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED } ?: setting.membershipNearExpiry,
-                attendanceEncourage = attendanceEncourage?.let { if (it) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED } ?: setting.attendanceEncourage,
-                gymAnnouncement = gymAnnouncement?.let { if (it) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED } ?: setting.gymAnnouncement,
-                systemNotice = systemNotice?.let { if (it) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED } ?: setting.systemNotice,
-                paymentConfirm = paymentConfirm?.let { if (it) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED } ?: setting.paymentConfirm,
-                pauseExpiry = pauseExpiry?.let { if (it) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED } ?: setting.pauseExpiry,
-                weeklyGoalAchieved = weeklyGoalAchieved?.let { if (it) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED } ?: setting.weeklyGoalAchieved,
-                personalRecord = personalRecord?.let { if (it) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED } ?: setting.personalRecord,
-                updatedDate = LocalDateTime.now()
-            ))
-
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "message" to "Notification type settings updated",
-                "data" to NotificationSettingResponse.from(setting)
-            ))
+            val res = notificationsettingService.createBatch(requests)
+            return ResponseEntity.ok(res.map { toResponse(it) } )
         } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to update notification type settings: ${e.message}"
-            ))
+            ResponseEntity.badRequest().build()
         }
     }
 
-    /**
-     * 방해 금지 시간 설정
-     * PATCH /api/notification-settings/user/{userId}/quiet-hours
-     * @param enabled 방해 금지 사용 여부
-     * @param startTime 시작 시간 (HH:mm 형식, 예: "22:00")
-     * @param endTime 종료 시간 (HH:mm 형식, 예: "08:00")
-     */
-    @PatchMapping("/user/{userId}/quiet-hours")
-    fun updateQuietHours(
-        @PathVariable userId: Long,
-        @RequestParam enabled: Boolean,
-        @RequestParam(required = false) startTime: String?,
-        @RequestParam(required = false) endTime: String?
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            var setting = notificationSettingRepository.findByUserId(userId)
-                ?: notificationSettingRepository.save(NotificationSetting(userId = userId))
-
-            val quietStart = if (enabled && startTime != null) {
-                LocalTime.parse(startTime)
-            } else {
-                null
-            }
-
-            val quietEnd = if (enabled && endTime != null) {
-                LocalTime.parse(endTime)
-            } else {
-                null
-            }
-
-            setting = notificationSettingRepository.save(setting.copy(
-                quietHoursEnabled = if (enabled) NotificationEnabled.ENABLED else NotificationEnabled.DISABLED,
-                quietHoursStart = quietStart,
-                quietHoursEnd = quietEnd,
-                updatedDate = LocalDateTime.now()
-            ))
-
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "message" to "Quiet hours ${if (enabled) "enabled" else "disabled"}",
-                "data" to NotificationSettingResponse.from(setting)
-            ))
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to update quiet hours: ${e.message}"
-            ))
+    @PutMapping("/{id}")
+    fun updateNotificationsetting(
+        @PathVariable id: Long,
+        @RequestBody request: NotificationsettingUpdateRequest
+    ): ResponseEntity<NotificationsettingResponse> {
+        val updatedRequest = request.copy(id = id)
+        val res = notificationsettingService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
         }
     }
 
-    /**
-     * 알림 설정 삭제 (기본값으로 초기화)
-     * DELETE /api/notification-settings/user/{userId}
-     */
-    @DeleteMapping("/user/{userId}")
-    fun deleteUserNotificationSetting(
-        @PathVariable userId: Long
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val setting = notificationSettingRepository.findByUserId(userId)
-
-            if (setting != null) {
-                notificationSettingRepository.delete(setting)
-                ResponseEntity.ok(mapOf(
-                    "success" to true,
-                    "message" to "Notification settings deleted. Will use default settings."
-                ))
-            } else {
-                ResponseEntity.ok(mapOf(
-                    "success" to false,
-                    "message" to "No notification settings found for this user"
-                ))
-            }
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to delete notification settings: ${e.message}"
-            ))
+    @PatchMapping("/{id}")
+    fun patchNotificationsetting(
+        @PathVariable id: Long,
+        @RequestBody request: NotificationsettingPatchRequest
+    ): ResponseEntity<NotificationsettingResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = notificationsettingService.patch(patchRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
         }
     }
 
-    /**
-     * 알림을 보낼지 확인하는 헬퍼 함수 (다른 서비스에서 사용)
-     * GET /api/notification-settings/user/{userId}/should-send?type={type}
-     * @param type 알림 타입 (0=GENERAL, 1=MEMBERSHIP_EXPIRY, 2=MEMBERSHIP_NEAR_EXPIRY, 3=ATTENDANCE_ENCOURAGE,
-     *                            4=GYM_ANNOUNCEMENT, 5=SYSTEM_NOTICE, 6=PAYMENT_CONFIRM, 7=PAUSE_EXPIRY,
-     *                            8=WEEKLY_GOAL_ACHIEVED, 9=PERSONAL_RECORD)
-     */
-    @GetMapping("/user/{userId}/should-send")
-    fun shouldSendNotification(
-        @PathVariable userId: Long,
-        @RequestParam type: Int
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val setting = notificationSettingRepository.findByUserId(userId)
+    @DeleteMapping("/{id}")
+    fun deleteNotificationsetting(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
+        val success = notificationsettingService.deleteById(id)
+        return ResponseEntity.ok(mapOf("success" to success))
+    }
 
-            // 설정이 없으면 모두 허용 (기본값)
-            if (setting == null) {
-                return ResponseEntity.ok(mapOf(
-                    "success" to true,
-                    "shouldSend" to true,
-                    "reason" to "No settings found. Using default (enabled)."
-                ))
-            }
-
-            // 전체 알림이 꺼져 있으면 거부
-            if (setting.enabled == NotificationEnabled.DISABLED) {
-                return ResponseEntity.ok(mapOf(
-                    "success" to true,
-                    "shouldSend" to false,
-                    "reason" to "All notifications are disabled."
-                ))
-            }
-
-            // 방해 금지 시간 확인
-            if (setting.quietHoursEnabled == NotificationEnabled.ENABLED) {
-                val now = LocalTime.now()
-                val start = setting.quietHoursStart
-                val end = setting.quietHoursEnd
-
-                if (start != null && end != null) {
-                    val isQuietTime = if (start < end) {
-                        now in start..end
-                    } else {
-                        // 시작 시간이 종료 시간보다 늦은 경우 (예: 22:00 ~ 08:00)
-                        now >= start || now <= end
-                    }
-
-                    if (isQuietTime) {
-                        return ResponseEntity.ok(mapOf(
-                            "success" to true,
-                            "shouldSend" to false,
-                            "reason" to "Currently in quiet hours ($start ~ $end)."
-                        ))
-                    }
-                }
-            }
-
-            // 타입별 설정 확인
-            val typeEnabled = when (type) {
-                0 -> true // GENERAL은 항상 허용
-                1 -> setting.membershipExpiry == NotificationEnabled.ENABLED
-                2 -> setting.membershipNearExpiry == NotificationEnabled.ENABLED
-                3 -> setting.attendanceEncourage == NotificationEnabled.ENABLED
-                4 -> setting.gymAnnouncement == NotificationEnabled.ENABLED
-                5 -> setting.systemNotice == NotificationEnabled.ENABLED
-                6 -> setting.paymentConfirm == NotificationEnabled.ENABLED
-                7 -> setting.pauseExpiry == NotificationEnabled.ENABLED
-                8 -> setting.weeklyGoalAchieved == NotificationEnabled.ENABLED
-                9 -> setting.personalRecord == NotificationEnabled.ENABLED
-                else -> true
-            }
-
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "shouldSend" to typeEnabled,
-                "reason" to if (typeEnabled) "Type is enabled." else "Type is disabled."
-            ))
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to check notification settings: ${e.message}",
-                "shouldSend" to true // 에러 시 기본값으로 허용
-            ))
-        }
+    @DeleteMapping("/batch")
+    fun deleteNotificationsettings(@RequestBody entities: List<Notificationsetting>): ResponseEntity<Map<String, Boolean>> {
+        val success = notificationsettingService.deleteBatch(entities)
+        return ResponseEntity.ok(mapOf("success" to success))
     }
 }

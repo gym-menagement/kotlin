@@ -1,242 +1,267 @@
 package com.gowoobro.gymspring.controller
 
-import com.gowoobro.gymspring.entity.NotificationHistoryResponse
-import com.gowoobro.gymspring.repository.NotificationHistoryRepository
-import com.gowoobro.gymspring.enums.notificationhistory.NotificationType
-import com.gowoobro.gymspring.enums.notificationhistory.SendStatus
-import org.springframework.data.domain.PageRequest
+import com.gowoobro.gymspring.entity.Notificationhistory
+import com.gowoobro.gymspring.entity.NotificationhistoryCreateRequest
+import com.gowoobro.gymspring.entity.NotificationhistoryUpdateRequest
+import com.gowoobro.gymspring.entity.NotificationhistoryPatchRequest
+import com.gowoobro.gymspring.service.NotificationhistoryService
+import com.gowoobro.gymspring.entity.NotificationhistoryResponse
+import com.gowoobro.gymspring.enums.notificationhistory.Type
+import com.gowoobro.gymspring.enums.notificationhistory.Status
+
+import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
+
 @RestController
-@RequestMapping("/api/notification-history")
-class NotificationHistoryController(
-    private val notificationHistoryRepository: NotificationHistoryRepository
-) {
+@RequestMapping("/api/notificationhistory")
+class NotificationhistoryController(
+    private val notificationhistoryService: NotificationhistoryService) {
 
-    /**
-     * 특정 사용자가 받은 알림 이력 조회
-     * GET /api/notification-history/user/{userId}?page=0&size=20
-     */
-    @GetMapping("/user/{userId}")
-    fun getUserNotificationHistory(
-        @PathVariable userId: Long,
-        @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "20") size: Int
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val pageable = PageRequest.of(page, size)
-            val historyPage = notificationHistoryRepository.findByReceiverId(userId, pageable)
+    private fun toResponse(notificationhistory: Notificationhistory): NotificationhistoryResponse {
+        return NotificationhistoryResponse.from(notificationhistory)
+    }
 
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "content" to historyPage.content.map { NotificationHistoryResponse.from(it) },
-                "page" to page,
-                "size" to size,
-                "totalElements" to historyPage.totalElements,
-                "totalPages" to historyPage.totalPages
-            ))
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to get notification history: ${e.message}"
-            ))
+    private fun filterByDateRange(
+        value: LocalDateTime?,
+        startRange: LocalDateTime?,
+        endRange: LocalDateTime?
+    ): Boolean {
+        if (value == null) return false
+        return when {
+            startRange != null && endRange != null -> value in startRange..endRange
+            startRange != null -> value >= startRange
+            endRange != null -> value <= endRange
+            else -> true
         }
     }
 
-    /**
-     * 특정 체육관 관련 알림 이력 조회
-     * GET /api/notification-history/gym/{gymId}?page=0&size=20
-     */
-    @GetMapping("/gym/{gymId}")
-    fun getGymNotificationHistory(
-        @PathVariable gymId: Long,
+    @GetMapping
+    fun getNotificationhistorys(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "20") size: Int
+        @RequestParam(defaultValue = "10") pagesize: Int,
+        @RequestParam(required = false) sender: Long?,
+        @RequestParam(required = false) receiver: Long?,
+        @RequestParam(required = false) gym: Long?,
+        @RequestParam(required = false) type: Int?,
+        @RequestParam(required = false) title: String?,
+        @RequestParam(required = false) body: String?,
+        @RequestParam(required = false) data: String?,
+        @RequestParam(required = false) status: Int?,
+        @RequestParam(required = false) errormessage: String?,
+        @RequestParam(required = false) startsentdate: LocalDateTime?,
+        @RequestParam(required = false) endsentdate: LocalDateTime?,
+        @RequestParam(required = false) startdate: LocalDateTime?,
+        @RequestParam(required = false) enddate: LocalDateTime?,
     ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val pageable = PageRequest.of(page, size)
-            val historyPage = notificationHistoryRepository.findByGymId(gymId, pageable)
-
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "content" to historyPage.content.map { NotificationHistoryResponse.from(it) },
-                "page" to page,
-                "size" to size,
-                "totalElements" to historyPage.totalElements,
-                "totalPages" to historyPage.totalPages
-            ))
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to get gym notification history: ${e.message}"
-            ))
-        }
-    }
-
-    /**
-     * 특정 알림 타입별 이력 조회
-     * GET /api/notification-history/type/{type}?page=0&size=20
-     * type: 0=GENERAL, 1=MEMBERSHIP_EXPIRY, 2=MEMBERSHIP_NEAR_EXPIRY, 3=ATTENDANCE_ENCOURAGE, 4=GYM_ANNOUNCEMENT, 5=SYSTEM_NOTICE, 6=PAYMENT_CONFIRM, 7=TEST
-     */
-    @GetMapping("/type/{type}")
-    fun getNotificationHistoryByType(
-        @PathVariable type: Int,
-        @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "20") size: Int
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val notificationType = NotificationType.values()[type]
-            val pageable = PageRequest.of(page, size)
-            val historyPage = notificationHistoryRepository.findByType(notificationType, pageable)
-
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "content" to historyPage.content.map { NotificationHistoryResponse.from(it) },
-                "page" to page,
-                "size" to size,
-                "totalElements" to historyPage.totalElements,
-                "totalPages" to historyPage.totalPages,
-                "type" to NotificationType.getDisplayName(notificationType)
-            ))
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to get notification history by type: ${e.message}"
-            ))
-        }
-    }
-
-    /**
-     * 특정 사용자의 특정 타입 알림 이력 조회
-     * GET /api/notification-history/user/{userId}/type/{type}?page=0&size=20
-     */
-    @GetMapping("/user/{userId}/type/{type}")
-    fun getUserNotificationHistoryByType(
-        @PathVariable userId: Long,
-        @PathVariable type: Int,
-        @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "20") size: Int
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val notificationType = NotificationType.values()[type]
-            val pageable = PageRequest.of(page, size)
-            val historyPage = notificationHistoryRepository.findByReceiverIdAndType(userId, notificationType, pageable)
-
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "content" to historyPage.content.map { NotificationHistoryResponse.from(it) },
-                "page" to page,
-                "size" to size,
-                "totalElements" to historyPage.totalElements,
-                "totalPages" to historyPage.totalPages,
-                "userId" to userId,
-                "type" to NotificationType.getDisplayName(notificationType)
-            ))
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to get user notification history by type: ${e.message}"
-            ))
-        }
-    }
-
-    /**
-     * 기간별 알림 이력 조회
-     * GET /api/notification-history/date-range?startDate=2024-01-01T00:00:00&endDate=2024-12-31T23:59:59&page=0&size=20
-     */
-    @GetMapping("/date-range")
-    fun getNotificationHistoryByDateRange(
-        @RequestParam startDate: String,
-        @RequestParam endDate: String,
-        @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "20") size: Int
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val start = LocalDateTime.parse(startDate)
-            val end = LocalDateTime.parse(endDate)
-            val pageable = PageRequest.of(page, size)
-            val historyPage = notificationHistoryRepository.findBySentDateBetween(start, end, pageable)
-
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "content" to historyPage.content.map { NotificationHistoryResponse.from(it) },
-                "page" to page,
-                "size" to size,
-                "totalElements" to historyPage.totalElements,
-                "totalPages" to historyPage.totalPages,
-                "startDate" to startDate,
-                "endDate" to endDate
-            ))
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to get notification history by date range: ${e.message}"
-            ))
-        }
-    }
-
-    /**
-     * 전송 상태별 이력 조회
-     * GET /api/notification-history/status/{status}?page=0&size=20
-     * status: 0=PENDING, 1=SUCCESS, 2=FAILED
-     */
-    @GetMapping("/status/{status}")
-    fun getNotificationHistoryByStatus(
-        @PathVariable status: Int,
-        @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "20") size: Int
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val sendStatus = SendStatus.values()[status]
-            val pageable = PageRequest.of(page, size)
-            val historyPage = notificationHistoryRepository.findByStatus(sendStatus, pageable)
-
-            ResponseEntity.ok(mapOf(
-                "success" to true,
-                "content" to historyPage.content.map { NotificationHistoryResponse.from(it) },
-                "page" to page,
-                "size" to size,
-                "totalElements" to historyPage.totalElements,
-                "totalPages" to historyPage.totalPages,
-                "status" to SendStatus.getDisplayName(sendStatus)
-            ))
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to get notification history by status: ${e.message}"
-            ))
-        }
-    }
-
-    /**
-     * 특정 알림 상세 조회
-     * GET /api/notification-history/{id}
-     */
-    @GetMapping("/{id}")
-    fun getNotificationHistoryById(
-        @PathVariable id: Long
-    ): ResponseEntity<Map<String, Any>> {
-        return try {
-            val history = notificationHistoryRepository.findById(id)
-
-            if (history.isPresent) {
-                ResponseEntity.ok(mapOf(
-                    "success" to true,
-                    "data" to NotificationHistoryResponse.from(history.get())
-                ))
-            } else {
-                ResponseEntity.ok(mapOf(
-                    "success" to false,
-                    "message" to "Notification history not found"
-                ))
+        var results = if (sender != null || receiver != null || gym != null || type != null || title != null || body != null || data != null || status != null || errormessage != null || startsentdate != null || endsentdate != null || startdate != null || enddate != null || false) {
+            var filtered = notificationhistoryService.findAll(0, Int.MAX_VALUE).content
+            if (sender != null) {
+                filtered = filtered.filter { it.senderId == sender }
             }
-        } catch (e: Exception) {
-            ResponseEntity.ok(mapOf(
-                "success" to false,
-                "message" to "Failed to get notification history: ${e.message}"
-            ))
+            if (receiver != null) {
+                filtered = filtered.filter { it.receiverId == receiver }
+            }
+            if (gym != null) {
+                filtered = filtered.filter { it.gymId == gym }
+            }
+            if (type != null) {
+                filtered = filtered.filter { it.type.ordinal == type }
+            }
+            if (title != null) {
+                filtered = filtered.filter { it.title == title }
+            }
+            if (body != null) {
+                filtered = filtered.filter { it.body == body }
+            }
+            if (data != null) {
+                filtered = filtered.filter { it.data == data }
+            }
+            if (status != null) {
+                filtered = filtered.filter { it.status.ordinal == status }
+            }
+            if (errormessage != null) {
+                filtered = filtered.filter { it.errormessage == errormessage }
+            }
+            if (startsentdate != null || endsentdate != null) {
+                filtered = filtered.filter { filterByDateRange(it.sentdate, startsentdate, endsentdate) }
+            }
+            if (startdate != null || enddate != null) {
+                filtered = filtered.filter { filterByDateRange(it.date, startdate, enddate) }
+            }
+            filtered
+        } else {
+            notificationhistoryService.findAll(0, Int.MAX_VALUE).content
         }
+
+        val totalElements = results.size
+        val totalPages = if (pagesize > 0) (totalElements + pagesize - 1) / pagesize else 1
+        val startIndex = page * pagesize
+        val endIndex = minOf(startIndex + pagesize, totalElements)
+
+        val pagedResults = if (startIndex < totalElements) {
+            results.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val response = mapOf(
+            "content" to pagedResults.map { toResponse(it) },
+            "page" to page,
+            "size" to pagesize,
+            "totalElements" to totalElements,
+            "totalPages" to totalPages,
+            "first" to (page == 0),
+            "last" to (page >= totalPages - 1),
+            "empty" to pagedResults.isEmpty()
+        )
+
+        return ResponseEntity.ok(response)
+    }
+
+    @GetMapping("/{id}")
+    fun getNotificationhistory(@PathVariable id: Long): ResponseEntity<NotificationhistoryResponse> {
+        val res = notificationhistoryService.findById(id)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+
+    @GetMapping("/search/sender")
+    fun getNotificationhistoryBySender(@RequestParam sender: Long): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findBySender(sender)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/receiver")
+    fun getNotificationhistoryByReceiver(@RequestParam receiver: Long): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findByReceiver(receiver)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/gym")
+    fun getNotificationhistoryByGym(@RequestParam gym: Long): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findByGym(gym)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/type")
+    fun getNotificationhistoryByType(@RequestParam type: Type): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findByType(type)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/title")
+    fun getNotificationhistoryByTitle(@RequestParam title: String): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findByTitle(title)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/body")
+    fun getNotificationhistoryByBody(@RequestParam body: String): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findByBody(body)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/data")
+    fun getNotificationhistoryByData(@RequestParam data: String): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findByData(data)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/status")
+    fun getNotificationhistoryByStatus(@RequestParam status: Status): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findByStatus(status)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/errormessage")
+    fun getNotificationhistoryByErrormessage(@RequestParam errormessage: String): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findByErrormessage(errormessage)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/sentdate")
+    fun getNotificationhistoryBySentdate(@RequestParam sentdate: LocalDateTime): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findBySentdate(sentdate)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+    @GetMapping("/search/date")
+    fun getNotificationhistoryByDate(@RequestParam date: LocalDateTime): ResponseEntity<List<NotificationhistoryResponse>> {
+        val res = notificationhistoryService.findByDate(date)
+        return ResponseEntity.ok(res.map { toResponse(it) } )
+    }
+
+
+    @GetMapping("/count")
+    fun getCount(): ResponseEntity<Map<String, Long>> {
+        val count = notificationhistoryService.count()
+        return ResponseEntity.ok(mapOf("count" to count))
+    }
+
+    @PostMapping
+    fun createNotificationhistory(@RequestBody request: NotificationhistoryCreateRequest): ResponseEntity<NotificationhistoryResponse> {
+        return try {
+            val res = notificationhistoryService.create(request)
+            ResponseEntity.ok(toResponse(res))
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
+    }
+
+    @PostMapping("/batch")
+    fun createNotificationhistorys(@RequestBody requests: List<NotificationhistoryCreateRequest>): ResponseEntity<List<NotificationhistoryResponse>> {
+        return try {
+            val res = notificationhistoryService.createBatch(requests)
+            return ResponseEntity.ok(res.map { toResponse(it) } )
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
+    }
+
+    @PutMapping("/{id}")
+    fun updateNotificationhistory(
+        @PathVariable id: Long,
+        @RequestBody request: NotificationhistoryUpdateRequest
+    ): ResponseEntity<NotificationhistoryResponse> {
+        val updatedRequest = request.copy(id = id)
+        val res = notificationhistoryService.update(updatedRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @PatchMapping("/{id}")
+    fun patchNotificationhistory(
+        @PathVariable id: Long,
+        @RequestBody request: NotificationhistoryPatchRequest
+    ): ResponseEntity<NotificationhistoryResponse> {
+        val patchRequest = request.copy(id = id)
+        val res = notificationhistoryService.patch(patchRequest)
+        return if (res != null) {
+            ResponseEntity.ok(toResponse(res))
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteNotificationhistory(@PathVariable id: Long): ResponseEntity<Map<String, Boolean>> {
+        val success = notificationhistoryService.deleteById(id)
+        return ResponseEntity.ok(mapOf("success" to success))
+    }
+
+    @DeleteMapping("/batch")
+    fun deleteNotificationhistorys(@RequestBody entities: List<Notificationhistory>): ResponseEntity<Map<String, Boolean>> {
+        val success = notificationhistoryService.deleteBatch(entities)
+        return ResponseEntity.ok(mapOf("success" to success))
     }
 }

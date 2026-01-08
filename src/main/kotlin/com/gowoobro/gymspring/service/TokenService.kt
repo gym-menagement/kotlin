@@ -20,8 +20,8 @@ import com.gowoobro.gymspring.enums.token.Status
 @Transactional
 class TokenService(private val tokenRepository: TokenRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Token> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Token> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return tokenRepository.findAll(pageable)
     }
 

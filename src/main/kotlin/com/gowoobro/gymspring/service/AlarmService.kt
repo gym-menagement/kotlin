@@ -21,8 +21,8 @@ import com.gowoobro.gymspring.enums.alarm.Status
 @Transactional
 class AlarmService(private val alarmRepository: AlarmRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Alarm> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Alarm> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return alarmRepository.findAll(pageable)
     }
 

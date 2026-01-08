@@ -19,8 +19,8 @@ import java.time.LocalDateTime
 @Transactional
 class PaymentformService(private val paymentformRepository: PaymentformRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Paymentform> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Paymentform> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return paymentformRepository.findAll(pageable)
     }
 

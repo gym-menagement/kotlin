@@ -19,8 +19,8 @@ import java.time.LocalDateTime
 @Transactional
 class DaytypeService(private val daytypeRepository: DaytypeRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Daytype> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Daytype> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return daytypeRepository.findAll(pageable)
     }
 

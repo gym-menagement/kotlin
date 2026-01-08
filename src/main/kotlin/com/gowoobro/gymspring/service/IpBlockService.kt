@@ -22,8 +22,8 @@ import com.gowoobro.gymspring.enums.ipblock.Use
 @Transactional
 class IpblockService(private val ipblockRepository: IpblockRepository) {
 
-    fun findAll(page: Int = 0, pageSize: Int = 10): Page<Ipblock> {
-        val pageable: Pageable = PageRequest.of(page, pageSize)
+    fun findAll(page: Int = 0, pagesize: Int = 10): Page<Ipblock> {
+        val pageable: Pageable = PageRequest.of(page, pagesize)
         return ipblockRepository.findAll(pageable)
     }
 
