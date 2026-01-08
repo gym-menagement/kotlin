@@ -11,6 +11,9 @@ import com.gowoobro.gymspring.enums.user.Use
 import com.gowoobro.gymspring.enums.user.Type
 import com.gowoobro.gymspring.enums.user.Role
 import com.gowoobro.gymspring.enums.user.Sex
+import com.gowoobro.gymspring.entity.Pushtoken
+import com.gowoobro.gymspring.repository.PushtokenRepository
+import com.gowoobro.gymspring.enums.pushtoken.Isactive
 
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
@@ -21,7 +24,8 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping("/api/user")
 class UserController(
-    private val userService: UserService) {
+    private val userService: UserService,
+    private val pushtokenRepository: PushtokenRepository) {
 
     private fun toResponse(user: User): UserResponse {
         return UserResponse.from(user)
@@ -328,5 +332,65 @@ class UserController(
     fun deleteUsers(@RequestBody entities: List<User>): ResponseEntity<Map<String, Boolean>> {
         val success = userService.deleteBatch(entities)
         return ResponseEntity.ok(mapOf("success" to success))
+    }
+
+    /**
+     * FCM 토큰 등록/업데이트
+     * GET /api/user/fcm/{token}?userId={userId}&old={oldToken}
+     */
+    @GetMapping("/fcm/{token}")
+    fun registerFcmToken(
+        @PathVariable token: String,
+        @RequestParam(required = false) userId: Long?,
+        @RequestParam(required = false) old: String?
+    ): ResponseEntity<Map<String, Any>> {
+        return try {
+            // 이전 토큰이 있으면 비활성화
+            if (!old.isNullOrBlank()) {
+                val oldTokens = pushtokenRepository.findByToken(old)
+                oldTokens.forEach {
+                    pushtokenRepository.save(it.copy(isactive = Isactive.INACTIVE, updateddate = LocalDateTime.now()))
+                }
+            }
+
+            // 현재 토큰 확인
+            val existing = pushtokenRepository.findByToken(token)
+            if (existing.isNotEmpty()) {
+                // 이미 존재하면 userId 업데이트 및 활성화
+                existing.forEach {
+                    val updatedUserId = userId ?: it.userId
+                    pushtokenRepository.save(it.copy(
+                        userId = updatedUserId,
+                        isactive = Isactive.ACTIVE,
+                        updateddate = LocalDateTime.now()
+                    ))
+                }
+                ResponseEntity.ok(mapOf(
+                    "success" to true,
+                    "message" to "FCM token updated"
+                ))
+            } else {
+                // 새로운 토큰 저장
+                val newToken = Pushtoken(
+                    userId = userId ?: 0, // userId가 없으면 0으로 설정
+                    token = token,
+                    devicetype = "android",
+                    isactive = Isactive.ACTIVE,
+                    createddate = LocalDateTime.now(),
+                    updateddate = LocalDateTime.now(),
+                    date = LocalDateTime.now()
+                )
+                pushtokenRepository.save(newToken)
+                ResponseEntity.ok(mapOf(
+                    "success" to true,
+                    "message" to "FCM token registered"
+                ))
+            }
+        } catch (e: Exception) {
+            ResponseEntity.ok(mapOf(
+                "success" to false,
+                "message" to "Failed to register FCM token: ${e.message}"
+            ))
+        }
     }
 }
