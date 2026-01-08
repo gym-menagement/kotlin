@@ -837,6 +837,116 @@
           "type": "like"
         }
       ]
+    },
+    {
+      "name": "notificationhistory",
+      "join": [
+        {
+          "name": "user",
+          "column": "sender",
+          "alias": "senderUser"
+        },
+        {
+          "name": "user",
+          "column": "receiver",
+          "alias": "receiverUser"
+        },
+        {
+          "name": "gym",
+          "column": "gym"
+        }
+      ],
+      "map": [
+        {
+          "name": "type",
+          "data": [
+            "",
+            "general:일반",
+            "membership_expiry:이용권만료",
+            "membership_near_expiry:이용권임박",
+            "attendance_encourage:출석독려",
+            "gym_announcement:체육관공지",
+            "system_notice:시스템공지",
+            "payment_confirm:결제확인",
+            "pause_expiry:일시정지만료",
+            "weekly_goal_achieved:주간목표달성",
+            "personal_record:개인기록갱신"
+          ]
+        },
+        {
+          "name": "status",
+          "data": ["", "pending:대기중", "success:성공", "failed:실패"]
+        }
+      ],
+      "compare": [
+        {
+          "name": "title",
+          "type": "like"
+        },
+        {
+          "name": "body",
+          "type": "like"
+        },
+        {
+          "name": "errormessage",
+          "type": "like"
+        }
+      ]
+    },
+    {
+      "name": "notificationsetting",
+      "join": [
+        {
+          "name": "user",
+          "column": "user"
+        }
+      ],
+      "map": [
+        {
+          "name": "enabled",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "membership_expiry",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "membership_near_expiry",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "attendance_encourage",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "gym_announcement",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "system_notice",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "payment_confirm",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "pause_expiry",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "weekly_goal_achieved",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "personal_record",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        },
+        {
+          "name": "quiet_hours_enabled",
+          "data": ["", "enabled:활성화", "disabled:비활성화"]
+        }
+      ]
     }
   ]
 }

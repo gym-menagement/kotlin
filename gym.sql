@@ -721,6 +721,75 @@ CREATE TABLE IF NOT EXISTS gymtrainer_tb (
     INDEX idx_gym_trainer (gt_gym, gt_trainer)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='헬스장-트레이너 매칭 테이블';
 
+
+-- 14. 알림 이력 테이블 (notificationhistory_tb)
+-- 회원에게 발송된 모든 푸시 알림의 전송 이력을 기록
+-- 이용권 만료 임박, PT 예약 확인, 결제 완료 등 다양한 타입의 알림 전송 기록과
+-- 전송 성공/실패 상태를 관리하여 알림 전송 이력을 추적합니다.
+DROP TABLE IF EXISTS `notificationhistory_tb`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notificationhistory_tb` (
+    `nh_id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '알림 이력 고유 ID',
+    `nh_sender` BIGINT(20) NULL COMMENT '발신자 ID (관리자/트레이너), NULL이면 시스템 자동 발송',
+    `nh_receiver` BIGINT(20) NOT NULL COMMENT '수신자 ID (회원)',
+    `nh_gym` BIGINT(20) NULL COMMENT '관련 체육관 ID (체육관 특정 알림인 경우)',
+    `nh_type` INT(11) NOT NULL DEFAULT 0 COMMENT '알림 타입 (0:일반, 1:이용권만료, 2:이용권임박, 3:출석독려, 4:체육관공지, 5:시스템공지, 6:결제확인, 7:일시정지만료, 8:주간목표달성, 9:개인기록갱신)',
+    `nh_title` TEXT NOT NULL COMMENT '알림 제목',
+    `nh_body` TEXT NOT NULL COMMENT '알림 본문 내용',
+    `nh_data` TEXT NULL COMMENT '추가 데이터 (JSON 형태, 딥링크 정보 등)',
+    `nh_status` INT(11) NOT NULL DEFAULT 0 COMMENT '전송 상태 (0:대기중, 1:성공, 2:실패)',
+    `nh_errormessage` TEXT NULL COMMENT '전송 실패 시 에러 메시지',
+    `nh_sentdate` DATETIME NOT NULL COMMENT '실제 전송된 시각',
+    `nh_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '레코드 생성 시각',
+    PRIMARY KEY (`nh_id`),
+    INDEX idx_sender (nh_sender),
+    INDEX idx_receiver (nh_receiver),
+    INDEX idx_gym (nh_gym),
+    INDEX idx_type (nh_type),
+    INDEX idx_status (nh_status),
+    INDEX idx_sentdate (nh_sentdate),
+    INDEX idx_date (nh_date),
+    FOREIGN KEY (nh_sender) REFERENCES user_tb(u_id) ON DELETE SET NULL,
+    FOREIGN KEY (nh_receiver) REFERENCES user_tb(u_id) ON DELETE CASCADE,
+    FOREIGN KEY (nh_gym) REFERENCES gym_tb(g_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='알림 전송 이력 테이블';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- 15. 알림 설정 테이블 (notificationsetting_tb)
+-- 회원별 푸시 알림 수신 설정을 관리하는 테이블
+-- 전체 알림 ON/OFF, 알림 유형별 수신 설정, 방해 금지 시간대 설정 등을 저장합니다.
+-- 각 회원당 1개의 레코드만 존재하며 (ns_user UNIQUE), 앱에서 설정 변경 시 UPDATE됩니다.
+DROP TABLE IF EXISTS `notificationsetting_tb`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notificationsetting_tb` (
+    `ns_id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '알림 설정 고유 ID',
+    `ns_user` BIGINT(20) NOT NULL UNIQUE COMMENT '회원 ID (user_tb 참조) - 1회원당 1개의 설정',
+    `ns_enabled` INT(11) NOT NULL DEFAULT 0 COMMENT '전체 알림 ON/OFF (0:활성화, 1:비활성화)',
+    `ns_membership_expiry` INT(11) NOT NULL DEFAULT 0 COMMENT '이용권 만료 알림 (0:활성화, 1:비활성화)',
+    `ns_membership_near_expiry` INT(11) NOT NULL DEFAULT 0 COMMENT '이용권 만료 임박 알림 D-7, D-3, D-1 (0:활성화, 1:비활성화)',
+    `ns_attendance_encourage` INT(11) NOT NULL DEFAULT 0 COMMENT '출석 독려 알림 (0:활성화, 1:비활성화)',
+    `ns_gym_announcement` INT(11) NOT NULL DEFAULT 0 COMMENT '체육관 공지사항 알림 (0:활성화, 1:비활성화)',
+    `ns_system_notice` INT(11) NOT NULL DEFAULT 0 COMMENT '시스템 공지 알림 (0:활성화, 1:비활성화)',
+    `ns_payment_confirm` INT(11) NOT NULL DEFAULT 0 COMMENT '결제 확인 알림 (0:활성화, 1:비활성화)',
+    `ns_pause_expiry` INT(11) NOT NULL DEFAULT 0 COMMENT '일시정지 만료 알림 (0:활성화, 1:비활성화)',
+    `ns_weekly_goal_achieved` INT(11) NOT NULL DEFAULT 0 COMMENT '주간 목표 달성 알림 (0:활성화, 1:비활성화)',
+    `ns_personal_record` INT(11) NOT NULL DEFAULT 0 COMMENT '개인 기록 갱신 알림 (0:활성화, 1:비활성화)',
+    `ns_quiet_hours_enabled` INT(11) NOT NULL DEFAULT 1 COMMENT '방해 금지 시간 사용 여부 (0:활성화, 1:비활성화)',
+    `ns_quiet_hours_start` TIME NULL COMMENT '방해 금지 시작 시간 (예: 22:00:00)',
+    `ns_quiet_hours_end` TIME NULL COMMENT '방해 금지 종료 시간 (예: 08:00:00)',
+    `ns_createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '설정 생성 시각',
+    `ns_updateddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '설정 최종 수정 시각',
+    `ns_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
+    PRIMARY KEY (`ns_id`),
+    UNIQUE KEY uk_user (ns_user),
+    INDEX idx_user (ns_user),
+    INDEX idx_enabled (ns_enabled),
+    FOREIGN KEY (ns_user) REFERENCES user_tb(u_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='회원별 알림 수신 설정 테이블';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 -- ============================================
 -- 샘플 데이터 삽입 (테스트용)
 -- ============================================
