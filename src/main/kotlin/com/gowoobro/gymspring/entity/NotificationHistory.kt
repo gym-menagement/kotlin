@@ -3,145 +3,143 @@ package com.gowoobro.gymspring.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.notificationhistory.NotificationType
-import com.gowoobro.gymspring.enums.notificationhistory.SendStatus
+import com.gowoobro.gymspring.enums.notificationhistory.Type
+import com.gowoobro.gymspring.enums.notificationhistory.Status
 
 @Entity
 @Table(name = "notificationhistory_tb")
-data class NotificationHistory(
+data class Notificationhistory(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nh_id")
     val id: Long = 0,
     @Column(name = "nh_sender")
-    val senderId: Long? = null,  // 누가 보냈는지 (관리자 ID, null이면 시스템 자동)
+    val senderId: Long = 0L,
     @Column(name = "nh_receiver")
-    val receiverId: Long = 0L,  // 받는 사람 ID
+    val receiverId: Long = 0L,
     @Column(name = "nh_gym")
-    val gymId: Long? = null,  // 어느 체육관 관련인지 (있는 경우)
+    val gymId: Long = 0L,
     @Column(name = "nh_type")
-    val type: NotificationType = NotificationType.GENERAL,  // 알림 타입
-    @Column(name = "nh_title", columnDefinition = "TEXT")
+    val type: Type = Type.GENERAL,
+    @Column(name = "nh_title")
     val title: String = "",
-    @Column(name = "nh_body", columnDefinition = "TEXT")
+    @Column(name = "nh_body")
     val body: String = "",
-    @Column(name = "nh_data", columnDefinition = "TEXT")
-    val data: String = "",  // JSON 형태로 저장
+    @Column(name = "nh_data")
+    val data: String = "",
     @Column(name = "nh_status")
-    val status: SendStatus = SendStatus.PENDING,  // 전송 상태
-    @Column(name = "nh_errormessage", columnDefinition = "TEXT")
-    val errorMessage: String? = null,
+    val status: Status = Status.PENDING,
+    @Column(name = "nh_errormessage")
+    val errormessage: String = "",
     @Column(name = "nh_sentdate")
-    val sentDate: LocalDateTime = LocalDateTime.now(),
+    val sentdate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "nh_date")
-    val date: LocalDateTime = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nh_sender", insertable = false, updatable = false)
-    var sender: User? = null
-
+    var senderuser: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nh_receiver", insertable = false, updatable = false)
-    var receiver: User? = null
-
+    var receiveruser: User? = null
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nh_gym", insertable = false, updatable = false)
     var gym: Gym? = null
 }
 
-data class NotificationHistoryCreateRequest(
-    val senderId: Long? = null,
-    val receiverId: Long = 0L,
-    val gymId: Long? = null,
-    val type: NotificationType = NotificationType.GENERAL,
+data class NotificationhistoryCreateRequest(
+    val sender: Long = 0L,
+    val receiver: Long = 0L,
+    val gym: Long = 0L,
+    val type: Type = Type.GENERAL,
     val title: String = "",
     val body: String = "",
     val data: String = "",
-    val status: SendStatus = SendStatus.PENDING,
-    val errorMessage: String? = null,
-    val sentDate: LocalDateTime = LocalDateTime.now(),
-    val date: LocalDateTime = LocalDateTime.now(),
+    val status: Status = Status.PENDING,
+    val errormessage: String = "",
+    val sentdate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
-data class NotificationHistoryUpdateRequest(
+data class NotificationhistoryUpdateRequest(
     val id: Long = 0,
-    val senderId: Long? = null,
-    val receiverId: Long = 0L,
-    val gymId: Long? = null,
-    val type: NotificationType = NotificationType.GENERAL,
+    val sender: Long = 0L,
+    val receiver: Long = 0L,
+    val gym: Long = 0L,
+    val type: Type = Type.GENERAL,
     val title: String = "",
     val body: String = "",
     val data: String = "",
-    val status: SendStatus = SendStatus.PENDING,
-    val errorMessage: String? = null,
-    val sentDate: LocalDateTime = LocalDateTime.now(),
-    val date: LocalDateTime = LocalDateTime.now(),
+    val status: Status = Status.PENDING,
+    val errormessage: String = "",
+    val sentdate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
-data class NotificationHistoryPatchRequest(
+data class NotificationhistoryPatchRequest(
     val id: Long = 0,
-    val senderId: Long? = null,
-    val receiverId: Long? = null,
-    val gymId: Long? = null,
-    val type: NotificationType? = null,
+    val sender: Long? = null,
+    val receiver: Long? = null,
+    val gym: Long? = null,
+    val type: Type? = null,
     val title: String? = null,
     val body: String? = null,
     val data: String? = null,
-    val status: SendStatus? = null,
-    val errorMessage: String? = null,
-    val sentDate: LocalDateTime? = null,
+    val status: Status? = null,
+    val errormessage: String? = null,
+    val sentdate: LocalDateTime? = null,
     val date: LocalDateTime? = null,
 )
 
-data class NotificationHistoryExtraInfo(
+data class NotificationhistoryExtraInfo(
     val type: String = "",
     val status: String = "",
-    val sender: UserResponse? = null,
-    val receiver: UserResponse? = null,
+
+    val senderuser: UserResponse? = null,
+    val receiveruser: UserResponse? = null,
     val gym: GymResponse? = null,
 )
 
-data class NotificationHistoryResponse(
+
+data class NotificationhistoryResponse(
     val id: Long,
-    val senderId: Long?,
-    val receiverId: Long,
-    val gymId: Long?,
+    val sender: Long,
+    val receiver: Long,
+    val gym: Long,
     val type: Int,
     val title: String,
     val body: String,
     val data: String,
     val status: Int,
-    val errorMessage: String?,
-    val sentDate: String,
-    val date: String,
-    val extra: NotificationHistoryExtraInfo
-) {
-    companion object {
-        fun from(history: NotificationHistory): NotificationHistoryResponse {
-            val senderResponse = history.sender?.let { UserResponse.from(it) }
-            val receiverResponse = history.receiver?.let { UserResponse.from(it) }
-            val gymResponse = history.gym?.let { GymResponse.from(it) }
+    val errormessage: String,
+    val sentdate: String?,
+    val date: String?,
 
-            return NotificationHistoryResponse(
-                id = history.id,
-                senderId = history.senderId,
-                receiverId = history.receiverId,
-                gymId = history.gymId,
-                type = history.type.ordinal,
-                title = history.title,
-                body = history.body,
-                data = history.data,
-                status = history.status.ordinal,
-                errorMessage = history.errorMessage,
-                sentDate = history.sentDate.toString().replace("T", " "),
-                date = history.date.toString().replace("T", " "),
-                extra = NotificationHistoryExtraInfo(
-                    type = NotificationType.getDisplayName(history.type),
-                    status = SendStatus.getDisplayName(history.status),
-                    sender = senderResponse,
-                    receiver = receiverResponse,
-                    gym = gymResponse,
-                )
+    val extra: NotificationhistoryExtraInfo
+){
+    companion object {
+        fun from(notificationhistory: Notificationhistory): NotificationhistoryResponse {
+            val senderuserResponse = notificationhistory.senderuser?.let { UserResponse.from(it) }
+            val receiveruserResponse = notificationhistory.receiveruser?.let { UserResponse.from(it) }
+            val gymResponse = notificationhistory.gym?.let { GymResponse.from(it) }
+            return NotificationhistoryResponse(
+                id = notificationhistory.id,
+                sender = notificationhistory.senderId,
+                receiver = notificationhistory.receiverId,
+                gym = notificationhistory.gymId,
+                type = notificationhistory.type.ordinal,
+                title = notificationhistory.title,
+                body = notificationhistory.body,
+                data = notificationhistory.data,
+                status = notificationhistory.status.ordinal,
+                errormessage = notificationhistory.errormessage,
+                sentdate = notificationhistory.sentdate?.toString()?.replace("T", " ") ?: "",
+                date = notificationhistory.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = NotificationhistoryExtraInfo(
+                    type = Type.getDisplayName(notificationhistory.type),status = Status.getDisplayName(notificationhistory.status),
+                    senderuser = senderuserResponse,receiveruser = receiveruserResponse,gym = gymResponse,)
+                
             )
         }
     }

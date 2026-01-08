@@ -2,13 +2,22 @@ package com.gowoobro.gymspring.entity
 
 import jakarta.persistence.*
 import java.time.LocalDateTime
-import java.time.LocalTime
 
-import com.gowoobro.gymspring.enums.notificationsetting.NotificationEnabled
+import com.gowoobro.gymspring.enums.notificationsetting.Enabled
+import com.gowoobro.gymspring.enums.notificationsetting.Membershipexpiry
+import com.gowoobro.gymspring.enums.notificationsetting.Membershipnear
+import com.gowoobro.gymspring.enums.notificationsetting.Attendanceenc
+import com.gowoobro.gymspring.enums.notificationsetting.Gymannounce
+import com.gowoobro.gymspring.enums.notificationsetting.Systemnotice
+import com.gowoobro.gymspring.enums.notificationsetting.Paymentconfirm
+import com.gowoobro.gymspring.enums.notificationsetting.Pauseexpiry
+import com.gowoobro.gymspring.enums.notificationsetting.Weeklygoal
+import com.gowoobro.gymspring.enums.notificationsetting.Personalrecord
+import com.gowoobro.gymspring.enums.notificationsetting.Quietenabled
 
 @Entity
 @Table(name = "notificationsetting_tb")
-data class NotificationSetting(
+data class Notificationsetting(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ns_id")
@@ -16,178 +25,171 @@ data class NotificationSetting(
     @Column(name = "ns_user")
     val userId: Long = 0L,
     @Column(name = "ns_enabled")
-    val enabled: NotificationEnabled = NotificationEnabled.ENABLED,  // 전체 알림 ON/OFF
-    @Column(name = "ns_membership_expiry")
-    val membershipExpiry: NotificationEnabled = NotificationEnabled.ENABLED,  // 이용권 만료 알림
-    @Column(name = "ns_membership_near_expiry")
-    val membershipNearExpiry: NotificationEnabled = NotificationEnabled.ENABLED,  // 이용권 만료 임박 알림
-    @Column(name = "ns_attendance_encourage")
-    val attendanceEncourage: NotificationEnabled = NotificationEnabled.ENABLED,  // 출석 독려 알림
-    @Column(name = "ns_gym_announcement")
-    val gymAnnouncement: NotificationEnabled = NotificationEnabled.ENABLED,  // 체육관 공지사항
-    @Column(name = "ns_system_notice")
-    val systemNotice: NotificationEnabled = NotificationEnabled.ENABLED,  // 시스템 공지
-    @Column(name = "ns_payment_confirm")
-    val paymentConfirm: NotificationEnabled = NotificationEnabled.ENABLED,  // 결제 확인
-    @Column(name = "ns_pause_expiry")
-    val pauseExpiry: NotificationEnabled = NotificationEnabled.ENABLED,  // 일시정지 만료 알림
-    @Column(name = "ns_weekly_goal_achieved")
-    val weeklyGoalAchieved: NotificationEnabled = NotificationEnabled.ENABLED,  // 주간 목표 달성 알림
-    @Column(name = "ns_personal_record")
-    val personalRecord: NotificationEnabled = NotificationEnabled.ENABLED,  // 개인 기록 갱신 알림
-    @Column(name = "ns_quiet_hours_enabled")
-    val quietHoursEnabled: NotificationEnabled = NotificationEnabled.DISABLED,  // 방해 금지 시간 사용
-    @Column(name = "ns_quiet_hours_start")
-    val quietHoursStart: LocalTime? = null,  // 방해 금지 시작 시간 (예: 22:00)
-    @Column(name = "ns_quiet_hours_end")
-    val quietHoursEnd: LocalTime? = null,  // 방해 금지 종료 시간 (예: 08:00)
+    val enabled: Enabled = Enabled.ENABLED,
+    @Column(name = "ns_membershipexpiry")
+    val membershipexpiry: Membershipexpiry = Membershipexpiry.ENABLED,
+    @Column(name = "ns_membershipnear")
+    val membershipnear: Membershipnear = Membershipnear.ENABLED,
+    @Column(name = "ns_attendanceenc")
+    val attendanceenc: Attendanceenc = Attendanceenc.ENABLED,
+    @Column(name = "ns_gymannounce")
+    val gymannounce: Gymannounce = Gymannounce.ENABLED,
+    @Column(name = "ns_systemnotice")
+    val systemnotice: Systemnotice = Systemnotice.ENABLED,
+    @Column(name = "ns_paymentconfirm")
+    val paymentconfirm: Paymentconfirm = Paymentconfirm.ENABLED,
+    @Column(name = "ns_pauseexpiry")
+    val pauseexpiry: Pauseexpiry = Pauseexpiry.ENABLED,
+    @Column(name = "ns_weeklygoal")
+    val weeklygoal: Weeklygoal = Weeklygoal.ENABLED,
+    @Column(name = "ns_personalrecord")
+    val personalrecord: Personalrecord = Personalrecord.ENABLED,
+    @Column(name = "ns_quietenabled")
+    val quietenabled: Quietenabled = Quietenabled.ENABLED,
+    @Column(name = "ns_quietstart")
+    val quietstart: String = "",
+    @Column(name = "ns_quietend")
+    val quietend: String = "",
     @Column(name = "ns_createddate")
-    val createdDate: LocalDateTime = LocalDateTime.now(),
+    val createddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "ns_updateddate")
-    val updatedDate: LocalDateTime = LocalDateTime.now(),
+    val updateddate: LocalDateTime? = LocalDateTime.now(),
     @Column(name = "ns_date")
-    val date: LocalDateTime = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 ) {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ns_user", insertable = false, updatable = false)
     var user: User? = null
 }
 
-data class NotificationSettingCreateRequest(
-    val userId: Long = 0L,
-    val enabled: NotificationEnabled = NotificationEnabled.ENABLED,
-    val membershipExpiry: NotificationEnabled = NotificationEnabled.ENABLED,
-    val membershipNearExpiry: NotificationEnabled = NotificationEnabled.ENABLED,
-    val attendanceEncourage: NotificationEnabled = NotificationEnabled.ENABLED,
-    val gymAnnouncement: NotificationEnabled = NotificationEnabled.ENABLED,
-    val systemNotice: NotificationEnabled = NotificationEnabled.ENABLED,
-    val paymentConfirm: NotificationEnabled = NotificationEnabled.ENABLED,
-    val pauseExpiry: NotificationEnabled = NotificationEnabled.ENABLED,
-    val weeklyGoalAchieved: NotificationEnabled = NotificationEnabled.ENABLED,
-    val personalRecord: NotificationEnabled = NotificationEnabled.ENABLED,
-    val quietHoursEnabled: NotificationEnabled = NotificationEnabled.DISABLED,
-    val quietHoursStart: LocalTime? = null,
-    val quietHoursEnd: LocalTime? = null,
-    val createdDate: LocalDateTime = LocalDateTime.now(),
-    val updatedDate: LocalDateTime = LocalDateTime.now(),
-    val date: LocalDateTime = LocalDateTime.now(),
+data class NotificationsettingCreateRequest(
+    val user: Long = 0L,
+    val enabled: Enabled = Enabled.ENABLED,
+    val membershipexpiry: Membershipexpiry = Membershipexpiry.ENABLED,
+    val membershipnear: Membershipnear = Membershipnear.ENABLED,
+    val attendanceenc: Attendanceenc = Attendanceenc.ENABLED,
+    val gymannounce: Gymannounce = Gymannounce.ENABLED,
+    val systemnotice: Systemnotice = Systemnotice.ENABLED,
+    val paymentconfirm: Paymentconfirm = Paymentconfirm.ENABLED,
+    val pauseexpiry: Pauseexpiry = Pauseexpiry.ENABLED,
+    val weeklygoal: Weeklygoal = Weeklygoal.ENABLED,
+    val personalrecord: Personalrecord = Personalrecord.ENABLED,
+    val quietenabled: Quietenabled = Quietenabled.ENABLED,
+    val quietstart: String = "",
+    val quietend: String = "",
+    val createddate: LocalDateTime? = LocalDateTime.now(),
+    val updateddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
-data class NotificationSettingUpdateRequest(
+data class NotificationsettingUpdateRequest(
     val id: Long = 0,
-    val userId: Long = 0L,
-    val enabled: NotificationEnabled = NotificationEnabled.ENABLED,
-    val membershipExpiry: NotificationEnabled = NotificationEnabled.ENABLED,
-    val membershipNearExpiry: NotificationEnabled = NotificationEnabled.ENABLED,
-    val attendanceEncourage: NotificationEnabled = NotificationEnabled.ENABLED,
-    val gymAnnouncement: NotificationEnabled = NotificationEnabled.ENABLED,
-    val systemNotice: NotificationEnabled = NotificationEnabled.ENABLED,
-    val paymentConfirm: NotificationEnabled = NotificationEnabled.ENABLED,
-    val pauseExpiry: NotificationEnabled = NotificationEnabled.ENABLED,
-    val weeklyGoalAchieved: NotificationEnabled = NotificationEnabled.ENABLED,
-    val personalRecord: NotificationEnabled = NotificationEnabled.ENABLED,
-    val quietHoursEnabled: NotificationEnabled = NotificationEnabled.DISABLED,
-    val quietHoursStart: LocalTime? = null,
-    val quietHoursEnd: LocalTime? = null,
-    val createdDate: LocalDateTime = LocalDateTime.now(),
-    val updatedDate: LocalDateTime = LocalDateTime.now(),
-    val date: LocalDateTime = LocalDateTime.now(),
+    val user: Long = 0L,
+    val enabled: Enabled = Enabled.ENABLED,
+    val membershipexpiry: Membershipexpiry = Membershipexpiry.ENABLED,
+    val membershipnear: Membershipnear = Membershipnear.ENABLED,
+    val attendanceenc: Attendanceenc = Attendanceenc.ENABLED,
+    val gymannounce: Gymannounce = Gymannounce.ENABLED,
+    val systemnotice: Systemnotice = Systemnotice.ENABLED,
+    val paymentconfirm: Paymentconfirm = Paymentconfirm.ENABLED,
+    val pauseexpiry: Pauseexpiry = Pauseexpiry.ENABLED,
+    val weeklygoal: Weeklygoal = Weeklygoal.ENABLED,
+    val personalrecord: Personalrecord = Personalrecord.ENABLED,
+    val quietenabled: Quietenabled = Quietenabled.ENABLED,
+    val quietstart: String = "",
+    val quietend: String = "",
+    val createddate: LocalDateTime? = LocalDateTime.now(),
+    val updateddate: LocalDateTime? = LocalDateTime.now(),
+    val date: LocalDateTime? = LocalDateTime.now(),
 )
 
-data class NotificationSettingPatchRequest(
+data class NotificationsettingPatchRequest(
     val id: Long = 0,
-    val userId: Long? = null,
-    val enabled: NotificationEnabled? = null,
-    val membershipExpiry: NotificationEnabled? = null,
-    val membershipNearExpiry: NotificationEnabled? = null,
-    val attendanceEncourage: NotificationEnabled? = null,
-    val gymAnnouncement: NotificationEnabled? = null,
-    val systemNotice: NotificationEnabled? = null,
-    val paymentConfirm: NotificationEnabled? = null,
-    val pauseExpiry: NotificationEnabled? = null,
-    val weeklyGoalAchieved: NotificationEnabled? = null,
-    val personalRecord: NotificationEnabled? = null,
-    val quietHoursEnabled: NotificationEnabled? = null,
-    val quietHoursStart: LocalTime? = null,
-    val quietHoursEnd: LocalTime? = null,
-    val createdDate: LocalDateTime? = null,
-    val updatedDate: LocalDateTime? = null,
+    val user: Long? = null,
+    val enabled: Enabled? = null,
+    val membershipexpiry: Membershipexpiry? = null,
+    val membershipnear: Membershipnear? = null,
+    val attendanceenc: Attendanceenc? = null,
+    val gymannounce: Gymannounce? = null,
+    val systemnotice: Systemnotice? = null,
+    val paymentconfirm: Paymentconfirm? = null,
+    val pauseexpiry: Pauseexpiry? = null,
+    val weeklygoal: Weeklygoal? = null,
+    val personalrecord: Personalrecord? = null,
+    val quietenabled: Quietenabled? = null,
+    val quietstart: String? = null,
+    val quietend: String? = null,
+    val createddate: LocalDateTime? = null,
+    val updateddate: LocalDateTime? = null,
     val date: LocalDateTime? = null,
 )
 
-data class NotificationSettingExtraInfo(
+data class NotificationsettingExtraInfo(
     val enabled: String = "",
-    val membershipExpiry: String = "",
-    val membershipNearExpiry: String = "",
-    val attendanceEncourage: String = "",
-    val gymAnnouncement: String = "",
-    val systemNotice: String = "",
-    val paymentConfirm: String = "",
-    val pauseExpiry: String = "",
-    val weeklyGoalAchieved: String = "",
-    val personalRecord: String = "",
-    val quietHoursEnabled: String = "",
+    val membershipexpiry: String = "",
+    val membershipnear: String = "",
+    val attendanceenc: String = "",
+    val gymannounce: String = "",
+    val systemnotice: String = "",
+    val paymentconfirm: String = "",
+    val pauseexpiry: String = "",
+    val weeklygoal: String = "",
+    val personalrecord: String = "",
+    val quietenabled: String = "",
+
     val user: UserResponse? = null,
 )
 
-data class NotificationSettingResponse(
-    val id: Long,
-    val userId: Long,
-    val enabled: Int,
-    val membershipExpiry: Int,
-    val membershipNearExpiry: Int,
-    val attendanceEncourage: Int,
-    val gymAnnouncement: Int,
-    val systemNotice: Int,
-    val paymentConfirm: Int,
-    val pauseExpiry: Int,
-    val weeklyGoalAchieved: Int,
-    val personalRecord: Int,
-    val quietHoursEnabled: Int,
-    val quietHoursStart: String?,
-    val quietHoursEnd: String?,
-    val createdDate: String,
-    val updatedDate: String,
-    val date: String,
-    val extra: NotificationSettingExtraInfo
-) {
-    companion object {
-        fun from(setting: NotificationSetting): NotificationSettingResponse {
-            val userResponse = setting.user?.let { UserResponse.from(it) }
 
-            return NotificationSettingResponse(
-                id = setting.id,
-                userId = setting.userId,
-                enabled = setting.enabled.ordinal,
-                membershipExpiry = setting.membershipExpiry.ordinal,
-                membershipNearExpiry = setting.membershipNearExpiry.ordinal,
-                attendanceEncourage = setting.attendanceEncourage.ordinal,
-                gymAnnouncement = setting.gymAnnouncement.ordinal,
-                systemNotice = setting.systemNotice.ordinal,
-                paymentConfirm = setting.paymentConfirm.ordinal,
-                pauseExpiry = setting.pauseExpiry.ordinal,
-                weeklyGoalAchieved = setting.weeklyGoalAchieved.ordinal,
-                personalRecord = setting.personalRecord.ordinal,
-                quietHoursEnabled = setting.quietHoursEnabled.ordinal,
-                quietHoursStart = setting.quietHoursStart?.toString(),
-                quietHoursEnd = setting.quietHoursEnd?.toString(),
-                createdDate = setting.createdDate.toString().replace("T", " "),
-                updatedDate = setting.updatedDate.toString().replace("T", " "),
-                date = setting.date.toString().replace("T", " "),
-                extra = NotificationSettingExtraInfo(
-                    enabled = NotificationEnabled.getDisplayName(setting.enabled),
-                    membershipExpiry = NotificationEnabled.getDisplayName(setting.membershipExpiry),
-                    membershipNearExpiry = NotificationEnabled.getDisplayName(setting.membershipNearExpiry),
-                    attendanceEncourage = NotificationEnabled.getDisplayName(setting.attendanceEncourage),
-                    gymAnnouncement = NotificationEnabled.getDisplayName(setting.gymAnnouncement),
-                    systemNotice = NotificationEnabled.getDisplayName(setting.systemNotice),
-                    paymentConfirm = NotificationEnabled.getDisplayName(setting.paymentConfirm),
-                    pauseExpiry = NotificationEnabled.getDisplayName(setting.pauseExpiry),
-                    weeklyGoalAchieved = NotificationEnabled.getDisplayName(setting.weeklyGoalAchieved),
-                    personalRecord = NotificationEnabled.getDisplayName(setting.personalRecord),
-                    quietHoursEnabled = NotificationEnabled.getDisplayName(setting.quietHoursEnabled),
-                    user = userResponse,
-                )
+data class NotificationsettingResponse(
+    val id: Long,
+    val user: Long,
+    val enabled: Int,
+    val membershipexpiry: Int,
+    val membershipnear: Int,
+    val attendanceenc: Int,
+    val gymannounce: Int,
+    val systemnotice: Int,
+    val paymentconfirm: Int,
+    val pauseexpiry: Int,
+    val weeklygoal: Int,
+    val personalrecord: Int,
+    val quietenabled: Int,
+    val quietstart: String,
+    val quietend: String,
+    val createddate: String?,
+    val updateddate: String?,
+    val date: String?,
+
+    val extra: NotificationsettingExtraInfo
+){
+    companion object {
+        fun from(notificationsetting: Notificationsetting): NotificationsettingResponse {
+            val userResponse = notificationsetting.user?.let { UserResponse.from(it) }
+            return NotificationsettingResponse(
+                id = notificationsetting.id,
+                user = notificationsetting.userId,
+                enabled = notificationsetting.enabled.ordinal,
+                membershipexpiry = notificationsetting.membershipexpiry.ordinal,
+                membershipnear = notificationsetting.membershipnear.ordinal,
+                attendanceenc = notificationsetting.attendanceenc.ordinal,
+                gymannounce = notificationsetting.gymannounce.ordinal,
+                systemnotice = notificationsetting.systemnotice.ordinal,
+                paymentconfirm = notificationsetting.paymentconfirm.ordinal,
+                pauseexpiry = notificationsetting.pauseexpiry.ordinal,
+                weeklygoal = notificationsetting.weeklygoal.ordinal,
+                personalrecord = notificationsetting.personalrecord.ordinal,
+                quietenabled = notificationsetting.quietenabled.ordinal,
+                quietstart = notificationsetting.quietstart,
+                quietend = notificationsetting.quietend,
+                createddate = notificationsetting.createddate?.toString()?.replace("T", " ") ?: "",
+                updateddate = notificationsetting.updateddate?.toString()?.replace("T", " ") ?: "",
+                date = notificationsetting.date?.toString()?.replace("T", " ") ?: "",
+
+                extra = NotificationsettingExtraInfo(
+                    enabled = Enabled.getDisplayName(notificationsetting.enabled),membershipexpiry = Membershipexpiry.getDisplayName(notificationsetting.membershipexpiry),membershipnear = Membershipnear.getDisplayName(notificationsetting.membershipnear),attendanceenc = Attendanceenc.getDisplayName(notificationsetting.attendanceenc),gymannounce = Gymannounce.getDisplayName(notificationsetting.gymannounce),systemnotice = Systemnotice.getDisplayName(notificationsetting.systemnotice),paymentconfirm = Paymentconfirm.getDisplayName(notificationsetting.paymentconfirm),pauseexpiry = Pauseexpiry.getDisplayName(notificationsetting.pauseexpiry),weeklygoal = Weeklygoal.getDisplayName(notificationsetting.weeklygoal),personalrecord = Personalrecord.getDisplayName(notificationsetting.personalrecord),quietenabled = Quietenabled.getDisplayName(notificationsetting.quietenabled),
+                    user = userResponse,)
+                
             )
         }
     }
