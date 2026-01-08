@@ -907,43 +907,43 @@
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "membership_expiry",
+          "name": "membershipexpiry",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "membership_near_expiry",
+          "name": "membershipnear",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "attendance_encourage",
+          "name": "attendanceenc",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "gym_announcement",
+          "name": "gymannounce",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "system_notice",
+          "name": "systemnotice",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "payment_confirm",
+          "name": "paymentconfirm",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "pause_expiry",
+          "name": "pauseexpiry",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "weekly_goal_achieved",
+          "name": "weeklygoal",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "personal_record",
+          "name": "personalrecord",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         },
         {
-          "name": "quiet_hours_enabled",
+          "name": "quietenabled",
           "data": ["", "enabled:활성화", "disabled:비활성화"]
         }
       ]
