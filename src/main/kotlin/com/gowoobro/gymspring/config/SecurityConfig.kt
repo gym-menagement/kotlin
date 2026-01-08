@@ -32,7 +32,7 @@ class SecurityConfig(
             .cors { cors -> cors.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers("/api/jwt", "/api/auth/**", "/api/user/encode-passwords", "/api/test/**").permitAll()
+                    .requestMatchers("/api/jwt", "/api/auth/**", "/api/user/encode-passwords", "/api/user/fcm/**", "/api/test/**", "/api/notifications/**", "/api/notification-history/**", "/api/notification-settings/**").permitAll()
                     .requestMatchers("/api/**").authenticated()
                     .anyRequest().permitAll()
             }
