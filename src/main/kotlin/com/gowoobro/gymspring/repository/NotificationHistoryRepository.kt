@@ -1,77 +1,111 @@
 package com.gowoobro.gymspring.repository
 
-import com.gowoobro.gymspring.entity.NotificationHistory
-import com.gowoobro.gymspring.enums.notificationhistory.NotificationType
-import com.gowoobro.gymspring.enums.notificationhistory.SendStatus
+import com.gowoobro.gymspring.entity.Notificationhistory
+import com.gowoobro.gymspring.entity.NotificationhistoryCreateRequest
+import com.gowoobro.gymspring.entity.NotificationhistoryUpdateRequest
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+import com.gowoobro.gymspring.enums.notificationhistory.Type
+import com.gowoobro.gymspring.enums.notificationhistory.Status
+
+
+
 @Repository
-interface NotificationHistoryRepository : JpaRepository<NotificationHistory, Long> {
+interface NotificationhistoryRepository : JpaRepository<Notificationhistory, Long> {
     @EntityGraph(attributePaths = [
-        "sender",
-        "receiver",
+        "senderuser",
+        "receiveruser",
         "gym"
     ])
-    override fun findAll(pageable: Pageable): Page<NotificationHistory>
+    override fun findAll(pageable: Pageable): Page<Notificationhistory>
 
     @EntityGraph(attributePaths = [
-        "sender",
-        "receiver",
+        "senderuser",
+        "receiveruser",
         "gym"
     ])
-    override fun findById(id: Long): java.util.Optional<NotificationHistory>
+    override fun findById(id: Long): java.util.Optional<Notificationhistory>
 
     @EntityGraph(attributePaths = [
-        "sender",
-        "receiver",
+        "senderuser",
+        "receiveruser",
         "gym"
     ])
-    fun findByReceiverId(receiverId: Long, pageable: Pageable): Page<NotificationHistory>
+    fun findBysenderId(senderuser: Long): List<Notificationhistory>
 
     @EntityGraph(attributePaths = [
-        "sender",
-        "receiver",
+        "senderuser",
+        "receiveruser",
         "gym"
     ])
-    fun findBySenderId(senderId: Long, pageable: Pageable): Page<NotificationHistory>
+    fun findByreceiverId(receiveruser: Long): List<Notificationhistory>
 
     @EntityGraph(attributePaths = [
-        "sender",
-        "receiver",
+        "senderuser",
+        "receiveruser",
         "gym"
     ])
-    fun findByGymId(gymId: Long, pageable: Pageable): Page<NotificationHistory>
+    fun findBygymId(gym: Long): List<Notificationhistory>
 
     @EntityGraph(attributePaths = [
-        "sender",
-        "receiver",
+        "senderuser",
+        "receiveruser",
         "gym"
     ])
-    fun findByType(type: NotificationType, pageable: Pageable): Page<NotificationHistory>
+    fun findByType(type: Type): List<Notificationhistory>
 
     @EntityGraph(attributePaths = [
-        "sender",
-        "receiver",
+        "senderuser",
+        "receiveruser",
         "gym"
     ])
-    fun findByStatus(status: SendStatus, pageable: Pageable): Page<NotificationHistory>
+    fun findByTitle(title: String): List<Notificationhistory>
 
     @EntityGraph(attributePaths = [
-        "sender",
-        "receiver",
+        "senderuser",
+        "receiveruser",
         "gym"
     ])
-    fun findByReceiverIdAndType(receiverId: Long, type: NotificationType, pageable: Pageable): Page<NotificationHistory>
+    fun findByBody(body: String): List<Notificationhistory>
 
     @EntityGraph(attributePaths = [
-        "sender",
-        "receiver",
+        "senderuser",
+        "receiveruser",
         "gym"
     ])
-    fun findBySentDateBetween(startDate: LocalDateTime, endDate: LocalDateTime, pageable: Pageable): Page<NotificationHistory>
+    fun findByData(data: String): List<Notificationhistory>
+
+    @EntityGraph(attributePaths = [
+        "senderuser",
+        "receiveruser",
+        "gym"
+    ])
+    fun findByStatus(status: Status): List<Notificationhistory>
+
+    @EntityGraph(attributePaths = [
+        "senderuser",
+        "receiveruser",
+        "gym"
+    ])
+    fun findByErrormessage(errormessage: String): List<Notificationhistory>
+
+    @EntityGraph(attributePaths = [
+        "senderuser",
+        "receiveruser",
+        "gym"
+    ])
+    fun findBySentdate(sentdate: LocalDateTime): List<Notificationhistory>
+
+    @EntityGraph(attributePaths = [
+        "senderuser",
+        "receiveruser",
+        "gym"
+    ])
+    fun findByDate(date: LocalDateTime): List<Notificationhistory>
 }
