@@ -121,4 +121,8 @@ interface NotificationsettingRepository : JpaRepository<Notificationsetting, Lon
         "user"
     ])
     fun findByDate(date: LocalDateTime): List<Notificationsetting>
+
+    // 커스텀 쿼리 메서드
+    @Query("SELECT n FROM Notificationsetting n WHERE n.user = :userId")
+    fun findByUser(userId: Long): java.util.Optional<Notificationsetting>
 }

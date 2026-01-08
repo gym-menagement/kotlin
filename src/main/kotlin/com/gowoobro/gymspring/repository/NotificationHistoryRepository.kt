@@ -108,4 +108,17 @@ interface NotificationhistoryRepository : JpaRepository<Notificationhistory, Lon
         "gym"
     ])
     fun findByDate(date: LocalDateTime): List<Notificationhistory>
+
+    // 커스텀 쿼리 메서드
+    @Query("SELECT n FROM Notificationhistory n WHERE n.receiver = :receiverId ORDER BY n.sentdate DESC")
+    fun findByReceiverOrderBySentdateDesc(receiverId: Long, pageable: Pageable): Page<Notificationhistory>
+
+    @Query("SELECT n FROM Notificationhistory n WHERE n.gym = :gymId ORDER BY n.sentdate DESC")
+    fun findByGymOrderBySentdateDesc(gymId: Long, pageable: Pageable): Page<Notificationhistory>
+
+    @Query("SELECT n FROM Notificationhistory n WHERE n.type = :type ORDER BY n.sentdate DESC")
+    fun findByTypeOrderBySentdateDesc(type: Int, pageable: Pageable): Page<Notificationhistory>
+
+    @Query("SELECT n FROM Notificationhistory n WHERE n.receiver = :receiverId AND n.type = :type ORDER BY n.sentdate DESC")
+    fun findByReceiverAndTypeOrderBySentdateDesc(receiverId: Long, type: Int, pageable: Pageable): Page<Notificationhistory>
 }
