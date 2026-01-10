@@ -2,7 +2,7 @@ package com.gowoobro.gymspring.controller
 
 import com.gowoobro.gymspring.repository.PushtokenRepository
 import com.gowoobro.gymspring.service.FcmService
-import com.gowoobro.gymspring.enums.notificationhistory.NotificationType
+import com.gowoobro.gymspring.enums.notificationhistory.Type
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -44,7 +44,7 @@ class NotificationController(
                 body = body,
                 data = mapOf("type" to "test"),
                 userIds = listOf(userId),
-                type = NotificationType.TEST
+                type = Type.GENERAL
             )
 
             ResponseEntity.ok(mapOf(
@@ -102,7 +102,7 @@ class NotificationController(
                 body = body,
                 data = data ?: mapOf("type" to "notification"),
                 userIds = userIds,
-                type = NotificationType.GENERAL
+                type = Type.GENERAL
             )
 
             ResponseEntity.ok(mapOf(
@@ -180,7 +180,7 @@ class NotificationController(
                 body = body,
                 data = data ?: mapOf("type" to "gym_notification", "gymId" to gymId.toString()),
                 userIds = userIds,
-                type = NotificationType.GYM_ANNOUNCEMENT,
+                type = Type.GYM_ANNOUNCEMENT,
                 gymId = gymId
             )
 
@@ -241,7 +241,7 @@ class NotificationController(
                 body = body,
                 data = data ?: mapOf("type" to "broadcast"),
                 userIds = userIds,
-                type = NotificationType.SYSTEM_NOTICE
+                type = Type.SYSTEM_NOTICE
             )
 
             ResponseEntity.ok(mapOf(

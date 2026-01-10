@@ -144,7 +144,7 @@ class NotificationApiController(
      * 사용자 알림 설정 조회
      */
     @GetMapping("/settings/user/{userId}")
-    fun getUserSettings(@PathVariable userId: Long): ResponseEntity<Map<String, Any>> {
+    fun getUserSettings(@PathVariable userId: Long): ResponseEntity<Map<String, Any?>> {
         val setting = notificationsettingRepository.findByUser(userId).orElse(null)
 
         return ResponseEntity.ok(
@@ -172,7 +172,7 @@ class NotificationApiController(
 
         // 기본 설정으로 생성
         val setting = Notificationsetting(
-            user = userId,
+            userId = userId,
             createddate = LocalDateTime.now(),
             updateddate = LocalDateTime.now(),
             date = LocalDateTime.now()
@@ -278,8 +278,8 @@ class NotificationApiController(
         val updated = setting.copy(
             quietenabled = if (enabled) com.gowoobro.gymspring.enums.notificationsetting.Quietenabled.ENABLED
                           else com.gowoobro.gymspring.enums.notificationsetting.Quietenabled.DISABLED,
-            quietstart = startTime?.let { java.time.LocalTime.parse(it) },
-            quietend = endTime?.let { java.time.LocalTime.parse(it) },
+            quietstart = startTime ?: "",
+            quietend = endTime ?: "",
             updateddate = LocalDateTime.now()
         )
         notificationsettingRepository.save(updated)
@@ -368,9 +368,9 @@ class NotificationApiController(
     private fun toHistoryResponse(history: Notificationhistory): Map<String, Any?> {
         return mapOf(
             "id" to history.id,
-            "senderId" to history.sender,
-            "receiverId" to history.receiver,
-            "gymId" to history.gym,
+            "senderId" to history.senderId,
+            "receiverId" to history.receiverId,
+            "gymId" to history.gymId,
             "type" to history.type,
             "title" to history.title,
             "body" to history.body,
@@ -385,7 +385,7 @@ class NotificationApiController(
     private fun toSettingResponse(setting: Notificationsetting): Map<String, Any?> {
         return mapOf(
             "id" to setting.id,
-            "userId" to setting.user,
+            "userId" to setting.userId,
             "enabled" to (setting.enabled.name == "ENABLED").let { if (it) 0 else 1 },
             "membershipExpiry" to (setting.membershipexpiry.name == "ENABLED").let { if (it) 0 else 1 },
             "membershipNearExpiry" to (setting.membershipnear.name == "ENABLED").let { if (it) 0 else 1 },

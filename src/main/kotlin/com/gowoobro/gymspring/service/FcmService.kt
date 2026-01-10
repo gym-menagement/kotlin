@@ -3,17 +3,17 @@ package com.gowoobro.gymspring.service
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message
 import com.google.firebase.messaging.Notification
-import com.gowoobro.gymspring.entity.NotificationHistory
-import com.gowoobro.gymspring.enums.notificationhistory.NotificationType
-import com.gowoobro.gymspring.enums.notificationhistory.SendStatus
-import com.gowoobro.gymspring.repository.NotificationHistoryRepository
+import com.gowoobro.gymspring.entity.Notificationhistory
+import com.gowoobro.gymspring.enums.notificationhistory.Type
+import com.gowoobro.gymspring.enums.notificationhistory.Status
+import com.gowoobro.gymspring.repository.NotificationhistoryRepository
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
 class FcmService(
-    private val notificationHistoryRepository: NotificationHistoryRepository
+    private val notificationhistoryRepository: NotificationhistoryRepository
 ) {
     private val objectMapper = jacksonObjectMapper()
 
@@ -25,27 +25,27 @@ class FcmService(
         title: String,
         body: String,
         data: Map<String, String>,
-        type: NotificationType,
+        type: Type,
         senderId: Long? = null,
         gymId: Long? = null,
-        status: SendStatus,
+        status: Status,
         errorMessage: String? = null
     ) {
         try {
-            val history = NotificationHistory(
-                senderId = senderId,
+            val history = Notificationhistory(
+                senderId = senderId ?: 0L,
                 receiverId = receiverId,
-                gymId = gymId,
+                gymId = gymId ?: 0L,
                 type = type,
                 title = title,
                 body = body,
                 data = objectMapper.writeValueAsString(data),
                 status = status,
-                errorMessage = errorMessage,
-                sentDate = LocalDateTime.now(),
+                errormessage = errorMessage ?: "",
+                sentdate = LocalDateTime.now(),
                 date = LocalDateTime.now()
             )
-            notificationHistoryRepository.save(history)
+            notificationhistoryRepository.save(history)
         } catch (e: Exception) {
             println("Failed to save notification history: ${e.message}")
         }
@@ -96,7 +96,7 @@ class FcmService(
         body: String,
         data: Map<String, String> = emptyMap(),
         userIds: List<Long> = emptyList(),
-        type: NotificationType = NotificationType.GENERAL,
+        type: Type = Type.GENERAL,
         senderId: Long? = null,
         gymId: Long? = null
     ): Int {
@@ -140,7 +140,7 @@ class FcmService(
                         type = type,
                         senderId = senderId,
                         gymId = gymId,
-                        status = SendStatus.SUCCESS,
+                        status = Status.SUCCESS,
                         errorMessage = null
                     )
                 }
