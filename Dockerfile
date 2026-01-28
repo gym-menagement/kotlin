@@ -45,9 +45,9 @@ ENV SPRING_PROFILES_ACTIVE=prod
 # 포트 노출
 EXPOSE 8004
 
-# 헬스체크
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:8004/actuator/health || exit 1
+# # 헬스체크
+# HEALTHCHECK --interval=30s --timeout=3s --start-period=90s --retries=3 \
+#     CMD curl -f http://localhost:8004/actuator/health || exit 1
 
 # 애플리케이션 실행
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
