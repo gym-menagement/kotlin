@@ -2,6 +2,7 @@ package com.gowoobro.gymspring.controller
 
 import com.gowoobro.gymspring.entity.Notificationhistory
 import com.gowoobro.gymspring.entity.Notificationsetting
+import com.gowoobro.gymspring.enums.notificationhistory.Type
 import com.gowoobro.gymspring.repository.NotificationhistoryRepository
 import com.gowoobro.gymspring.repository.NotificationsettingRepository
 import com.gowoobro.gymspring.service.FcmService
@@ -83,7 +84,8 @@ class NotificationApiController(
         @RequestParam(defaultValue = "20") size: Int
     ): ResponseEntity<Map<String, Any>> {
         val pageable = PageRequest.of(page, size)
-        val historyPage: Page<Notificationhistory> = notificationhistoryRepository.findByTypeOrderBySentdateDesc(type, pageable)
+        val typeEnum = Type.entries.getOrElse(type) { Type.GENERAL }
+        val historyPage: Page<Notificationhistory> = notificationhistoryRepository.findByTypeOrderBySentdateDesc(typeEnum, pageable)
 
         return ResponseEntity.ok(
             mapOf(
@@ -108,7 +110,8 @@ class NotificationApiController(
         @RequestParam(defaultValue = "20") size: Int
     ): ResponseEntity<Map<String, Any>> {
         val pageable = PageRequest.of(page, size)
-        val historyPage: Page<Notificationhistory> = notificationhistoryRepository.findByReceiverAndTypeOrderBySentdateDesc(userId, type, pageable)
+        val typeEnum = Type.entries.getOrElse(type) { Type.GENERAL }
+        val historyPage: Page<Notificationhistory> = notificationhistoryRepository.findByReceiverAndTypeOrderBySentdateDesc(userId, typeEnum, pageable)
 
         return ResponseEntity.ok(
             mapOf(
