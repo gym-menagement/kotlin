@@ -58,3 +58,7 @@ tasks.withType<Test> {
 tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
 	jvmArgs("-Djava.net.preferIPv4Stack=true")
 }
+
+tasks.named<Jar>("jar") {
+	enabled = false
+}
