@@ -1,6 +1,6 @@
 # 멀티 스테이지 빌드를 사용한 Spring Boot Kotlin 애플리케이션
 # Stage 1: Build
-FROM --platform=linux/amd64 gradle:8.5-jdk17 AS builder
+FROM gradle:8.5-jdk17 AS builder
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ COPY src src
 RUN ./gradlew bootJar -x test --no-daemon
 
 # Stage 2: Runtime
-FROM --platform=linux/amd64 eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:17-jre-jammy
 
 WORKDIR /app
 
