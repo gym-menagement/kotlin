@@ -33,6 +33,7 @@ class SecurityConfig(
             .authorizeHttpRequests { requests ->
                 requests
                     .requestMatchers("/api/jwt", "/api/auth/**", "/api/user/encode-passwords", "/api/user/fcm/**", "/api/test/**", "/api/notifications/**", "/api/notification-history/**", "/api/notification-settings/**").permitAll()
+                    .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/user").permitAll()
                     .requestMatchers("/api/**").authenticated()
                     .anyRequest().permitAll()
             }
