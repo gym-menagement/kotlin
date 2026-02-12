@@ -31,8 +31,14 @@ class AttendanceService(private val attendanceRepository: AttendanceRepository) 
         return attendanceRepository.findById(id).orElse(null)
     }
 
-    fun count(): Long {
-        return attendanceRepository.count()
+    fun count(gym: Long? = null, start: LocalDateTime? = null, end: LocalDateTime? = null): Long {
+        return if (gym != null && start != null && end != null) {
+            attendanceRepository.countByGymIdAndCheckintimeBetween(gym, start, end)
+        } else if (gym != null) {
+            attendanceRepository.countByGymId(gym)
+        } else {
+            attendanceRepository.count()
+        }
     }
 
 

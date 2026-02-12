@@ -232,8 +232,12 @@ class AttendanceController(
 
 
     @GetMapping("/count")
-    fun getCount(): ResponseEntity<Map<String, Long>> {
-        val count = attendanceService.count()
+    fun getCount(
+        @RequestParam(required = false) gym: Long?,
+        @RequestParam(required = false) startcheckintime: LocalDateTime?,
+        @RequestParam(required = false) endcheckintime: LocalDateTime?
+    ): ResponseEntity<Map<String, Long>> {
+        val count = attendanceService.count(gym, startcheckintime, endcheckintime)
         return ResponseEntity.ok(mapOf("count" to count))
     }
 

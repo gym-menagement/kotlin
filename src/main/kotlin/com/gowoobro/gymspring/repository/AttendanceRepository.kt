@@ -242,4 +242,7 @@ interface AttendanceRepository : JpaRepository<Attendance, Long> {
         "gym"
     ])
     fun findByDate(date: LocalDateTime): List<Attendance>
+    fun countByGymId(gymId: Long): Long
+
+    fun countByGymIdAndCheckintimeBetween(gymId: Long, start: LocalDateTime, end: LocalDateTime): Long
 }
