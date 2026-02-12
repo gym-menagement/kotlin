@@ -1,10 +1,13 @@
 package com.gowoobro.gymspring.service
 
-import com.gowoobro.gymspring.entity.User
-import com.gowoobro.gymspring.entity.UserCreateRequest
-import com.gowoobro.gymspring.entity.UserUpdateRequest
-import com.gowoobro.gymspring.entity.UserPatchRequest
-import com.gowoobro.gymspring.repository.UserRepository
+import com.gowoobro.gymspring.entity.*
+import com.gowoobro.gymspring.enums.gymtrainer.Status
+import com.gowoobro.gymspring.enums.user.Level
+import com.gowoobro.gymspring.enums.user.Role
+import com.gowoobro.gymspring.enums.user.Sex
+import com.gowoobro.gymspring.enums.user.Type
+import com.gowoobro.gymspring.enums.user.Use
+import com.gowoobro.gymspring.repository.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -13,16 +16,16 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
-import com.gowoobro.gymspring.enums.user.Level
-import com.gowoobro.gymspring.enums.user.Use
-import com.gowoobro.gymspring.enums.user.Type
-import com.gowoobro.gymspring.enums.user.Role
-import com.gowoobro.gymspring.enums.user.Sex
-
 
 @Service
 @Transactional
-class UserService(private val userRepository: UserRepository, private val passwordEncoder: PasswordEncoder) {
+class UserService(
+    private val userRepository: UserRepository,
+    private val passwordEncoder: PasswordEncoder,
+    private val membershipRepository: MembershipRepository,
+    private val gymtrainerRepository: GymtrainerRepository,
+    private val gymRepository: GymRepository
+) {
 
     fun findAll(page: Int = 0, pagesize: Int = 10): Page<User> {
         val pageable: Pageable = PageRequest.of(page, pagesize)
@@ -117,7 +120,7 @@ class UserService(private val userRepository: UserRepository, private val passwo
             address = request.address,
             image = request.image,
             sex = request.sex,
-            birth = request.birth,
+            birth = request.birth?.atStartOfDay(),
             type = request.type,
             connectid = request.connectid,
             level = request.level,
@@ -141,7 +144,7 @@ class UserService(private val userRepository: UserRepository, private val passwo
                 address = request.address,
                 image = request.image,
                 sex = request.sex,
-                birth = request.birth,
+                birth = request.birth?.atStartOfDay(),
                 type = request.type,
                 connectid = request.connectid,
                 level = request.level,
@@ -173,7 +176,7 @@ class UserService(private val userRepository: UserRepository, private val passwo
             address = request.address,
             image = request.image,
             sex = request.sex,
-            birth = request.birth,
+            birth = request.birth?.atStartOfDay(),
             type = request.type,
             connectid = request.connectid,
             level = request.level,
@@ -225,7 +228,7 @@ class UserService(private val userRepository: UserRepository, private val passwo
             address = request.address ?: existing.address,
             image = request.image ?: existing.image,
             sex = request.sex ?: existing.sex,
-            birth = request.birth ?: existing.birth,
+            birth = request.birth?.atStartOfDay() ?: existing.birth,
             type = request.type ?: existing.type,
             connectid = request.connectid ?: existing.connectid,
             level = request.level ?: existing.level,
@@ -236,5 +239,56 @@ class UserService(private val userRepository: UserRepository, private val passwo
             date = request.date ?: existing.date,
         )
         return userRepository.save(updated)
+    }
+
+    fun getAvailableProfiles(user: User): List<UserProfileDto> {
+        val profiles = mutableListOf<UserProfileDto>()
+
+        // 1. Member Role (from Membership)
+        val memberships = membershipRepository.findByuserId(user.id)
+        memberships.forEach { membership ->
+            membership.gym?.let { gym ->
+                profiles.add(
+                    UserProfileDto(
+                        role = Role.MEMBER,
+                        gymId = gym.id,
+                        gymName = gym.name,
+                        contextId = membership.id
+                    )
+                )
+            }
+        }
+
+        // 2. Trainer Role (from GymTrainer)
+        val gymTrainers = gymtrainerRepository.findBytrainerId(user.id).filter { 
+            it.status == Status.IN_PROGRESS 
+        }
+        gymTrainers.forEach { gymTrainer ->
+            gymTrainer.gym?.let { gym ->
+                profiles.add(
+                    UserProfileDto(
+                        role = Role.TRAINER,
+                        gymId = gym.id,
+                        gymName = gym.name,
+                        contextId = gymTrainer.id
+                    )
+                )
+            }
+        }
+
+        // 3. Gym Admin (Owner) Role (from Gym)
+        val gyms = gymRepository.findByUser(user.id)
+        gyms.forEach { gym ->
+            profiles.add(
+                UserProfileDto(
+                    role = Role.GYM_ADMIN,
+                    gymId = gym.id,
+                    gymName = gym.name,
+                    contextId = gym.id
+                )
+            )
+        }
+
+        return profiles.distinct()
     }
 }

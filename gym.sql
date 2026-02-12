@@ -798,6 +798,22 @@ CREATE TABLE `notificationsetting_tb` (
 -- INSERT INTO qrcode_tb (qr_user, qr_code, qr_isactive, qr_generateddate)
 -- VALUES (1, UUID(), 1, NOW());
 
+-- 16. 헬스장 관리자 테이블 (gymadmin_tb)
+-- 회원이 헬스장의 운영자가 될 수 있도록 관리하는 테이블
+CREATE TABLE IF NOT EXISTS gymadmin_tb (
+    ga_id BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '관리자 ID',
+    ga_gym BIGINT(20) NOT NULL DEFAULT 0 COMMENT '헬스장 ID (gym_tb 참조)',
+    ga_user BIGINT(20) NOT NULL DEFAULT 0 COMMENT '회원 ID (user_tb 참조)',
+    ga_level INT(11) NOT NULL DEFAULT 1 COMMENT '관리자 레벨 (OWNER:운영자, MANAGER:관리자)',
+    ga_status INT(11) NOT NULL DEFAULT 0 COMMENT '상태 (ACTIVE:활성, INACTIVE:비활성)',
+    ga_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
+    PRIMARY KEY (ga_id),
+    INDEX idx_gym (ga_gym),
+    INDEX idx_user (ga_user),
+    INDEX idx_gym_user (ga_gym, ga_user)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='헬스장 관리자 테이블';
+
+
 -- -- 공지사항 샘플
 -- INSERT INTO notice_tb (nt_gym, nt_title, nt_content, nt_type, nt_status, nt_createddate)
 -- VALUES

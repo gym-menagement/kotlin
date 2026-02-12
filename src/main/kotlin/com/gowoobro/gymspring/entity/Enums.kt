@@ -49,3 +49,8 @@ enum class UserRole {
     MEMBER,
     GUEST
 }
+
+enum class GymAdminLevel {
+    OWNER,
+    MANAGER
+}

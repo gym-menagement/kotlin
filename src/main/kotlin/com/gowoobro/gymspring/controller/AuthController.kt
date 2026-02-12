@@ -43,7 +43,10 @@ class AuthController(
                 if (passwordMatches) {
                     val jwt = jwtUtil.generateToken(user.loginid)
                     println("JWT generated successfully")
-                    val userResponse = UserResponse.from(user)
+                    
+                    val profiles = userService.getAvailableProfiles(user)
+                    val userResponse = UserResponse.from(user, profiles)
+                    
                     ResponseEntity.ok(JwtResponse(jwt, "Bearer", userResponse))
                 } else {
                     ResponseEntity.status(401).body(null)
@@ -71,7 +74,10 @@ class AuthController(
 
             if (user != null) {
                 val jwt = jwtUtil.generateToken(loginRequest.loginid)
-                val userResponse = UserResponse.from(user)
+                
+                val profiles = userService.getAvailableProfiles(user)
+                val userResponse = UserResponse.from(user, profiles)
+                
                 ResponseEntity.ok(JwtResponse(jwt, "Bearer", userResponse))
             } else {
                 ResponseEntity.status(404).body(null)

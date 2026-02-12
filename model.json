@@ -158,6 +158,29 @@
       ]
     },
     {
+      "name": "gymadmin",
+      "join": [
+        {
+          "name": "gym",
+          "column": "gym"
+        },
+        {
+          "name": "user",
+          "column": "user"
+        }
+      ],
+      "map": [
+        {
+          "name": "level",
+          "data": ["", "owner:운영자", "manager:관리자"]
+        },
+        {
+          "name": "status",
+          "data": ["", "active:활성", "inactive:비활성"]
+        }
+      ]
+    },
+    {
       "name": "gym",
       "compare": [
         {

@@ -2,6 +2,7 @@ package com.gowoobro.gymspring.entity
 
 import jakarta.persistence.*
 import java.time.LocalDateTime
+import java.time.LocalDate
 
 import com.gowoobro.gymspring.enums.user.Level
 import com.gowoobro.gymspring.enums.user.Use
@@ -61,7 +62,7 @@ data class UserCreateRequest(
     val address: String = "",
     val image: String = "",
     val sex: Sex = Sex.MALE,
-    val birth: LocalDateTime? = LocalDateTime.now(),
+    val birth: LocalDate? = LocalDate.now(),
     val type: Type = Type.NORMAL,
     val connectid: String = "",
     val level: Level = Level.NORMAL,
@@ -82,7 +83,7 @@ data class UserUpdateRequest(
     val address: String = "",
     val image: String = "",
     val sex: Sex = Sex.MALE,
-    val birth: LocalDateTime? = LocalDateTime.now(),
+    val birth: LocalDate? = LocalDate.now(),
     val type: Type = Type.NORMAL,
     val connectid: String = "",
     val level: Level = Level.NORMAL,
@@ -103,7 +104,7 @@ data class UserPatchRequest(
     val address: String? = null,
     val image: String? = null,
     val sex: Sex? = null,
-    val birth: LocalDateTime? = null,
+    val birth: LocalDate? = null,
     val type: Type? = null,
     val connectid: String? = null,
     val level: Level? = null,
@@ -122,6 +123,7 @@ data class UserExtraInfo(
     val sex: String = "",
 
 )
+
 
 
 data class UserResponse(
@@ -144,10 +146,11 @@ data class UserResponse(
     val lastchangepasswddate: String?,
     val date: String?,
 
-    val extra: UserExtraInfo
+    val extra: UserExtraInfo,
+    val profiles: List<UserProfileDto> = emptyList()
 ){
     companion object {
-        fun from(user: User): UserResponse {
+        fun from(user: User, profiles: List<UserProfileDto> = emptyList()): UserResponse {
             return UserResponse(
                 id = user.id,
                 loginid = user.loginid,
@@ -170,8 +173,8 @@ data class UserResponse(
 
                 extra = UserExtraInfo(
                     level = Level.getDisplayName(user.level),use = Use.getDisplayName(user.use),type = Type.getDisplayName(user.type),role = Role.getDisplayName(user.role),sex = Sex.getDisplayName(user.sex),
-                    )
-                
+                    ),
+                profiles = profiles
             )
         }
     }
